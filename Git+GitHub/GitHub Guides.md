@@ -12,7 +12,8 @@ References
 </p>
 
 ### (2) Understanding the GitHub Flow
-<p>**a. Create a Branch**
+<p>
+**a. Create a Branch**
 : Main is Main.
 : A branch name should be descriptive
 
