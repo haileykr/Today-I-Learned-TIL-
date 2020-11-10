@@ -10,6 +10,7 @@ References
 : **Commit** - saved changes
 : **Pull Requests** - proposing your changes and asking that someone will review and pull in your contribution and merge them into their branch.
 </p>
+
 ### (2) Understanding the GitHub Flow
 <p>**a. Create a Branch**
 : Main is Main.
@@ -39,6 +40,7 @@ References
 : After the changes are verified in production, they can be merged to the main branch.
 : Pull Requests keep a record of the historical changes
 : Incorporate certain keywords are relevant
+</p>
 
 ### (3) Forking Projects
 : **Fork** - Process of contributing to someone else's project or using someone else's project as the starting point of your own
