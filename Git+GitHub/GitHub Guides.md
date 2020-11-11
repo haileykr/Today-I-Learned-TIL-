@@ -1,18 +1,16 @@
-References
-- https://guides.github.com/
-- https://lab.github.com/
+# References
+- [https://guides.github.com/]https://guides.github.com/
+- [https://lab.github.com/]https://lab.github.com/
 
 # GitHub Guides
 ### (1) Hello World
-<p>: What is GitHub? / Create a Repository / Create a Branch / Make a Commit / Open a Pull Request / Merge Pull Request
+: What is GitHub? / Create a Repository / Create a Branch / Make a Commit / Open a Pull Request / Merge Pull Request
 : **Repository** - usually used to organize a single project! Can contain folders, files, images, videos, spreadsheets, data sets, etc [anything your project needs].
 : **Branching** - is the way to work on different versions of a repository at one time.
 : **Commit** - saved changes
 : **Pull Requests** - proposing your changes and asking that someone will review and pull in your contribution and merge them into their branch.
-</p>
 
 ### (2) Understanding the GitHub Flow
-<p>
 **a. Create a Branch**
 : Main is Main.
 : A branch name should be descriptive
@@ -41,7 +39,6 @@ References
 : After the changes are verified in production, they can be merged to the main branch.
 : Pull Requests keep a record of the historical changes
 : Incorporate certain keywords are relevant
-</p>
 
 ### (3) Forking Projects
 : **Fork** - Process of contributing to someone else's project or using someone else's project as the starting point of your own
