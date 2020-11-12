@@ -1,6 +1,8 @@
 # References
 - [https://guides.github.com/]https://guides.github.com/
 - [https://lab.github.com/]https://lab.github.com/
+- [git-scm.com]git-scm.com
+- [gitimmersion.com]gitimmersion.com
 
 # GitHub Guides
 ### (1) Hello World
