@@ -66,3 +66,52 @@
 2. Modify the content and style 
 - Ex. Edit the title of your index page ~> Code - **_config.yml**
 
+### (5) Git Handbook
+1. Version Control System (VCS)
+: tracks history of changes ~> which changes, by who, when and why?
+<br>
+
+2. Distributed Version Control System
+: DVCSs allow full access to every file, branch, and iteration of a project, and allows every user access to history of changes
+: no need for a constant connection to the central repository
+<br>
+
+3. Why Git?
+: 2017 Survey @Stack Overflow ~> More than 70% of developers use Git
+: Git shows the entire timeline of changes from the inception of a project
+: Collaboration can happen in every time zone
+: Changes are safely proposed using branches
+<br>
+
+4. What's a Repository?
+: Repository (Git Project) ~> encompasses the entire collection of files & folders associated with a project, and each file's revision history (appearing as *commits*)
+: allows ~> interaction with history, cloning, creating branches, committing, merging, comparing changes, etc.
+<br>
+
+5. Basic Git Commands
+- *git init*: initializes a new repository
+- *git clone*: creates a local copy of an existing project
+- *git add*: stages a change (part 1/2)
+- *git commit*: takes a snapshot and adds to the project history (part 2/2)
+- *git status*: shows the status of changes [modified / untracked / staged]
+- *git branch*: shows the branches being worked on locally
+- *git merge*: merges lines of development together
+- *git pull*: updates the local line of development with updates from its remote counterpart.
+- *git upsh*: updates the remote repository with any commits made locally to a branch.
+
+- More: [https://git-scm.com/docs](https://git-scm.com/docs)
+
+- Working locally: *git clone* // *git remote -v*
+- Saved Changes: *git add* // *git commit* // *git diff*
+- Remote to Local: *git pull* = *git fetch* + *git merge* //  Local to Remote: *git push*
+<br>
+
+6. How GitHub fits in
+: GitHub is a Git hosting repository
+: provides tools for better codes through *command line features, issues (threaded discussions), pull requests, code reviews, use of a collection of apps
+<br>
+
+7. Models of Collaboration
+- Shared Repository
+- Fork & Pull
+<br>
