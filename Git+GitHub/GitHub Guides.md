@@ -48,3 +48,21 @@
 : **Clone / Download** - to actually work on it. Clone with the command line or using GitHub Desktop.
 : Make changes, then Stage, Commit, & Push.
 : Pull Request!
+
+
+### (4) Getting Started with GitHub Pages
+: **Public webpages** hosted and published through GitHub.
+<br>
+
+1. Create Your Website
+- Create a New Repository, named **username.github.io**
+- Go to Setting - GitHub Pages.
+- Click "Choose a Theme"
+(Use the *Jekyll Theme Chooser* to load a pre-made theme)
+- Write your own content
+- Click "Commit changes"
+<br>
+
+2. Modify the content and style 
+- Ex. Edit the title of your index page ~> Code - **_config.yml**
+
