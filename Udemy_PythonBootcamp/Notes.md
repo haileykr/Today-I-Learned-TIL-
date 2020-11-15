@@ -90,3 +90,145 @@ _Using Jupyter_
 
  #### 14. Variable Assignments
  - Best Practice (According to **PEP8**) - lowercase except for constants, no words with significant meaning in Python ex. "list", "str"
+
+ - Python : **"Dynamic Typing"** ~> i.e. you can reassign variables to different data types
+ vs. "Statically-Typed"
+ ex. my_dogs = 2
+ my_dogs = ["Sammy", "Frankie"]
+ - type(variable) : to check data type
+ 
+ #### 15. Introduction to String
+ - Strings are "ordered sequence"
+ ~> can use indexing and slicing
+ - h  e  l  l  o
+   0  1  2  3  4 (Index)
+   0 -4 -3 -2 -1 (Reverse Indexing)
+- ex. print('hello \n world')
+    \n for a new line
+  ex. print ('hello \t world')
+    \t for a tab
+- Slicing : [start:stop:step]
+ex. mystring = "Hello World"
+mystring[-1] ~> 'd'
+mystring[0] ~> 'H'
+
+mystring[2:] ~> 'llo World'
+mystring[:3] ~> 'Hel'
+mystring[0:3:2] ~> 'Hl'
+mystring[::3] ~> 'HlWl'
+mystring[::-1] ~> 'dlroW olleH'
+
+#### 17. String Properties and Methods
+- Immutability
+ex. name = "Sam"
+name[0] = 'P' ~> does not work
+instead,
+last_letters = name[1:]
+'P' **+** last_letters ~> works! *String Concatenation*
+- x.upper()
+ex. x = x.upper()
+- x.split() : split string based on white space or assigned letter
+ex. x = 'Hello this is a string'
+x.split() ~> ['Hello', 'this', 'is', 'a', 'string']
+x.split('i') ~> ['Hello th', 's', 's']
+
+#### 19. String Formatting for Printing
+- *String Interpolation*: formatting strings for printing variables  in them
+1. .format() method
+ex. print('This is a string {}'.format('INSERTED'))
+~> This is a string INSERTED
+ex. print('The {} {} {}'.format('fox', 'brown', 'quick'))
+~> The fox brown quick
+ex. print('The {2} {1} {0}'.format('fox', 'brown', 'quick'))
+~> The quick brown fox
+ex. print('The {q} {b} {f}'.format(f='fox',b='brown',q='quick'))
+~> The quick brown fox
+
+
+- Float formatting follows "{value:width.precision f}"
+ex. result = 100 / 777 = 0.1287001287001287
+print("Result: {r:1.3f}".format(r=result))
+~> Result: 0.129
+<br>
+2. f-strings (formatted string literals)
+ex. name = 'Jose'
+print('Hello, his name is {}'.format(name))
+print(f'Hello, his name is {name})
+
+#### 21. Lists in Python
+- Ordered sequences that can hold a variety of object types
+ex. [1, 2, 3, 4, 5]
+ex. mylist = ['STRING', 100, 23.2]
+<br>
+
+**len()**
+ex. len(mylist) ~> 3
+ex. mylist[0] ~> 'STRING'
+ex. mylist[1:] ~> [100, 23.2]
+<br>
+
+**+**
+ex. anotherlist = ['three', 'eleven']
+mylist + anotherlist ~> ['STRING', 100, 23.2, 'three', 'eleven']
+ex. mylist[0] = 'string'
+mylist ~> ['string', 100, 23.2]
+<br>
+
+**append() AND pop()**
+ex. mylist.append('six')
+~> ['string', 100, 23.2, 'six']
+ex. mylist.pop()
+~> 'six'
+ex. mylist
+~> ['string', 100, 23.2]
+ex. mylist.pop(0)
+~> 'string'
+ex. mylist
+~> [100, 23.2]
+<br>
+
+**sort() AND reverse()**
+ex. newlist = ['a', 'c', 'b']
+numlist = [3, 6, 2]
+ex. newlist.sort()
+~> ['a', 'b', 'c']
+~> **note that it does not return anything though!**
+~> therefore, sorted_list = newlist.sort()
+then sorted_list is **None**
+~> newlist.sort()
+sorted_list = newlist
+
+ex. numlist.reverse()
+~> [6, 3, 2]
+
+#### 23. Dictionaries in Python
+- Unordered mappings for storing objects
+- Key-value paring
+- this allows grabbing objects w/o needing to know the index location
+- {'key1':'value1',
+'key2':'value2'}
+- **Dictionaries**: Objects retrieved by key name. Unordered and cannot be sorted
+vs. **Lists**: Objects retrieved by location. Ordered Sequence and can be indexed and sliced
+<br>
+- ex. my_dict = {'a':'b', 'c':2}
+my_dict ['c'] ~> 2
+- Nested values are okay too!
+ex. example = {'k1':123, 'k2':[0,1,2], 'k3':{'insideKey':100}}
+ex. example['k2'] ~> [0,1,2]
+ex. example['k3']['insideKey'] ~> 100
+ex. example['k2'][1] ~> 1
+<br>
+- Addition is simple
+ex. my_dict['k3'] = 100
+my_dict ~> {'a':'b','c':2,'k3':100}
+
+ex. my_dict['c']=211
+my_dict ~> {'a':'b','c':211,'k3':100}
+
+ex. my_dict.keys()
+~> dict_keys(['a','c','k3'])
+my_dict.values()
+~> dict_values(['b',211,100])
+
+my_dict.items()
+~> dict_items([('a','b'), ('c',211), ('k3', 100)])
