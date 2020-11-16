@@ -232,3 +232,83 @@ my_dict.values()
 
 my_dict.items()
 ~> dict_items([('a','b'), ('c',211), ('k3', 100)])
+<br>
+
+#### 25. Tuples in Python
+- Similar to lists, but these are **IMMUTABLE**
+ex. t1 = (1, 2, 3)
+ex. t2 = ('one', 2.215)
+ex. t2[0] ~> 'one'
+ex. t3 = ('a','a','b')
+ex. t3.count('a') ~> 2
+ex. t3.index('a') ~> 0
+
+- Good for maintaining _Data Integrity_
+<br>
+
+#### 26. Sets in Python
+- Unordered Collections of **unique** elements
+- there can only be one representative of the same object
+ex. myset = set()
+ex. myset ~> set()
+ex. myset.add(1)
+ex. myset ~> {1}
+ex. myset.add(1)
+ex. myset ~> {1}
+
+- Useful to **Cast a list to a Set** for unique values
+ex. mylist = [1,1,1]
+ex. set(mylist)
+~> {1}
+
+#### 27. Booleans in Python
+- Operators that allow you to convey **True** or **False** statements
+
+#### 28. I/O w/ basic files in Python
+- NOTE. the following code only works in Jupyter
+ex. %%writefile myfile.txt
+Hello this is a text file
+ex. myfile = open('myfile.txt')
+ex. myfile.read()
+- Then, if myfile.read() again, **''** is returned
+~> b/c the cursor is pointing at the end of the file now
+- Reset the curser to be at the beginning!
+ex. myfile.seek(0)
+ex. contents = myfile.read()
+
+ex. myfile.readlines()
+~> reads *line by line*
+
+- **pwd**: current loc
+
+- **File Locations**
+*Windows*
+ex. myfile = open("C:\\Users\\UserName\\Folder\\test.txt"
+- tip!! double slashes so that Python does not confuse it with \n, \t, and so on.
+<br>
+
+_MacOS_ or _Linux_
+ex. myfile = open("/Users/YourUserName/Folder/myfile.txt")
+
+- don't forget to **close** the file afterwards though!
+ex. myfile.close()
+
+- or you can use **with**
+ex. with open('myfile.txt') as my_new_file:
+        contents = my_new_file.read()
+
+
+- **Write** or **Overwrite**
+: NOTE. in Jupyter, *shift + tab* shows you instructions
+ex. with open('myfile.txt', mode = 'r') as myfile:
+        contents = myfile.read()
+ex. myfile.write('~~~')
+
+- mode = 'r': read only
+= 'w': write only (overwrites or creates new!)
+= 'a': append only
+= 'r+': reading and writing
+= 'w+': writing and reading (overwrites or creates new!)
+
+
+
