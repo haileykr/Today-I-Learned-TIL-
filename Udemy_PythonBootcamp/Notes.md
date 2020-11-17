@@ -310,5 +310,61 @@ ex. myfile.write('~~~')
 = 'r+': reading and writing
 = 'w+': writing and reading (overwrites or creates new!)
 
+#### RESOURCES FOR PRACTICES
+1. **Basic Practice**
+http://codingbat.com/python
+
+2. **More Mathematical (and Harder) Practice**
+https://projecteuler.net/archives
+
+3. **List of Practice Problems**
+http://www.codeabbey.com/index/task_list
+
+4. **A SubReddit Devoted to Daily Practice Problems**
+https://www.reddit.com/r/dailyprogrammer
+
+5. **Very Tricky with very few hints and touch (not for beginners but still interesting!!)**
+www.pythonchallenge.com
+<br>
 
 
+
+## Section 4 -  Python Comparison Operators
+#### 32. Comparison Operators in Python
+ex. 2 == 2 ~> True
+ex. 'hello' == 'bye' ~> False
+- **case-sensitive**!
+ex. 'hello' == 'Hello' ~> False
+ex. 2.0 == 2 ~> True
+ex. 2 != 2.1 ~> True
+<br>
+
+
+#### 33. Chaining Comparison Operators in Python with Logical Operators
+- **and, or, not**
+ex. 1< 2 and 2< 3
+ex. 1 < 2 < 3
+ex. not 1==1 ~> False
+asking for an opposite boolean!
+<br>
+
+## Section 5 - Python Statements
+#### 34. If Elif and Else Statements in python
+- **control flow** - when we want certain codes to execute only when a condition is met
+- Control Flow syntax makes use of colons and indentation (whitespace)
+- if some_condition:
+    #execute some code
+elif some_other_condition:
+    #do something different
+else:
+    #do something else
+<br>
+
+#### 35. For Loops
+- Syntax
+my_iterable = [1,2,3]
+for item_name in my_iterable:
+    print(item_name )
+ex. mystring = 'Hello'
+for letter in mystring:
+    print(letter)
