@@ -368,3 +368,208 @@ for item_name in my_iterable:
 ex. mystring = 'Hello'
 for letter in mystring:
     print(letter)
+<br>
+- **'_'** as a variable name
+ex. for _ in mystring:
+    print(letter)
+
+- for *Tuple*
+ex. tup=(1, 2, 3)
+for item in tup:
+    print(item)
+- for a List of Tuple
+mylist = [(1,2), (3,4), (5,6), (7,8)]
+len(mylist) ~> 4
+ex. for item in mylist:
+    print(item)
+    ~> (1,2)
+    (3,4)
+    (5,6)
+    (7,8)
+
+*Tuple Unpacking*
+ex. for a,b in mylist:
+    print(a)
+    print(b)
+    ~> 1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+
+
+<br>
+
+- For **Dictionaries**
+ex. d = {'k1':1, 'k2':2, 'k3':3}
+for item in d:
+    print(item)
+~> k1
+k2
+k3
+~> only gettinng *KEYS!!*
+
+for item in d.items():
+    print(item)
+~> ('k1', 1)
+('k2', 2)
+('k3', 3)
+~> iterating through items
+
+for key, value in d.items():
+    print(value)
+~> 1
+2
+3
+
+for value in d.values():
+    print(value)
+~> 1
+2
+3
+- Remember again that dictionaries are **unordered**
+<br>
+
+#### 36. While Loops
+- Useful tools with Loops
+- **break, continue, pass**
+1. break
+: Breaks out of the current closest enclosing loop.
+2. continue
+: Goes to the top of the closest enclosing loop.
+3. pass
+: Does nothing at all
+
+ex. x = [1, 2, 3]
+
+for item in x:
+    #comment - placeholder
+    pass
+
+ex. mystring = 'Sammy'
+for letter in mystring:
+    if letter == 'a':
+        continue
+    print(letter)
+
+for letter in mystring:
+    if letter == 'a':
+        break
+    print(letter)
+<br>
+
+#### 37. Useful Operators
+- range()
+ex. for num in range(3):
+        print(num)
+    ~> 0
+    1
+    2
+
+ex. for num in range(1,3):
+        print(num)
+    ~> 1
+    2
+
+ex. for num in range(1,3,2):
+        print(num)
+    ~> 1
+
+ex. list(range(1,3,2)) to make it a List!!
+
+- Enumerate
+ex. index_count=0
+word = 'abcde'
+for letter in word:
+    print(word[index_count])
+    index_count += 1
+
+ex. for item in enumerate(word):
+        print(item)
+    ~> Tuples!
+    (0, 'a')
+    (1, 'b')
+    (2, 'c')
+    (3, 'd')
+    (4, 'e')
+
+ex. for index, letter in enumerate(word):
+        print(letter)
+    ~> a
+    b
+    c
+    d
+    e
+
+- Zip
+ex.mylist1 = [1, 2, 3], 0, -1, -2]
+mylist2 = ['a', 'b', 'c']
+
+for item in zip(mylist1, mylist2):
+    print(item)
+
+~> (1, 'a')
+(2, 'b')
+(3, 'c')
+
+ex. list(zip(mylist1, mylist2))
+~> list of tuples
+
+- Boolean
+ex. 'x' in ['x', 'y', 'z']
+~> True
+
+ex. 'a' in 'apple'
+~> True
+
+ex. 'mykey' in {'mykey': 358}
+~> True
+
+ex. d = {'mykey': 358}
+358 in d.keys()
+~> True
+
+- Min and Max
+ex. mylist = [10,20,30,40,1001]
+ex. max(mylist)
+~> 1001
+
+- Random
+ex. from random import shuffle
+mylist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+shuffle(mylist)
+~> mylist is shuffled!
+
+- Random Integer
+ex. from random import randint
+ex. randint(0, 100)
+
+- Input
+Note. always receives as STRING!
+ex. result = input('Enter a number here: '_)
+
+#### 38. List Comprehension
+- Unique way of quickly creating a List
+ex. mystring = 'hello'
+
+for letter in mystring:
+    mylist.append(letter)
+
+
+ex. mylist = [letter for letter in mystring]
+
+ex. mylist = [num+1 for num in range(0,2 ]
+
+ex. mylist = [x for x in range(0,2) if x%2 ==0]
+
+ex. results = [x if x%2==0 else 'ODD' for x in range(0,2) ]
+
+ex. mylist = [x*y for x in [2,4,6] for y in [1,10,1000] ]
+
+- though READABILITY   first
+<br>
+
+## 6. Methods and Functions
