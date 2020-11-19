@@ -572,4 +572,170 @@ ex. mylist = [x*y for x in [2,4,6] for y in [1,10,1000] ]
 - though READABILITY   first
 <br>
 
-## 6. Methods and Functions
+## 6. Methods and 
+#### 41. Methods and Python Documentation
+- help(function)
+- docs.python.org
+<br>
+
+#### 42. Function
+- functions allow us to create blocks of code that can be easily executed many times, without needing to constantly rewrite the entire block of code
+<br>
+
+#### 43. Def Keyword
+- def name_of_function():
+        ''' //three quotation marks indicate docstring
+        Docstring explains function
+        '''
+        print("Hello")
+- snake casing - all lowercase with underscores
+<br>
+
+#### 44. Basics of Functions
+ex. def say_hello(name='Default'):
+        print(f'Hello {name}')
+ex. say_hello('Jose'), say_hello()
+ex. def add_num(num1, num2):
+        return num1+num2
+<br>
+
+#### 45. Functions with Logics
+- ex. #return true if any number is even inside a list
+<br>
+
+#### 46. Tuple Unpacking
+ex. stock_prices = [('A',200),('G',100),('M',300)]
+ex. def stock_check(price):
+current_max = 0
+stock=''
+
+for a, b in stock_prices:
+    if current_max < b:
+        current_max = 0
+        stock = a
+#return
+return (stock, current_max)
+
+#### 47. Interactions between Functions
+- 'Three Cup Monte' Game
+ex. example = ['', '0', '']
+
+from random import shuffle
+shuffle(example)
+
+def shuffle_list(mylist):
+    shuffle(mylist)
+    return mylist
+
+shuffle_list(example)
+
+def player_guess():
+    guess=''
+    
+    while guess not in ['0','1','2']
+    guess = input("Pick a number: 0, 1, or 2") //because input takes values as strings
+<br>
+
+#### 49. *args and **kwargs in Python
+- *args: arguments
+**kwargs: keyword arguments
+~> a dictionary [of key-value pairs]
+
+ex. def myfunc(*args):
+        //*args is treated as a tuple
+        return sum(args) * 0.05
+    ~>can enter as many arguments as wanted
+
+ex. def myfunc(**kwargs):
+        if 'fruit' in kwargs:
+            print('My fruit of choice is {}'.format(kwargs['fruit']))
+        else:
+            print('no fruit')
+
+    myfunc(fruit='apple')
+    ~> My fruit of choice is apple
+
+    
+ex. def myfunc(*args, **kwargs):
+        print('I would like {} {}'.format(args[0], kwargs['food']))
+    
+    myfunc(10,20,30,veggies = 'celery', food='eggs')
+
+- **EULER PROJECT**
+
+<br>
+
+#### 55. Lambda Expressions, Map, and Filter Functions
+- Lambda expressions: ananymous, one-time-use function!
+
+- map function: built-in
+map(function, iterables)
+ex. def square(qwerty):
+        return qwerty**2
+    my_nums = [1,2,3,4,5]
+    for element in map(square, my_nums):
+        print(element)
+    list(map(square,my_nums))
+
+- filter function: built-in
+ex. def check_odd(qwerty):
+        return qwerty%2 == 0
+    my_nums = [1,2,3,4,5,6]
+    list(filter(check_odd, my_nums))
+    ~> [2,4,6]
+    for n in filter(check_odd,my_nums): print(n)
+
+- lambda function: built-in
+ex. def square(qwerty): return qwerty**2
+~> lambda qwerty: qwerty**2
+ex. list(map( lambda qwerty:qwerty**2,my_nums))
+
+
+<br>
+
+#### 56. Nested Statements and Scope
+- **LEGB RULE FORMAT**
+- 1. Local: Names assigned in any way within a function (def or lambda)and not declared global in that fn
+2. Enclosing function locals: Names in the local scope of any and all enclosing functions (def or lambda), from inner to outer
+3. Global (module): Names assigned at the top-level of a module file, or declared global in a def within the file
+4. Built-in (Python): Names preassigned in the built-in names module: open, range, SyntaxError, ...
+
+ex. name = 'Abe'
+
+def greet():
+    name = 'Sammy' // (a)
+
+    def hello():
+        print('Hello ' + name + '!')
+    hello()
+
+greet()
+:Hello Sammy!
+
+- but with (a) commented out, we get Hello Abe
+
+- ex. x = 10
+def func(x):
+    print(f'X is {x}')
+
+    #Local Reassignment
+    x = 20
+    print(f'I just locally  changed x to {x})
+
+ex. func(x)
+~> x is 10
+I just locally  changed x to 20
+ex. print(X)
+~> 10
+
+- but with
+def func( ):
+    **global x** ~> grabbing the global!
+
+local reassignment will affect the global variable
+
+
+#### 58. Homework
+- Useful Links
+1. string module - (https://stackoverflow.com/questions/16060899/alphabet-range-in-python)[https://stackoverflow.com/questions/16060899/alphabet-range-in-python]
+2. set comparison - (https://medium.com/better-programming/a-visual-guide-to-set-comparisons-in-python-6ab7edb9ec41)[https://medium.com/better-programming/a-visual-guide-to-set-comparisons-in-python-6ab7edb9ec41]
