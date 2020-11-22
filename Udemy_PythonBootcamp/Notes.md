@@ -739,3 +739,172 @@ local reassignment will affect the global variable
 - Useful Links
 1. string module - (https://stackoverflow.com/questions/16060899/alphabet-range-in-python)[https://stackoverflow.com/questions/16060899/alphabet-range-in-python]
 2. set comparison - (https://medium.com/better-programming/a-visual-guide-to-set-comparisons-in-python-6ab7edb9ec41)[https://medium.com/better-programming/a-visual-guide-to-set-comparisons-in-python-6ab7edb9ec41]
+
+
+## 7. Milestone Project 1 - Tic Tac Toe
+#### 62. Validate User Input
+Validating User Input: ex. isdigit()
+1. https://stackoverflow.com/questions/5424716/how-to-check-if-string-input-is-a-number
+2. https://stackoverflow.com/questions/1265665/how-can-i-check-if-a-string-represents-an-int-without-using-try-except
+
+#### 63. Simple Interaction
+1. Display a list
+2. Have a user choose an index position and an input value
+3. Replace value at index position with user's chosen input value
+<br>
+
+#### 64. Actual Tic Tac Toe game!
+- Some rules:
+~ the board should be printed out every time a player makes a move
+~ accept input of the player position & then place a symbol on the board
+~ "numpad" to match numbers to the grid
+7 8 9
+4 5 6
+1 2 3
+~ to clear the screen between moves:
+*from IPython.display import clear_output
+clear_output()*
+~> only works in Jupyter
+~ in other IDE's, consider
+*print('\n'*100)
+
+1. Write a function that can print out a board
+Set up your board as a list, where each index 1-9 corresponds with a number on a number pad
+2. Ask the first player if he/she wants 'X' or 'O'
+3. Write a function that takes in the board list object, a marker ('X'or 'O'), and a desired position (1-9)
+4. Write a function that takes in a board and a mark (X or O) and then checks to see if that mark has won
+5. Write a function that uses the random module to randomly decide which player goes first. 
+Use random.randint()
+6. Write a function which returns a boolean showing whether a space on the board is freely available
+7. Write a function that checks if the board is full (True) and returns a boolean value
+8. Write a function that asks for a player's next position (1-9) and then uses the function from Step 6 ot check if it's a free position. If it is, then return the position for later use.
+9. Write a functino that asks the player if they wanna play again and returns a boolean True if they want to so.
+10. Use the while loops and the functions to complete the program!
+<br>
+
+## 8. Object-Oriented Programming
+#### 68. Object-Oriented Programming - Introduction
+- OOP allows programmers to create their own objects which have methods & attributes
+- Methods act as Functions
+- OOP allows us to create code that is repeatable and organized
+- Objects <-> Class
+
+- Basic Syntax
+class NameOfClass():
+# Note. Class name is capitalized 
+# vs. Function name was lower-case
+#   __init__ allows you to create an instance of the actual object
+    def __init__(self, param1, param2):
+        self.param1 = param1
+        self.param2 = param2
+#   self is passed in to note that this isn't just a function, but is a method connected to the class
+    def some_method(self):
+        # perform some action
+        print(self.param1)
+<br>
+
+#### 69. Attributes and Class Keyword
+ex. mylist =[1, 2, 3]
+ex. class Dog()):
+        def __init__(self, breed, name, spots):
+
+            # Attributes
+            ## Convention to use the same name for All
+            self.breed = breed
+
+            self.name = name
+
+            # Expect boolean T/F
+            self.spots = spots
+
+
+<br>
+#### 70. OOP - Class Object Attributes and Methods
+- class Dog():
+    ## CLASS OBJECT ATTRIBUTE
+    ## SAME FOR ANY INSTANCE OF A CLASS
+    ## NO SELF
+    species = 'mammal'
+
+    def __init__(self, breed = 'Default!', name):
+        self.breed = breed
+        self.name = name
+
+    #OPERATIONS / ACTIONS -- METHODS
+    def bark(self, number):
+        print("WOOF! My name is {} and the number is {}".format(self.name, number))
+        
+        
+ex. my_sample = Dog(breed='Lab')
+ex. type(my_sample) ~> __main__.Dog
+
+ex. my_sample.breed ~> 'Lab'
+
+
+
+ex. class Circle():
+        pi = 3.14
+
+        def __init__(self, radius = 1):
+            self.radius = radius
+            self.area = radius * radius * Circle.pi
+        
+        def get_circumference(self):
+            return self.radius * self.pi * 2
+
+        
+<br>
+
+#### 71. Inheritance and Polymorphism
+- Inheritance: a way to make a new class using a class that is already defined
+ex. Base Class
+class Animal():
+    def __init__(self):
+        print("ANIMAL CREATED")
+    
+    def who_am_i(self):
+        print("I am an animal")
+    
+    def drink_water(self):
+        print("I am drinking water")
+    
+
+
+ex. #Derived Class
+class Dog(Animal):
+    def __init__(self):
+        Animal.__init__(self)
+        print("Dog Created")
+    
+    # to override
+    def who_am_i(self):
+        print("I am doggy!")
+
+
+- Polymorphism
+: different object classes sharing the same method name
+ex. class Dog():
+        def __init__(self, name):
+            self.name = name
+        def speak(self):
+            return self.name + "says woof!"
+
+ex. class Cat():
+        def __init__(self, name):
+            self.name = name
+        def speak(self):
+            return self.name + "says meow!"
+            
+ex. niko = Dog("niko")
+    felix = Cat("felix")
+    print(niko.speak())
+    print(felix.speak())
+    
+
+ex. for pet in [niko, felix]:
+        print(type(pet))
+        print(type(pet.speak()))
+    ~> <class '__main__.Dog'>
+    ~> <class 'str'>
+    ~> <class '__main__.Cat'>
+    ~> <class 'str'>
