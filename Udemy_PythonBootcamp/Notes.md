@@ -908,3 +908,72 @@ ex. for pet in [niko, felix]:
     ~> <class 'str'>
     ~> <class '__main__.Cat'>
     ~> <class 'str'>
+
+
+
+- Abstract class: is not expected to be made of an instance
+: only E as a base class
+ex. class Animal():
+        def __init__(self, name):
+            self.name = name
+        
+        def speak(self): 
+            raise NotImplementedError("Subclass must implement this abstract method")
+        ~> when instance is made of Animal and speak() is called, return error
+
+    class Dog(Animal):
+        def speak(self):
+            return self.name + "says woof"
+
+<br>
+
+
+#### 72. OOP - Special (Magic / Dunder) Method
+- allows us to use some built-in funcitons
+ex. len, print
+- Special i.e. Magic i.e. Dunder Methods
+ex. class Book():
+      def __init__(self, title, author, pages):
+        self.title = title
+        self.author = author
+        self.pages = pages
+      def __str__(self):
+        return f"{self.title} by {self.author}"
+      ~> made the "string representation function"
+
+      def __len__(self):
+        return self.pages
+    
+      def __del__(self):
+
+        print("A book object has been deleted")
+
+ex. b = Book('Python rocks', 'Jose', 200)
+ex. print(b)
+    ~> asks the string representation of b
+ex. del b
+
+<br>
+
+
+#### 72. Challenge Example
+ex. Account function
+ex. class Account:
+    
+        def __init__(self, owner, balance):
+            self.owner = owner
+            self.balance = balance
+        
+        def __str__(self):
+            return f"Account owner: {self.owner}\nAccount balance: ${self.balance}"
+        
+        def deposit(self, value):
+            self.balance += value
+            print(self)
+        
+        def withdraw(self, value):
+            if value > balance:
+                print("Not enough balance)
+            else:
+                self.balance -= value
+                print(self)
