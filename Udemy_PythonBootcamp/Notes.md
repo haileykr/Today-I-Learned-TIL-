@@ -977,3 +977,289 @@ ex. class Account:
             else:
                 self.balance -= value
                 print(self)
+
+<br>
+
+## 9. Modules and Packages
+
+#### 77. Pip Install AND PyPi
+- Using PyPi with pip install
+: PyPi is a repository for open-source third-party Python packages
+: similar to RubyGems in the Ruby world, PHP's Packagist, CPAN for Perl, and NPM for Node.js
+- So far we've only used the standard library
+- "pip install" at CLI to install open-sourced packages on 
+- By installing Python from python.org or through the Anaconda distribution, you also installed **pip**
+- **pip** is a simple way to download packages at your command line, directly from the PyPi repository
+
+- how to install the external packages
+: Windows Users ~ Command Prompt
+: MacOS / Linux Users ~ Terminal
+
+ex. pip install requests 
+ex. pip install colorama
+ex. python
+ex. from colorama import init
+ex. init()
+ex. from colorama import Fore
+ex. print(Fore.GREEN + "qwerty")
+ex. quit()
+
+
+- ex. Google "Python Package for Excel"
+ex. python-excel.org
+
+<br>
+
+#### 78. Modules AND Packages
+- How to create our own modules and packages?
+- Modules are just .py scripts that you call in another .py script
+- Packages are a collection of modules
+- Jupyter cannot be used here
+- In a program, a module is called in!
+  ex. from mymodule import my_func
+        my_func()
+    
+- New folder called MyMainPackage, and SubPackage inside it
+- in order for the computer to know that these are packages not just regular folders, we have to have a file titled "__init__.py" in both of them
+
+- "some_main_script.py" in the main package, and "mysubscript.py" in the SubPackage
+
+- To import a package,
+"from MyMainPackage import some_main_script"
+"from MyMainPackage.SubPackage import mysubscript"
+
+<br>
+
+#### 79. __name__ and "__main__"
+- An often confusing part of Python is a mysterious line of code.
+ex. if __name__ == "__main__"
+- Sometimes, when you are importing from a module, you'd like to know whether a module function is being used as an import, or if you are using the original .py file of that module.
+- ex. one.py
+ex. two.py
+
+- when a python script is run, all the commands @indentation level 0 are called
+- __name__: built-in variable
+- back of the hood, when
+python one.py
+a python script is directly run,
+this built-in variable is assigned "__main__"
+~> __name__ = "__main__"
+
+- thus, when a python script is directly run  it is true that
+__name__ == "__main__"
+vs. being imported
+
+- cf. one.py
+
+- it is a very common structure
+~> to define a bunch of functions then at the bottom under "if __name__ == '__main__': " run the functions in order
+
+<br>
+
+## 10. Error Handling
+#### 80. Errors and Exception Handling
+- Currently if there is any type of error in the code, the entire script will stop.
+- We can use Error Handling to let the script continue with other code, even if there is an error.
+- Three Keywords:
+1. **try**: a block of code to be attempted (may lead to an error)
+2. **except**: block of code will execute in case there is an error in **try** block
+3. **finally**: a final block of code to be executed, regardless of an error
+
+- ex. try:
+        result = 10 + 10
+      except:
+        print("Hey it looks like you aren't adding numbers")
+      else:
+        print('Add went well!')
+        print(result)
+
+
+- ex. try:
+        f = open('testfile', 'w')
+        f.write("Write a test line")
+    
+      except TypeError:
+        print("There was a type error")
+    
+      except OSError:
+        print("Hey you have OSError")
+      finally:
+        print("always run")
+
+
+- ex. def ask_for_int():
+        while True:
+            try:
+                result = int(input("Enter a number"))
+            except:
+                print("Please enter number")
+                continue
+            else:
+                print("Yes thank you")
+                break
+            finally:
+                print('end of try/except/finally example')
+<br>
+
+#### 84. Pylint Overview
+- there are severl testing tools and we will focus on two:
+1. pylint ~> a library that looks at your code and reports possible issues!
+2. unittest ~> built-in library will allow to test your own programs and check you are getting desired outputs
+- pylint myexample.py -r y (report yes)
+
+- how to use pylint to check your code for possible errors and styling
+- Python as a set of style convention rules known as PEP 8
+- afterwards we will explore how to test our code with the built-in unittest library
+- for this lecture we will be creating .py scripts in sublime
+- you can still use the associated notebook for code using the %%writefile jupyter command!
+
+- in cmd, "pip install pylint"
+
+- in text editor
+ex. simple1.py
+
+- **pylint**: rates your code, useful when working with others to keep up to the recommended coding formats&styles
+
+<br>
+
+#### 85. Running Tests with the Unittest Library
+
+- when writing a test function,
+it is always the best to go from simple to complex as the functions will run in order
+
+- ex. cap.py
+      def cap_text(text):
+        return text.capitalize()
+
+- ex. import unittest
+      import cap #just created
+
+      class TestCap(unittest.TestCase): #inheriting
+        def test_one_word(self):
+            text = 'python'
+            result =  cap.cap_text(text)
+            self.assertEqual(result,'Python')
+        def test_multiple_words(self):
+            text = 'monty python'
+            result = cap.cap_text(text)
+            self.assertEqual(result,'Monty python')
+    
+      if __name__=='__main__':
+        unittest.main()
+<br>
+
+## 11. Milestone Project-2
+#### 86. Warmup Project - "War"Card Game
+- To contruct this game these are required:
+1. Card Class
+2. Deck Class
+3. Player Class
+4. Game Logic
+- the "war" process can be repeted in this case of back to back ties
+
+<br>
+
+#### 87. Card Class
+# CARD
+# SUIT, RANK, VALUE
+class Card:
+    def __init__(self,suit,rank):
+        self.suit = suit
+        self.rank = rank
+        self.value = values[rank]
+        
+    def __str__(self):
+        return self.rank + "" of " self.suit
+
+- to compare values in string, we will introduce a dictionary containing those
+~> values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':11, 'Queen':12, 'King':13,'Ace':14}
+~> put it at the top
+
+ex. two_hearts = Card("Hearts","Two")
+values[two_hearts.rank]
+~>2 
+
+- also include
+these:
+import random
+suits = ('Hearts','Diamonds','Spades','Clubs')
+ranks = ('Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','Queen','King','Ace')
+
+<br>
+
+
+#### 88. Deck Class
+1. Instantiate a new deck
+~> Create all 52 Card objects
+~> Hold as a list of Card objects
+2. Shuffle a Deck through a method call
+~> Random library shuffle() function
+3. Deal cards from the Deck object
+~>Pop method from cards list
+
+- we will see that the Deck class has a list of Card objects
+- This means that the Deck class will return Card class object instances, not just normal python data types
+
+- ex. class Deck:
+        def __init__(self):
+            
+            self.all_cards = []
+            
+            for suit in suits:
+                for rank in ranks:
+                    #Create the Card Object
+
+                    created_card = Card(suit,rank)
+                    self.all_cards.append(created_card)
+        def shuffle(self):
+            random.shuffle(self.all_cards)
+            # shuffle method of the built-in random module
+            # from random import shuffle
+            then just call shuffle
+            is also possible
+            
+            
+        def deal_one(self):
+            return self.all_cards.pop()
+                    
+- ex. new_deck = Deck()
+  ex. for card_object in new_deck.all_cards:
+        print(card_object)
+
+
+<br>
+
+#### 89. Player Class
+~ this class to be used to hold a player's current cards list
+~ a player should be able to add or remove cards from their "hand"
+~ able to add a single card or multiple cards
+~ Translating a Deck / Hand of cards with top and bottom to a Python list?
+
+~ Player Class will have a self.all_cards list
+~ A player "plays" a card from the top
+  i.e.  player_cards.pop(0)
+~ players will add card to the "bottom"
+  i.e. card.append("new_card")
+~ player adding multiple card using extend()
+  i.e. new_cards = ["X","Z"]
+  cards.extend(new_cards)
+  ~> extend() merges two lists
+  ~> don't use append here! it will mess up the list (["B","C", ["X","Z"]])
+
+
+<br>
+
+#### 90. Game Logic - Part1
+~ there are lots of ways to implement the game logic
+~ check out the notebook file
+~ there r 3 situations:
+1. Player One > Player Two
+2. Player One < Player Two
+3. Player One == Player Two
+
+~ the way we will write this is with an if / elif / else within a while loop that assumes that a "war" has happened
+
+~ at_war = False if the players resolve the match-up on the first drawn card, otherwise we will add card to the current cards on the table
+
+
+            
