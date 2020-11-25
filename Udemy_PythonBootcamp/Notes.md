@@ -1262,4 +1262,25 @@ ranks = ('Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','
 ~ at_war = False if the players resolve the match-up on the first drawn card, otherwise we will add card to the current cards on the table
 
 
+<br>
+
+#### 93. Milestone Project 2 Overview
+- Black Jack Game
+- For our version, we will have a computer dealer and a human player
+1. Player places a bet
+2. - Dealer starts with 1 card face up and 1 card face down
+- Player starts with 2 cards face up
+4. - Player goes first in game play.
+- Player goal: Get closer to 21 than the dealer does
+- Possible Actions: (1) HIT (Receive another card from DECK)
+(2) STAY (Stop Receiving Cards)
+- We will ignore actions like Insurance, Split, or Double Down
+5. After PLAYER TURN, (1) if player is under 21, dealer then hits until they either beat the player or the dealer busts
+(2) if player keeps hitting goes over 21,they bust and lost the bet! The game is over then and dealer collects the money
+- Special Rules:
+(1) Face Cards (Jack, Queen, King) count as a value of 10
+(2) Aces can count as either 1 or 11 whichever value is preferable to the player
+<br>
+
+
             
