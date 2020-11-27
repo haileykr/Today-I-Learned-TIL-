@@ -1282,5 +1282,626 @@ ranks = ('Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','
 (2) Aces can count as either 1 or 11 whichever value is preferable to the player
 <br>
 
+## 12. Python Decorators 
+#### 98. Decorator Overview
+- ex. Imagine you created a function:
+def simple_func():
+    # Do simple stuff
+    # return something
+- ex. Now you want to add some new capabilities to the function:
+def simple_func():
+    # Want to do more stuff!
+    # Do simple stuff, return something
+- you have now two options:(1)Add that extra code (functionality) to your old function
+(2) Create a brand new function that contains the old code, and then add new code to that
+
+- Python has __decorators__that allow you to tack on extra functionality to an already  _existing_ function
+
+- They use the @ operator and are then placed on top of the original function
+
+ex. @some_decorator
+def simple_func():
+    # Do simple stuff
+    return something
+
+- Function inside a function
+ex. def hello(name='Jose'):
+    print('The hello() function has been executed!')
+    
+        def greet():
+            return '\t This is the greet() func inside hello!'
+        
+    return greet
+~> we will use this concept as a building block for decorators
+
+- Having a function as an argument
+~> another building block!
+
+ex. def hello():
+        return 'Hello, World!'
+    
+    def other(some_other_func):
+        print('Other code runs here!')
+        print(some_other_func())
+
+
+    other(hello)
+
+
+- Now to decorator...
+ex. def new_decorator(original_func):
+        def wrap func():
+            print('Some extra code, before the original function!')
+
+            original_func()
+
+            print('Some extra code, after the original function!')
+        
+        return wrap_func
+
+
+ex. def needing_decorator():
+        print('wanna be decorated!')
+    
+ex. decorated_func = new_decorator(needing_decorator)
+    decorated_func()
+
+OR
+ex. @new_decorator
+    def needing_decorator():
+        print('wanna be decorated!')
+
+=> THUS, @new_decorator is a switch to implement the decorator function or not!! (leave it there or comment it)
+
+<br>
+
+#### 99. Decorators Homework
+- **FLASK** : web development framework with Python
+~> uses decorators a lot
+- check out their website
+- check out 'view decorator'
+
+- **DJANGO** : another popular web development FW
+
+<br>
+
+
+
+## 13. Python Generators
+#### 100. Generators with Python
+- Generator functions
+: allow us to write a function that can send back a value and then later resume to pick up where it left off 
+: this type of function is a generator in Python, allowing us to generate a sequence of values over time
+: the main difference in syntax will be the use of a yield statement
+: when a generator function's compiled, they become an object that supports an iteration protocol
+: that means when they are called in your code, they don't actually return a value and then exit
+: generator functions will automatically suspend and resume their execution and state around the last point of value generation
+: the advantage is that instead of having to compute an entire series of values upfront, the generator computes one value and waits until the next value is calledfor.
+: ex. range() function ~> doesn't produce an list in memory for all the values from start to stop. instead, it just keeps track of the last number and the step size, to provide a list of #'s.
+~> if a user did need the list, they need to transform the generator to a list by list(range(0,10))
+~> let's explore how to create our own generators!
+
+: **thus, advantage with generators is that you don't waste the memory as much by 'generating' numbers one by one, not storing all of them at the same time**
+
+- ex. def create_cubes(n):
+        result = []
+        for x in range(n):
+            yield x**3
+
+- ex. def simple_gen():
+        for x in range(3):
+            yield x
+    
+      for number in simple_gen():
+        print(number)
+    
+      g = simple_gen()
+      print(next(g))
+
+
+- ex. for letter in s:
+            print(letter)
+
+      but next(s) does not work
+    
+      instead, s_iter = iter(s)
+      next(s_iter) works cuz iter function makes a variable an iterable item
+
+- **Generator Comprehension!!**
+ex. my_list = [1,2,3,4,5]
+
+gencomp = (item for item in my_list if item >3)
+
+for item in gencomp:
+    print(item)
+
+~> 4, 5
+vs. listcomp
+= [~]
+
+<br>
+
+## 14. Advanced Python Modules
+#### 103. Introduction to Advanced Python Modules
+- Modules Covered:
+1. Collections
+2. OS module and Datetime
+3. Math and Random
+4. Python Debugger
+5. Timeit
+6. Regular Expressions
+7. Unzipping and Zipping Modules
+
+<br>
+
+#### 104. Python Collections Module
+- built-in, container of special data types
+- ex. **Counter Class**
+ex. **from collections import Counter**
+ex. mylist = [1,1,1,2,2,3,3,3,3,3]
+ex. Counter(mylist) ~> Counter({1:5, 2:4 ,3:7})
+ex. Counter('Mississippi')
+- ex. **Default Dictionary**
+: when a WRONG key is called, it will automaticallya assign a default value instead of yielding a KeyError
+
+ex. **from collections import defaultdict**
+ex. d = defaultdict(lambda: 0) # 0 is the default
+ex. d['correct'] = 100, works as a normal dictionary
+ex. d['WRONG KEY'] ~> returns the value of 0 
+
+- ex. **Named Tuple**
+mytuple = (10, 20, 30)
+mytuple[0] ~> 10
+~> Named Tuple will have a "NAME" indices as well
+
+ex. **from collections import namedtuple**
+ex. Dog = namedtuple(#typename, #fieldname as a list)
+ex. Dog = namedtuple('Dog', ['age','breed','name'])
+ex. sammy = Dog(age=5, breed='Husky', name='Sam')
+ex. type(sammy) ~> __main__.Dog
+ex. sammy ~> Dog(age=5, breed='Husky', name='Sam')
+ex. sammy.age ~> 5
+ex. sammy.breed ~> 'Huskey'
+ex. sammy.name ~> 'Sam'
+ex. sammy[0] ~> 5
+
+<br>
+
+#### 105. Opening and Reading Files and Folders (Python OS Module)
+- **Python's OS Module and shutil**
+- ex. f = open('practice.txt', 'w+')
+f.write('This is a test string')
+f.close()
+
+- **import os**
+ex. os.getcwd()
+~> reports back the current working directory
+ex. os.listdir()
+ex. os.listdir('C:\\Users')
+
+- **import shutil**
+: move files
+ex. shutil.move(#src, #dst)
+ex. shutil.move('practice.txt','C:\\Users)
+
+- deleting files: suggesting **send2trash**module for reversability
+- **pip install send2trash**
+- ex. **import send2trash**
+ex.  send2trash.send2trash('practice.txt')  
+
+- **os.walk()**
+~> make tree
+ex. for folder, sub_folders, files in os.walk(file_path):
+        print(f"Currently looking at {folder}\n")
+        print('The subfolders are: ')
+        for sub_fold in sub_folders:
+            print(f'Subfolder: {sub_fold}')
+        
+        print('\n')
+        print("the files are: ")
+        for f in files:
+            print(f"File: {f}")
+        print('\n')
+
+<br>
+
+#### 106. Python Datetime Module
+- **import datetime**
+ex. mytime = datetime.time(2,20) #2am, 20 minutes past 2am
+ex. mytime.minute ~> 20
+ex. print(mytime) ~> 02:20:00
+
+ex. today = datetime.date.today()
+ex. today.ctime()
+
+
+- **from datetime import datetime**
+ex. datetime(2021, 10, 3, 14, 20, 1)
+ex. mydatetime= mydatetime.replace(year=2020)
+
+- # DATE
+**from dateimte import date**
+ex. date1 = date(2021, 11, 3)
+ex. date2 = date(2020, 11, 3
+
+ex. result= date1 - date2
+~> \datetime.timedelta(365),result.day
+ex. datetime1 = datetime(2021, 11, 3, 22, 0)
+ex. datetime2 = dateimte(2020, 11, 3, 12, 0)
+
+ex. result = datetime1 - datetime2
+~> datetime.timedelta(365,36000)
+
+<br>
+
+#### 107. Python Math and Random Modules
+- import math
+ex. help(math)
+cf. round(4.5) ~> 4,
+    round(5.5) ~> 6
+ex. math.pi
+    math.e
+- Note. **NUMPY** ~> geared towards arithmetic calculations
+ex. math.log(math.e)
+ex. math.log(100,10)
+
+- **import random**
+ex. random.randint(0,100)
+
+ex. random.seed(42)
+    random.randint(0,100)
+    ~> *seed* lets you get the  same sequence of random numbers
+    
+ex. mylist = list(range(0,20))
+    random.choice(mylist)
+    
+    # SAMPLE WITH REPLACEMENT
+    random.choices(population=mylist, k=10)
+    ~> randomly picking up 10 numbers including duplicates
+
+    # SAMPLE WITHOUT REPLACEMENT!
+    random.sample(population=mylist, k=10)
+
+    random.shuffle(mylist)
+
+ex. random.uniform(a=0, b=100)
+    ~> uniform distribution (Same likelyhood among numbers)
+ex. random.gauss(mu=0, sigma=1)
+    ~> Gaussian or Normal distribution
+    ~> mean and std dev
+
+<br>
+
+#### 108. Python Debugger
+- Python comes with a built-in debugger tool that allows you to interactively explore variables within mid-operation of your Python code!
+~> can use it instead of print() and finding errors manually
+
+- **import pdb** #Python debugger
+ex. x = [1, 2, 3]
+    y = 2
+    z = 3
+
+    result1 = y + z
+    
+    pdb.set_trace()
+
+    result2 = y + x
+
+    ~> can pause and explore the codes
+
+<br>
+
+#### 109. Python Regular Expressions Part 1
+- ex. "dog" in "my dog is great" ~> True
+  ~>while the punctuation, spellings, and lower/uppercases and whatnot have to be exact!
+- On the other hand,
+  Regular Expressions (regex) allow us to search for general patterns in text data!
+  ex. user@email.com
+        ~> pattern "text" + "@" + "text"+ ".com"
+
+- The **re** libary allows us to create specialized pattern strings and then search for matches within text
+
+- ex. Phone Number:
+    (555) - 555 - 5555
+  ex. Regex Pattern:
+    r"(\d\d\d) - \d\d\d - \d\d\d\d
+    r"(\d{3}) - \d{3} - \d{4}
+
+- ex. **import re**
+    text = "my phone once, my phone twice"
+    pattern = 'phone'
+
+  ex. match = re.search(pattern, text)
+    ~> returns back the first match
+  ex. matches = re.findall(pattern, text)
+    ~> returns back all the matches
+  ex. for match in re.finditer(pattern,text):
+        print(match.span())
+        print("found")
+
+<br>
+
+#### 110. Python Regular Expressions Part 2
+- Character Identifiers:
+: Character: Description
+: \d : A digit
+: \w : Alphanumeric
+: \s : white space
+: \D : a non-digit
+: \W : Non-alphanumeric
+: \S : non-white space
+
+- Quantifiers:
+: Character : Description
+: + : Occurs one or more times
+: {3} : occurs exactly 3 times
+: {2, 4} : occurs 2 to 4 times
+: {3,} : occurs 3 or more
+: * : occurs zero or more times
+: ? : Once or none
+ex. text = "My phone number is 408-555-1234'
+ex. phone = re.search(r'\d{3}-\d{3}-\d{4}', text)
+ex. phone.group()
+    ~> '408-555-7777'
+
+- *compile* function
+: compiles together different regular expression pattern codes
+ex. phone_pattern = re.compile (r'(\d{3})-(\d{3})-(\d{4})')
+~> parentheses mean that patterns are compiled
+
+ex. results = re.search(phone_pattern, text)
+ex. results.group()
+    ~> '408-555-7777'
+    results.group(1) ~>'408'
+
+<br>
+
+#### 111. Python Regular Expressions Part 3
+- **or** operator
+ex. re.search(r'cat|dog', 'The cat is here')
+- **wildcard** operator
+ex. re.findall(r'.at', 'The cat in the hat sat there')
+ex. r'^\d' : starts with a digit
+ex. pattern = r'[^\d]+': excludes number
+~> used a lot to remove punctuations
+ex. test_phrase = 'This is a string! How can I remove punctuations?'
+ex. re.findall(r'[^!?]+', test_phrase)
+~> ['This is a string', 'How can I remove punctuations']
+ex. re.search(r'ca(tfish|rbonated)', text)
+
+<br>
+
+#### 112. Timing Your Python Code
+- For efficiency testing, timing might be useful!
+1. Simply tracking time elapsed
+2. Using the timeit module
+3. Special *%%timeit* "magic" for Jupyter Notebooks
+
+~ ex. def func_one(n):
+            return [str(num) for num in range(n)]
+      def func_two(n):
+            return list(map(str, range(n)))
+            
+1. ex.
+    # CURRENT TIME BEFORE
+    start_time = time.time()
+    # RUN CODE
+    result = fun_one(10000)
+    # CURRENT TIME AFTER RUNNING CODE
+    end_time = time.time()
+    # ELAPSED TIME
+    elapsed_time = end_time - start_time
+    print(elapsed_time)
+
+2. ex.
+    import timeit
+    timeit.timeit(#statement, setup, number, etc)
+    ~> stmt (statement): to be called over and over again
+    ~> setup: called once for the statement to run multiple times
+
+ex. stmt = ''' #triple-quote for multi-line strings
+    func_one(100)
+    '''
+    setup = '''
+    def func_one(n):
+        return [str(num) for num in range(n)]
+    '''
+
+    timeit.timeit(stmt, setup, number=1000000)
+
+    AND COMPARE WITH THE ONES FOR FUNC_TWO
+    
+3. in Jupyter Notebook
+    only,
+    ex. %%timeit
+    func_one(100)
+
+    ex. %%timeit
+    func_two(100)
+
+<br>
+
+#### 113. Zipping and Unzipping files with Python
+- ex. f = open('fileone.txt', 'w+')
+f.write('ONE FILE')
+f.close()
+
+ex. f = open('filetwo.txt', 'w+')
+f.write('TWO FILE')
+f.close()
+
+ex. **import zipfile** 
+# Zipping
+comp_file = zipfile.ZipFile('comp_file.zip','w') # Create the file
+comp_file.write('fileone.txt',compress_type=zipfile.ZIP_DEFLATED)
+comp_file.write('filetwo.txt',compress_type=zipfile.ZIP_DEFLATED)
+comp_file.close()
+
+ex.
+# Unzipping
+zip_obj = zipfile.ZipFile('comp_file.zip', 'r')
+zip_obj.extractall('extracted_content')
+pwd
+
+- when zipping several at once, **shutil** is better
+ex. import shutil
+dir_to_zip = 'C:\\Users\\.....'
+output_filename = 'example'
+shutil.make_archive(output_filename,'zip',dir_to_zip)
+
+ex. shutil.unpack_archive('example.zip','final_unzip','zip')
+
+<br>
+
+
+#### 115. Advanced Python Module Puzzle - Solution
+ex. import shutil
+    shutil.unpack_archive('unzip_me_for_instructions.zip','','zip)
+
+    with open('extracted_content/Instructions.txt') as f:
+        print(f.read())
+    
+ex. import re
+    pattern = r'(\d{3})-(\d{3})-(\d{4})
+
+ex. def search(file,pattern = r'(\d{3})-(\d{3})-(\d{4})):
+        f = open(file, 'r')
+        text = f.read()
+        
+        if re.search(pattern, text):
+            return re.search(pattern, text)
+        else:
+            return ''
+
+ex. import os
+    results = []
+    for folders, sub_folders, files in os.walk(os.getcwd()+'\\extracted_content'):
+        for f in files:
+            full_path = folder + '\\' + 
+            results.append(search(full_path))
+    
+ex. for r in results:
+        if  r  != '':
+            print(r.group())
+
+<br>
+
+## 15. Web Scraping with Python
+#### 116. Web Scraping Introduction Using Python
+- **Web Scraping** is a general term  for techniques involving automating the gathering of data from a website
+
+~ we first need to understand the basic concept of how a website works
+~ when a browser loads a website, the user gets to see what is known as the "front-end" of the website.
+
+~ Many things to understand first:
+1. Rules of Web Scraping
+2. Limitations of Web Scraping
+3. Basic HTML and CSS
+
+~>
+1. **Rules of Web Scraping!**
+: Always try to get permission before scraping
+: If you make too many scraping attempts or requests your IP Address could get blocked
+: Some sites automatically block scraping software
+
+2. **Limitations of Web Scraping!**
+: In general every website is unique which means that every web scraping script is unique
+: A slight change or update to a website may completely break your web scraping script
+
+3. **Basics of Front-End**
+: Main front end components of a website =HTML+CSS+JS
+: **HTML** is used to create the basic structure and content of a webpage
+: **CSS** is used for the design and style of a web page, where elements are placed and how it looks
+: **JavaScript** is used to define the interactive elements of a webpage
+
+~ Python can view these HTML and CSS elements programmatically, and extract info from the website
+~ Let's explore HTML and CSS in more depths.
+
+~ quick overview:
+: **HTML** contains the information
+: **CSS** contains the styling
+: We can use **HTML** and **CSS** tags to locate specific info
+
+~ To web scrape with Python,
+: **BeautifulSoup** and **requests libraris** can be used
+: these are external
+: directly at your command line for installation...
+~> pip install requests
+~> pip install lxml
+~> pip install bs4
+: or for Anaconda distributions,
+: use conda install instead of pip install
+
+<br>
+
+#### 117. Web Scraping Libraries
+~ Install the necessary libraries
+~ Explore how to inspect elements and view source of a webpage
+~ Chrome is recommended
+
+~ import requests
+    import bs4
+
+~ On Chrome,
+    right click- View page source 
+    ~> however, usually this contains TOO MUCH info and it's hard to scrape info from here
+    ~> instead, we want to narrow down
+    ~> ex. want to get the image
+    ~> right click on the image and 'inspect'
+
+<br>
+
+#### 118. Python Web Scraping - Grabbing A Title
+- ex. import requests
+ex. result = requests.get("http://www.example.com")
+ex. result.text
+
+ex. import bs4
+ex. soup = bs4.BeautifulSoup(result.text, "lxml")
+ex. soup
+
+ex. soup.select('title')
+ex. soup.select('title')[0].getText()
+
+<br>
+
+#### 119. Python Web Scraping - Class
+- A big part of web scraping with BeautifulSoup is to figure out what string syntax to pass into the soup.select() method.
+- ex.
+: soup.select('div') ~> all with 'div' tag
+: soup.select('#some_id') ~> elements containing id = 'some_id'
+: soup.select('.some_class') ~> elements containing 'some_class'
+: soup.select('div span') ~> any elements named span within a div element
+: soup.select('div>span') ~> any elements named span directly within a div element, with nothing in between 
+
+ex. res = requests.get('https://en.wikipedia.org/wiki/Grace_Hopper)
+ex. soup = bs4.BeautifulSoup(res.text,"lxml")
+ex. soup.select('.toctext')
+
+
+<br>
+
+
+#### 120. Python Web Scraping - Image
+- images on a website typ. have their own URL link (ending in .jpg or .png)
+- Beautiful Soup can scan a page, locate the <img> tags and grab the URL's
+- then we can downlaod the URL's as images and write them to the computer
+- Note: always check the copyright permission
+
+    
+- ex. import requests
+      import bs4
+ex. source = requests.get("https://en.wikipedia.org/wiki/Arduino")
+ex. suppi = bs4.BeautifulSoup(source.text,"lxml")
+ex. suppi.select('.thumbinner img')
+ex. comp = suppi.select('.thuminner img')[0]
+ex. comp['src']
+~> copy the URL
+ex. link_image =   requests.get(URL)
+ex. f = open('Wiki_imagE.jpg','wb') #wb ~> write binary
+ex. f.write(link_image.content)
+ex. f.close()
+
+
 
             
