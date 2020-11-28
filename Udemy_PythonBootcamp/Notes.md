@@ -1878,6 +1878,12 @@ ex. res = requests.get('https://en.wikipedia.org/wiki/Grace_Hopper)
 ex. soup = bs4.BeautifulSoup(res.text,"lxml")
 ex. soup.select('.toctext')
 
+ex. first_item = soup.select('.toctext')[0]
+ex. first_item.text
+
+ex. for item in soup.select('.toctext'):
+        print(item.text)
+
 
 <br>
 
@@ -1897,11 +1903,215 @@ ex. suppi.select('.thumbinner img')
 ex. comp = suppi.select('.thuminner img')[0]
 ex. comp['src']
 ~> copy the URL
-ex. link_image =   requests.get(URL)
+ex. link_image =   requests.get(URL) while URL has to include https:// at the beginning
 ex. f = open('Wiki_imagE.jpg','wb') #wb ~> write binary
 ex. f.write(link_image.content)
 ex. f.close()
 
+<br>
 
+#### 121. Python Web Scraping - Book Examples Part 1
+- Grabbing info from multiple pages
+- We will use a site specifically designed to practice web scraping: *www.toscrape.com*
+
+- *#GOAL: Get Title of Every Book with a 2-Star Rating
+
+ex. import requests
+    import bs4
+    
+    base_url = "http://books.toscrape.com/catalogue/page-{}.html"
+
+    res = requests.get"(base_url.format(1))
+    soup = bs4.BeautifulSoup(res.text,"lxml")
+    products = soup.select(".product_pod")
+
+    example = products[0]
+
+- Then there are tons of ways to complete the job. Out of these, to find the books with two-star rating,
+1. Quick and Dirty Way
+
+ex. 'star-rating Two' in str(example)
+
+2. Using BS4 method
+
+ex. example.select(".star-rating.Three")
+~> note . instead of space
+
+ex. example. select('a')[1]['title']
+~> 'A Light in the Attic'
+
+ex. # We can check if something is 2 starts (either by string call in, or example.select)
+ex. # example.select('a')[1]['title'] to grab the book title
+
+ex. import requests
+ex. import rs4
+
+ex. base_url = "http://books.toscrape.com/catalogue/page-{}.html"
+ex. two_star_titles = []
+
+ex. for i in range(1,51):
+        scrape_url = base_url.format(i)
+        res = requests.get(scrape_url)
+
+        soup = bs4.BeautifulSoup(res.text,"lxml")
+        books = soup.select(".product_pod")
+
+        for book in books:
+            if len(books.select('.star-rating.Two'))!= 0:
+                title = book.select('a')[1] ['title']
+                
+                two_star_titles.append(title)
+
+
+
+<br>
+
+#### 125. Python Web Scraping - Exercise!
+
+- Note that there are MANY ways to complete the jobs! And these are My Ways...
+
+    <!-- TASK: Import any libraries you think you'll need to scrape a website -->
+    import requests
+    import bs4
+
+
+    <!-- TASK: Use reqeusts library and BeautifulSoup to connect to https://quotes.toscrape.com/ and get the HTML text from the homepage.
+     -->
+    res = requests.get("http://quotes.toscrape.com/")
+    soup = bs4.BeautifulSoup(res.text,"lxml")
+
+    <!-- TASK: Get the names of all the authors on the first page -->
+    authors = soup.select('.author')
+    author_firstpage = set()
+
+    for i in range(len(authors)):
+        author_firstpage.add(authors[i].text)
+
+    
+    <!-- TASK: Create a list of all the quotes on the first page -->
+    quotes = soup.select('.text')
+    quote_firstpage = []
+
+    <!-- TASK: Create a list of all the quotes on the first page -->
+    quotes = soup.select('.text')
+    quote_firstpage = []
+
+    for j in range(len(quotes)):
+        quote_firstpage.append(quotes[j].text)
+    
+
+    <!-- TASK: Inspect the site and use Beautiful Soup to extract the top 10 tags from the requests text shown on the top right from the homepage
+    HINT: Try to find a class only present in the top right tags perhaps SPAN -->
+    ttags = soup.select('.tag-item')
+    top_ten_tags = []
+
+    for k in range(len(ttags)):
+        top_ten_tags.append(ttags[k].text[1:-1])
+
+
+- big task!
+    TASK: Notice how there is more than one page, and subsequent pages look like this "http://quotes.toscrape.com/page/2"
+    Use Loop and String concat. to loop through All the pages and get All the unique Authors on the website!
+
+    base_url = 'https://quotes.toscrape.com/page/{}'
+    unique_author_set = set()
+    counter = 1
+
+    while True:
+        resource = requests.get(base_url.format(counter))
+        soup = bs4.BeautifulSoup(resource.text, "lxml")
+        
+        
+        if 'No quotes found' in str(soup):
+            break
+        else:
+            authors = soup.select('.author')
 
             
+            for i in range(len(authors)):
+                unique_author_set.add(authors[i].text)
+            counter += 1
+        
+        
+        print(unique_author_set)
+
+
+    
+    
+
+
+<br>
+
+#### 124. Python Web Scraping - Exercise SOLUTIONS!! Now!! Yay!!
+ex. url = 'http://quotes.toscrape.com/page/'
+
+page_still_valid = True
+authors = set()
+page = 1
+
+while page_still_valid:
+    page_url = url + str(page)
+    
+    res = requests.get(page_url)
+    
+    if "No quotes found!" in res.text:
+        break
+
+    soup = bs4.BeautifulSoup(res.text,"lxml")
+    
+    for name in soup.select(".author"):
+        authors.add(name.text)
+    
+
+
+
+    page = page  + 1
+    
+
+<br>
+
+## 16. Working with Images
+#### 125. Introduction to Images with Python
+- Interact with images
+- Using pip install pillow
+
+<br>
+
+#### 126. Wokring with images
+- Pillow library, which is a fork of the PIL(Python Image Library) with easy to use function calls.
+
+- official documentaion at *pillow.readthedocs.io*
+
+ex. from PIL import Image
+ex. computer_image = Image.open('my_computer_image.jpg')
+ex. computer_image.show()
+
+- cropping image
+ex. x = 0
+    y = 0
+    w = 100
+    h = 100
+
+ex. computer_image. crop((x,y,w,h))
+
+- copying and pasting
+ex. computer = computer_image.crop( (x,y,w,h) )
+ex. computer.paste(im = computer, box = (0,0))
+
+
+
+- resizing
+ex. computer_image.resize( (3000,500))
+
+- rotating
+ex. computer_image.rotate(10)
+
+- Color Transparency
+~> RGBA - Red, Green, Blue, Alpha
+~> 0 to 255
+~> alpha value decides the transparency in general
+ex. computer_image.putalpha(100)
+ex. red.putalpha(100), blue.putalpha(100)
+ex. blue.paste(im = red, box = (0,0),mask = red)
+~> purple
+ex. blue.save('purple.png')
