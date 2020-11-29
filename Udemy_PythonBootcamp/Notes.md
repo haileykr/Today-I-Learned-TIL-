@@ -791,13 +791,13 @@ Use random.randint()
 
 - Basic Syntax
 class NameOfClass():
-# Note. Class name is capitalized 
-# vs. Function name was lower-case
-#   __init__ allows you to create an instance of the actual object
+#Note. Class name is capitalized 
+vs. Function name was lower-case
+__init__ allows you to create an instance of the actual object
     def __init__(self, param1, param2):
         self.param1 = param1
         self.param2 = param2
-#   self is passed in to note that this isn't just a function, but is a method connected to the class
+#self is passed in to note that this isn't just a function, but is a method connected to the class
     def some_method(self):
         # perform some action
         print(self.param1)
@@ -819,11 +819,12 @@ ex. class Dog()):
 
 
 <br>
+
 #### 70. OOP - Class Object Attributes and Methods
 - class Dog():
-    ## CLASS OBJECT ATTRIBUTE
-    ## SAME FOR ANY INSTANCE OF A CLASS
-    ## NO SELF
+    #CLASS OBJECT ATTRIBUTE
+    SAME FOR ANY INSTANCE OF A CLASS
+    NO SELF
     species = 'mammal'
 
     def __init__(self, breed = 'Default!', name):
@@ -1160,8 +1161,8 @@ it is always the best to go from simple to complex as the functions will run in 
 <br>
 
 #### 87. Card Class
-# CARD
-# SUIT, RANK, VALUE
+#CARD
+#SUIT, RANK, VALUE
 class Card:
     def __init__(self,suit,rank):
         self.suit = suit
@@ -1519,7 +1520,7 @@ ex. today.ctime()
 ex. datetime(2021, 10, 3, 14, 20, 1)
 ex. mydatetime= mydatetime.replace(year=2020)
 
-- # DATE
+- **_DATE_**
 **from dateimte import date**
 ex. date1 = date(2021, 11, 3)
 ex. date2 = date(2020, 11, 3
@@ -1683,13 +1684,13 @@ ex. re.search(r'ca(tfish|rbonated)', text)
             return list(map(str, range(n)))
             
 1. ex.
-    # CURRENT TIME BEFORE
+    _CURRENT TIME BEFORE_
     start_time = time.time()
-    # RUN CODE
+    _RUN CODE_
     result = fun_one(10000)
-    # CURRENT TIME AFTER RUNNING CODE
+    _CURRENT TIME AFTER RUNNING CODE_
     end_time = time.time()
-    # ELAPSED TIME
+    _ELAPSED TIME_
     elapsed_time = end_time - start_time
     print(elapsed_time)
 
@@ -1731,14 +1732,14 @@ f.write('TWO FILE')
 f.close()
 
 ex. **import zipfile** 
-# Zipping
+_Zipping_
 comp_file = zipfile.ZipFile('comp_file.zip','w') # Create the file
 comp_file.write('fileone.txt',compress_type=zipfile.ZIP_DEFLATED)
 comp_file.write('filetwo.txt',compress_type=zipfile.ZIP_DEFLATED)
 comp_file.close()
 
 ex.
-# Unzipping
+_Unzipping_
 zip_obj = zipfile.ZipFile('comp_file.zip', 'r')
 zip_obj.extractall('extracted_content')
 pwd
@@ -1970,17 +1971,17 @@ ex. for i in range(1,51):
 
 - Note that there are MANY ways to complete the jobs! And these are My Ways...
 
-    <!-- TASK: Import any libraries you think you'll need to scrape a website -->
+    #TASK: Import any libraries you think you'll need to scrape a website
     import requests
     import bs4
 
 
-    <!-- TASK: Use reqeusts library and BeautifulSoup to connect to https://quotes.toscrape.com/ and get the HTML text from the homepage.
-     -->
+    #TASK: Use reqeusts library and BeautifulSoup to connect to https://quotes.toscrape.com/ and get the HTML text from the homepage.
+    
     res = requests.get("http://quotes.toscrape.com/")
     soup = bs4.BeautifulSoup(res.text,"lxml")
 
-    <!-- TASK: Get the names of all the authors on the first page -->
+    #TASK: Get the names of all the authors on the first page
     authors = soup.select('.author')
     author_firstpage = set()
 
@@ -1988,11 +1989,11 @@ ex. for i in range(1,51):
         author_firstpage.add(authors[i].text)
 
     
-    <!-- TASK: Create a list of all the quotes on the first page -->
+    #TASK: Create a list of all the quotes on the first page
     quotes = soup.select('.text')
     quote_firstpage = []
 
-    <!-- TASK: Create a list of all the quotes on the first page -->
+    #TASK: Create a list of all the quotes on the first page
     quotes = soup.select('.text')
     quote_firstpage = []
 
@@ -2000,8 +2001,8 @@ ex. for i in range(1,51):
         quote_firstpage.append(quotes[j].text)
     
 
-    <!-- TASK: Inspect the site and use Beautiful Soup to extract the top 10 tags from the requests text shown on the top right from the homepage
-    HINT: Try to find a class only present in the top right tags perhaps SPAN -->
+    #TASK: Inspect the site and use Beautiful Soup to extract the top 10 tags from the requests text shown on the top right from the homepage
+    #HINT: Try to find a class only present in the top right tags perhaps SPAN
     ttags = soup.select('.tag-item')
     top_ten_tags = []
 
@@ -2115,3 +2116,152 @@ ex. red.putalpha(100), blue.putalpha(100)
 ex. blue.paste(im = red, box = (0,0),mask = red)
 ~> purple
 ex. blue.save('purple.png')
+
+<br>
+
+## 17. Working with PDFs and CSVs
+#### 129. Introduction to pdfs and spreadsheet csvs
+- CSV: Comma Separated Varaiables
+- note that *only* information is exported to csv, not formulas, images, macros, etc.
+
+- we will work with the built-in csv module for Python, which will allow us to grab columns, rwos, and values from a .csv file and write to it
+- this is a very popular space for outside libraries, for example,
+1. Pandas
+: full data analysis library
+: can work with almost all tabualr datatypes
+: runs visualizations and analysis
+: especially great for data science
+
+2. Openpyxl
+: designed specifically for Excel files
+: retains a lot of Excel specific functionality
+: supports excel formulas
+: python-excel.org tracks various other Excel-based Python libraries
+
+3. Google Sheets Python API
+: direct Python interface for working with Google Spreadsheets
+: allows you to directly make changes to the spreadsheets online
+: more complex syntax, but available in many programming languages
+
+~> check these out!
+
+
+-   ex. import csv
+ex. # Open the file
+ex. data = open('example.csv', encoding = 'utf-8')
+
+ex. # csv.reader
+ex. csv_data = csv.reader(data)
+
+ex. # reformat it into a python object list of lists
+ex. data_lines = list(csv_data)
+
+ex. data_lines[10]
+ex. all_emails = []
+ex. for line in data_lines[1:6]:
+        all_emails.append(line[3])
+
+
+
+- write to a csv file
+ex. file_to_output = open ('to_save_file.csv' , mode = 'w' , newline='')
+ex. csv_writer = csv.writer(file_to_output, delimiter = ',')
+ex. csv_writer.writerow( ['1','2','3'])
+ex. csv_writer.writerows( [['1','2','3']['4','5','6']])
+ex. file_to_output.close()
+
+ex. f = open('to_save_file.csv',mode='a',newline='')
+ex. csv_writer = csv.writer(f)
+ex. csv_writer.writerow(['1','2','3'])
+ex. f.close()
+
+
+<br>
+
+
+#### 130. Working with PDF Files in Python
+- Portable Document Format developed by Adobe in 1990s
+- While PDFs share the same file extension and can be viewed in pdf readers, many pdfs are not machine readable through Python
+- since pdfs mainly encasuplate and display a fixed-layout flat document
+- no machine readable standard format
+- that means that a pdf that was scanned is highly unlikely to be readable
+- additions to pdfs such as images, tables, format adjustments can also render a pdf unreadable by Python
+- there are many paid PDF programs that can read and extract from these files, but we will use the open-source and free **PyPDF2** library
+
+- if a pdf file is unreadable using those libraries, well then..
+
+- **pip install PyPDF2**
+
+
+ex. import PyPDF2
+ex. f = open('pdf_file_name.pdf','rb')
+ex. pdf_reader = PyPDF2.PdfFileReader(f)
+
+ex. pdf_reader.numPages
+
+ex. page_one = pdf_reader.getPage(0)
+
+ex. page_one_texts=page_one.extractText()
+ex. f.close()
+
+- Adding to pdf file: we can only add a different page within free programs
+
+ex. pdf_writer = PyPDF2.PdfFileWriter() # writer object
+
+
+ex. pdf_writer.addPage(first_page)
+
+ex. pdf_output = open('Some_BrandNew_Doc.pdf','wb')
+ex. pdf_writer.write(pdf_output)
+
+ex. f.close()
+
+ex. pdf_output.close()
+
+
+
+
+
+<br>
+
+#### 133. PDFs and SPREADSHEETs Python Puzzle Exercise_Solution
+- #Task One: Grab the Google Drive Link from .csv File
+ex. import csv
+ex. data = open('find_link.csv',encoding = 'UTF-8')
+ex. csv_data = csv.reader(data)
+
+ex. data_lines = list(csv_data)
+
+ex. link_str = ''
+ex. for row_num, data in enumerate(data_lines):
+        link_str+= data[ row_num
+    
+
+ex. link_str
+
+
+
+- #Task Two: Download the PDF from the link and find phone # in the doc.
+ex. import PyPDF2
+
+ex. f1=open('Find_the_Phone#.pdf' ,'rb' )
+ex. pdf_reader = PyPDF2.PdfFileReader(f1)
+ex. import re
+ex. pattern = r'\d{3}'
+
+ex. all_text = ''
+ex. for num in range(pdf.numPages):
+        page = pdf_reader.getPage(num)
+        page_text = page.extractText()
+
+        all_text = all_text + ' ' + page_text
+
+ex. for match in re.finditer(pattern,all_text):
+        print(match)
+    ~> to check the phone number format
+    ~> all_text[index1:index2!]
+
+~> after figuring out the format, can find the exact match
+
+ex. phone_number = re.search (r'\d{3}.\d{3]. \d{4}' ,
+all_text)
