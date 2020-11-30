@@ -1,6 +1,55 @@
-## Section 2: Python Setup
+## 1. Course Overview
+#### 1. Welcome Message!
+- Course Nooteboooks - https://github.com/Pierian-Data/Complete-Python-3-Bootcamp 
+- Q&A forum
+: https://support.udemy.com/hc/en-us/articles/229233387-How-to-Use-The-Q-A
+- Discord Channel
+: https://discord.gg/TztE6B8
+- Udemy Certification
+: https://support.udemy.com/hc/en-us/articles/229603868-Certificate-of-Completion
+- Course Slides
+: https://drive.google.com/drive/folders/1CKqOQzst1cGURXGiRVivi2Xsc0n-X8CR?usp=sharing
 
-#### 7\. Installing Python (Step by Step)
+<br>
+
+#### 4. Why Python?
+- Brief History of Python
+: Created in 1990 By Guido van Rossum
+: Python 3 Released in 2008
+: Specifically Designed as an easy-to-use language
+: High focus on readability of code
+
+- Why choose Python?
+: designed for clear, logical code that is easy to read and learn
+: lots of existing libraries and frameworks written in Python allowing users to apply Python to a wide variety of stuff
+: focuses on optimizing developer time than a computer's processing time
+
+- What can you do with Python?
+: Automate simple tasks
+~ searching for files and editing them
+~ scraping information from a website
+~ Reading and editing excel files
+~ work with PDFs
+~ automate emails and text messages
+~ Fill out forms
+
+: Data Science and Machine Learning
+~ Analyze large data files
+~ create visualizations
+~ perform machine learning tasks
+~ Create and run predictive algorithms
+
+: Create websites
+~ Use web frameworks such as Django and Flask to handle the backend of a website and user data
+~ Craete interactive dashboards
+
+- Many potentials for different Jobs!
+
+<br>
+
+
+## 2 Python Setup
+#### 7. Installing Python (Step by Step)
 
 -   Python: 1991, Guido Van Rosssum
 -   Advantages:
@@ -14,7 +63,7 @@
 -   Anaconda + Jupyter  
     
 
-#### 8\. Running Python Code
+#### 8. Running Python Code
 
 -   Several ways to run Python code
     
@@ -59,11 +108,11 @@ _Using Jupyter_
 3.  File - New - Notebook // Python  
     Note: Notebook is a cell-based system
 
-#### 9\. Getting the Course Materials
+#### 9. Getting the Course Materials
 
 -   Use the link
 
-#### 10\. Git and GitHub Flow
+#### 10. Git and GitHub Flow
 
 -   Git: A free & open source distributed version control system. - git-scm.com
 -   GitHub: A webpage where you can publish your Git repositories and collaborate with others
@@ -72,7 +121,7 @@ _Using Jupyter_
     guides.github.com  
     gitimmersion.com
 
-## Section 3
+## 3. Python Objects & Data Structure Basics
 #### 11. Introduction to Pyton Data Types
 - Integers [int] : Whole numbers ex. 3
 - Floating Points [float] : Numbers with a decimal point ex. 2.3
@@ -329,7 +378,7 @@ www.pythonchallenge.com
 
 
 
-## Section 4 -  Python Comparison Operators
+## 4. Python Comparison Operators
 #### 32. Comparison Operators in Python
 ex. 2 == 2 ~> True
 ex. 'hello' == 'bye' ~> False
@@ -348,7 +397,7 @@ ex. not 1==1 ~> False
 asking for an opposite boolean!
 <br>
 
-## Section 5 - Python Statements
+## 5. Python Statements
 #### 34. If Elif and Else Statements in python
 - **control flow** - when we want certain codes to execute only when a condition is met
 - Control Flow syntax makes use of colons and indentation (whitespace)
@@ -2265,3 +2314,299 @@ ex. for match in re.finditer(pattern,all_text):
 
 ex. phone_number = re.search (r'\d{3}.\d{3]. \d{4}' ,
 all_text)
+
+<br>
+
+
+## 18. Emails with Python
+#### 134. Introduction
+- will explore how to send emails with Python and how to check our inbox for received messages
+- this process highly relies on admin previleges on the local computer, internet, and   email.
+
+<br>
+
+#### 135. Sending Emails with Python
+- to send emails with Python, we need to manually go through the following steps:
+1. Connecting to an email server
+2. Confirming connection
+3. Setting a protocol
+4. Logging on
+5. Sending the message
+
+- fortunately the built-in smtplib library in Python makes these steps simple function-calls.
+
+- Each major email provider has their own SMTP (Simple Mail Transfer Protocol) Server.
+: Provider - SMTP server domain name
+: Gmail (will need App Password) - smtp.gmail.com
+: Yahoo Mail - smtp.mail.yahoo.com
+: Outlook.com/Hotmail.com - stmp-mail.outlook.com
+: AT&T - smtp.mail.att.net (Use port 465)
+: Verizon - smtp.verizon.net (Use port 465)
+: Comcast - smtp.comcast.net
+
+- we will go over this process with a Gmail account
+- for gmail users, you will need to generate an app password instead of your normal password
+- this lets Gmail know that the Python script attempting to access your account is authorized by you.
+
+
+ex. import smtplib
+ex. smtpobject = smtplib.SMTP('smtp.gmail.com', 587) #587 as the port number
+ex. # EHLO Object : greets the server and makes the connection
+ex. # this should be called RIGHT AFTER smtp object is created
+ex. smtpobject.ehlo()
+
+- note that 587port number enables encryption using TLS encryption
+
+- in order to initiate this encryption,
+
+ex. smtpobject.starttls()
+~>can be skipped if 468is used
+~>since 468uses SSL encrypt.
+
+ex. **import getpass**
+ex. password = getpass.getpass("What is your pw: ')
+~>  masks the input and confuses with the wrong password length
+
+- generating App Password
+
+
+ex. email = getpass.getpass("Email: ")
+ex. pass_word = getpass.getpass("Password: ")
+ex. smtp_object.login(email, password)
+
+
+
+ex. from_address = email
+ex. to_address = email
+ex. subject = input("enter the subject line: ")
+ex. message = input("message:")
+ex. msg="Subject: "+subject+'\n'+message
+    #format needed for this specific function
+    
+
+
+ex. smtpobject.sendmail(from_address, to_address,msg)
+ex. smtp_object.quit()
+
+<br>
+
+#### 136. Receiving Emails with Python
+- we can use the built-in imaplib  & email libraries  in Python
+- the imaplib library has a special syntax for searching your Inbox
+
+ex. **import imaplib**
+ex. M = imaplib.IMAP4_SSL('imap.gmail.com')
+ex. import getpass
+ex. email = getpass.getpass("Email: ")
+ex. password = getpass.getpass("Password: ")
+ex. M.login(email, password)
+
+
+ex. M.list()
+ex. M.select('inbox')
+
+
+
+ex. type, data = M.search(None, 'BEFORE 01-Nov-2000')
+ex. type, data = M.search(None, 'SUBJECT "NEW TEST PYTHON"')
+~> data returns the  unique id referring to the actual email
+
+
+
+ex. email_id = data[0]
+ex. result, email_data = M.fetch(email_id, '(RFC82)')
+ex. # RFC82 is the Protocol Name
+~> email_id gives you some data
+ex. raw_email = email_data[0][1]
+ex. raw_email_string=raw_email.decode('utf-8')
+
+
+
+ex. **import email**
+ex. email_message = email.message_from_string(raw_email_string)
+ex. for pt in email_message.walk():
+        if pt.get_content_type() == 'text/plain':
+            body = pt.get_payload(decode=True)
+            print(body)
+
+<br>
+
+## 19. Final Capstone Projects
+#### 137. Final Capstone Project ideas
+- in the folder
+- Sample ideas (100)!! & sample solutions
+
+<br>
+
+## 20. Advanced Python Objects and Data Structures
+#### 138. Advanced Numbers
+- hexadecimal: hex(12) ~> 0xc
+
+- binary: bin(1234) ~> 0b10011010010
+
+- ex. 2**4 ~> 16
+  ex. pow(2,4) ~>16
+  ex. pow(2,4,3) ~>(2**4)%3 ~> 1
+
+- ex. abs(-3) ~> 3
+
+- ex. round(3.1) ~> 3.0
+  ex. round(3.141592, 2)~>3.14
+
+
+
+<br>
+
+#### 139. Advanced Strings
+- ex. s = 'hello world'
+  ex. s.capitalize() ~> 'Hello world'
+  ex. s.upper()
+  ex. s.lower()
+  ex. s.count('o') ~> 2
+  ex. s.find('o') ~> 4
+
+- formatting methods
+  ex. s ~> 'hello world'
+  ex. s.center(20,'z')
+        ~> 'zzzzhello worldzzzzz'
+
+  ex. 'hello\thi'.expandtabs()~> ' hello    hi'
+
+  ex. s = 'hello'
+  ex. s.isalnum() ~> True
+  ex. s.isalpha() ~> True
+  ex. s.islower()
+  ex. s.isspace()
+    ~> #white space
+  ex. s.istitle()
+  ex. s.isupper()
+
+  ex. s.endswith('o')
+
+- ex. s.split('e')~> ['h','llo']
+  ex. s.partition('i ')
+  ~>  compared to split, partition() will separate the string only at the first instance & show the separater at the middle
+
+- And a lot of others! More info in the notebook
+
+<br>
+
+#### 140. Advanced Sets
+- ex. s = set()
+ex. s.add(1)
+ex. s.add(2)
+ex. s.clear() ~> empty set
+- copying
+ex. s = {1,2,3}
+ex. sc = s.copy()
+ex. sc ~> {1,2,3}
+
+- difference
+ex. s.add(4)
+ex. s.difference(sc) ~> {4}
+ex. s1 = {1,2,3}
+ex. s2 = {1,4,5}
+ex. s1.difference_update(s2)
+ex. s1 ~> {2,3}
+ex. s.discard(2) ~> s == {1,3,4}
+- intersection
+ex. s3 = {1,2,3}
+ex. s4 = {1,2,4}
+ex. s3.intersection(s4) ~> {1,2}
+ex. s3.intersection_update(s4) ~> s3 =={1,2}
+- disjoint_method
+ex. s5 = {1,2}
+ex. s6 = {1,2,4}
+ex. s7 = {7}
+ex. s5.isdisjoint(s6) ~> False
+ex. s5.isdisjoint(s7) ~> True i.e. "Null Intersection"
+- subset_method
+ex. s5.issubset(s6) ~> True
+ex. s5.issuperset(s6) ~> False
+- symmetric_difference_method ~> finding elements not in intersection
+ex. s5.symmetric_difference(s6) ~> {4}
+- union_method
+ex. s5.union(s6) ~> {1,2,4}
+- update_method
+ex. s5.add(5) ~> s5 == {1,2,5}
+ex. s5.update(s6) ~> s5 == {1,2,4,5}
+
+<br>
+
+#### 141. Advanced Dictionaries
+- ex. d = {'k1':1, 'k2':2}
+
+- dictionary comprehension : not super common to use it though, not a go-to
+  ex. {x:x**2 for x in range(10)}
+  ex. {k:v**2 for k,v in zip(['a','b'],range(2))}
+
+- ex. for k in d.iteritems():
+        print k
+        ~> 2
+           1
+
+  ex. d.viewitems():
+        ~> dict_items([('k2',2),('k1',1)])
+
+<br>
+
+#### 142. Advanced Lists
+- ex. l = [1,2,3]
+  ex. l.append(4)
+  ex. l.count(10)
+  ~> 0 (doesn't occur)
+  ex. l.count(1)
+  ~> 1 (occurs once)
+
+- ex. x = [1,2,3]
+      x.append([4,5])
+      print x
+      ~> [1,2,3,[4,5]]
+
+- ex. x = [1,2,3]
+      x.extend([4,5])
+      print x
+      ~> [1,2,3,4,5]
+    
+- ex. l.index(2) ~> 1
+- ex. l = [1,2,3,4]
+      l.insert(2,'inserted')
+      l ~> [1,2,'inserted',3,4']
+- ex. ele = l.pop()
+      ele ~> 4
+      l ~> [1,2,'inserted',3]
+- ex. l.remove('inserted')
+      l ~> [2,3]
+      ~> removes the first instance of the passed element
+- ex. l.reverse()
+      l ~> [3,2]
+- ex. l.sort()
+
+<br>
+
+## 21. Bonus Material - GUI
+#### 145. Introduction to GUIs
+- All notebooks for this section are located under the GUI folder in the NbVierwer / Github
+- There are many, many GUI options for Python users
+: Documentation concerning the *most common GUI frameworks* - https://wiki.python.org/moin/GUI%20Programming%20in%20Python
+: A full list of all available GUI frameworks - https://wiki.python.org/moin/GUI%20Programming%20in%20Python
+
+- No framework is objectively better than another and it all depends on the use
+- ex. if you want to begin GUI by designing a *game*, check this PyGame out - https://www.pygame.org/hifi.html
+- ex. if you want to build a *web app*, probably better to avoid Python as the GUI and use if for Back-End work using *Flask* or *Django*. With web apps better to explore HTML, CSS, and JS to provide the GUI for the users
+
+- Jupyter Notebook Widget - https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20Styling.html#Predefined-styles
+
+<br>
+
+#### 147. Interact Functionality with GUIs
+
+- ex. **from ipywidgets import interact, interactive, fixed**
+**import ipywidgets as widgets**
+
+- interact function: auto-generates the user interface control for some sort of function arguments
+
+- refer to notebook while keeping in mind that the interface has changed with different syntax
+
+- **from IPython.display import display**
+
