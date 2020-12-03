@@ -520,7 +520,195 @@
 
 - Select: drop-down
 : select and option elements
-: ex. 
+: ex. <div>
+        <label for="meal">Please Select an Entree</label>
+            <select name="meal" id="meal">
+                <option value="fish">Fish</option>
+                <option value="veg">Vegetarian</option>
+                <option value="steak">Steak</option>
+            </select>
+
+
+<br>
+
+#### 54. Range & Text Area
+- Two more types
+- Range
+: ex. <p>
+          <label for="cheese">Amount of Cheese</label>
+          <input type="range" id = "cheese" min="1" max = "10" value="1.5"step = "0.5" name="cheese_level">
+      </p>
+
+- Text Area: Multi-line Textbox
+: ex. <label for="requests">Any Special Requests?</label>
+      <textarea id="requests" rows = "10" name = "requests" cols = "25" placeholder = "Type something"></textarea>
+
+<br>
+
+#### 55. HTML5 Form Validations
+- giving some constraints!
+- lots of validations are enabled using JS
+- but there is something called 'server-side validation' (built-in validation)
+
+- **required** : the boolean *required* attribute which, if present, indicates that the user must specify a value for the input before the owning form can be submitted
+: ex. <h2>Validations Demo</h2>
+      <form action="/demo">
+          <label for="first">Enter the first name</label>
+          <input type="text" id = "first" required name = "first">
+          <button>Submit!!</button>
+      </form>
+  
+- setting min(length), max(length)
+: ex. <label for="email">Email</label>
+      <input type="text" id = "email" name= "email" minlength = "5" maxlength = "20" required>
+
+- pattern: for regular expressions
+
+- type: email, url, tel (telephone) and so on
+
+- NOTE: id cannot start with a number!!
+
+<br>
+
+## 6. CSS: The Very Basics
+#### 58. What Matters In This Section
+- Crucial
+: Conceptual Overview of CSS
+: Basic CSS Syntax
+: Including Styles Correctly
+: Color Systems: RGB, Hex, etc.
+: font-family property
+
+- Important
+: Common Text Properties
+
+<br>
+
+
+#### 59. What is CSS?
+- What is it? : CSS is a lanaguage for describing how documents are presented visually - how they are arranged and styled
+- What does it stand for? : 'Cascading Style Sheets'
+
+
+- CSS Rules
+: (almost) everything you do in CSS follows this basic pattern
+ex. selector {
+      property: value;
+    }
+ex. h1 {
+      color: purple;
+    }
+ex. img {
+      width: 100px;
+      height: 200px;
+    }
+ex. # select every other text input
+    input[type = "text"]: nth-of-type(2n){
+      border: 2px solid  red;
+    }
+
+
+- MDN: CSS Reference!
+: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+
+<br>
+
+
+#### 61. Including Styles Correctly
+- Including Styles
+1. Inline Styles : You can write your styles directly inline on each element, but this is **NOT A GOOD IDEA** for most of the time (hard to edit and share the styles)
+2. The <STYLE> Element: You can write your styles inside of a <style> element, this is easy, but it makes it impossible to share styles between documents. **Not recommended either**
+3. External StyleSheet: Write your styles in a .css file then include it using a <link> in the head of the html doc. **Recommended!**
+
+
+- ex. <head>
+        <title>Forms Demo</title>
+        <link rel = "stylesheet" href = "my_styles.css">
+      </head>
+
+- Refer to *including_styles.html* and *app1.css*
+
+<br>
+
+#### 62. Color & Background - Color Properties
+- different ways of representing colors!
+
+<br>
+
+#### 63. Color Systems: RGB & Named Colors!
+- Named Colors : https://htmlcolorcodes.com/color-names/
+
+- NOTE: a typical computer can display ~16,000,000 different colors
+
+- RGB: Red, Green, and Blue Channel. Each Channel ranges from 0 to 255
+ex. rgb (255,0,0) ~> red
+ex. rgb (0,0,255) ~> blue
+ex. rgb (173,20,0) ~> purple
+ex. rgb (0,0,0) ~> black
+
+- NOTE: color picker : https://htmlcolorcodes.com/color-picker/
+
+<br>
+
+#### 64. Color System: Hexadecimal
+- still red, green, blue channels
+- each ranges from 0 - 255 BUT represented with hexadecimal!
+
+- Decimal: 0,1,2,3,4,5,6,7,8,9
+- Hexadecimal: 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F
+
+- ex. #ffff00 (red{2}, green{2}, blue{2})
+      = rgb (255, 255, 0)
+      ~> yellow
+  ex. #000000 <=> #000
+  ex. #cc55ee<=> #c5e
+  
+
+
+- there are other ways of representing colors too! Youtube if interested
+
+<br>
+
+#### 65. A Reminder On Semicolons & CSS
+- omitting semicolons will result in errors, but the computer doesn't tell us ~> keep in mind to include them!!
+
+<br>
+
+
+#### 66. Common Text Properties
+- ex. text-align, font-weight, text-decoration, line-height, letter-spacing
+
+- font-weight: text or number. Usually 400 is normal and 700 is bold
+
+- text-decoration: underline, overline, etc.
+- ex. text-decoration: underline wavy #f2367f
+  ex. text-decoration: none
+
+<br>
+
+#### 67. Font Size Basics With Pixels
+- Relative: em, rem, vh, vw, %, and more!
+- Absolute: px, pt, cm, in, mm!
+
+- PX (Pixel)
+  : by far the most commonly used absolute unit
+  : 1px does not necessarily correspond to exactly one pixel, depends on machines and manythings
+  : not recommended for responsiveness
+
+  <br>
+
+  #### 68. The Font Family Propert
+  - built-in fonts:  https://www.cssfontstack.com/
+    ~> as some fonts are not installed on every machine, your users may see different fonts
+
+  - because of that, you usually specify a "font stack"
+    ex. font family: Gill Sans Bold, sans-serif;
+    ~> Gill Sans Bold as the first choice, if there's not, any other sans-serif family as the Second choice!
+
+
+
+
+      
 
 
 
