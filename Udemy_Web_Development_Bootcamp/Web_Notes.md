@@ -706,6 +706,158 @@ ex. rgb (0,0,0) ~> black
     ~> Gill Sans Bold as the first choice, if there's not, any other sans-serif family as the Second choice!
 
 
+<br>
+
+## 7. The World of CSS Selectors
+#### 69. What Matters in this Section
+- Crucial
+: Element Selector
+: Class Selector
+: ID Selector
+: Descendent Selector
+: CSS Specificity
+
+
+- Important
+: Adjacent Selector
+: Direct Descendent Selector
+: Attribute Selector
+: Pseudo Elements
+: Pseudo Classes
+
+<br>
+
+
+#### 70. Element & Universal Selectors
+- Universal Selector : Select everything!
+ex. * {
+      color: black;
+    }
+~> not very commonly used
+
+- Element Selector
+ex. button {
+      font-size: 30px;
+    }
+
+- Selector List: more than one
+ex. h1, h2 {
+      color: magenta;
+    }
+
+<br>
+
+#### 71. ID Selector
+- ID Selector: ex. select the element with id of 'logout'
+ex. #logout {
+      color: orange;
+      height: 200px;
+    }
+- note that id is unique
+~> change properties of ONE thing
+
+- cf. color palette website: https://coolors.co/palettes/trending
+
+- no space between # and the id name
+
+<br>
+
+#### 72. The Class Selector
+- ex. .complete{
+        color: green;
+      }
+- a way of grouping things
+
+<br>
+
+#### 73. The Descendent Selector
+- ex. Select all <a>'s that are nested inside an <li>
+ex. li a {
+      color: teal;
+    }
+
+<br>
+
+#### 74. The Adjacent & Direct-Descendent Selectors
+- Adjacent Selectors [Combinators]: Select only the paragraphs that are immediately preceded -**not nested**- by an <h1>
+ex. h1 + p {
+      color: red;
+    }
+
+
+- Direct Child
+: Select only the <li>'s that are direct children of a <div> element
+ex. div > li {
+      color: white;
+    }
+
+<br>
+
+#### 75. The Attribute Selector
+- Attribute Selector: Select all input elements where the type attribute is set to "text"
+- ex. input[type = "text"]  {
+        width: 300px;
+        color: yellow;
+      }
+
+  ~> common example - input elements
+
+ex. section.post {
+      }
+    is the same as
+
+    section[class="post"] {
+    }
+
+- more info: https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
+
+- other ways : ex. *= ~> "including", $= ~> "ending with"
+
+<br>
+
+
+#### 76. Pseudo Classes
+- keyword added to a selector that specifies a special **state** of selected element(s)
+: ex. :active
+: ex. :checked
+: ex. :first
+: ex. :first-child
+: ex. :hover
+: ex. :not()
+: ex. :nth-child()
+: ex. :nth-of-type()
+
+- ex. button:hover{
+        background-color: magenta;
+        color: white;
+      }
+
+- ex. post button:hover{
+        background-color: magenta;
+        color: yellow;
+      }
+
+
+- ex. a:hover {
+        text-decoration: none;
+      }
+
+- ex. button:active {
+        background-color: #02c39a;
+      }
+
+
+
+- ex. .post:nth-of-type(3n){
+          background-color: #8f38ec;
+      }
+
+<br>
+
+
+
+
+
 
 
       
