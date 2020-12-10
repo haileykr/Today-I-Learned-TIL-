@@ -857,10 +857,355 @@ ex. section.post {
 
 
 
+#### 77. Pseudo Elements
+- Keywords added to a selector that lets you style a particular part of selected element(s)
+- ex. ::after
+ex. ::before
+ex. ::first-letter
+ex. ::first-line
+ex. ::selection
+
+cf. pseudo-classes:  specifies a special state of selected element(s)
+
+- ex. flask symbol ~> in experiment, should not be used in production
+
+ex. :: selection {}: the style applies to  wherever you select
 
 
 
-      
+<br>
+
+#### 78. The CSS Cascade
+- cascading ~> the order matters!
+- the order of styles in a css file and the order of the css files matter
+
+<br>
+
+#### 79. WTF is 'Specificity'
+
+- What happens when conflicting styles target the same elements?
+
+- Specificity is how the browser decides which rules to apply, when multiple rules could apply to the same element
+
+- It is a measure of how specific given selectors are. The more specific selector 'wins'
+
+- General formula
+: ID  >>  Class  >> Element
+
+- Actual Formula
+: ID selectors  x100
+: Class, Attribute, & Pseudo-Class Selectors x10
+: Element and Pseudo-Element Selectors - x1 (cf. tho it is not decimal // 10x1 != 10)
+
+:https://specificity.keegan.st/
+
+<br>
+
+#### 80. TIP:  Chrome Dev Tool & CSS
+- Can explore CSS 
+
+<br>
+
+#### 81. Inline Styles & Important
+- More specific! x 1000 Most specific among all
+~> nobody really recommends using it anyways
+
+- ex. <button style="background-color:green">Register Now!!</button>
+
+
+- **The !important exception**
+: _important_ rule on a style declaration overrides any other declarations.
+: it is a bad practice and not recommended
+
+ex. p {
+      color: blue !important;
+    }
+
+: has nothing to do with specificity but still interacts with it ~> overrides ALL
+
+<br>
+
+
+#### 82. CSS Inheritance
+- ex. when body is set to purple, h1 inside the body gets purple too
+~> in Chrome Dev Tool, you can see that the property is 'inherited from body'
+
+- but some elements don't inherit automatically
+~> there's a workaround (though not that commonly used)
+~> ex. button {
+        color: inherit;
+       }
+
+<br>
+
+## 8. The CSS BoxModel
+#### 83. What Matters in This Section
+- Crucial
+: Border
+: Padding
+: Margin
+: Width and Height
+: Display Property
+: CSS Units - Percentages, EMS, and REMS
+
+- Nice To Have
+: Border Radius
+
+<br>
+
+
+#### 84. Box Model: Width & Height
+- Content (Width and Height) < Padding < Border < Margin
+
+<br>
+
+#### 85. Box Model: Border & Border-Radius
+- Border Properties (the important ones)
+1. Border-Width
+: Controls the thickness of the border
+2. Border-Color
+: Controls the coloer of the border
+3. Border-Style
+: Controls the line style
+
+- for border, **pixel** is commonly used, as border is small/thin
+
+- note - cf. box-sizing: border-box;
+~> now the width of the element is *from border to border*
+
+- can change top, right, bottom, and left separately
+
+- *border* ~> can change all props at once
+~> width, style, color [order]
+
+- then border radius ~> a good way to make a circle too
+
+<br>
+
+#### 86. Box Model: Padding
+- Individual Properties
+: padding-left
+: padding-right
+: padding-bottom
+: padding-top
+
+- Shorthand Properties
+: set all four  sides at once!
+ex. apply to all four sides
+~> padding: 10px;
+ex. vertical | horizontal
+~> padding: 5px 10px;
+ex. top | horizontal | bottom
+~> padding: 1px 2px 2px;
+ex. top | right | bottom | left
+~> padding: 5px 1px 0 2px;
+
+<br>
+
+#### 87. Box Model: Margin
+- Spacing outside the Border
+- Setting the body margin to be zero
+~> pretty common
+
+
+<br>
+
+
+#### 88. The Display Property
+- "Display" Property
+1. Inline
+: width & height are ignored
+: margin & padding push elements away horizontally, but not vertically
+2. Block
+: block elements break the flow of a document.
+: Width, height, margin, and padding are respected
+
+3. Inline-Block
+: Behave like an inline element except Width, Height, Margin, and Padding are respected
+
+4. None
+: to hide
+
+ex. h1: block element, and span: inline element
+~> by adding display: inline; property or whatsoever, you can change their behaviors
+
+<br>
+
+#### 84. CSS Unit
+- Absolute Units
+: px - by far the most commonly used absolute unit
+: 1px does not necessarily equal the width of exactly one pixel!
+: not recommended for responsive websites
+
+- Relative Units
+: percentages - percentages are always relative to some other value
+: sometimes, it's a value from the parent and other times it's a value from the element itself
+: width: 50% - half the width of the parent
+: line-height: 50% - half the font-size of the element itself
+
+<br>
+
+#### 90. CSS Units: ems
+- EM's are relative units
+: with font-size, 1em equals the font-size of the parent. 2ems is twice the font-size of the parent, etc.
+: with other properties, 1em = the computed font-size of the element itself.
+
+<br>
+
+
+#### 91. CSS Units: rems
+- problem with em ~> depending on the parent element's size
+~> ex. nested list: fonts get larger and larger or smaller and smaller
+
+- ROOT EMS
+: [rem]. relative to the **root html element**'s font size.
+: ex. root font-size: 20px, 1em is always 20px, 2rem is always 40px,etc.
+
+- and root html here can be changed with
+ex. html {
+      font-size: 10px;
+    }
+
+
+
+<br>
+
+
+## 9. Other Assorted Useful CSS Properties
+#### 92. What Matters in This Section
+- Crucial
+: Transition
+: Position Property
+
+- Important
+: Google Fonts
+: Opacity & Alpha Channel
+: The Full Stor On The Background Property
+
+- Nice To Have
+: Transforms
+
+<br>
+
+#### 93. Opacity & The Alpha Channel
+- rgba(red, green, blue, alpha)
+~> alpha: governs the transparency (0 - 1)
+~> for hex color, add two letters at the end (00 -FF)
+
+- note: alpha only affects background
+
+- Opacity: will change the transparency of all the elements(0-1)
+
+<br>
+
+#### 94. The Position Property
+- Values
+1. **static**
+: default. element is positioned according to the normal flow of the document. *top, right, bottom, left, and z-index* have *no effect*!!
+
+2. **relative**
+: element is positioned according to the normal flow of the document, and then offset *relative to itself* based on the values of *top, right, bottom, and left*. 
+
+3. **absolute**
+: element is removed from the  normal flow of the document. 
+: ex. the next element can be overlapped by it
+: No space is created for the element in the page layout. 
+: It is positioned relative to its closest positional ancestor or it is placed relative to the initial containing block otherwise.
+: cf. when it's static, considered "not positioned"
+~> once the ancestor is positioned relative, the child element's absolute position will take effect
+
+4. Fixed
+: element is removed from the normal flow of the document, and no space is created for the element in the page layout.
+: positioned relative to the initial *containing block* established by the *vieport*, except for some cases
+: kinda like *Absolute* while *Fixed* has nothing to do its ancestors' positional status
+: ex. how you make a nav bar
+
+5. Sticky
+: like *Fixed*, but until the screen gets to its original position, it does not move
+: ex. position: -webkit-sticky;
+      position: sticky;
+      top: 20px;
+
+<br>
+
+#### 95. CSS Transitions
+- SO COOL!
+- ex. transition: 1s;
+  ex. transition: background-color 1s;
+  ex. transition: all 1s 0.5s;
+  ex. transition: background color 1s, border-radius 2s;
+- PROPERTY NAME | DURATION | TIMING FUNCTION | DELAY 
+
+- timing functions
+: how the intermediate values r calculated
+: https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function
+: can define it separately too
+: ex. transition-timing-function: ease-out;
+
+: reference - easings.net
+
+- best practice: single-out each transition, rather than transitioning all in one code ~> better for updating Codes!
+
+<br>
+
+#### 96. The Power of CSS Transforms
+- cf. centering block-level elements like h1 ~> setting left & right margin to be auto ~> will make it centered
+
+- lets you rotate, scale, skew, or translate an element // modifies the coordinate space of the CSS visual form
+
+- very useful when you wanna make, for example, animations
+
+<br>
+
+#### 97. Fancy Button Hover Effect CodeAlong
+- refer to the code
+- ex. background: none;
+  ex. box-shadow: 0 0.5em 0.5em -0.4em #f1ff5c;
+
+<br>
+
+#### 98. The Truth About Background
+- there are a lot of functions related to background
+ex. background-image: url(~);
+ex. background-size: cover;
+ex. background-position: bottom;
+
+ex. background: url(~) no-repeat;
+
+- free images - https://unsplash.com/
+
+- make sure that the order is correct
+- you can have multiples images for background too
+
+
+
+<br>
+
+
+
+#### 99. Google Fonts Is Amazing
+- https://fonts.google.com/
+- download only what you need
+- provides you with the link and CSS rule
+- loads from the link then displays the font
+
+<br>
+
+#### 100. Photo Blog CodeAlong 
+
+- calc()
+- note. when you add elements in different lines, **"white space"** kicks in and it can be a problem!
+- with Flexbox it won't be a problem!
+
+<br>
+
+#### 102. What Matters In This Section
+
+
+
+
+
+
 
 
 
