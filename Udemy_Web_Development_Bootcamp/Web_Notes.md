@@ -1201,6 +1201,203 @@ ex. background: url(~) no-repeat;
 
 #### 102. What Matters In This Section
 
+- Crucial
+: Media Queries
+: FOCUS ON CONCEPTS, NOT MEMORIZING THE PROPERTIES!
+: Flex Shortand
+: Flex-basis, grow, and shrink
+: Flex-wrap
+: Align-Items
+: Align-content and align-self
+: Justify-Content
+: Flex-Direction
+
+<br>
+
+#### 103. What on Earth is Flexbox?
+- What is it?
+: Flexbox is a one-dimensional layout method for laying out items in rows or columns
+- It's New(ish)
+: Flexbox is a recent addition to CSS, included to address common layout frustrations
+- Why 'Flex'?
+: Flexbox allows us to distribute space dynamically across elements of an unknown size, hence the term "flex"
+
+<br>
+
+#### 104. Flex-Direction
+- display: flex;
+~> turn on the flexbox properties
+
+- main axis (x) and cross axis (y)
+
+
+- flex-direction ~> lets you change the main axis direction
+ex. flex-direction: row; is the default
+ex. flex-direction: row-reverse;
+ex. flex-direction: column;
+ex. flex-direction: column-reverse;
+
+- controls how the flow is controlled
+
+<br>
+
+#### 105. Justify-Content
+- determines how the elements are distributed along the **main axis**
+
+- justfiy-conetent: flex-start; ~> is the default
+
+- ex. justify-content: flex-end; ~> the opposite
+ex. justify-content: center;
+ex. justify-content: space-between;
+ex. justify-content: space-around;
+ex. justify-content: space-evenly;
+
+<br>
+
+#### 106. Flex-Wrap
+- sets whether flex items are forced onto one line or can wrap onto multiple lines. if wrapping is allowed, it sets the direction that lines are stacked.
+- wrap-reverse: cross axis is reversed
+
+- nowrap / wrap / wrap-reverse!
+
+<br>
+
+
+#### 107. Align Items
+- How to align itmes along the cross axis
+- align-items: flex-start/flex-end/center/baseline
+: note. baseline ~> aligning to the base line of texts
+
+<br>
+
+#### 108. Align-Content & Align-Self
+- Note: Align-Content is activated ONLY when *wrap* property is set
+
+- Align-self: a property to individual items.
+: applied not to the flex container itself, but to individual items!
+
+<br>
+
+#### 109. Flex-Basis, Grow, & Shrink
+1. Flex-Basis
+: defines the initial size of an element before additional space is distributed
+~> initial dimension of elements along the __main axis__
+
+
+2. Flex-Grow
+: controls the amount of available space an element should take up. Accepts a unit-less number value.
+~> take up the empty space with numbers as ratios among the elements
+
+3. Flex-Shrink
+: if items are larger than the container, they shrink according to flex-shrink.
+~> governs the amount the elements shrink, *when* there is no enough space
+
+<br>
+
+#### 110. Flex Shorthand
+- flex
+- developer.mozilla.org/en-US/docs/Web/CSS/flex 
+
+<br>
+
+#### 111. Responsive Design & Media Queries
+
+1. The Problem
+: as mobile devices and tablets became wildly available, developers had a problem...
+: how do we create websites that look good on all screen sizes?
+
+2. One Approach
+: early on, it was common to create separate stylesheets for different devices, or completely different websites for each size
+
+
+
+
+
+3. Enter Responsive
+: these days, we typically create ONE website and stylesheet that is able to respond to different device sizes and features
+
+- One Solution: Media Queries
+~> media queries allow us to modify our styles depending on particular parameters like screen width or device type
+
+- note: 'developer tools' -  "toggle device toolbar"
+
+<br>
+
+#### 112. The Power of Media Queries
+- ex. @media (max-width: 800px) {
+        # at <= 800px, apply the following styles
+        .sidebar {
+            display: none;
+        }
+
+        .main {
+            width: 80%;
+        }
+      }
+
+      @media (min-width: 30em) and (orientation: landscape) {
+          #container {
+              flex-direction: column;
+              justify-content: center;
+          }
+      }
+
+
+<br>
+
+
+#### 113. Building a Responsive Nav
+- no standard px size for different media, but there are references
+
+
+
+
+<br>
+
+
+
+
+## 11. Pricing Panel Project
+#### 114. Pricing Panel CodeAlong Pt.1
+- CodePen!
+
+
+- CSS Rest: meyerweb.com/eric/tools/css/reset/
+~> copy and paste in the css file for the starting point!
+~> you don't have to do it but lots of ppl prefer doing it
+
+- building mobile version first then desktop version
+
+
+<br>
+
+
+## 12. CSS Framework: Bootstrap
+
+#### 120. What Matters In This Section
+- Crucial
+: WTF is Bootstrap
+: Working with CSS Frameworks
+: Including 3rd Party CSS & CDNS
+
+- Important
+: Bootstrap Grid
+: Responsive Bootstrap Grid
+: Bootstrap Navbars
+
+- Nice to Have
+: Icons
+: Typography and Utilities
+: Bootstrap Forms
+: Bootstrap Buttons
+
+<br>
+
+#### 121. Bootstrap!
+- Bootstrap: "The World's Most Popular CSS Framework"
+- Bootstrap helps us quickly build responsive websites - Components and Grid Systems
+1. Components
+: Bootstrap gives us access to a bunch of  pre-built components that we can incorporate into our own websites
 
 
 
@@ -1210,8 +1407,129 @@ ex. background: url(~) no-repeat;
 
 
 
+2. Grid System
+: Bootstrap also comes with a Grid System, which helps us construct our own custom, responsive layouts.
+
+- getbootstrap.com
+
+- don't rely on Bootstrap only (you can def make the same thing by coding on your own), but know that it's out there, and others too (ex. foundation, semanticUI)
+
+<br>
+
+#### 122. Including Bootstrap & Containers
+- Either (1) download the whole bootstrap package or (2) use the CDN (Content Delivery Network)
+: CDN - a hosted version of the stylesheet
+
+- https://getbootstrap.com/docs/5.0/getting-started/introduction/
+
+- as of now, version is v.4.5
+
+
+- some components require JS
+~> include at the end of body
+
+- in the real application, downloading the css file is recommended ~> to make sure that the file is pristine
+
+
+- mostly we access Bootstrap by classes
+
+- First thing to focus on
+: Layout - Container
+
+- Containers are the most basic layout element in BS and are required to use their default grid system
+: used to contain, pad, and (often) cetner the content within them
+
+- ex. Responsive containers allow you to specify a class that is 100% wide until the specified breakpoint is reached, after which we apply max-widths for each of the higher breakpoints. For example, .container-sm is 100% wide to start until the sm breakpoint is reached, where it will scale up with md, lg, xl, and xxl
+: once it hits the breakpoint, then the layout works as a regular container
+
+<br>
+
+#### 123. Bootstrap Buttons
+
+- using btn classes
+
+
+- "semantic"colors
+: any website will have different color palette for their own primary, secondary, info, ... uses!
+
+<br>
+
+#### 124. Bootstrap Typography & Utilities
+- Content - Typography
+- display headings ~> larger than typical h's
+- lead class ~> makes a paragraph stand out
+- block quotes ~> <blockquote></blockquote>
+~> class="blockquote", <footer class="blockquote-footer">
+~> "class = mb-0": margin-bottom is zero
+
+- Utilities - Colors
+: "text-primary" ~> primary color
+: "bg-info" ~> background color
+
+<br>
 
 
 
-  
+
+#### 125. Badges, Alerts, & Button Groups
+- More components!
+- Badges: typically used for counts, labels, etc.
+~> span class = "badge bg-colorname"
+
+- Button Groups
+~> group multiple buttons together into a group!
+~> .btn-group
+
+- Alert
+~> div class = "alert alert-colorname"
+
+~> to have the close button,
+ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+~> the span doesn't need to be there actually with Bootstrap v5.0 now
+~> aria-label is what the screen-reader will read
+~> class of btn-close to make it pretttier
+~> data-bs-dismissible = "alert" to make it work
+
+~> role = "alert" is crucial for screenreaders
+: makes sure that the alert message is not ignored
+
+- note. aria-hidden = "True": the screen-reader doesn't have to see this
+
+- if you add "alert-dismissible fade show" class to the div, it fades out and the x goes to top right.
+
+
+<br>
+
+
+
+#### 126. Intro to BS Grid
+
+- NOTE ~> works ONLY in a container!
+- you have to create a row, using the class of row
+
+- assuming 12 units wide
+- if wanting equal widths, you can just assign class="col", instead of specifying the no.
+~> <div class="row">
+
+
+- every row in BS has 12 units in space
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+f
+
 
