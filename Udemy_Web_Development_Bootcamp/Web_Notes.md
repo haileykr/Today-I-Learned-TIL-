@@ -1508,7 +1508,7 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 #### 126. Intro to BS Grid
 
 - NOTE ~> works ONLY in a container!
-- you have to create a row, using the class of row
+- you have to create a row, using the class of row ~> typically div, but could be section or something else
 
 - assuming 12 units wide
 - if wanting equal widths, you can just assign class="col", instead of specifying the no.
@@ -1527,9 +1527,93 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 
 
 
+#### 127. Responsive Bootstrap Grids
+- ex. col-md-6: after md breakpoint and up, the column should take 6 units. Everything below, the column takes 12 units
+
+- new class for **responsive images** ~> "img-fluid"
+
+- class="g-0" will eliminate the spacing
+
+<br>
+
+#### 128. Useful Grid Utilities
+
+- Bootstrap uses Flexbox
+~> can check by inspecting, and see that the class="row" already has a setting of display:flex
+
+- .align-itmes-start/center/end
+- .align-self-start/center/end
+   ~> vertical alignment
+
+- .justify-content-start/center/end/between/around
+- .justify-content-sm-center
+   ~> horizontal alignment
+
+<br>
+
+#### 129. Bootstrap &  Forms
+- Several Components!
+1. Form Controls
+: this class is on the input itself
+
+: .form-group ~>useful
+: .form-control ~> Bootstrap class for formatting
+
+- changing radio buttons and checkboxes is harder
+~> you can use .form-check
+~> or .custom-control .custom-checkbox for diff. effects
+
+- radio buttons, switches, etc.
+
+- form layout: can edit by using columns and rows
+
+- .form-row : very similar to .row, and it just has a different gutter size so that the forms look more compact
+~> not in the v5
+
+<br>
+
+#### 130. Bootstrap Navbars
+- don't feel pressured to remember the navbar syntax!
+- wrap things with .navbar-collapse for collapsable navbar, and expand with .navbar-expand-size
+- and .navbar-toggler to show the hamburger icon
+- connect that icon with the data, by data-bs-toggle="collapse" and data-bs-target="#id_name"
+
+- cf. ml-auto: margin left is 
+
+- placemnet ~> .fixed-top / .sticky-top / others
+
+<br>
+
+#### 131. Bootstrap Icons!
+- new feature!
+- svg
+: Scalable Vector Graphics
+
+- .input-group
+
+- there are other icon websites!
+~> most popular - fontawesome.com/start
+
+<br>
+
+#### 132. Other Bootstrap Utilities
+- quick way to apply css properties
+- many
+
+- Border
+: note. cannot change the width
+
+
+- Spacing
+: Margin (m) and Padding (p)
+: sides - t, b, l, r, x, y, blank
+: size - 0, 1, 2, 3, 4, 5, auto
 
 
 
-f
+
+
+
+
 
 
