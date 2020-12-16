@@ -1609,6 +1609,889 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 : sides - t, b, l, r, x, y, blank
 : size - 0, 1, 2, 3, 4, 5, auto
 
+: {property}{sides} - {breakpoint} - {size}
+
+- display: inline, block, flex, none, etc.
+~> d-none can hide something
+~> supports responsivity
+
+<br>
+
+#### 133. A Mixed Bag of Other Bootstrap Stuff
+
+- Cards: pretty commonly used
+: can mix-and-match
+
+: a container with some special features
+
+- Carousel
+: slider
+
+- Dropdowns
+
+
+- Spinner
+
+- Progress
+
+- Modal
+: popup
+
+
+<br>
+
+## 13. OPTIONAL Museum of Candy Project
+- finished code available
+
+- order-{number}
+
+<br>
+
+## 14. JavaScript BASICS!
+~> a week of full-time content!
+
+<br>
+
+#### 141. What Matters In This Section
+
+- Crucial
+: Understanding the role of JavaScript
+: JavaScript Numbers
+: Variables & Let
+: Const
+: Booleans
+: Variable Naming
+
+
+<br>
+
+#### 142. Why JavaScript is Awesome
+- reference - https://codepen.io/ste-vg/details/GRooLza
+
+
+
+<br>
+
+
+
+
+#### 143. Primitives & The Console
+- Steps
+: Step 1 - Learn JS on its own. No HTML / CSS.
+: Step 2 - Use JS to manipulate HTML / CSS.
+
+- Primitive Types (any language has primitive types)
+: The Basic Building Blocks
+1. Number
+2. String
+3. Boolean
+4. Null
+5. Undefined
+6. xTechnically there are two others ~> Symbol and BigInt
+
+- Running Code in The Console
+: The easiest place to start
+1. Early on, we will run our code using the Chrome developer tools console
+~> definitely not the professional choice
+2. Then we will learn how to write external scripts
+
+- In Chrome, Inspect -> Console
+: JavaScript
+: or ctrl + shift + J
+: you can 'undock' it as we are using it to learn only
+
+- Some keywords
+: clear() to clear the console
+
+- "REPL"
+: Read, Evaluate, Print, and Loop
+: Loop means that the console does not stop and rather loops
+: REPL(read-eval-print loop) 또는 인터랙티브 톱레벨(interactive toplevel), 랭기지 셸(language shell)은 단일 사용자의 입력(예: 단일 식)을 취하고 이를 평가(실행)하고 결과를 사용자에게 반환시키는 단순한 상호작용 컴퓨터 프로그래밍 환경이다. REPL 환경으로 작성된 프로그램은 구간마다 실행된다
+
+
+<br>
+
+
+#### 144. JavaScript Numbers
+- JS has one number type
+- Positive numbers
+- Negative numbers
+
+- Whole numbers (integers)
+- Decimal numbers
+
+- Math Operations
+: addition, subtraction, multiplication, division, modulo, exponents, etc
+
+- // creates a comment
+
+- order of operation
+: PEMDAS (Parentheses, Exponents, Multiplication, Division, Addition, and Subtraction)
+
+<br>
+
+
+
+#### 145. WTF is NaN
+- Nan: Not A Number, and is a numeric value that represents something that is... not a number
+
+- ex. 0/0 //NaN
+- ex. 1 + NaN //NaN
+
+- typeof NaN ~>  "number"
+
+<br>
+
+#### 147. Variables & Let
+- Variables: are like labels for values
+: We can store a value and give it a name so that we can
+~> Refer back to it later
+~> Use that value to do... stuff
+
+- Basic Syntax
+: let someName = value;
+
+- ex. let year = 1652;
+
+- ex. let numHens = 5;
+  ex. let numRoosters = 1;
+  ex. let totalChickens = numHens + numRoosters ~> 6
+
+~> however, totalChickens does not change with the change in numHens or numRoosters
+~> it is just a snapshot in time
+
+
+
+<br>
+
+
+
+#### 148. Updating Numbers
+- ex. let score = 0;
+  ex. score += 5; ~> score == 5
+  ex. score++; ~> score == 6
+
+<br>
+
+#### 149. Const & Var
+- there are two other ways to assign variables
+1. const
+~> const works just like let, except you CAN'T change the value
+ex. const hens = 4;
+ex. hens = 20; ~> ERROR!
+
+ex. const pi = 3.14159;
+ex. const daysInWeek = 7;
+ex. const minHeightForRide = 60;
+~> Once we cover Arrays & Objects, we will see other situations where const makes sense over let
+
+2. var
+: the old variable keyword
+: before let & const, var was the only way of declaring variables
+: these days there is not a reason to use it really
+
+<br>
+
+#### 150. Booleans
+- true or false
+ex. let isLoggedIn = true;
+ex. let gameOver = false;
+
+
+- Variables can change types!!
+
+ex. let numPuppies = 23; // Number
+ex. numPuppies = false; // Now a Boolean
+ex. numPuppies = 100; // Back to Number
+
+
+<br>
+
+#### 151. Variable Naming and Conventions
+
+- Hard Rules
+: no space
+: no start with number
+: case-sensitive
+: $, _, digits are possible
+: Reference ~> MDN, identifier
+~> An identifier is a sequence of characters in the code that identifies a variable, function, or property
+~> In JavaScript, identifiers are case-sensitive and can contain Unicode letters, $, _, and digits (0-9), but may not start with a digit
+
+- Conventions
+: Camel-case
+ex. current_date ~> snake-case
+ex. currentDate ~> camel-case
+~> starts with lowercase
+
+: be clear with the variable name
+ex. isLoggedIn is better than
+ex. userLogIn
+ex. isGameOver is better than
+ex. Game
+
+
+<br>
+
+
+## 15. JavaScript Strings and More
+
+#### 152. What Matters in This Section
+- Crucial
+: String Basics
+: Indices and Length
+: Undefined & Null
+: String Methods
+: String Template Literals
+
+- Important
+: Random Numbers & the Math Object
+
+<br>
+
+
+#### 153. Introduction to Strings
+- Strings: 'strings' of characters
+: Strings are another primitive type in JavaScript. They represent text, and must be wrapped in quotes
+
+ex. let firstName = "Ziggy"; //Double quotes work
+ex. let msg = "Please do not feed the chimps!";
+ex. let animal = 'Dumbo Octopus'; //Single quotes too
+
+: fine to use either single or double quotes, but be consistent
+
+: mix them only when a string need to wrap another
+
+
+<br>
+
+
+#### 154. Indices & Length
+- ex. let animal = "Dumbo Octopus"
+  ex. animal[0] ~> "D"
+
+- ex. animal.length  ~>  13
+  ex. "lol".length ~> 3
+  ex. 'abcd' + 'efg' ~> 'abcdefg'
+  ex. 'abc'[0] ~> 'a'
+
+<br>
+
+#### 155. String Methods
+
+- Methods are built-in actions we can perform with individual strings
+- they help us do things like:
+~> searching within a string
+~> replacing part of a string
+~> changing the casing of a string
+
+- Reference -  developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/
+
+- Syntax
+: thing.method()
+
+cf. "asdf".length
+~> no parentheses => accessing property, not 'executing' something
+
+- ex. let msg = "meoww";
+  ex. msg.toUpperCase();
+      ~> "MEOWW"
+      ~> does not change the original variable
+
+
+
+- ex. '     he    '.trim() ~> 'he'
+
+- you can also chain methods!
+
+ex. '     hello again!!!!!     '.trim().toUpperCase() ~>'hello again!!!!!!'
+: the order does not matter
+
+<br>
+
+
+
+
+#### 156. String Methods w/Arguments
+- Syntax
+: thing.method(arg)
+
+~> some methods accept **arguments** that modify their behavior. Think of them as inputs that we can pass in, we pass these args inside of the parentheses
+
+
+- ex. indexOf
+  ex. let tvShow = 'catdog';
+  ex. tvShow.indexOf('cat'); // 0
+  ex. tvShow.indexOf('dog'); // 3
+  ex. tvShow.indexOf('bird'); // -1
+  ~> gives the first index of the arg
+
+- ex. slice
+  ~> accepts 1+ args
+
+  ex. let str = 'abcdefg';
+  ex. str.slice(0,5); // 'abcde'
+  ex. str.slice(5); // 'fg'
+  ex. str.slice(-1); // 'g'
+  ex. str.slice(-5); // 'cdefg'
+
+- ex. replace
+  ~> replaces only the first matching instance
+  ex. let greetings = 'hello world!';
+  ex. greetings.replace('hello','hiiii');
+  ex. greetings.replaceAll('hello','hiiii')
+  ~> **NOTE:** replaceAll() is not compatible with all the browser, check the Browser compatibility section of the MDN guide
+
+- ex. repeat
+  ex. 'lol'.repeat(3) // 'lollollol'
+  ex. 'lol'.repeat(0) // empty string
+
+
+<br>
+
+
+#### 157. String Template Liters - SUPER USEFUL
+- Template Literal
+: Template Literal is strings that allow embedded expressions, which will be evaluated and then turned into a resulting string!
+
+ex. `I counted ${3+4} sheep`; //  "I counted 7 sheeps"  
+
+
+: we use back-ticks (usually above tab), NOT single quotes!
+
+<br>
+
+#### 158. Undefined & Null
+- Null
+: "Intentional absence of any value"
+: Must be assigned
+
+ex. //No one is logged in yet
+ex. let loggedInUser = null; //value is explicitly yet nothing
+ex. //A user logs in...
+ex. loggedInUser = 'Christopher Hemsworth';  //LoggedIn
+
+- Undefined
+: Variables that do not have an assigned value are undefined
+
+- note. typeof null ~> "objet"
+  note. typeof undefined ~> "undefined"
+
+<br>
+
+#### 159. Random Numbers & The Math Object
+- Math Object: collections of properties and methods related to mathematical constants&functions
+
+ex. Math.PI //3.141592653589793...
+
+ex. Math.round(4.9) //5
+
+ex. Math.abs(-456) //456
+
+ex. Math.pow(2,5) //32
+
+ex. Math.floor(3.999)//3
+
+ex. Math.ceil(3.99)//4
+
+- in Console, you can type Math and can see properties and methods contained in that
+
+
+- Random Numbers: Math.random() gives a random decimal b/w 0 and 1 (non-inclusive:  not including 1)
+
+- Random Integers
+: let's generate random numbers b/w 1 and 10
+ex. const step1 = Math.random();
+// 0.5961104892810127
+ex. const step2 = step1 * 10;
+// 5.9611...
+ex. const step3 = Math.floor(step2)+ 1;
+// 6
+
+~> Math.floor(Math.random() *10) + 1;
+
+~> can manipulate numbers to get ranges needed
+
+
+<br>
+
+
+## 16. JavaScript Decision Making
+
+#### 160. What Matters In This Section
+
+- Crucial
+: Comparison Operators
+: Running JavaScript From a File
+: Conditionals: If, Else-If, and Else
+: Truth-y and False-y Values
+: Logical AND
+: Logical OR
+: Logical NOT
+
+<br>
+
+#### 161. Decision Making With Code??
+
+- Boolean Logic: making decision w/code
+
+
+<br>
+
+
+#### 162. Comparison Operators
+
+: > //greater than
+: < // less than
+: >= // greater than or equal to
+: <= // less than or equal to
+
+: == // equality
+: != // not equal
+
+: === // strict equality
+: !== // strict non-equality  
+
+ex. 'a' < 'b'; ~>true
+~> comparison based on unicode
+ex. 'A' < 'b'; ~>true
+
+<br>
+
+
+
+#### 163. Equality: Triple vs. Double Equals
+- == (double equal)
+: checks for equality of values, but not equality of type
+: it coerces both values to the same type and then compares them
+: this can lead to some unexpected results
+
+ex. 0 == ''; //true
+
+ex. null == undefined; //true
+
+ex. '1' == 1 //true
+
+- === (triple equal)
+: checks for equality of values and types
+
+ex. 0 === ''; //false
+
+- So try to use *triple equals* until you become a professional software engineer
+
+
+
+<br>
+
+#### 164. Console, Alert, & Prompt
+
+
+- console.log()
+: prints arguments to the console
+: (we need this if we're going to start working with files!)
+
+ex. console.log("HELLO")
+~>  HELLO
+
+: similar to print function
+
+- ex. alert("Hi There!")
+~> pop-up
+
+
+- ex. prompt("please enter a number")
+~> also a pop-up
+
+- ex.parseInt('101')
+~> 101 //converts string to integer
+
+<br>
+
+#### 165. Running JavaScript From A Script!
+- you gotta connect the JS script file to the HTML file
+: include your script in .html
+: ex. ~
+      <script src="app.js"></script>
+      </body>
+
+~> if you connect them, you can see the JS query in the Console
+
+~> you want to place the js link at the end of body so that all the elements are loaded in first and then js can manipulate them
+
+<br>
+
+
+#### 166. If Statements
+- Conditional Statements: making decisions with codes
+
+
+1. If Statement
+: only runs code if given condition is met
+
+ex. let rating = 3;
+ex. if (rating === 3) {
+      console.log ("You are a Superstar!");
+}
+
+<br>
+
+#### 167. Else-If
+- Else-If: If not the first thing, maybe this other thing?!
+
+ex. let rating = 2;
+ex. if (rating ===3) {
+      console.log("You are a Superstar!");
+    }
+    else if (rating ===2) {
+      console.log("Meets expectations");
+    }
+
+<br>
+
+#### 168. Else
+- Else: if nothing else was true,do this...
+ex. if
+ex. else if
+ex. else if
+ex. else if
+ex. else
+
+<br>
+
+#### 169. Nesting Conditionals
+- ex. const password = prompt("please enter a new password");
+  ex. if (password.length >=6) {
+        if (password.indexOf(' ')===-1) {
+          console.log("GOOD JOB! NO SPACE");
+        }
+        else {
+          console.log("PASSWORD CANNOT CONTAIN SPACES");
+        }
+      else {
+        console.log("PASSWORD TOO SHORT! MUST BE 6+ CHARACTERS!"));
+      }  
+
+
+
+<br>
+
+#### 170. Truth-y and False-y Values
+- Truthy and Falsy Values
+: All JS values have an inherent truthyness or falsyness about them
+: Falsey values
+~> false
+~> 0
+~> "" (empty string)
+~> null
+~> undefined
+~> NaN
+
+: Everything else is truthy
+
+<br>
+
+#### 171. Logical AND
+- Logical Operators
+: combining expressions
+
+
+
+- AND: must be true on both sides, for the entire thing to be true
+ex. 1<=4 && 'a' === 'a' ~> true
+
+
+<br>
+
+
+
+
+#### 172. Logical OR
+- OR: if one side it true the entire thing is true
+
+<br>
+
+#### 173. Logical NOT
+- NOT: expression returns true if expression is false
+ex. !('a' === 'b') ~> true
+
+<br>
+
+
+
+## 17. JavaScript Arrays
+#### 174. What Matters In This Section
+- Crucial
+: Array Basics - Creating and Updating
+
+: Push & Pop
+
+: Shift & Unshif
+
+- Important
+: Cocat, IndexOf
+: Slice & Splice
+
+: Multi Dimensional Arrays
+
+
+<br>
+
+
+#### 175. JS Arrays
+- Arrays: Ordered collection of values
+ex. list of comments on IG post
+ex. collection of levels in a game
+
+- Creating Arrays
+ex. let students = [];
+ex. let colors = ['red', 'orange', 'yellow'];
+ex. let combo = ['anchovies', 1];
+
+<br>
+
+#### 176. Array RandomAccess
+- Arrays are Indexed
+: each element has a corresponding index
+
+- Modification to Arrays
+: ex. let sample = [5, 2, 3, 4, 5];
+  ex. sample[0] = 1;
+  ex. sample ~> [1,2,3,4,5]
+
+: vs. for strings modification to one element is not possible
+
+<br>
+
+#### 177. Push AND Pop
+
+#### 178. Shift AND Unshift
+- Push: add to end
+- Pop: remove from end
+- Shift: remove from start
+- Unshift: add to start
+
+<br>
+
+
+#### 179. Concat, indexOf, includes & reverse
+- More Methods
+
+: concat - merge arrays
+ex. const array1 = ['a','b','c']
+ex. const array2 = ['d','e','f']
+ex. const array3 = array1.concat(array2);
+~> array3 => ['a','b','c','d','e','f']
+
+: includes - look for a value
+ex. array1.includes('a') ~> true
+
+: indexOf - just like string.indexOf
+ex. array1.indexOf('b') ~> 1
+
+: join - creates a string from an array
+: reverse - reverses an array
+ex. array1.reverse() ~> ['c','b','a']
+
+: slice - copies a portion on an array
+ex. array1.slice() ~> ['a','b','c']
+ex. array1.slice(1) ~> ['b','c']
+ex. array1.slice(1,2) ~> ['b']
+ex. array1.slice(-2) ~> ['b','c']
+
+: splice - removes/replaces elements
+~> changes the contents of an array by removing or replacing elements and/or adding new elements in place
+ex. array1.splice(1,0,'sss'); ~> ['a','sss','b','c']
+ex. array1.splice(1,1) ~> ['a','b','c']
+ex. array1.splice(1,2,'eee','www') ~> ['a','b','eee','www']
+
+~> not recommended to use to insert elements at the middle of the array though
+: sort - sorts an array
+
+<br>
+
+#### 181. Reference Types & Equality Testing
+- ex. [1] === [1] ~> false
+  ex. [1] == [1] ~> false
+  ex. [] == [] ~> false
+
+  ~> in JS, array comparison considers the reference in the memory
+
+  ex. let nums = [1,2]
+  ex. let numsCopy = nums;
+  ex. nums.push(4)
+  ex. nums ~> [1,2, 4]
+  ex. numsCopy ~> [1,2, 4]
+  
+  ~> because both are referring to the same thing in the memory
+  ~> same in Python
+
+  ~> thus comparing the elements in the arrays take more work
+
+- cf. [1] == [1] ~> True in Python
+
+<br>
+
+#### 182. Arrays + Const
+
+- defining arrays with const is pretty common
+~> cuz we can still change the contents, as long as "the reference" remains the same
+
+ex. const myEggs = ['brown', 'brown'];
+ex. myEggs.push('purple']);
+
+ex. myEggs = ['blue','pink'] // NO! as the reference is being forced to be changed
+
+
+<br>
+
+
+
+
+#### 183. Multi-Dimensional Arrays
+- Nested Arrays
+: we can store arrays inside other arrays!
+ex. const boar = [
+      ['O',null,'X'],
+      [null,'X','O'],
+      ['X','O',null]
+    ]
+
+<br>
+
+## 18. JS Object Literals
+#### 184. What Matters In This Section
+- Crucial
+
+: Creating and Working with Object Literals
+
+
+: Nesting Arrays and Objects
+
+<br>
+
+
+#### 185. Introducing Object Literals
+- JS Objects: our second data structure
+
+- Objects: are collections of **properties**
+: properties are a **key-value pair**
+: rather than accessing data using an index, we use custom keys
+
+ex. const fitbitData = {
+        totalSteps: 308727,
+        totalMiles: 211.7,
+        avgCalorieBurn: 5755,
+        workoutsThisWeek: '5 of 7 dys',
+        avgGoodSleep: '2h 13m'}
+: no order!
+
+<br>
+
+#### 186. Creating Object Literals
+- ex. const chicken = {species: 'Silkie', name:'Albert'}
+
+- also points at the memory like arrays
+
+
+<br>
+
+
+#### 187. Accessing Data Out of Objects
+- ex. chicken['species'] ~> 'Silkie'
+  ex. chicken.species ~>  'Silkie'
+
+- NOTE: *VALID KEYS*~> All keys are converted to strings, except for symbols which we haven't covered yet
+~> cf. you had to explicity say {'a':1} for dictionaries in Python
+
+- perks of using the square bracket notation...
+~> ex. let curious = 'species'
+   ex. chicken[curious] ~> 'Silkie'
+
+<br>
+
+#### 188. Modifying Objects
+
+- ex. chicken.lastName = 'Hemsworth';
+
+<br>
+
+#### 189. Nesting Arrays & Objects 
+- Arrays + Objects : Combination is Powerful!
+- ex. const shoppingCartStatus = [
+        {
+            product: 'Jenga Classic',
+            price: 6.88,
+            quantity: 1
+        },
+
+        {
+            proudct: 'Eggs',
+            price: 3.99,
+            quantity: 1
+        },
+
+        {
+            product: 'Egg Basket',
+            price: 10.12,
+            quantity: 1
+        }
+    ]
+
+- ex. const student = {
+          firstName: 'David',
+          lastName: 'Jones',
+          strengths: ['Music','Art'],
+          exams: {
+              midterm: 92,
+              final: 88
+          }
+      }
+
+
+
+
+<br>
+
+
+
+
+## 19. Repeating Stuff With Loops
+
+#### 190. What Matters In This Section
+- Crucial
+: For Loops
+: While Loops
+: The Break Keyword
+: For...Of Loop
+
+: Iterating Arrays
+
+
+- Important
+: Nested Loops
+
+- Nice To Have
+
+: Iterating Objects
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
