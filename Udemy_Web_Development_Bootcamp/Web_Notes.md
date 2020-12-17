@@ -2474,6 +2474,237 @@ ex. const fitbitData = {
 
 : Iterating Objects
 
+<br>
+
+#### 191. Intro to For Loops
+- Loops: loops allow us to repeat code
+~> for loop
+~> while loop
+~> for ... of loop
+~> for ... in loop
+
+- Syntax
+~> for (
+      [initialExpression];
+      [condition];
+      [incrementExpression]
+    )
+ex. for (let i=1; i<=10; i++) {
+      console.log(i);
+    }
+
+<br>
+
+#### 193. The Perils Of Infinite Loops :(
+- Avoid Infinite Loops
+
+<br>
+
+#### 194. Looping Over Arrays 
+
+- ex. const animals = ['lions','tigers','chimpanzees'];
+  ex. for (let i=0; i<animals.length; i++) {
+          console.log(i, animals[i]);
+      }
+
+<br>
+
+
+
+#### 196. Another Loop: The While Loop
+- ex. let num = 0;
+  ex. while (num <10) {
+          console.log(num);
+          num++ }
+
+- ex. const SECRET = "BabyHippo";
+  ex. let guess = prompt("enter the secret code...");
+  ex. while (guess !== SECRET) {
+          guess = prompt("enter the secret code...");
+      }
+  ex. consolg.log("got it!");
+
+
+<br>
+
+#### 197. The Break Keyword
+- ex. let inpu = prompt("Hey, say something!")
+  ex. while (true) {
+        input = prompt(input);
+
+        if (input === "stop copying me") break;
+      }
+      console.log("yeah you win");
+
+<br>
+
+#### 199. The Lovely For ... Of Loop
+- For ... Of
+: a nice and easy way of iterating over arrays (or other iterable objets)
+: newer
+: not available in Explorer
+
+- Syntax
+~> for (variable of iterables) {
+      statement
+    }
+
+- ex. const chicken = ['Silkie', 'Brown', 'White']
+  ex. for (let item of chicken) {
+          console.log(item);
+      }
+  ex. for (let char of "hello") {
+          console.log(char);
+      }
+
+
+<br>
+
+#### 200. Iterating Over Objects
+- the object with key value pairs is NOT Iterable!
+
+- FOR ... IN Loop
+~> For ... in is pretty UNCOMMON these days
+~> but it enables iterating *over* objects
+~> gives back the key in the object
+
+- Another option...
+~> Use a special method
+~> **Object.keys(object_name);**
+   => gives you an array made up of keys
+   **Object.values(object_name);**
+   => gives you an array made up of values
+   **Object.entries(object_name);**
+   => Nested arrays of key value pairs
+  
+     
+    
+
+
+~> cf. for ... in for iterable arrays gives you back only the indices
+
+<br>
+
+## 20. NEW: Introducing Functions
+#### 203. What Matters in This Section
+- Crucial
+: Defining Functions
+: Working with Arguments
+: Function Return Values
+: Function Exercises
+
+<br>
+
+#### 204. Intro to Functions
+- Functions: reusable procedures
+: Functions allow us to write reusable, modular code
+: we define a "chunk" of code that we can then execute at a later point
+: we use them ALL THE TIME
+
+<br>
+
+#### 205. Our Very First Function
+
+- 2 Step Process: (1) Define, (2)Run
+
+1. Define
+ex. function funcName() {
+      //do something
+    }
+
+
+2. Run
+ex. funcName(); //run once
+
+ex. funcName(); //run again
+
+<br>
+
+#### 206. Argument Intro
+
+- ex. function greet(firstName){
+          console.log(`Hello ${person}`);
+      }
+
+- note: argument is what's passed into (ex. 'Elvis')
+
+  : parameter is the placeholder (ex. firstName)
+
+<br>
+
+#### 207. FUnctions with Multiple Arguments
+- ex. function repeat(message, number){
+        let result = '';
+        for (let i=0; i<number; i++) {
+
+            result += message
+        }
+        console.log(result);
+  }
+
+<br>
+
+
+#### 208. The Return Keyword
+
+- Return: Built-in Methods **return** values when we call them and we can store those values somewhere
+
+: return actually stops the execution of function!
+
+: returns a single value only
+
+<br>
+
+## 21. Levelling Up Our Functions
+#### 209. What Matters In This Section
+- Crucial
+: Function Scope
+: Block Scope
+: Lexical Scope
+: Function Expressions
+: Higher-Order Functions
+: The Keyword "this"
+
+- Important
+: Returning Functions
+: Adding Methods To Objects
+
+<br>
+
+#### 210. Function Scope
+- Scope
+: variable "visibility"
+: the location where a variable is defined dictates where we have access to that variable
+
+- a variable defined in the function is only accessible within that specific function
+
+- refer to the scope diagram
+
+<br>
+
+#### 211. Block Scope
+- Block: a chunk of codes incased in the curley braces ~> conditionals and loops
+
+~> block scope is the same as the function scope logic-wise
+
+- cf. python does not support creating block scope
+  : https://stackoverflow.com/questions/6167923/block-scope-in-python
+  : while the following construcs create scope
+  ~> module
+  ~> class
+  ~> function incl. lambda
+  ~> general expression
+  ~> comprehensions - dict, set, list in Python3.x
+- NOTE: if you define a variable using **var** the variable becomes global
+~> so avoid it
+
+<br>
+
+
+
+
+#### 212. Lexical Scope
+- nested function has access to variables defined in the parental functions
 
 
 
@@ -2486,6 +2717,300 @@ ex. const fitbitData = {
 
 
 
+
+<br>
+
+
+#### 213. Function Expressions
+- Ways of defining functions...
+1. Function Statement
+ex. function sumNumbers(a,b) {
+        return a+b;
+    }
+~> making a function with the name
+
+2. Function Expressions
+: storing a function in a variable
+ex. const sumUp = function (a,b) {
+        return a+b;
+    }
+
+ex. sumUp(a,b);
+
+~> making a function without a name, storing it in a variable, and letting the function to run behind the scene
+
+<br>
+
+
+#### 214. Higher-Order Functions
+- Higher-order functions: functions that operate on or with other functions
+: they can accept other functions as arguments, and return a function
+
+- ex. function callTwice(func){
+        func();
+        func();
+    }
+
+      function rollDice(){
+        const roll = Math.floor(Math.random()*6)+1;
+        console.log(roll);
+      }
+
+      callTwice(rollDice)
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+#### 215. Returning Functions
+
+- returning a function inside a function
+
+
+- ex. function makeBetween(min,max){
+          return function(num){
+              return num>=min && num<=max;
+          }
+    }
+      const isBetween = makeBetween(1,5);
+      isBetween(3);
+
+
+
+
+<br>
+
+#### 216. Defining Methods
+- Methods: we can add functions like properties on objects
+  : we can tell them **methods**!
+
+- ex. const calc = {
+        add: function(x,y) {
+            return a+b;
+        }
+        round: function(x) {
+            return Math.round(x);
+        }
+      }
+
+- shorthand - more popular!
+  ex. const calc = {
+        blah: 'Hi!',
+        add(x,y) {
+            return x+y;
+        },
+        round(x){
+            return Math.round(x);
+        }
+      }
+
+      
+
+- cf. in Python,
+  ex. class Product:
+          def __init__(self, name, price):
+              self.name = name
+              self.price = price
+          def myfunc(self):
+              print("Hi this is "+ self.name +"which costs $ "+ self.price)
+      soup = Product("soup",3.99)
+      soup.myfunc()
+
+
+
+
+<br>
+
+#### 217. The Mysterious Keyword: "This"
+- 'This' in methods: use the keyword 'this' to access other properties in the same **OBJECT**
+  ex. const product = {
+        name: "soup"
+        price: 3.99
+        fullInfo() {
+            return `To buy ${this.name} you need $${this.price} `
+        }
+  }
+
+- ATTENTION! the value of **this** depends on the invocation context of the function it's used 
+  ex. product.fullInfo()
+  ~> returns the expected
+  ex. const soup = product.fullInfo
+      soup()
+      ~> does NOT return the expected!
+      ~> cuz this is referring to **window** object, which is the top-level obj. for all
+      ex. prompt() == window.prompt ()
+      ~> so soup() == window.soup() and cuz window object does not have 'name' and 'product' info, it will not return the same
+
+
+<br>
+
+#### 218. Using Try / Catch
+
+- ex. try {
+        //if the following could result in any error
+        hello.toUpperCase();
+      }catch (e){
+        //if 'try' resulted in any error, and e is the error that is caught! 
+        console.log("error");
+      }
+
+
+
+
+
+- can handle errors
+- can make sure that the code keeps running even after an error occured 
+
+<br>
+
+
+
+## 22. Callbacks & Array  Methods
+
+#### 219. What Matters in This Section
+
+
+
+
+
+
+
+
+
+- Crucial
+: ForEach
+: Map
+: Arrow Functions
+: Filter
+
+
+- Nice To Have
+: Some & Every
+: Reduce
+
+<br>
+
+#### 220. What Is This Section Even About?
+- Goals
+: use the new arrow function syntax
+: understand and use these methods
+~> forEach
+~> map
+~> filter
+~> reduce
+~> find
+~> some
+~> every
+
+<br>
+
+#### 221. The forEach Method
+- ForEach: accepts a callback function
+: calls the function once per element in array
+
+- ex. const nums = [1, 2, 3];
+  ex. nums.forEach(function (n) {
+          console.log(n*n);
+      });
+      //prints: 1, 4,9
+      nums.forEach(function (el) {
+            if(el%2 === 0){
+                  console.log(el);
+            }
+      }) ;
+      //prints: 2
+  
+~> with the advent of for ... of => for (let el of iterables) {} (newer syntax) forEach is being less popular
+~> anonymous function used only for that specific use, once!
+
+
+- array callback methods ~> the methods which expect functions
+
+<br>
+
+#### 222. The Map Method
+- MAP: Creates a new array with the results of calling a callback on every element in the array
+
+~> a way to "map" one state to another state
+
+- ex. const texts =['a','b','c'];
+  ex. const caps = texts.map(function(text){
+        return text.toUpperCase();
+      })
+
+<br>
+
+
+
+
+#### 223. Introduction to Arrow Functions
+- Arrow Func's : Syntatically compact alternative to a regular function expression
+- ex. const square = (x) => {
+          return x*x;
+      }
+  ex. const sum = (x,y) => {
+          return x+y;
+      }
+
+~> very useful when a function is a one-time thing
+
+- ex. const randNum = () => {
+          return Math.floor(Math.random)
+}
+
+<br>
+
+#### 224. Arrow Function Implicit Returns
+- Implicit Returns: can only do with arrow functions
+  ex. //Regular function expression
+  ex. const isEven = function (num){
+          return num %2 == 0;
+      }
+  ex. //arrow function with parens around param
+  ex. const isEven = (num) => {
+          return num %2 ===0;
+      }
+  ex. //no parans around param
+  ex. const isEven = num => {
+          return num %2 ===0; // only works with one param
+      }
+  ex. //implicit return
+  ex. const isEven = num => (
+          num %2 ===0
+      )
+  ex. const isEven = num => num%2 ===0; //one-liner
+
+  ~> good for simple functions
+
+  <br>
+
+  #### 225. Arrow Functions WrapUp
+  - ex. const titles=movies.map(function(el) {
+            return el.title;
+        })
+    ex. const titles =movies.map(el)=> el.title;
+  
+  ~> arrow functions pop up a lot when you need to pass in another
+
+  
+
+
+
+
+  
+
+
+
+
+      
 
 
 
