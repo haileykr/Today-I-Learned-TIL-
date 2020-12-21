@@ -2990,22 +2990,1009 @@ ex. sumUp(a,b);
 
   ~> good for simple functions
 
+<br>
+
+#### 225. Arrow Functions WrapUp
+- ex. const titles=movies.map(function(el) {
+          return el.title;
+      })
+  ex. const titles =movies.map(el)=> el.title;
+
+~> arrow functions pop up a lot when you need to pass in another
+
+<br>
+
+#### 226. setTimeOut and setInterval
+- both expect you to pass the callback functions in, but they are not array methods
+
+- setTimeOut & setInterval: relevant to *scheduling*
+
+- cf.other languages: use 'waiting' functions like sleep()or pause()
+
+- in JavaScript, use
+1. setTimeout (handler: TimerHandler [function], timeout?: number ... arguments: any[]): number
+~> after the desginated time, the function will run
+
+ex. setTimeout(() => {
+        console.log("HELLO!")
+    }, 3000)
+    ~> two arguments: (1) a function and (2) ms
+
+ex. console.log(~~~) - 1
+    setTimeout()~~~ - 2 
+    console.log(~~~) - 3
+    ~> 1 and 3 run immediately, and 2 runs after the designated timeframe
+
+2. setInterval()
+~> the function runs every n seconds
+
+ex. setInterval(() => {
+        console.log("HELLO!!")
+    },3000)
+
+3. to stop the interval...
+: clearInterval(id)
+~> assign id to the interval and stop
+~> ex. const id = setInterval() ...
+
+<br>
+
+#### 227. The Filter Method
+- Filter: creates a new array with all elements that **pass** the test implemented by the provided function
+
+ex. const nums = [9,8,7,6,5,4,3,2,1];
+ex. const odds = nums.filter(n => {
+      return n % 2 === 1; //our callback returns true or false
+      //if it returns true, n is added to the filtered array
+    })
+    // [9,7,5,3,1]
+
+ex. const smallNums = nums.filter(n => n <5);
+
+ex. let movies = [
+      {
+        title: 'Alien',
+        score: 90,
+        year: 1979
+      }
+      ...
+    ]
+ex. const goodMovies = movies.filter (m => m.score>=90)
+
+
+~> often we combine map and filter
+
+ex. const goodMoviesList = goodMovies.map(m => m.title)
+
+ex. const goodMoviesList = movies.filter(m => m.score >= 90).map(m => m.title)
+
+~> if the code becomes too long, you can indent lines too
+ex. const goodMoviesList = movies
+        .filter(m => m.score >=90)
+        .map(m => m.title);
+
+<br>
+
+#### 228. Some & Every Methods
+
+- Both of them return boolean!
+
+- Every
+: returns true if **all** elements in the array pass the provided function
+
+- Some
+: Similar to every, but returns true if ANY of the array elements pass the test function
+
+ex. const words = ['dog',  'jello', 'vlog', 'cupcake', 'bag', 'wag'];
+
+ex. //Are all words 3-letter long?
+ex. words.every(word => {
+      return word.length === 3;
+    }) //false
+
+ex. //Are there any words longer than 4 characters?
+ex. words.some(word => {
+      return word.length > 4;
+    }) //true
+
+ex. //Do any words start with 'Z'?
+ex. words.some(word => word[0] === 'Z'); //false
+
+ex. //Do any words contain 'cake'?
+ex. words.some(word => word.includes('cake') ); //true
+
+<br>
+
+#### 229. The Notorious Reduce Method
+- Reduce
+: Executes a reducer function on each element of the array, **resulting in a single value** !!!!!
+~> two parameters!
+
+
+ex. //Summing An Array
+ex. [3,5,7].reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+    }
+ex. ~> callback   | accumulator | curentValue | return
+       first call | 3           | 5           | 8
+       second call| 8           | 7           | 15
+
+
+~> can use it for calculations and comparisons and so on
+
+- the second argument to the reduce function will be the **starting point** for the first parameter!
+
+<br>
+
+#### 230. Arrow Functions & "this"
+- the keyword 'this' behaves differently inside an arrow function and other functions!
+
+- ex. const marketItem = {
+        productName: 'soup',
+        price: 3.99
+        fullInfo: function() {
+            return `You need ${this.price} to purchase ${this.productName}!`
+        }
+      }
+      ~> works!
+  ex. however, with arrow function like
+        ...
+        fullInfo: () => `${this.price) +${this.productName}`
+      
+      ~> it does not work, because with the arrow function, *this* refers to the scope that it's created in! (i.e. window)
+
+- vs. when we use 'this' in a non-arrow func.,  'this'has nothing to do with the scope! It is related to how the function is executed, rather.
+
+- so carefully decide if you wanna use a regular function or an arrow function when defining an object method!
+
+<br>
+
+## 23. Newer JavaScript Features
+#### 231. What Matters In This Section
+- Crucial
+: Spread with Arrays
+: Spread with Objects
+
+: Destructuring
+
+- Important
+: Default Params
+: Spread in Function Calls
+
+: Rest Params
+
+<br>
+
+#### 232. Default Params
+- Default Params: The Old Way
+ex. function multiply(a,b) {
+      b = typeof b !== 'undefined' ? b : 1;
+      return a*b;
+    }
+
+- Default Params: The New Way
+ex. function multiply(a,b=2) {
+      return a*b;
+  } 
+
+~> note: the param with the default should come after the one without the default
+
+<br>
+
+
+
+#### 233. Spread in Function Calls
+- Spread
+: Spread syntax allows an iterable such as an array to be **expanded** in places where zero or more arguments (for function calls) or elements (for array literals) are expected,
+: or an object expression to be expanded  in places where zero or more key-value pairs (for object literals) are expected 
+
+- Spread for Function Calls
+: expands an iterable (array, string, etc.) into a list of arguments
+ex. const nums = [9,3,2,8];
+ex. Math.max(nums); //NaN
+ex. //Use spread!
+ex. Math.max(...nums); //67
+ex. //Same as calling:
+    //Math.max(9,3,2,8)
+
+<br>
+
+#### 234. Spread with Array Literals
+
+
+- Create a new array using an existing array. Spreads the elements from one array into a new array.
+- ex. const nums1 = [1,2,3];
+  ex. const nums2 = [4,5,6];
+
+  ex. [...nums1, ...nums2];
+  ex. // [1,2,3,4,5,6]
+
+  ex. ['a','b',...nums2];
+  ex. //['a','b',4,5,6]
+
+  ex. [...nums1, ...nums2,7,8,9];
+  ex. //[1,2,3, 4,5,6, 7,8,9]
+
+  ex. [..."hello"];
+  ex. //["h","e","l","l","o"]
+
+<br>
+
+#### 235. Spread with Objects
+- Copies properties from one object into another object literal
+
+ex. const feline = {legs:4, family: 'Felidae'}
+ex. canine = {family: 'Caninae',furry:true}
+
+ex. const dog = {...canine, isPet: true}
+ex. // {family:'Caninae',furry:true,isPet:true}
+
+ex. const lion = {...feline,genus: 'Panthera'};
+ex. // {legs:4, family: 'Falidae', genus:'Panthera'}
+
+ex. const catDog = {...feline, ...canine );
+ex. // {legs:4, family:'Caninae',furry:true}
+
+
+
+<br>
+
+#### 236. Rest Params
+- The Arguments Object
+: available inside every func.
+: It's an **array-like** object
+  ~> has a len. property
+  ~> does not have array methods like push/pop
+: contains all the arguments passed to the function
+: **not available** inside of arrow func. (thus use rest params!)
+
+
+
+: ex. function sumAll() {
+          let total = 0;
+          for (let i=0; i< arguments.length; i++){
+              total += arguments[i];
+          }
+          return total;
+      }
+
+: ex. sumall(8,4,3,2); // 17
+
+- cf. in Python,
+  ex. import sys
+      print(sys.argv)
+  ex. >>>python example.py one two three
+      ~> print(sys.argv)
+      ~> ["example.py", "one", "two", 
+      three"]
+
+- however note again that arguments is NOT an array!
+ex. function summation() {
+          return arguments.reduce((total,el)=> total+el)
+    }
+~> does NOT work as arguments is not an array and cannot have an array method
+
+
+- THIS IS WHERE **REST PARAMS** COMES INTO PLAY!
+- Rest Params
+: Collects all remaining arugments into an actual array
+
+ex. function sumAll(...nums) {
+        let total = 0;
+        for (let n of  nums) total += n;
+        return total;
+    }
+
+ex. sumAll(1,2,3,4); //10
+
+ex. function raceResults(gold,...everyoneElse){
+        console.log(everyoneElse);
+    }
+
+<br>
+
+#### 237. Destructuring Arrays
+- Destructuring
+: a short, clean syntax to 'unpack':
+  ~> values from arrays
+  ~> properties from objects into distinct variables
+
+- ex. const score = [182310293123,190482094,129033,18441,12933,1923];
+
+  ex. const highScore = scores[0];
+  ex. const secondHighScore = scores[1];
+  
+  ex. //faster way -> DESTRUCTURING
+  ex. const [gold, silver] = scores;
+  ex. gold; //182310293123
+  ex. silver; //190482094
+
+  ex. const [gold, ...others] = scores;
+  ex. gold; // 182310293123
+  ex. others; //[190482094,129033,18441,12933,1923]
+
+
+<br>
+
+
+#### 238. Destructuring Objects
+- more common than destructuring arrays, as it does not have anything to do with the order!
+
+- ex. const runner = {
+        first: "Eliud",
+        last: "Kipchoge",
+        country: "Kenya"
+      }
+  ex. const {first,last} = runner;
+  
+  ex. first; //"Eliud"
+  ex. last; // "Kipchoge"
+
+
+- and if you want to rename,
+  ex. const {first:newVarName}=runner;
+
+- and to set default value,
+  ex. const {first, last, team = 'JPMorgan'} = runner;
+
+
+<br>
+
+
+#### 239. Destructuring Params
+- Param Destructuring
+: we can destructure the values that are passed into the function as parameters
+
+
+- ex. const fullName = ({first, last}) => {
+        return  `${first} ${last}`
+      }
+      const runner = {
+        first: "Eliud",
+        last: "Kipchoge"
+      }
+
+
+- ex. fullName(runner); // "Eliud Kipchoge"
+
+~> most frequently used with objects!
+
+- ex. movies.filter(({score}) => score >=90);
+
+
+
+<br>
+
+
+## 24. Introducing the World of DOM
+#### 240. What Matters In This Section
+- Crucial
+
+: Intro to the DOM
+: querySelector
+: getElementByid
+: innerHTML and Text
+: Changing Styles
+: Creating/Removing Elements
+: classList
+
+- Important
+: Traversing the DOM
+: Manipulating Attributes
+
+<br>
+
+#### 241. Introducing DOM
+
+
+- DOM
+: Document Object Model
+
+- What is it?
+: the DOM is a JavaScript representation of a webpage.
+: it's your JS "window" into the contents of a webpage
+: it's just a bunch of objects that you can interact with via JS
+
+<br>
+
+
+
+
+#### 242. The Document Object
+- a part of loading a webpage involves..
+~> HTML + CSS go in..
+~> JS objects come out (and the objects are linked to each other through data structure)
+~> at the top of the data structure, the "root" is the "document" object
+
+- console: type  console.dir(document) and can take a look into it
+
+
+- Document
+
+: the document object is our entry point into the world of the DOM. it contains representations of all the content on a page, plus tons of useful methods and properties
+
+~> created automatically by a page based on the contents in the page.
+
+
+- CodeAlong
+: "selecting" codes
+
+~> console - console.dir(document)
+: can explore each "property" object
+: ex. "b" tag (bold) itself is now an object
+
+: ex. document.all
+: ex. document.all[10] ~> <b>Silkie</b>
+: ex. document.all[10].innerText ~> "Silkie"
+: ex. document.all[10].innerText = "SLICKIE"  =>> changes the content!
+
+~> thus, you can manipulate a lot using the Document Object!
+
+<br>
+
+
+
+
+#### 243. getElementById
+- 1. Select
+  2. Manipulate
+
+- 1. Selecting
+~> getElementById
+   : the method that exists ON the document
+   : and when you call it, you pass in the string
+~> getElementsByTagName
+~> getElementsByClassName
+
+- ex. const banner = document.getElementById('banner')
+  ~> gives you the img
+  ex. console.dir(banner)
+  ~> it's an object! which contains a lot of properties
+  
+  ~> returns the object representation of the element, which then you can manipulate
+
   <br>
 
-  #### 225. Arrow Functions WrapUp
-  - ex. const titles=movies.map(function(el) {
-            return el.title;
-        })
-    ex. const titles =movies.map(el)=> el.title;
+  #### 244. getElementsByTagName & className
+  - ex. const allImages = document.getElementsByTagName('img')
+    ~> returns the **"HTML Collection"**
+
+    ex. for(let image of allImages){
+            console.log(image.src);
+        }
   
-  ~> arrow functions pop up a lot when you need to pass in another
+  - HTML Collection
+  : looks like an array but it is not an array
+  : though allImages[index], allImages.length, and For ... Of can be used
+  : but array methods are not applicable to this
+  : it is a collection of **elements**
+  : it is the most general base class from which all element objects (that represent elemtns) in a Document inherit. It only has methods and properties common to all kinds of elements, and more specific classes inherit from Element.
+
+
+<br>
+
+#### 245. querySelector & querySelectorAll
+- querySelector
+: a newer, all-in-one method to select a single element.
+
+ex. //Finds first h1 element:
+ex. document.querySelector('h1');
+
+ex. //Finds first element with ID of red:
+ex. document.querySelector('#red');
+
+ex. //Finds first element with class of:
+ex. document.querySelector('.big');
+
+ex. document.querySelector('img:nth-of-type(2)')
+
+ex. document.querySelector('a[title="Java"]')
+
+<br>
+
+
+#### 246. innerHTML, textContent,  & innerText
+- there are so many! you can use
+
+- some of the important ones...
+~> classList
+~> getAttribute()
+~> setAttribute()
+~> appendChild()
+~> append()
+~> prepend()
+~> removeChild()
+~> remove()
+~> createElement
+~> innerText
+~> textContent
+~> innerHTML
+~> value
+~> parentElement
+~> children
+~> style
+~> nextSibling
+~> previousSibling
+
+
+- innerText & textContent
+: texts inside
+
+ex. document.querySelector('p').innerText = 'lololol'
+~> changed the content!
+
+- textContent=> shows ALL the contents(ex.hidden)
+
+
+
+- innerHTML: shows the entire content including the HTML elements
+~> useful when updating the contents
+
+ex. document.querySelector('h1').innerHTML = '<i>jadlkfjlka</i>'
+
+<br>
+
+#### 247. Attributes
+- can change attributes incl. id and class!
+
+- ex. document.querySelector('#banner').id = "whoops"
+  ~> changes the id, but it also disables the css setting that is on the previous id
+
+- ex. const firstLink = document.querySelector('a')
+  ex. firstLink.href
+      ~> "file://wiki/List~~~~" (computed value taken from the JS Object!)
+  ex. firstLink.getAttribute('href')
+      ~> "/wiki/List~~~ "
+  
+  ~> so .getAttribute() is the *method* which goes through html itself to look for the html
+     vs. .href is the property which goes through the JS Object
+
+  ex. firstLink.setAttribute('href','http://www.google.com')
+
+  <br>
+
+  #### 248. Changing Styles
+  
+  - ex. const h1 = document.querySelector('h1');
+    ex. h1.style
+
+    ~> .style returns the CSSStyleDeclaration 
+    ~> note. in CSS, we use '-' ex. text-align
+       vs. in JS, '-' does not work and instead, camelCase is used ex.textAlign
+
+    ~> but!! the object only contains *inline* styles specified
+
+- Thus, unless we use in-line styles, the object does not contain the styles we specified in a separate css file, but we can still  **manipulate** the styles using this specific object!
+
+~> however changing styles through this will **ONLY add the in-line styles**
+: not a good idea!
+
+~> rather add classes and manipulate those 
+
+- the way to get the "computed" style after all the css sheets are applied
+  ~> window.getComputedStyle(element)
+
+<br>
+
+#### 249. Classlist
+- ex. const h2 =document.querySelector('h2')
+  ex. h2.getAttribute('class')
+      ~> null
+  ex. h2.setAttribute('class','purple')
+  ex. const currentClasses = h2.getAttribute('class')
+  ex. h2.setAttribute('class',`${currentClasses} +'purple')
+
+ ~> can be annoying to go through multiple steps if you don't want to override the current classes
+
+
+- Thus use sth called  *classList*
+  ex. h2.classList
+
+  ~> an object to interact with to control and retrive the classes of the elments
+
+  ex. h2.classList.add('purple')
+
+  ex. h2.classList.remove('purple')
+  ex. h2.classList.contains('purple')
+
+  ex. h2.classList.toggle('purple')
+
+
+<br>
+
+
+#### 250.Traversing Parent/Child/Sibling
+
+
+
+- could traverse among elements using relationships!
+  ex.const firstBold = document.querySelector('b')
+  ex. firstBold
+      ~> <b>Silkie</b>
+  ex. firstBold.parentElement
+      ~> <p> ... </p>
+  ex. firstBold.parentElement.parentElement
+      ~> <body> ... </body>
+  ex. firstBold.parentElement.parentElement.parentElement
+      ~> the root element
+
+- ex. paragraph.childresn
+  ~> note that children might be multiple and you can select each with indices
+
+- trasversing siblings!
+  ~> .nextSibling / .previousSibling: gives you back the corresponding node (a lot of cases, \n text nodes
+
+  
+  ~> .nextElementSibling / .previousElementSibling: gives you back the element! 
+
+
+<br>
+
+
+#### 251. Append & AppendChild
+- creating new elements from scratch and appending to the page
+
+- How to make a new DOM element?
+  : Document.createElement ( )
+  ex. const newImg = document.createElement('img')
+  ex. newImg.src = 'url'
+
+  ~> now to append
+  1. appendChild
+  : document.body.appendChild(newImg)
+  : append as the last child the page
+
+  ex. const newH3 = document.createElement('h3')
+  ex. newH3.innerText = 'akfdljdlkaf'
+  ex. document.body.appendChild(newH3)
+
+  2. append() / prepend()
+  : newer, does not work in Explorer
+  : syntax - ParentNode.append()
+
+  ex. const p = document.querySelector('p')
+  ex. p.append('i am new text yeahhh')
+  ~> appended the new text! at the end of the paragraph
+
+  : can add multiple
+
+  3. insertAdjacentElement(position, elem.)
+  : inserts a given element node at a given position rel. to the element it's invoked on
+  : position - beforebegin / afterbegin / beforeend / afterend
+
+  ex. const h2 = document.createElement('h2')
+  ex. h2.append("Are adorable chickens")
+  ex. h1.insertAdjacentElement( 'afterend', h2)
+
+  4. after()
+  : ex. const h3 = document.createElement('h3')
+    ex. h3.innerText = 'I am h3'
+    ex. h1.after(h3)
+
+
+<br>
+
+#### 252. removeChild & remove
+1. Node.removeChild()
+~> should call the parent to remove the specific ch.
+ex. const firstLi = document.querySelector('li')
+
+ex. firstLi.parentElement.removeChild(firstLi)
+
+2. ChildNode.remove()
+~> call the actual thing to be removed
+ex. firstLi.remove()
+
+<br>
+
+
+
+#### 253. Pokemon Sprites Demo
+
+- Reference code available!
+
+<br>
+
+## 25. DOM Events
+#### 254. What Matters in This Section
+- Crucial
+: Introducing Events
+: addEventListener
+: Forms Events
+
+- Important
+: Keyboard Events
+: Input & Change Events
+: Event Bubbling
+: Event Delegation
+
+<br>
+
+#### 255. Intro to Events
+- Events
+: responding to user inputs and actions!
+
+- A Small Taste
+: clicks, drags, drops, hovers, scrolls, form submission, key presses, focus/blur
+: mouse wheel, double click, copying, pasting, audio start, screen resize, printing
+
+<br>
+
+#### 256. Inline Events
+
+
+- there are three ways to respond to events
+
+1. (not recommended) in-line HTML Event Handler Attribute
+  : onclick="~"
+  : syntax is confusing, and need to duplicate codes if you want the same function for multiple
+
+<br>
+
+#### 257. The Onclick Property
+
+2. Use JS to set the onclick(or other) property(ies)
+  ex. const btn = document.querySelector('button')
+  ex. btn.onclick = function() {
+          console.log("YOU CLICKED ME!");
+          console.log("I HOPE IT WORKED!");
+      }
+
+  ~> easier to duplicate (ex. can set up the loop and assign .onclick property to each)
+
+  ex. function yell(){
+          console.log("yeahhhhhhh");
+      }
+  ex. btn.onmouseenter = yell;
+      //NOTE. you are just defining the function, and only when the event occurs, the function is **executed**
+
+  
+  ex. document.querySelector('h1').onclick = () => {
+          alert('you clicked the h1 !')
+      }
+
+
+<br>
+
+#### 258. addEventListener
+
+- the best Option!
+
+- addEventListener
+  : specify the event type and a callback to run
+  ex. const button =  document.querySelector('h1');
+  ex. button.addEventListener('click', () => {
+          alert("You clicked me!!")
+      })
+
+- Better than the other two because
+  1. .onclick (2nd way) style can only designate one function i.e. one property
+
+  2. and there are options you can include ex. .addEventListener('onclick', function,{once:true});
+
+  3. companion method:  .removeEventListener
+
+<br>
+
+#### 259. Random Color Exercise
+- code available!
+
+<br>
+
+
+#### 260. Events & The Keyword "This"
+
+- ex. function colorize() {
+        this.style.backgroundColor = makeRandColor();
+        this.style.color = makeRandColor()
+      }
+      ~> note again that the keyword 'this' depends on the scope the function is created in
+
+<br>
+
+
+
+
+#### 261. Keyboard Events & Event Objects
+
+1. Event Objects
+- ex. document.querySelector('button').addEventListener('click', function (evt) {
+        console.log(evt)
+      })
+      ~> when this is coded, there is a thing that's *automatically* passed into the callback function => Event Object (evt in this example)
+
+- keyboard objects
+  : code, and key are the important ones
+  : ex. shift - there are left and right shifts
+  : ex. keys - q / ㅂ, code - keyQ
+
+<br>
+
+#### 262. Form Events & PreventDefault
+- when we submit (i.e. click button), let's stop the action to go to another page, and rather do something on the same page
+
+- first gotta create an object of the form, to listen to the events happening with it
+
+- ex. const tweet = document.querySelector('#tweetForm');
+  ex. tweet.addEventListener('submit',function(e) {
+          console.log("SUBMIT!")
+
+
+          e.preventDefault();
+  });
+
+- inputObject.value: whatever is in the input
+
+
+- Rather, if you assign 'names' to elements inside the form,
+  ex. tweetForm.elements.username (when the input name is 'username')
+
+<br>
+
+#### 263. Input & Change Events
+- example - wants update every time the input is updated
+
+- ex. input.addEventListener('change', function(e){})
+  ~> 'change': only applied when you leave the input
+  ex. input.addEventListener('input',function(e){})
+  ~> 'input': happens everytime the input changes
+  ~> can be useful for preview & whatnot!
+
+
+<br>
+
+
+#### 264. Event Bubbling
+
+- all the events bubbled up by elements will run
+  ~> to stop the execution of further events, .stopPropagation()
+
+<br>
+
+#### 265. Event Delegation
+
+- example file - deleting list items using
+  for (li in lis) {
+    li.eventListener('click',function(e){
+        li.remove;
+    })
+  }
+  works for the list items, which were already there, at the time 'const li's were defined
+  : however, the new list items added don't get assigned to lis and it does not work
+  : thus, we will assign the event listener to the parent element.
+
+- ex. tweetsContainer.addEventListener('click',function(e){
+        //target is set to the specific <li>  clicked
+        
+        // if the clicked element is <li>, remove the target
+        e.target.nodeName === 'LI' && e.target.remove();
+      })
+
+<br>
+
+
+
+
+
+## 26. Score Keeper CodeAlong
+#### 266. Score Keeper
+- "Bulma": similar to Bootstrap, another CSS framework
+  : does not require jqery!!!
+
+- we will use 'card' format 
+
+<br>
+
+#### 269. Score Keeper Refactoring
+- to reduce duplicates, objects will be used
+
+<br>
+
+
+
+## 27. Async JavaScript: Oh Boy!
+
+
+
+
+#### 270. What Matters In This Section
+- Crucial
+: Working With Promises
+: Async Functions
+
+- Important
+: The Call Stack
+: Callback Hell
+
+- Nice To Have
+: Understanding WebAPI's
+: Creating Our Own Promises
+
+<br>
+
+#### 271. Call Stack
+- Call Stack
+: The mechanism the JS interpreter uses to keep track of its place in a script that calls multiple functions.
+: How JS "knows" what function is currently being run and what functions are called from within that function, etc.
+
+- How it works
+1. When a script calls a function, the interpreter adds it to the call stack and then starts carrying out the function
+
+2. Any functions that are called by that function are added to the call stack further up, and run where their calls are reached
+
+3. When the current function is finished, the interpreter takes it off the stack and resumes execution where it left off in the last code listing!
+
+- reference
+~> loupe
+   :isTriangle Demo
+   => http://latentflip.com/loupe/?code=ZnVuY3Rpb24gbXVsdGlwbHkoeCx5KSB7CiAgICByZXR1cm4geCAqIHk7Cn0KCmZ1bmN0aW9uIHNxdWFyZSh4KSB7CiAgICByZXR1cm4gbXVsdGlwbHkoeCx4KTsKfQoKZnVuY3Rpb24gaXNSaWdodFRyaWFuZ2xlKGEsYixjKXsKICAgIHJldHVybiBzcXVhcmUoYSkgKyBzcXVhcmUoYikgPT09IHNxdWFyZShjKTsKfQoKaXNSaWdodFRyaWFuZ2xlKDMsNCw1KQ%3D%3D!!!
+
+~> chrome - sources
+
+<br>
+
+#### 272. Web APIs & Single Threaded
+- JavaScript is Single-Threaded
+: At any given point in time, that single JS thread is running at most one line of JS code
+
+- fortunately...we have a workaround
+  ex. console.log("Sending request to server!")
+      setTimeout(() => {
+          console.log("Here is your data from the server...")
+      }, 3000)
+      console.log("I am at the end of the file!")
+  
+  ~> "Sending request to server!"
+     "I am the end of the file!" => the browser (C++) sets the timer and tells  JS to 
+     "Here is your data from the server.."
+
+
+
+
+- The **browser** does the work! (not JS)
+: Browsers come with Web APIs that are able to handle certain tasks in the background (like making requests or setTimeout)
+: The JS call stack recognizes these Web API functions and passes them off to the browser to take care of
+: Once the browser finishes those tasks, they return and are pushed onto the stack as a callback.
+
+- reference - loupe again!
+  : setTimeOut Demo
+  => http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIlNlbmRpbmcgcmVxdWVzdCB0byBzZXJ2ZXIhIikKc2V0VGltZW91dChmdW5jdGlvbigpIHsKICAgIGNvbnNvbGUubG9nKCJIZXJlIGlzIHlvdXIgZGF0YSBmcm9tIHRoZSBzZXJ2ZXIuLi4iKQp9LCAzMDAwKQpjb25zb2xlLmxvZygiSSBBTSBBVCBUSEUgRU5EIE9GIFRIRSBGSUxFISIp!!!
+
+<br>
+
+#### 273. CallBack Hell :(
+- Nesting setTimeout() function to make events consecutive
+
+- It is incredibly a common practice to nest so many callbacks, in case it doesn't work, if API is down or request failed, etc., etc....
+
+  => "Callback Hell"
+  
+~> Async to come!!
+
+<br>
+
+#### 274. Demo: fakeRequest using Callbacks
+
+- Enter Promises
+: A Promise is an object representing the eventual completion or failure of an asynchronous operation
+
+
+
 
   
 
 
 
 
+
+
+
   
+
+
+
+
+
 
 
 
