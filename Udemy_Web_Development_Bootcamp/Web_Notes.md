@@ -3976,30 +3976,269 @@ ex. firstLi.remove()
 - Enter Promises
 : A Promise is an object representing the eventual completion or failure of an asynchronous operation
 
+- ex. // THE CALLBACK VERSION
+        const fakeRequestCallback(url, success, failure){
+          const delay = Math.floor(Math.random * 4500)+500;
+          setTimeout(() => {
+            if (delay > 4000){
+              failure("Connection Timeout :(")
+            } else {
+              success ("Here is your fake data from ${url})
+            }
+          }, delay)
+        }
+
+- Note that if you want to execute something ONCE one thing is run, you have to NEST it. ~> can yield to multiple nested success/fail callbacks
+
+<br>
+
+#### 274. Demo: fakeRequest Using Promises
+- Promises: newer, and not supported in Internet Explorer
+
+- ex. const fakeRequestPromise ('url') => {
+        return new Promise((resolve, reject) = {
+            const delay = Math.floor(Math.random() * 4500) + 500;
+            setTimeout(() => {
+              if (delay > 4000){
+                reject('Connection Timeout :(')
+              }
+              else {
+                resolve('Here is your fake data from ${url})
+              }
+            }
+        }
+      }
+
+- ex. let res = fakeRequestPromise('hikingtrails.com/api/nearme')
+~> gives back the "Primise" Object
+
+- Promise status: pending / fulfilled (resolved, success) / rejected (failure)
+
+- Fulfill / Reject
+  : A promise is a returned object to which you attach callbacks, instead of passing callbacks into a function
 
 
+- NOTE. if 'fulfill'd, use *then*
+  NOTE. if 'reject'ed, use *catch*
 
-  
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
+  ex. fakeRequestPromise('yelp.com/api/coffee')
+        .then(() => {
+            console.log("Promise Resolved!");
+            console.log("It worked!!!!");
+        }).catch(() => {
+            console.log("Promise Rejected!");
+            console.log("Oh No, Error!!!");
+        })
 
       
 
 
+- when there become multiple levels of promise requests...
+  ex. fakeRequestPromise('yelp.com/api/coffee/page1')
+          .then(() => {
+              console.log("Promise Resolved! (1)")
+              console.log("It worked! (1)")
+              fakeRequestPromise('yelp.com/api/cofee/page2')
+                  .then(() => {
+                      console.log("Promise Resolved! (2)")
+                      console.log("It worked! (2)")
+                  })
+                  .catch(() => {
+                      console.log("Promise Rejected! (2)")
+                      console.log("Oh no error!(2)")
+                  })
+          })
+          .catch(() => {
+              console.log("Promise Rejected! (1)")
+              console.log("Oh No, Error! (2)")
+          })
+
+
+  ~> Merely chaining Promises is not significantly better than the callback hell!
+
+<br>
+
+#### 276. The Magic Of Promises
+- With the Promise, you can actually return the Promise itself, instead of using .then()
+
+  ex. fakeRequestPromise('yelp.com/api/coffee/page1')
+          .then((data) => {
+                console.log("It worked! (page1)")
+                console.log(data)
+                return fakeRequestPromise('yelp.com/api/coffee/page2')
+          })
+          .then((data) => {
+                console.log("It worked! (page2)")
+                console.log(data)
+                return fakeRequestPromise('yelp.com/api/coffee/page3')
+          })
+          .then((data) => {
+                console.log("It worked! (page3)")
+                console.log(data)
+          })
+          .catch((err) => {
+                console.log("Oh no, a request failed!")
+                console.log(err)
+
+          })
+  
+  ~> Returning the "fulfilled" promise and chaining
+  ~> anytime the request fails (rejected), it falls through and goes to .catch
+
+  ~> you can pass in the data too
+
+<br>
+
+
+#### 277. Creating Our Own Properties
+- Syntax
+  : new Promise(resolve, reject) => {
+        resolve();
+    }
+
+  : Promise Object always takes **two parameters!**
+  : one for fullfillment, and the other for failure cases
+
+
+- ex. const fakeRequest = (url) => {
+          return new Promise((resolve, reject) => {
+              const rand = Math.random();
+              setTimeout(() => {
+                  if (rand < 0.7){
+                      resolve('YOUR FAKE DATA HERE');
+                  }
+                  reject('Request Error!');
+              }, 1000)
+          })
+      }
+
+      fakeRequest ('/dogs/1')
+          .then((data) => {
+              console.log("Done with Request!")
+              console.log("data is: ", data)
+          })
+          .catch((err) => {
+              console.log("Oh No! ",err)
+          })
+
+- ex. color change codes using (1) Callback and (2) Promise
+
+
+<br>
+
+#### 278. Async Keyword
+- Async Function
+  : A newer and cleaner syntax for working with async code!
+  : Syntax "makeup/sugar" for promises (making syntax prettier and cleaner!)
+
+- Two Pieces
+1. Async
+2. Await
+
+- Becuase these two simplify codes a lot, we will use these further along
+- While *understanding* Promises is crucial too!
+
+
+- The async keyword
+: Async functions always return a promise
+: If the function returns a value, the promise will be resolved with that value
+
+
+: If the function throws an exception, the promise will be rejected
+
+ex. async function hello() {
+        return 'Hey guy!';
+    }
+    hello();
+    //Promise {<resolved>: Hey guy!}
+    async function uhOh() {
+        throw new Error('oh no!')
+    }
+    uhOh();
+    //Promise {<rejected>: Error: oh no!}
+
+ex. const sing = async () => {
+    }
+    ~> <pending> promise returned
+
+
+ex. const login = async (username, password) => {
+      //if missing any of them
+      if(!username || !password) throw 'Missing Credentials'
+
+      if (password === 'corgifeetarecute') return 'welcome!'
+      throw 'Invalid Password'
+    }
+
+    login('username', "corgifeetarecute)
+      .then(msg => {
+          console.log("LOGGED IN!")
+          console.log(msg)
+      })
+      .catch(err => {
+          console.log("Error!")
+          console.log(err)
+      })
+
+    ~> "LOGGED IN!" \n "welcome!"
+
+
+
+
+<br>
+
+#### 279. The Await Keyword
+- The await keyword
+
+  : await will pause the execution of the function, waiting for a promise to be resolved
+
+
+- ex. for the color change function,
+
+  ex. async function rainbow(){
+          await delayedColorChange('red',1000) //returns a Promise
+          //'await' pauses executions until the code returns a Promise
+          await delayedColorChange('orange',1000)
+
+          return "ALL DONE!"
+          //this async function itself will return a promise, in this case a resolved promise saying "ALL DONE!"
+      }
+
+  ex. async function printRainbow() {
+          await rainbow();
+          console.log("End of rainbow!")
+      }
+
+      printRainbow()
+
+
+
+- very very common pattern!
+  ex. async function makeTwoRequests() {
+          let data1 = await fakeRequest('/page1');
+          console.log(data1);
+      }
+
+<br>
+
+#### 280. Handling Errors in Async Functions
+- To handle errors in async functions, **try and cath** is the good solution! (when an error results in the codes after where the error occurs, might not even run)
+
+  ex. async function makeTwoRequests() {
+      try {
+          let data1 =await fakeRequest('/page1');
+          let data2 =await fakeRequest('/page2');
+          console.log(data1);
+      } catch(e){
+          console.log("caught an error!", e)
+      } 
+      }
+
+
+<br>
+
+## 28. AJAX and APIs
+#### 281. What Matters In This Section
 
 
 
@@ -4009,6 +4248,113 @@ ex. firstLi.remove()
 
 
 
+- Crucial
+: Working With API's
+: Intro to JSON
+: Working With Axios
+
+- Important
+: Postman
+: The Fetch API
+
+- Nice To Have
+: Making XHRs
+
+<br>
+
+
+#### 282. Intro to AJAX
+- AJAX
+: Asynchronous
+: JavaScript
+: And
+: XML
+
+- Asynchronous & JavaScript ~> basically making requests to load, send, or save info behind the scene seamlessly on a given website/application, interacting with the server somewhere
+
+- creating something where using JavaScript, we can load, fetch, send data, or save progress to db, and others, behind the scene (Vs. in the past havin had to load a new page, etc.)
+~> ex. on Chrome,  Developer Tool - Network => can see that all sorts of requests are being made when you scroll down a Reddit page
+
+<br>
+
+#### 283. Intro to APIs
+- API or Appilcation Programming Interface
+: actually a very broad term. A sort of interface for one software to communicate with another piece of software!
+
+- Web APIs
+: interfaces which are web-based(http-based)
+: interact with 'endpoints' which ususally are urls
+
+- ex. cryptonator.com
+
+  ex. openweathermap.org/current
+
+  ex. developer.twitter.com
+
+  ex. developers.instagram.com
+
+  ex. developers.facebook.com
+
+  ex. twilio.com
+
+  ~> returns JSON
+
+
+- vs. when you take info from a page using 'source' you also get tons of html & css, which you have to filter
+- API comes in handy, when you only need the data
 
 
 
+
+
+<br>
+
+
+
+
+
+
+
+#### 284. WTF is JSON
+- XML: Extensible Markup Language
+  : used to be dominant!
+
+
+- So these days, we can say "AJAJ"
+
+
+- JSON
+: Java
+: Script
+: Object
+: Notation
+=> but not the same as JS at all!
+
+~> just a format of transferring data
+
+ex. {
+      "productName": "soup",
+      "market": "convenience store",
+      "popularity": "high"
+  }
+
+~> note that *every key* has to be a *double-quoted string*
+
+- reference: json.org/json-en.html
+
+- since all elements are quoted strings in JSON, we gotta parse them in a correct way so that we can use them
+=> JSON.parse()
+
+ex. const data = `some JSON`
+ex. JSON.parse(data)
+ex. JSON.parse(data).ticker.price
+
+- the other way i.e. converting JS to JSON
+=> JSON.stringfy
+
+ex. const dog = {breed:'lab', color: 'black', owner: undefined}
+
+
+
+ex. JSON.stringfy(dog)
+    ~> {"breed": "lab","color":"black"}
