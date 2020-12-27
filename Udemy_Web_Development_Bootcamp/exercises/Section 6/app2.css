@@ -1,0 +1,32 @@
+h1 {
+    text-align: center;
+    font-weight: normal;
+    text-decoration: underline #f7f32f wavy;
+    font-size: 200px;
+    font-family: Futura, Arial Bold;
+}
+
+
+p {
+    text-align: right;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    
+}
+
+a {
+    text-decoration: none;
+}
+
+
+p::first-letter {
+    font-size: 50px;
+}
+
+::selection {
+    background-color: lightgoldenrodyellow;
+}
+
+h2:hover {
+    color: purple;
+}

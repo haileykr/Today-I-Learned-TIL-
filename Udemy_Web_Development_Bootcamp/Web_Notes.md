@@ -999,6 +999,7 @@ ex. top | horizontal | bottom
 ~> padding: 1px 2px 2px;
 ex. top | right | bottom | left
 ~> padding: 5px 1px 0 2px;
+<<<<<<< Updated upstream
 
 <br>
 
@@ -3991,6 +3992,8 @@ ex. firstLi.remove()
 - Note that if you want to execute something ONCE one thing is run, you have to NEST it. ~> can yield to multiple nested success/fail callbacks
 
 <br>
+=======
+>>>>>>> Stashed changes
 
 #### 274. Demo: fakeRequest Using Promises
 - Promises: newer, and not supported in Internet Explorer
