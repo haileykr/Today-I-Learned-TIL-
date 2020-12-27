@@ -1,0 +1,55 @@
+    section {
+        background-color: #f4f1de;
+        width: 800px;
+        height: 800px;
+    }
+
+    div {
+        background-color: #81b29a;
+        width: 50%;
+        height: 50%;
+    }
+
+    h1 {
+        font-size: 40px;
+        border: 1px solid black;
+    }
+
+    #ems h2 {
+        font-size: 2em;
+        margin-left: 1em;
+    }
+
+    #ems article {
+        font-size: 15px;
+    }
+
+    #ems p {
+        font-size: 0.8em;
+    }
+
+    #ems button {
+    font-size: 1em;
+    padding: 0 1em;
+    border-radius:  0.5em;
+    }
+
+    #ems ul {
+        font-size: 1.5em;
+    }
+
+    #rems h3 {
+        font-size: 4rem;
+    }
+
+    #rems h2 {
+        font-size: 3rem;
+    }
+
+    #rems ul {
+        font-size: 1.2rem;
+    }
+
+    html {
+        font-size: 20px;
+    }

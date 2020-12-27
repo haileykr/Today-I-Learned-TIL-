@@ -1,0 +1,26 @@
+span {
+    border: 1px solid black;
+    background-color: palevioletred;
+    width: 500px;
+
+    height: 20px;
+    margin: 10px;
+    display: inline-block;
+}
+
+h1 {
+    background-color: powderblue;
+    border: 1px solid black;
+    width: 300px;
+    padding: 50px;
+    margin: 100px;
+}
+
+div {
+    height: 200px;
+    width: 200px;
+    background-color: olivedrab;
+    border: 5px solid black;
+    display: inline-block;
+    margin: 50px;
+}
