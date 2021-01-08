@@ -842,8 +842,8 @@ Use random.randint()
 class NameOfClass():
 #Note. Class name is capitalized 
 vs. Function name was lower-case
-__init__ allows you to create an instance of the actual object
-    def __init__(self, param1, param2):
+\__init__ allows you to create an instance of the actual object
+    def \__init__(self, param1, param2):
         self.param1 = param1
         self.param2 = param2
 #self is passed in to note that this isn't just a function, but is a method connected to the class

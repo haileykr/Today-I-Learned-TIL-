@@ -999,7 +999,6 @@ ex. top | horizontal | bottom
 ~> padding: 1px 2px 2px;
 ex. top | right | bottom | left
 ~> padding: 5px 1px 0 2px;
-<<<<<<< Updated upstream
 
 <br>
 
@@ -3992,8 +3991,6 @@ ex. firstLi.remove()
 - Note that if you want to execute something ONCE one thing is run, you have to NEST it. ~> can yield to multiple nested success/fail callbacks
 
 <br>
-=======
->>>>>>> Stashed changes
 
 #### 274. Demo: fakeRequest Using Promises
 - Promises: newer, and not supported in Internet Explorer
@@ -4361,3 +4358,1292 @@ ex. const dog = {breed:'lab', color: 'black', owner: undefined}
 
 ex. JSON.stringfy(dog)
     ~> {"breed": "lab","color":"black"}
+
+- JSON docs
+: https://www.json.org/json-en.html
+
+- JSON Formatter & Validator
+: https://jsonformatter.curiousconcept.com/
+
+<br>
+
+#### 285. Using Postman
+- HTTP request!!!
+
+- for this, we will use a tool called "postman"
+- Postman
+: https://www.postman.com/downloads/
+: very common to web developers
+: download
+
+~> on its desktop version,
+ex. you can send a GET request, and see HTML / CSS / JS of the website
+
+~> Postman's strength highlights when APIs are used
+ex. Cryptocurrency API
+ex. https://api.cryptonator.com/api/ticker/btc-usd
+
+- status code!
+~> represents the status of the server
+ex. 200 OK
+ex. 404 Not Found
+ex. 405 Not Allowed (POST request is not supported by this server)
+
+~> starting with 2
+: good overall
+~> starting with 3
+: redirection messages
+
+~> starting with 4
+: client error responses
+
+~> starting with 5
+: server error resopnses
+
+- header contains a bunch of information
+
+
+- TV Show API
+: https://www.tvmaze.com/api
+
+<br>
+
+#### 286. Query Strings & Headers
+
+
+- ":" means a variable! ex. /search/shows?q=:query
+- "?q=:query" ~> an example of **query strings**
+~> a way of providing additional information
+
+- ex. https://icanhazdadjoke.com/api
+
+- Postman: can set a header too
+: ex. if you set a header to include application/json, you get json instead of html from the jokes website
+
+<br>
+
+#### 287. Making XHR's
+
+- Old way of setting a Request
+~> XMLHttpRequest
+: the "original" way of sending requests via JS
+: does not support promises, so... A LOT of callbacks!
+: WTF is going on with the weird Capitalization? Clunky syntax that I find difficult to remember!
+
+ex. const myReq = new XHLHttpRequest(); //New Request Object
+    myReq.onload = function(){
+        const data = JSON.parse(this.responseText);
+        console.log(data);
+        // Attach onload callback on that Object 
+    };
+
+    myReq.onerror = function(err) {
+        console.log('ERROR',err);
+        // Attach error callback on that object
+    };
+
+    myReq.open('get', 'https://icanhazdadjoke.com/',true);
+    // Get a request
+
+    myReq.setRequestHeader('Accept','application/json');
+
+    myReq.send();
+    // Send the request
+
+  
+~> syntax complexity and requiring lots of callbacks when you want to send multiple requests, etc
+
+<br>
+
+#### 288. The Fetch API
+
+
+
+- Fetch API
+: A newer way of making a HTTP request using JS
+: Support promises!
+: Not suppored in Internet Explorer
+
+ex. fetch('https://api.cryptonator.com/api/ticker/btc-used')
+      // ~> gives back a Promise
+      .then(res =>{
+          console.log("Response, Waiting to Parse", res)
+          return res.json()
+      })
+      // *NOTE!*
+      .then(data => {
+          console.log("Data parsed...",data)
+      })
+      .catch(e =>{
+          console.log("Oh no! Error!", e)
+      })
+
+~> One thing annoying about fetch: We don't actually have the data just yet
+
+~> Fetch is going to RESOLVE a PROMISE and triggerring .then, **as soon as** it receives a header coming back from the API, before everything has been transferred
+
+~> *NOTE!* : thus chain .then to wait until all the data is transferred , and make data parsed as JSON
+
+- Still could be confusing! with lots of work
+~> library like Axios comes in handy
+
+
+- ex. const fetchBitcoinPrice = async() => {
+          const res = await fetch('https://api.cryptonator.com/api/ticker/btc-usd')
+          const data = await res.json();
+          console.log(data.ticker.price)
+      }
+
+      ~> a simpler version
+      ~> still built upon fetch!
+
+<br>
+
+#### 289. Intro to Axios
+- Axios
+: A library for making HTTP requests
+: https://github.com/axios/axios
+
+- https://www.cryptonator.com/api/
+
+-include
+: <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> before the app.js
+: because in the app.js, we will use the axios library
+
+
+- Most important method: axios.get()
+~> you get data at once! does not require multiple steps
+
+ex. axios.get('https://api.cryptonator.com/api/ticker/bcn-usd')
+    .then(res =>{
+        console.log(res.data.ticker.price)
+    })
+
+    
+<br>
+
+
+#### 290. Setting Headers With Axios
+- Recall. the dad joke site! ~> if you just fetch using the entire url, you get html with too much information
+~> when you specify application - application/json header, you get filtered data
+
+- NOTE. the second argument for axios.get(): can specify options ex. header
+
+ex. const getDadJoke = async () => {
+        const config = {headers: {Accept: 'application/json'}}
+        const res = await axios.get('https://icanhazdadjoke.com/')
+}
+
+<br>
+
+#### 291. TV Show Search App
+- TV Maze endpoint 
+- Reference
+
+
+<br>
+
+
+
+
+
+## 29. Prototypes, Classes, & OOP
+#### 292. What Matters In This Section
+- Crucial
+: Object Prototypes (the concept)
+: Defining Classes
+: Extends and Super
+
+- Important
+: The " new" keyword (the 4 things it does)
+
+- Nice To Have
+: Defining the Constructor Functions(the "old" way)
+: Converting Colors and Associated Crazy Math
+
+<br>
+
+#### 293. What On Earth Are Prototypes
+- Object-Oriented Programming (OOP)
+- Object Prototype
+: __proto__ ~> references the prototype
+
+- Prototype ~> kind of a template object
+~> contains lots of methods
+
+- ex. Array.prototype
+
+- you can add your own method
+ex. method called "grumpus"
+ex. String.prototype.grumpus = () => alert("go away!")
+
+- ex. String.prototype.yell = function() {
+        return `${this.toUpperCase()}!!!!!`
+    }
+
+- but not really recommended to add functions to prototype
+~> these are rather for demonstration
+
+- ex. Array.prototype.pop = function(){
+      return "Sorry I want that element, I will never pop it off!"
+    }
+
+
+- Overriding a prototype method is also possible
+
+- Note.
+: something.prototype ~> actual prototype object
+: \__proto__~> "reference" to that object
+
+<br>
+
+
+#### 294. Intro to Object Oriented Programming
+- "Organizing" our codes! ~> is the key
+
+<br>
+
+
+#### 295. Factory Functions
+
+- ex. function hex(r,g,b){}
+~> converts the rgb color into the hex color
+
+
+- Factory Function: to make an object that automatically has the specified methods and stores variable values as properties on that object
+
+- ex. function makeColor(r, g, b){
+        const color = {};
+        color.r = r;
+        color.g = g;
+        color.b = b;
+
+        color.rgb = function(){
+          console.log(this)
+          //here, this refers to the object created
+          
+          const {r, g, b} = this;
+          return `rgb(${r},${g},${b})`
+          //this way, we dont need to call as this.r, this.g, this.b
+        }
+
+        color.hex = function(){
+          const {r,g,b} = this;
+          return '#' + ((1<<24) + (r<<16) + (g<<8) + b).toString(16).slice(1);
+
+        return color;
+      }
+  
+  ex. makeColor(255, 255, 255)
+  ~>{r: 255, g: 255, b: 255}
+
+<br>
+
+#### 296. Constructor Functions
+- Factory Function ~> not commonly used!
+~> Constructor Functions are more common
+
+- drawback of the **factory functions**
+: you get to have the UNIQUE copies of functions for each object
+
+ex. const black = makeColor(0,0,0)
+ex. const firstColor = makeColor(35, 255, 150)
+ex. black.hex === firstColor.hex ~> false! [referring to the different locations]
+
+ex. "hi".slice === "hello".slice ~> true!!
+
+- ex. [1, 2, 3, 4] ~> the method pop is not defined in this object, but is defined in \__proto__ instead!
+
+- Constructor Function
+: cf. *new operator* ~> lets developers create an instance of a user-defined object type / an instance of a built-in object type that has a constructor function
+
+
+ex. function Color(r, g, b) { //capitalized to show that it isn't a regular function
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        console.log(this);
+    }
+
+ex. new Color(255, 40 , 100)
+~> r, g, b as properties
+~> and \__proto__ including constructor
+
+~> without the *new* keyword, *this* would refer to the window object
+~> with the *new* keyword though, it behaves differently! creates an object and links to another
+
+
+- to define methods to the prototype, not each object,
+~> define outside that constructor
+
+ex. Color.prototype.rgb = function() {
+        const {r, g, b} = this;
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this*
+
+- NOTE: you do **not** want to use **arrow function** for this, as this keyword behaves differently.
+
+
+<br>
+
+
+#### 297. JavaScript Class
+- Achieves the same thing as Constructor but has much prettier syntaxes!![Syntatic Sugar]
+
+- Major improvement: you don't need to separate the (1) constructor and (2) methods
+
+- ex. class Color {
+          //we always add in a constructor!
+          constructor(r,g,b){
+              console.log(r,g,b);
+            
+          }
+}
+
+- Constructor: a function that will execute whenever new Color is created!
+
+<br>
+
+
+
+#### 298. More Classes Exercise
+- code: color into hsl
+- hsl: hue (0 - 360), saturation (0 - 100%), lightness(0 - 100%)!
+
+<br>
+
+
+
+
+#### 299. Extends and Super Keywords
+- separate class with **constructor**
+- Then extend it!
+- ex. class Cat extends Pet {}
+
+- you can override
+
+
+
+- *Super*: References the class that we are extending from
+  ex. class Cat extends Pet{
+          constructor(name,age,breed){
+                super(name,age);
+                this.breed = breed;
+          }
+  }
+
+<br>
+
+## 30. Mastering The Terminal
+#### 300. What Matters In This Section
+
+
+
+- Crucial!
+: LS
+: CD
+: MKDIR
+: RM
+: Touch
+: PWD
+: Installation
+: Relative vs. Absolute Paths
+
+- Important
+: Remembering All The Commands
+
+<br>
+
+#### 301. Backend Overview
+- Creating a server, completing database, etc...
+
+<br>
+
+#### 302. A Pep Talk On Terminal
+
+- text-based prompt
+
+<br>
+
+
+#### 303. Why Do We Need To Know Terminal Commands?
+- Speed!
+: Develop Faster
+: The terminal takes some getting used to, but it can be MUCH faster than using a GUI
+
+- Access
+: With Great Power...
+: the terminal provides a "mainline" into the heart of our computer, giving us access to areas we normally do not interact with
+
+
+- Tools!
+: Many of the tools we need are installed and used via the command line. We don't have much of a choice!
+
+
+
+
+- Confusing Terminology!
+1. Terminal
+: A text-based interface to your computer. Originally a physical object, but now we use software terminals
+
+
+2. Shell
+: The program that runs on the terminal
+
+3. Bash
+: One of the most popular shells (and the default on a mac)
+
+4. ZShell
+: One of the most popular shells along with Bash shells (zsh)
+
+- you can swap between shells in the terminal
+
+<br>
+
+#### 304. Windows Terminal Installation Instructions
+- https://www.youtube.com/watch?v=qdwWe9COT9k&feature=youtu.be
+
+- *How to Install Git Bash on Windows 10*
+: Why you need it?
+~> it's for development & coordination with other developers
+~> so you can install other tools and packages like python
+
+: Shell
+~> Command Line Interface (CLI) for running commands on your computer
+~> Most web servers run on Linux and the Shell is vital for interacting with those servers
+~> Microsoft has a Terminal Program (used to access the Shell), but it runs MS Dos vs. Unix (Linux)
+
+: Bash
+~> Basically an Emulator for running Unix (LInux) shell on Windows
+
+: Git
+~> Version Control Software that helps developers collaborate when building software and websites (github.com)
+
+: Git Bash is essentially a package that installs both Git and Bash at the same time (https://git-scm.com/downloads)
+
+<br>
+
+
+#### 305. The Basics: LS & PWD
+- Use GIT BASH!
+- home directory
+
+
+
+- LS: list the contents of your current directory
+
+- "~" : reference to the home directory!
+
+- PWD: Print Working Directory //Prints the path to the working directly (where you are currently)
+
+<br>
+
+#### 306. Changing Directories
+- CD: Change Directory //Change and move b/w folders!
+
+- cd.. : back one up
+
+<br>
+
+#### 307. Relative VS. Absolute Paths!
+
+- absolute path <= can access from anywhere
+: starts with "\"
+
+ex. Relative Path: cd ../../Pets
+~> go Two levels up then go to the folder Pets!
+
+<br>
+
+
+#### 308. Making Directories
+- mkdir(make directory) will create a new directory or new directories
+
+<br>
+
+#### 309. Man Pages AND Flags
+- "Man": show info about the following command!
+ex. $ man ls
+ex. then q to quit!
+
+~> Not supported in Git Bash though
+~> Use  <command> --help instead!
+
+- "Flags"
+: several options specific to the command
+
+- cf. hidden files: start with "." and can be found with ls -a
+
+<br>
+
+
+#### 310. The Touch Command
+- touch to create a file or multiple files
+: while primary purpose of this is to set the modification and access time of files
+
+- ex. touch purple.txt
+
+<br>
+
+#### 311. Removing Files & Folders
+
+- rm: delete a file or files... permanently!
+
+- rmdir: delete a directory, only an empty one!
+- rm -rf: delete a directory even if it is not empty! (r = recursive, f = force)
+
+
+<br>
+
+## 31. Our First Brush With Nodes
+#### 312. What Matters In This Section?
+- Crucial
+: The Node REPL!
+: Running Node Files
+: Installation
+
+- Important
+: Process
+
+- Nice To Have
+: argv
+: File System Module! (Don't Let it Stress You Out)
+
+<br>
+
+#### 313. Introducing Node JS
+- What is Node?
+: "A JavaScript Runtime"
+: Until recently, we could only run JavaScript code in a web browser. Node is a JavaScript runtime that executes code outside of the browser
+: We can use the same JavaScript syntax we know and love to write server-side  code instead of relying on the other languages like Python or Ruby
+
+~> can run JS without even opening a web browser!
+
+- nodejs.org/en
+
+<br>
+
+#### 314. What Is Node Used For?
+- What do people build with it?
+: Web Servers
+: Command Line Tools
+: Native Apps (VSCode)
+: Video Games
+: Drone Software
+: A Whole Lot More
+
+<br>
+
+#### 315. Installing Node
+- Terminal
+~> type "node": not found => install node
+~> nodejs.org
+
+<br>
+
+#### 316. Node REPL
+- REPL
+: Read
+: Evaluate
+: Print
+: Loop
+
+
+- Once Node is installed you can write JS in terminal
+
+- Node JS VS. Client-side JS
+: Not included in Node
+~> because Node doesn't run in a browser, we don't have access to all the browser "stuff". The window, document, and DOM API's are not supported in node
+
+: New Stuff in Node!
+~> node comes with tons of built-in modules which are not available in a browsers. These modules help us to do things like interact with the operating system and files/folders.
+
+ex. document, window ~> not available in node
+ex. global object ~> window in browsers
+~> global in node
+
+
+ex. setTimeout(()=> console.log("HELLO!"),3000)
+
+<br>
+
+
+#### 317. Running Node Files
+- ex. touch firstScript.js
+  ex. and to run, node firstScript.js
+
+<br>
+
+
+#### 318. Process & Argv
+- Node js itself is a big topic, and we are only touch its surface
+- Node js itself comes with a lot =>documentation
+
+- ex. node ~> version
+  ex. node -v
+
+- NVM: Node Version Manager
+
+- ex. Process: The process object is a  global that provides information about, and control over, the current Node.js process. As a global, it's always available to Node.js applications without using require(). It can also be explicitly access using require()!
+
+- ex. process.version
+  ex. process.cwd()
+
+- ex. process.argv
+
+~> the process.argv property returns an array containing the command line arguments passed when the Node.js process was launched. The first element will be process.execPath. See process.arv0 if access to the original value of argv[0] is needed. The second element will be the path to the JS file executed. The remaining elements will be any additional command line arguments.
+
+ex. node args.js puppie chickens hello
+~> HELLO FROM ARGS FILE!
+   [
+      '/usr/local/bin/node'
+      '/Users/coltsteele/Code/25_Node_Intro/args.js',
+      'puppies',
+      'chickens',
+      'hello!'
+   ]
+ex. touch greeter.js
+
+<br>
+
+#### 319. File System Module Crash Course!
+- refer to docs!
+
+- ex. make a folder and index.html & app.css & app.js in that
+
+- ex. const fs = require('fs);
+  ~> no need to download it or anything, but it's not default in the scope and we gotta tell that we will use it
+
+  ex. touch boilerplate.js
+  ex. refer to the code files!
+
+- NOTE. Synchronous vs. Asynchronous
+
+
+: the asynchronous form always takes a completion callback as its last argument. The arguments passed to the completion callback depend on the method, but the first operation was completed successfully, then the first argument will be *null* or *undefined*
+
+: exceptions that occur using synchronous operations are thrown immediately and may be handled using try-catch
+
+: synchronous will block the whole process until they complete, halting all connections
+
+<br>
+
+## 32. Exploring Modules AND  The NPM Universe
+#### 320. What Matters In This Section
+- Crucial
+
+: Module.Exports
+: Requiring Modules
+: Using NPM
+: Installing Packages
+: Creating Package.json Files
+
+- Nice To Have
+: The Dad Jokes Package
+: Rainbow Package
+
+
+
+
+: The Figlet Package
+: Franc Package
+
+<br>
+
+
+
+#### 321. Working With module.exports
+- Sharing JS codes b/w the files!
+
+- can decide whether to share files and require them
+
+- ex. touch math.js
+  ex. const add=(a,b)=>a+b;
+  
+  ex. touch app.js
+  ex. const math = require('./math')
+  ex. console.log(math)
+
+- When referencing a file, rather than an existing module (ex. fs), you have to write './' at the front
+
+- ex. node app.js
+      ~> {}!!!!!!!
+      ~> unlike outisde node, where linking js files using \<script> and the linked contents become available, you have to *specify* which you want to export out of the file
+
+- ex. in math.js,
+  ex. module.exports = "HELLOOO"
+      ~> by default, it is an object
+
+  ex. now node app.js returns "HELLOOO
+  
+  ex. module.exports.add = add
+  ex. module.exports.PI = PI
+  ex. module.exports.square = square
+
+  ~> remember that this is an **object** again!
+  ~> thus adding methods to it
+
+  ex. then node app.js returns the object with methods
+
+- refer to the code to see how you can export
+  ex. module.exports.add = (x,y) => x+y;
+
+  ex. const math = {
+          add:add
+      }
+  ex. module.exports = math
+
+  ex. exports.add = add
+
+<br>
+
+#### 322. Requiring A Directory
+
+- You can require the entire directory
+
+ex. mkdir shelter
+ex. touch blue.js sadie.js janet.js
+    //each is an exported object
+
+- make **"index.js"**  and require all files in the same directory!
+
+ex. const blue = require ('./blue')
+ex. const sadie = require ('./saide')
+ex. const janet = require ('./janet')
+
+ex. const allcats = [blue, sadie, janet]
+    module.exports = allcats;
+
+- when you reference a directory, it will look for index.js
+
+ex. in app.js,
+    const allcats = require ('./shelter')
+
+<br>
+
+
+
+
+#### 323. Introducing NPM
+- NPM: Node Package Management
+:  NPM is really two things
+~> A library of thousands of packages published by other developers that we can use for free!
+~> A command line tool to easily install and manage those packages in our Node projects
+
+- npmjs.com
+
+<br>
+
+#### 324. Installing Packages - Jokes & Rainbow
+
+
+- https://www.npmjs.com/package/give-me-a-joke
+
+- https://www.npmjs.com/package/colors
+
+- Core Mechanic
+: a terminal command called **npm install [package_name]
+
+- ex. npm install give-me-a-joke
+      ~>  'node-modules' folder appears!
+      
+  ex. package-lock.json
+      ~> contents of node-modules!
+
+
+- ex. const jokes = require ('give-me-a-joke')
+      ~> looks for the package in node-modules!
+  
+  ex. console.log(jokes)
+      ~> four different methods
+  
+  ex. jokes.getRandomDadJoke(function(joke){
+          console.log(joke);
+      });
+
+
+  - ex. npm install colors
+
+
+
+
+<br>
+
+
+
+
+#### 325. Adding Global Packages
+- https://www.npmjs.com/package/cowsay
+- Local vs. Global installation of Packages
+
+- Local installation
+~> packages are only available (or easily available) inside the folder they are installed!
+~> preferrable way
+~> reason 1. we don't want to access the package everywhere (because we may want variety)
+
+- Global installation
+~> SOMETIMES preferred! for Command Line Tools
+~> ex. npm -g cowsay
+
+=> then package is installed in the global node-modules folder
+
+- but you can't just "require" global packages locally!
+~> gotta "link" then
+
+ex. in the terminal, npm link cowsay
+ex. in the index.js,
+    const cowsay =require('cowsay')
+
+<br>
+
+
+#### 326. The All-Important Package.json
+- Packages have "packages.json" files
+: contains meta-data or information about the project/package
+
+- what we care about the most
+: "dependencies!!"
+: ex. give-me-a-joke
+~> "axios": "^0.19.2"
+: dependencies of the specific versions are installed too! so packages.json is looked into!
+
+- the way that we create packages.json ~> using npm command!
+
+- ex. mkdir Artster
+  ex. cd Artster
+  ex. npm init
+      ~> creation utility for the packages.json
+      ~> the easiest way of making the packages.json which conforms to the standard rules!
+
+
+- now if we import packages
+  ex. npm i figlet
+  ~> no warning about lacking packages.json
+  ~> packages.json wouldn't affect how the codes works (as long as all required modules/packages are in node-modules, but we want them to be synchronized, in case node-modules is deleted or the packages are shared with other developers)
+
+<br>
+
+#### 327. Installing All Dependencies For A Project
+- https://github.com/dkhd/node-group-chat
+
+- NOTE: we usually DO NOT include node-modules when sharing packages! 
+~> the user will install the required ones based on packages.json instead
+~> for a reasonably-sized packages!
+
+- ex. node-group-chat
+      => download .zip
+
+  ex. cd node-group-chat-master
+  ex. node index.js
+      ~> Error! because the module 'express' cannot be found
+
+  ex. in the same folder where packages.json is saved,
+  ex. npm install
+      => packages.js will be reviewed and dependencies are installed
+
+
+<br>
+
+
+#### 328. Language Guesser!
+- https://github.com/wooorm/franc
+
+
+
+- https://github.com/adlawson/nodejs-langs
+
+- we will use **franc**package to detect the language and return the language codes [ISO], and then **langs**package to convert the language code to the lang names!
+
+<br>
+
+
+
+
+## 33. Creating Servers with Express
+#### 329. What Matters In This Section
+- Crucial
+: Our First Express App!
+: Routing Basics
+: Path Parameters
+: Working With Query Strings
+: What are frameworks?
+
+
+- Important
+: Nodemon
+
+<br>
+
+
+
+
+#### 330. Introducing Express!
+- A node package, just like any other package we have used, except it is also a framework!
+
+- What is Express?
+: Our First Framework!
+~> Express is a "fast, unopinionated, minimalist web framework for Node.js". It helps us build web apps!
+~> it's just an NPM package with lots of methods and optional plugins that we can use to build web applications and API's
+
+- Express helps us...
+1. Start up a server to listen for requests
+2. Parse incoming requests
+3. Match those requests to particular routes
+4. Craft our http response and associated content
+
+- Libraries vs. Frameworks
+: both are codes that someone else has written
+1. Library: When you use a library, you are in charge! You control the flow of the application code, and you decide when to use the library
+2. Framework: With frameworks, that control is inverted. The framework is in charge, and you are merely a participant! The framework tells you where to plug in the code.
+~> less freedom but more features
+
+<br>
+
+#### 331. Our Very First Express App
+- ls, mkdir FirstApp, cd FirstApp, ls
+- npm init -y
+
+- note. you cannot use captial letters for the app name!
+~> thus change to firstapp in packages.json
+
+- now that we have "packages.json", we can install Express!!
+
+- npm install express
+~> now, in the folder "node_modules", express and its required stuff is saved!
+
+- Now make the express file...
+: touch index.js
+
+- our goal here - is to get the server up and running
+
+- ex. const express = require ('express')
+  ex. const app = express()
+  ~> in the docs: this pattern is common
+  ex. console.dir(app)
+  ~> app object!
+
+
+- ex. app.listen(3000, () => {
+          console.log("LISTENING ON PORT 3000")
+      })
+
+      //listening to the incoming requests to the server we set up!
+      ~> this is only served locally in my machine!
+      ~> remember the port number! in this case, 3000!
+      ~> "localhost" :  reference to this machine
+      ~> ex. localhost:3000
+          => error, because there is nothing to present on that server
+
+      ~> goal: to get incoming requests and get outgoing response
+
+      ~> ex. app.use(() => {
+                  console.log("WE GOT A NEW REQUEST!")
+             })
+      // app.use() ~> anytime there is an incoming request, this callback will run
+
+      ~> everytime we refresh, we see that request line!
+
+- common port numbers: 3000, 8080
+
+
+<br>
+
+#### 322. The Request & Response Objects
+- In order to respond with contents, we need to discuss **two important objects** that Express makes for us
+~> On every incoming reqeust, we have access to "req" [object representing the incoming request ] and "res" [obj representing the outgoing response]
+~> these objects are *made by express* AND *passed in* through the 
+: app.use ((req, res) => {
+        console.log("WE GOT A NEW REQUEST!")
+        console.dir(req)
+  })
+  callback!
+
+- NOTE. http request: not a JS object, but text information
+~> Express takes this data and parses it into an object!
+
+: console.dir(req)
+~> a lot of information in the req!!
+ex. pathname: '/' => URL we are requesting! 
+ex. "localhost:3000/dogs"
+~> pathname: '/dogs'
+
+
+- **response object** has methods on it
+~> incl. res.send ([body])
+~> express docs
+~> sends the http response, in String, Object, or others
+
+ex. app.use((req, res) => {
+          console.log("WE GOT A NEW REQUEST!")
+          res.send("HELLO, WE GOT YOUR REQUEST! HERE'S THE RESPONSE!")
+          //res.send() generating and sending an HTTP response
+
+          res.send({color:"red"})
+          //application/json
+
+          res.send('<h1>This is my webpage</h1>')
+    })
+
+
+- Postman: GET | localhost:8080, send
+~> body: "HELLO, WE GOT YOUR REQUEST! HERE'S THE RESPONSE"
+~> header: content-type=> text / html
+
+~> if we send the object instead, we get the header content-type application/json!
+
+<br>
+
+#### 333. Express Routing Basics
+
+- How we respond with different contents to different requests
+
+- Routing: path the incoming requests and match them to some responses
+
+ex. of paths: /dogs
+
+ex. // /cats => "meow"
+    // /dogs => "woof"
+    // /(home route or ROOT) => "welcome to our home page"
+ex. // app.get(path,  callback function)
+    app.get('/cats' , (req, res) => {
+        console.log("CAT REQUEST !!")
+        res.send('MEOW')
+    })
+
+- NOTE: **comment out the app.use code!** as there's only one response to each http request, and res.send() is that response
+
+- again, "res" is the object which has a lot of methods on it
+
+- (req, res)=> { ~~~ } ~> v common pattern
+
+- how to deal with all the other things?
+: app.get('*', (req, res) => {
+
+
+        res.send("i dont know that path!')
+  })
+
+
+~> make sure! that is it at the end of the code
+
+
+<br>
+
+
+#### 334. Express Path Parameters
+
+- Patterns!!
+: help better searching
+
+- ex. pattern in /r/SOMETHING
+
+~> app.get ('/r/:subreddit' , (req, res) => {
+      res.send('This is a subreddit!'))
+
+  }
+  => localhost:3000/r/puppy ~> responds with "This is a subreddit"
+
+
+- and here, :subreddit can be accessed as params through req
+
+: console.log(req.params)
+~> ex. {subreddit : 'aeriocvladf;k'}
+
+: const {subreddit } = req.params
+  res.send(`Browsing the ${subreddit} subreddit`)
+
+: multiple patterns are OK too
+
+<br>
+
+
+
+
+
+#### 335. Working With Query Strings
+- reminder: query strings are something that comes after the question mark!
+
+- Key-Value Pairs!
+
+
+- the req object has a specific property called query!!!!!
+ex. app.get('/search', (req, res) =>{
+        console.log(req.query)
+        res.send('HI')
+    
+      //const {q} = req.query;
+      // res.send(`<h1>Search results for : ${q})
+    })
+
+ex. in postman, q = dogs and color = red
+~> { q: 'dogs', color: 'red' }
+
+<br>
+
+
+
+
+#### 336. Auto-Restart With Nodemon
+
+- could be annoying to restart the server anytime there's a change
+~> there are several ways to get away with it
+
+- we use the package called 'nodemon'
+~> command-line tool
+~> install globally
+~> nodemon ~~~  instead of node ~~~, then automatic. tracks changes!!
+
+- npm i -g nodemon
+
+<br>
+
+## 34. Creating Dynamic HTML With Templating
+#### 337. What Matters In This Section
+- Crucial
+: What Is Templating?
+: Configuring Express for EJS
+
+: Passing Data to Templates
+: Serving Static Assets
+: Creating Partials
+: EJS Loops& Conditionals
+
+<br>
+
+#### 338. What is Templating?
+- Templating allows us to define a preset "pattern" for a webpage that we can dynamically modify wi
+- For example, we could define a single "Search" template that displays all the results for a given search term. We don't know what the term is or how many results there are ahead of time. The webpage is created on the fly.
+
+~> we can repeat parts of the template over and over with loops, for example!
+
+~> End Goal: to combine logic with creating HTML responses
+~> many ways to do it, but we choose
+
+- EJS
+: Embedded JavaScript
+: Others - Handle bars, Jade, Pug, Numjucks, Etc.
+=> unique syntax
+
+: reasons why we are using this
+~> very popular
+~> *uses JS syntax*
+
+<br>
+
+#### 339. Configuring Express for EJS
+- ejs.co
+
+- first, a simple Express app to use ejs
+
+- ex. Templating_Dome > npm init -y
+      npm i express
+      touch index.js
+
+- in index.js,
+  ex. const express = require ('express');
+      const app = express();
+      //execution of Express
+
+      app.listen(3000, () => {
+          console.log("Listening on Port 3000")
+      })
+
+      //simple routing
+      app.get('/', ( req, res ) => {
+          res.send("HI");
+      }
+
+=> start with nodemon!
+
+- Now it's the time to make it use EJS!
+  ex. app.set("view engine", ,"ejs");
+      // app.set takes two arguments
+      // key (property) - value!
+  
+- also need to NPM install EJS!
+  ex. npm i ejs
+
+  ~> don't need to "require" ejs in index.js (done behind the scene)
+
+- when we use view engine, Express assumes that the views(or templates) are stored in the folder called "views"
+  ex. mkdir views
+
+
+
+
+
+- now it's the time to make templates!
+  ex. touch views/home.ejs
+
+- in the EJS file, start with HTML boilerplate!
+
+- now inside index.js, instead of app.get > res.send("HI"), you can send back a template!
+
+~> method we use for that is "render"
+=> ex.res.render('home.ejs')
+   //no need to specify as views/home.ejs as views folder is the default
+
+<br>
+
+
+
+
+#### 340. Setting The Views Directory
+- the minor issue that you may encounter : views folder should be in the same folder you're executing in!
+ex. cd ..
+ex. nodemon Templating_Demo/index.js
+~> Error!! wah
+
+- to avoid this issue,
+  ex. const path = require ('path')
+  
+  ex. app.set('views', path.join(__dirname,'/views'))
+      //joining the directory name where index.js is saved and /views
+
+
+- path module: related to directory and file paths! ex. path.join: joins multiple strings to normalize them into a single path
+
+<br>
+
+
+
+
+
+
+
+#### 341. EJS Interpolation Syntax
+- let us learn some basic EJS syntax!
+- ejs.co: esp. "TAGS"
+~> these tags tell EJS that the following is not regular HTML
+
+
+1. <%= : Outputs the value into the template (HTML escaped!)
+
+ex. in home.ejs,
+    <%= 4 + 5 + 1 %>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
