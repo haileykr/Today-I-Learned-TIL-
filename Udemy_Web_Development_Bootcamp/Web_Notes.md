@@ -5618,11 +5618,642 @@ ex. nodemon Templating_Demo/index.js
 - ejs.co: esp. "TAGS"
 ~> these tags tell EJS that the following is not regular HTML
 
+- NOTE: in VSCode, there is an "EJS Extension"!
+
 
 1. <%= : Outputs the value into the template (HTML escaped!)
 
 ex. in home.ejs,
-    <%= 4 + 5 + 1 %>
+    <%= 4 + 5 + 1 %> // treated not as HTML, but as js!
+
+<br>
+
+
+
+
+
+#### 342. Passing Data to Templates
+- define a simple route in index.js ('/rand')
+
+- you can enter the math eq <%=Math.random~~~%> inside the <h1>, but it's a better practice to define the number first then pass it to the template
+
+- in index.js,
+  ex. app.get('/rand', (req, res) => {
+          const num = Math.floor(Math.random()*10)+1
+          res.render('random', {rand: num} )
+      })
+      ~> second argument passed in as an object!
+      ~> whatever "num" is, will be accessible through "rand" in the template
+
+- in rand.ejs,
+  ex. <%=rand%>
+
+
+
+
+
+<br>
+
+
+
+
+
+#### 343. Subreddit Template Demo
+
+- ex. app.get('/r/:subreddit', (req, res) => {
+          const {subreddit} = req.params;
+          res.render('subreddit', {subreddit})
+      })
+
+
+<br>
+
+
+
+
+
+
+
+#### 344. Conditionals in EJS
+- <% %> : embeds JS code except actually rendering result!
+- ex. <% if (num % 2 === 0) { %>
+      <h2> That is an even number!</h2>
+      <% } %>
+
+- ex. <%= num%2===0 ? 'EVEN' : 'ODD'%>
+
+<br>
+
+
+
+
+
+
+
+
+#### 345. Loops Using EJS
+- ex. app.get('/cats', (req,res)=> {
+          const cats = [
+              'Blue', 'Rocket', 'Monty', 'Stephanie', 'Winson'
+          ]
+})
+
+<br>
+
+
+#### 346. More Complicated Subreddit Demo
+- data.json
+- in index.js,
+  ex. const redditData = require('./data.json')
+
+- ex. app.get('/r/:subreddit', (req, res) => {
+      const {subreddit} = req.params;
+      const data = redditData[subreddit];
+      res.render('subreddit', {...data})
+})
+
+<br>
+
+
+#### 347. Serving Static Assets In Express
+- "serving" css, js, html, fonts, etc
+
+- express.static() ~> "middleware"
+  app.use(express.static())
+  => app.use runs for every single request (get/post/etc.)
+
+
+
+
+- middleware: runs between getting request and outputing response
+- ex. app.use(express.static('public'))
+  //server the public directory where css and js files are saved
+
+  ex. then in subreddit.ejs,
+  ex. <link rel = "stylesheet" href = "app.css">
+
+
+
+- though to have access to files wherever, we want to introduce absolute paths!
+  ex. app.use(express.static(path.join(__dirname,  'public')))
+
+
+
+
+<br>
+
+
+
+
+#### 348. Bootstrap + Express
+- duplicate Templating_Demo
+
+- mkdir public
+  mkdir public/css public/js
+
+- download Compiled CSS and JS From Bootstrap!
+: then move the files ~~~.min.css/js to the folder we are working in
+
+
+- now in subreddit.ejs,
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <script src= "/js/bootstrap.min.js" >
+- while jQuery is also required! : could use CDN but will download this time (compressed)
+
+- now load that jQuery before .js file
+  <script src="/js/jQuery.js">
+
+- let's now add the navbar!
+
+
+<br>
+
+
+#### 349. EJS & Partials
+
+
+
+
+- Partials: Sub-templates inside Others!
+
+- Basic Idea
+: To make a template that all the templates should have in common, then include it
+
+- make a folder called partials!(don't need to do so but our Colt prefers it)
+
+- in EJS way, <%-include ("/partials/head") %>
+
+- <%- %> =>  "unescaped"! meaning treated as html
+
+<br>
+
+
+
+
+
+
+
+## 35. Defining RESTful Routes
+
+#### 350. What Matters In This Section 
+- Crucial
+: GET VS. POST Requests
+: Parsing Request Body
+
+: Forms + Express
+
+: Handling Post Requests in Express
+
+
+- Important
+: Method Override
+
+: RESTful Routing
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 351. Get Vs. Post Requests
+- Get
+: Used to retrieve information
+: Data is sent via query string
+: Information is plainly visible in the URL!
+: Limited amount of data can be sent
+
+- Post
+: Used to post data to the server
+: Used to write/create/update
+: Data is sent via request body, not a data string!
+: Can send any sort of data(JSON!)
+
+- Simple recall ex.
+: <form action="/tacos"  method = "get" >
+      <input type="text" name="meet">
+      <input type="number" name="qty">
+      <button>Submit</button>
+  </form>
+  => in the URL the submitted information is shown
+
+
+- Example of Post
+
+: <form action="/tacos" method = "post">
+      <input type="text" name = "meat">
+      <input type="number" name="qty">
+      <button>Submit</button>
+  </form>
+
+
+<br>
+
+
+
+
+#### 352. Defining Express Post Routes
+- let's talk about handling the post requests in Express!
+: cf. making post requests is no different from making get requests as shown above
+
+- refer to the code! RESTDemo & getpost.html
+
+<br>
+
+#### 353. Parsing The Request Body
+
+
+
+
+
+
+- req.body
+: contains key-value pairs of data submitted in the request body. By default, it's undefined, and is populated when you use body-parsing middleware such as body-parser and multer.
+
+- we need to explicitly tell how to parse req.body
+
+- ex. tell express to parse form-encoded information to req.body
+: built-in in express
+: => app.use(express.urlencoded({extended : true}))
+  //applicable only to form data
+: => app.use(express.json)
+  // applicable to JSON data
+: ~> now console.log(req.body) gives out some data
+
+- can deconstruct to deal with data better
+: ex. const {meat, qty} = req.body
+  ex. res.send(`OK, here are your ${qty} ${meat} tacos`)
+
+  <br>
+
+#### 354. Intro to REST
+- Representational State Transfer!
+: REST is an "architectural style for distributed hypermedia systems".
+
+: It's basically a set of guidelines for how a client + server should communicate and perform CRUD operations on given resources!
+
+: The main idea of REST is treating data on the server-side  as resources that can be CRUDed
+
+: The most common way to approach REST is in formatting the URLs and HTTP verbs in your applications
+
+- so, it's a set of guidelines and RESTful is when the apps comply with those ones!
+
+- we care because we will create APIs and routes which are RESTful!
+
+- some architectural constraints
+~> client-server architecture
+~> statelessness
+~> cacheability
+~> layered system
+~> code on demand (optional)
+~> uniform interface:URL patterns matched with different HTTP verbs
+
+- so goal: combining some base URLs and different HTTP methods to expose the full CRUD operations over HTTP
+
+- NOTE: Github GIST
+~> technical posts(could be useful)
+
+- and Github has an API to expose CRUD functionalities for GIST
+: get ~> GET /gists
+: post ~> POST /gists
+: update ~> PATCH/gists
+: delete ~> DELETE/gists
+=> different  HTTP requests but the same endpoints!
+=> an example of RESTful API!
+
+- another example: Instagram!
+
+<br>
+
+#### 355. RESTful Comments Overview
+- let's actually implemenet RESTful server architecture
+
+- we don't have database yet, so let's pretend that we do using an array
+
+- comment:username - comment_text
+
+- ex. GET / allcomments
+  ex. POST / newcomment ~> we usually use POST to CREATE something, as we can send more data&not shown in URL
+
+- but we will do
+  ex. GET /comments - list all comments  [index.ejs]
+  ex. GET /comments/new - form to create new comments     [new.ejs]
+  ex. POST /comments - create a new comment  [create.ejs]
+  ex. GET /comments/:id - Get one comment (using ID)  [show.ejs]
+  ex. PATCH /comments/:id - update one comment  [update.ejs]
+  ex. DELETE /comments/:id - destory one comment  [destroy.ejs]
+  ex. GET /comments/:id/edit - form to edit specific comment  [edit.ejs]
+
+- note that there are MANY ways to implement REST, and the following is just one option
+
+- we will also introduce EJS for interactiveness
+  ex. npm i ejs
+  ex. mkdir views
+  ex. mkdir views/comments
+
+- in index.js,
+  ex. app.use('view engine','ejs')
+  ex. const path = require('path')
+  ex. app.set('views',path.join(__dirname,"views"))
+
+  ex. const comments = [...] //fake comments as an array
+  
+- base case
+  ex. app.get('/comments', (req, res) => {
+          res.render('comments/index',{comments})
+  })
+  ~> here, index is index.ejs
+
+
+<br>
+
+
+
+
+
+#### 357. RESTful Comments New
+- in index.js,
+  ex. app.get('/comments/new', (req, res) => {
+          res.render('comments/new');
+      })
+- when ask for new comment form, a form is returned, and new comments in that form are posted
+
+
+- in index.js,
+  ex. app.post('/comments',(req, res)=> {
+        console.log(req.body)
+        //make sure there's something sent
+        res.send("IT WORKED!")
+  })
+
+
+- and in new.ejs,
+  <form action="/comments"method="post">
+
+- note again that we did set up the body parser
+  : app.use(express.urlencoded({extended: true}))
+  : req.body parsing with urlencoded
+  ~> any form data that comes in goes through parsing
+
+- ex. const {username,comment} = req.body 
+  ex. comments.push ( {username, comment} )
+
+<br>
+
+
+#### 358. Express Redirect
+
+- status codes: 3xx is with redirects!
+
+- default: 302 Found!!
+
+
+- res.redirect('/comments'); //default - get
+
+<br>
+
+
+#### 359. RESTful Comments Show
+- many people call is show / details route : show details on one particular resource !!
+
+- ex. app.get('/comments/:id', (req, res) => {
+        const {id} = req.params;
+        const comment = comments.find(c => c.id === parseInt(id))
+        res.render('comments/show')
+        
+})
+
+- and we can start with hardcoded id's
+
+<br>
+
+#### 360. The UUID Package
+- Problem! New comments do not have IDs
+
+- https://www.npmjs.com/package/uuid
+
+- Randomly Generate Universally Unique IDentifiers
+
+- ex. npm i uuid 
+
+
+- ex. const {v4: uuidv4} = require('uuid');
+  ex. uuidv4(); //from docs
+
+- const comments = [ { id: uuid(), ... } ]
+
+<br>
+
+
+#### 361. RESTful Comments Update
+- Two HTTP Verbs that can update the contents - PUT and PATCH
+- "PUT": update the whole thing
+
+
+- "PATCH": partially change
+  ex. app.patch('/comments/:id', (req, res) => {
+          const {id} = req.params;
+          const foundComment = comments.find(c => c.id === id)
+          const newCommentText = req.body.comment;
+          foundComment.comment = newCommentText;
+          res.redirect ('/comments')
+  })
+
+- BUT note that this is not a preferred way, as IMMUTABILITY is important for web developers!
+
+<br>
+
+
+#### 362. Express Method Override
+- http://expressjs.com/en/resources/middleware/method-override.html
+
+- Now we want to create a form to UPDATE resources on the webpage
+
+- ex. app.get('/comment/:id/edit')
+
+- ex. edit.ejs
+
+
+- ex. npm i method-override 
+: lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it
+
+: 1. override using a header
+: 2. override using a query value~> let's use this option!
+
+- ex. const methodOverride = require('method-override')
+  ex. app.use(methodOverride('__method'))
+      // use methodOverride as a middleware!
+  
+  ex. <form method="POST" action="/resource?_method=DELETE"></form>
+
+
+<br>
+
+
+
+
+
+
+
+
+#### 363. RESTful Comments Delete
+- you could possibly do it using JS, ex. axios, fetch
+
+- app.delete('/comments/:id', (req, res) => {
+      const {id} = req.params;
+      comments = comments.filter(c => c.id !== id)
+})
+
+- it may seem a bit silly to make a new array, but it's generally a good practice to make a copy and not mutate the original
+
+- DIGEST!!
+
+<br>
+
+
+
+
+
+
+
+
+## 36. Our First DataBase: MongoDB
+#### 364. What Matters In This Section
+- Crucial
+: Installation
+: The Mongo Shell
+: Mongo Inserts
+: Mongo Finding/Querying
+: Mongo Updates
+: Mongo Deletions
+
+
+- Important
+: Databases Basics
+: SQL vs. NoSQL
+
+
+
+
+<br>
+
+
+
+
+
+#### 365. Introduction to Databases
+- What is Mongo?
+: OUR FIRST DATABASE!
+: According to Mongo's homepage, it is "the most popular database for modern applications". It is commonly used in combination with Node.
+: Mongo is a **document database**, which we can use to store and retrieve complex data from.
+
+
+- Why use a Database?
+: Instead of just saving to a file?
+: Databases can handle large amounts of data efficiently & store it compactly!
+: They generally offer security features & control over access to data
+: They provide tools for easy insertion, querying, & updating of data.
+: They (generally) scale well!!
+
+<br>
+
+#### 366. SQL vs. NoSQL Databases
+- generally two types of databases!
+1. SQL Databases
+: Structured Query Language db's are relational db's. We pre-define a schema of tables before we insert anything.
+: ex. MySQL, Postgres, SQLite, Oracle, Microsoft SQL Server
+
+vs.
+
+2. NoSQL Databases
+: There are many types of NoSQL db's which do not use SQL including documents, key-value, and graph stores
+: MongoDB, Couth DB, Neo4j, Cassandra, Redis
+: very diverse
+
+
+
+
+<br>
+
+
+
+
+#### 367. Why use MongoDB?
+- Why are we learning mongo?
+: Mongo is very commonly used with Node and Express (MEAN & MERN stacks)
+: it's easy to get started with (though it can be tricky to truly master)
+: it plays particularly well with JavaScript
+: its popularity also means there is a strong community of developers using Mongo
+
+~> so it's an answer to 'we need some kind of database, so why can't it be something that is popular and compatible with what we have learned so far?'
+
+
+- Still recommend to learn MySQL or Postgres in the next year
+
+- Note that installing Mongo DB can be a pain in the ass!
+: just follow the provided video (googling other stuffs may cause conflicts!) then it'll all be smooth
+
+<br>
+
+#### 368. Installing Mongo:MacOS
+- https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
+
+<br>
+
+
+#### 369. Installing Mongo:Windows
+- follow the official guide
+~> https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+
+<br>
+
+
+
+
+
+
+
+#### 370. The Mongo Shell
+- in terminal, mongo
+~> when MongoDB is running on bg 
+~> typing mongo will connect to Mongo Server
+
+- https://zarkom.net/blogs/windows-local-coding-environment-1204
+
+- ">" ~> Mongo shell!
+~> also a JavaScript shell!(ex.1+2)
+
+- ex. db
+  ~> test
+  : default database you will be using
+
+- ex. show databases
+  ex. show dbs
+
+- ex. use animalShelter
+~> create/move_to a db!!
+
+- ex. db
+~> now shows animalshelter
+
+
+
+
+
+
+
+
+
+
       
 
 
