@@ -1363,7 +1363,7 @@ ex. justify-content: space-evenly;
 
 
 - CSS Rest: meyerweb.com/eric/tools/css/reset/
-~> copy and paste in the css file for the starting point!
+~> copy and paste in the c ss file for the starting point!
 ~> you don't have to do it but lots of ppl prefer doing it
 
 - building mobile version first then desktop version
@@ -2854,6 +2854,7 @@ ex. sumUp(a,b);
 
 #### 218. Using Try / Catch
 
+0
 - ex. try {
         //if the following could result in any error
         hello.toUpperCase();
@@ -3191,7 +3192,7 @@ ex. function multiply(a,b=2) {
 ex. const nums = [9,3,2,8];
 ex. Math.max(nums); //NaN
 ex. //Use spread!
-ex. Math.max(...nums); //67
+ex. Math.max(...nums); //670  
 ex. //Same as calling:
     //Math.max(9,3,2,8)
 
@@ -6228,6 +6229,8 @@ vs.
 ~> typing mongo will connect to Mongo Server
 
 - https://zarkom.net/blogs/windows-local-coding-environment-1204
+- https://www.loom.com/share/ec6493fff5b04f2f98ee1f10d00f2334
+
 
 - ">" ~> Mongo shell!
 ~> also a JavaScript shell!(ex.1+2)
@@ -6245,6 +6248,505 @@ vs.
 - ex. db
 ~> now shows animalshelter
 
+<br>
+
+
+#### 371. What On Earth is BSON?
+- mongodb.com/json-and-bson
+
+- JSON: JavaScript Object Notation
+: simple associative containers, wherein a string key is mapped to a value (which can be a number, string, function, or even another object). This simple language trait allowed JavaScript objects to be represented remarkably simply in text
+: both human-readable and machine-readable and simple to implement support for other langs, became popular beyong the web
+
+- Still some issues with JSON from the db perspective
+1. JSON is a text-based format, and text parsing is very slow
+2. JSON's readable format is far from space-efficient, another db concern
+3. JSON only supports a limited number of basic data types
+
+- BSON: Binary JSON
+: a binary representation to store data in JSON format optimized for flexibility + speed + space
+
+<br>
+
+
+#### 372. Inserting with Mongo
+- MongoDB - Docs - Server
+- we will focus on "MongoDB CRUD Operations"
+
+- let's create the db again in the previous video
+
+- ex. mongo
+  ex. show dbs
+  ex. use animalShelter
+
+- Insert Methods
+~> db.collection.insertOne()
+~> db.collection.insertMany()
+~> db.collection.insert()
+
+- Good thing about Mongo: if not existing yet, it makes one instead!!!
+
+- ex. db.dogs.insertOne({name: "Charlie", age: 3, breed: "corgi", catFriendly: true})
+  ex. show collections
+
+
+- here, the object is JS object, not JSON
+
+- ex. db.dogs.find()
+~> object id is automatically generated
+[unless you specify with "_id"]
+
+- ex. db.collection.insert() ~> allows you to insert a document or array of documents
+
+- ex. db.dogs.insert([{name: "Wyatt", breed: "Golden", age:  14,catFriendly: false}, {name: "Tonya", breed: "Chihuahua", age: 17, catFriendly: true}])
+
+- NOTE: YOU DON'T NEED TO HAVE THE SAME FORMAT FOR ENTRIES (NO CONSTRAINTS)
+- NOTE: MONGO NOW SUPPORTS THE CONSTRAINTS IF WANTED
+
+<br>
+
+
+
+
+
+
+
+#### 373. Finding with Mongo
+- db.collections.find()
+~> will find all the instance in collection
+
+
+
+
+- ex. db.dogs.find({breed: "corgi"})
+  ex. db.dogs.findOne({catFriendly: true})
+
+  ~> db.collections.find() : returns "cursor" (covered later)
+  ~> db.collections.findOne() : returns the document
+
+
+<br>
+
+
+
+
+#### 374. Updating with Mongo
+- db.collection.updateOne()
+  : update only the first one that matches
+- db.collection.updateMany()
+  : update all that match
+- db.collection.replaceOne()
+
+
+- when updating with Mongo, gotta use special operators!
+- one of them is the "set"!
+~> $set operator replaces the value of a field with the specified value
+~> { $set: { <field1>: <value1>, ...}}
+
+- ex. db.dogs.updateOne({name: 'Charlie'}, {$set: {age: 4, breed: "Lab"}})
+
+- when the fields do not exist already, they are created per $set
+
+- $currentDate: {lastModified:true}
+  ~> to keep track of the dates when modifications are made
+
+- ex. db.cats.updateOne({age:6},{$set: {age:7}, $currentDate: {lastChanged: true}})
+
+~> now you can see "lastChanged" field which shows the ISODate (specific to BSON)
+- ex. db.cats.replaceOne(...) ~> can change everything about the instance except for its id
+
+
+
+
+
+<br>
+
+
+
+
+#### 375. Deleting with Mongo
+- db.collection.deleteMany()
+  db.collection.deleteOne() ~>with some criteria
+
+- ex. db.cats.deleteOne({name: "Blue Steele"})
+
+- ex. db.dogs.deleteMany({})~> delete all in one go!
+
+
+<br>
+
+
+
+
+
+#### 376. Additional Mongo Operators
+- ex. db.dogs.insert([
+        {name:"Rusty",breed:"Mutt",personality:{catFriendly:true, childFriendly: true}},
+        {name:"Chungus",breed:"Husky",personality:{catFriendly:false, childFriendly: true}}
+        
+      ])
+
+- because catFriendly is not the field,
+  ex. db.dogs.find({catFriendly: true}) does not work
+  ~> instead,
+  ex. db.dogs.find({'personality. catFriendly': true}) works
+
+- Some other Operators!
+  : Query Operators ~> so many!
+  ex. $gt : greater than!
+  ex. $gte: greater than or equal to
+  ex. $in: in some array
+  ex. $ne: not equal to
+  ex. $or & $and
+
+
+  ex. db.dogs.find({age: {$gte: 10}})
+  ex. db.dogs.find({breed: {$in: ["Mutt", "Husky"]}})
+  ex. db.dogs.find({breed: {$in: ["Mutt", "Husky"], age: {$gt: 12}}})
+  ex. db.dogs.find({breed: {$ne: "Husky"}})
+
+<br>
+
+
+
+
+## 37. Connecting To Mongo With Mongoose
+#### 377. What Matters In This Section
+- Crucial
+: The Roleof ORM / ODM's
+: Connecting Mongoose to Mongo
+: Defining A Model
+
+: Mongoose CRUD
+: Schema Constraints
+
+- Important
+: Model Instance & Static Methods
+: Mongoose Middleware
+
+- Nice To Have
+: Mongoose Virtuals
+
+<br>
+
+
+#### 378. What is Mongoose
+- https://mongoosejs.com/
+
+- most of time, we'd use apps to use Mongo instead of using shell
+~> drivers! [docs.mongodb.com/drivers/]
+~> for Node.js, we can npm i the required driver to connect Node to Mongo
+
+- however, we will use the tool "MONGOOSE!"
+
+
+- ODM: Object Data Maper?
+: Object Document Mapper?
+: ODMs like Mongoose map documents coming from a database into usable JavaScript objects
+: Mongoose provides ways for us to model out our application data and define a schema. It offers easy ways to validate data and build complex queries from the comfort of JS.
+
+~> so it is more than just a driver, which provides an extra layer of validation + others on top of connecting Mongo and JavaScript
+~> translate database information to programming language objects
+
+- cf. ORM: Object Relation Mapper ~> used for SQL-based ODMs
+
+<br>
+
+
+
+
+
+#### 379. Connecting Mongoose to Mongo
+- ALWAYS a good idea to have "mongoosejs.com" open while working with it! as syntax can be complex
+
+- we will first use Mongoose separately, then migrate over to incorporating Express, and other web-related stuffs!!
+
+- in MongooseBasics folder,
+  ex. npm init -y
+  ex. npm i mongoose
+  ex. touch index.js
+  
+- in index.js,
+  ex. const mongoose = require('mongoose')
+  ex. mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
+
+- our first goal is to get Mongoose
+  : then connect to our Mongo DB Server!
+  : default MongoDB Port - 27017 (can be found in Mongo DB docs!)
+
+- docs -> Quick Start -> the following lines are recommended to be included!
+  : to make sure that we successfully connected!
+  : const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+    // we're connected!
+    });
+
+- NOTE: .connect() method returns PROMISE and for error handling, using "CATCH" is a good idea!
+
+- ex. mongoose.connect(...)
+      .then(() => {
+          console.log("CONNECTION OPEN!!")
+      })
+      .catch(err => {
+          console.log("ERROR!!")
+          console.log(err)
+      })
+
+
+
+
+<br>
+
+
+
+
+
+#### 380. Our First Mongoose Model
+- The Models are JS classes that we make with the assistance of Mongoose, which represent the data in MongoDB
+
+- it helps us interact with the database
+
+- for every single resource or collection we are planning to use in a JS file through Mongoose, we should define a model for each one
+
+- With Mongoose, everything is derived from Schema.
+
+
+
+
+- Scheme: schematic / blueprint / gameplan
+: mapping of different collection keys from Mongo to different types in JS
+
+ex. var blogSchema = new mongoose.Schema({
+        title: String,
+        author: String,
+        body: String,
+        comments: [{body: String, data: Date}],
+        date: {type: Date, default: Date.now},
+        hidden: Boolean,
+        meta: {
+          votes: Number,
+          favs: Number
+        }
+    });
+
+
+
+
+ex. const Movie = mongoose.model('Movie', movieSchema)
+~> here, 'Movie' is the model name!
+~> it has to be singular and start with an uppercase letter
+~> Mongoose will take that and make a collection called 'movies'
+
+~> now we have a model class named Movie!
+
+~> now we can make instances of Movie classes and save them on MongoDB
+
+ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating: 'R'})
+
+
+- In Git Bash,
+  ex. node
+  ex. .load index.js
+  ex. amadeus
+
+- and if want to save it,
+  ex. amadeus.save() //.save()comes with every Model
+
+- in mongo,
+  ex. use movieApp
+  ex. db.movies.find()
+
+
+- ex. amadeus.score = 9.7 //changing on JS
+  ex. amadeus.save() //now saved on MongoDB as well!
+
+
+<br>
+
+
+
+
+
+#### 381. Insert Many
+- Commonly used way
+: ex. const blah = new Movie()
+  ex. blah.save()
+  => you need to call .save()
+
+- Not that common to insert multiple resources at the same time but here's how
+: ex. Movie.insertMany([
+        {title: 'blah', rating: 'R'},
+        {title: 'blah', rating: 'R'},
+        {title: 'blah', rating: 'R'}
+      ])
+
+=> no need to .save() later
+
+- .insertMany() returns a Promise!! so can do .then and .catch
+
+: Movie.insertMany(...)
+  .then(data => {
+        console.log("IT WORKED!");
+        console.log(data);
+  })
+
+
+
+
+
+<br>
+
+
+
+#### 382. Finding with Mongoose
+- Model.find()
+  Model.findById()
+  ...
+
+- same as finding in mongo
+: pass in queries
+: the same operators (ex. $gt)
+
+- NOTE. FINDING SOMETHING IN MONGO CAN BE PAINFUL
+: HOW DO WE KNOW THAT THE COMMAND WENT THROUGH WHILE WAITING?
+
+1. Use Callbacks (NOT recommended)
+: ex. MyModel.find({name: 'John', age: {$gt: 18}}, function (err, docs)());
+
+2. Treat the results like promises
+: though MONGOOSE QUERIES are NOT PROMISES
+
+- ex. node
+  ex. .load index.js
+  ex. Movie ~>Model{Movie}
+  ex. Movie.find({}).then(data => console.log(data))
+  => these are the DATA we can use!! (without this, the returned ones are QUERIES)
+
+  => it's an **array** containing movies from MongoDB
+  
+  ex. Movie.find({rating: 'PG-13'}),then(data => console.log(data))
+
+  ex. Movie.findOne({}).then(m => console.log(m))
+  ~> first movie as an element in an array
+
+- .exec() method
+  => gives us a full PROMISE (not QUERY, the thenable object)
+
+
+
+
+
+- .findById(id) ~>very commonly used! Especially in an Express app
+  ex. app.get('movies/:id') and just can use that id to find the matching data in the database
+
+<br>
+
+
+
+
+
+#### 383. Updating With Mongoose
+- ex. Model.updateMany()
+  ex. Model.updateOne()
+  
+- ex. in mongo,
+  ex. db.movies.find({title: 'Amadeus'})
+
+- ex. in node,
+  ex. Movie.updateOne({title: 'Amadeus'}, {year: 1984} ).then(res => console.log(res))
+  // change the year of the movie 'Amadeus'
+
+- ex. in mongo,
+  ex. db.movies.find({title: {$in: ['Amadeus', 'blah']}})
+
+- ex. in node,
+  ex. Movie.updateMany({title: {$in:['Amadeus', 'blah' ]}}, {score: 10.0}).then(res => console.log(res))
+
+
+- ex. Model.findOneAndUpdate()
+  ~> finds the object and update and gives us back the original object! (but with {new: true}, it returns the updated one)
+
+  ex. Movie.findOneAndUpdate({title: 'blah'}, {score: 7.00}, {new: true}).then(m => consoel.log(m))
+
+
+- ALWAYS be careful of DEPRECATION warnings!
+: Solutions - https://mongoosejs.com/docs/deprecations.html
+
+<br>
+
+
+
+
+
+#### 384. Deleting With Mongoose!
+
+
+- ex. .remove() ~> does not give us back any documents that were invovled 
+
+- but
+  ex. .findOneAndRemove() and
+  ex. .findByIdAndRemove()
+  give back the object ~> depends on the use!
+
+
+- in node,
+  ex. Movie.remove({title: 'blah'}).then(msg => console.log(msg))
+  ex. Movie.deleteMany({year: {$gte: 1999}}).then(msg => console.log(msg))
+  ex. Model.findOneAndDelete({title: 'blah'}).then(m => console.log (m))
+*0
+<br>
+
+
+
+
+
+#### 385. Mongoose Schema Validations
+- Let's talk more about creating Mongo Schema!
+
+- let's make a new model
+  ex. touch product.js
+
+
+
+
+
+
+- **OPERATION BUFFERING**
+: allows us to use the models we defined IMMEDIATELY
+  (without having to wait for Mongoose to be conencted)
+  ~> we don't need to nest all the codes in mongoose.connect().then()
+
+
+- ex. const productSchema = new mongoose.Schema({
+        //name: String,
+        name: {
+            type: String
+            required: true
+        }
+        price: {
+            type: Number
+        }
+      })
+
+- ex. const Product = mongoose.model('Product', productSchema)
+
+- ex. const mountainbike = new Product({name: 'Mountain Bike', price: 599})
+      // if name is not specified error is returned
+- ex. mountainbike.save()
+    .then(data => {
+        console.log("IT WORKED!");
+        console.log(data);
+    })
+    .catch(err => {
+        console.log("ERROR!")
+        console.log(err)
+    })
+
+
+- if you pass in data that is not defined in the schema, the code still runs but does not store that additional information!!
+
+<br>
 
 
 
@@ -6254,7 +6756,448 @@ vs.
 
 
 
-      
+
+
+#### 386. Additional Schema Constraints
+- schema type options
+: https://mongoosejs.com/docs/schematypes.html
+
+
+<br>
+
+
+
+
+
+
+
+#### 387. Validating Mongoose Updates
+- when you are UPDATE-ing database, you have to SPECIFICALLY TELL if you still want to apply VALIDATIONS
+: under options, runValidators: true  
+
+<br>
+
+
+
+
+
+
+
+
+
+#### 388. Mongoose Validation Errors
+- built-in validators ex. min, max
+  : min: [6, 'Too few eggs']
+  ~> the second value is the errormessage!
+
+  - there are a lot of error handling packages out there too!
+
+  - and commonly, validation can occur on the client side even before the server attempts to save it 
+
+
+
+
+<br>
+
+
+
+
+#### 389. Model Instance Methods
+
+
+- Adding our own functions to the schema
+: very common!
+: a way of adding functions to the Model, in addition to whatever Mongoose is already providing.
+
+- Instance Methods
+: methods available on every single instance
+
+- vs. Static / Class Methods
+: all of the methods that start with a class
+
+ex. const Proudct = mongoose.model('Product', productSchema)
+ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
+
+- Let's start by defining our own instance method
+  ex. ~Schema.methods.~whateveryouwant
+  ex. productSchema.methods.greet = function() {
+          console.log("HELLO!!!")
+      }
+
+      => make sure that these are added BEFORE mongoose.model line!
+
+- in node,
+  ex. node
+  ex. .load product.js
+
+  ex. const p = new Product({name: 'bike bag', price:10})
+  ex. p.greet()
+
+
+- ex. const findProduct = async() => {
+        const foundProduct = await Product.findOne({name: 'Bike Helmet'})
+        foundProudct.greet();
+      }
+  ex. findProduct()
+
+- another function example
+:  ex. const findProduct = async () => {
+            const foundProduct = await Product.findOne({name: 'Mountain Bike'});
+            foundProduct.onSale = !foundProduct.onSale
+            foundProduct.save()
+        }
+
+        // toggle the onSale property
+
+: ex. productSchema.methods.toggleOnSale = function () {
+          this.onSale = !this.onSale;
+          return this.save()
+      }
+  ex. const findProduct = async() => {
+            const foundProduct = await Product.findOne(...)
+            console.log(foundProduct)
+            await foundProduct.toggleOnSale();
+            console.log(foundProduct); 
+      }
+
+
+- productSchema.methods.addCategory = function (newCat) {
+    this.categories.push(newCat);
+    return this.save()
+}
+
+- one of the points of having methods / functions
+: to do the same thing repeatedly
+
+<br>
+
+
+
+
+
+#### 390. Adding Model Static Methods
+- not applicable to "instances"
+- "this" means different thing
+
+- static method  example!
+  ex. productSchema.statics.fireSale = function(){
+            return this.updateMany({},  {onSale: true, price: 5})
+      }
+
+
+
+- ex. Product.fireSale().then(res => console.log(res))
+
+
+- **SO TO RE-ITERATE..!!**
+: STATIC methods on the MODEL ~> often have to do with fancy ways of finding things, updating things, creating things, and deleting things
+~> usually built on top of the existing Model methods incl. .find(), ...
+
+: INSTANCE methods operate on individual instances of model, ex. addCategory and toggleOnSale for INDIVIDUAL product
+
+
+<br>
+
+
+
+
+#### 391. Mongoose Virtuals
+- Mongoose virtuals give us ability to add features to the schema, which don't actually exist in the db itself, but we can access to via Mongoose
+
+- person.js!
+
+- ex. const personSchema = new mongoose.Schema({
+        first: String,
+        last: String
+      })
+
+  ex. personSchema.virtual('fullName').get(function() {
+          return `${this.first} ${this.last}`
+
+      })
+      //getter of virtual property
+
+  ex. const Person = mongoose.model('Person',personSchema)
+
+- yes we can do this by using instance method like .getFullName(), but the virtual way will behave as if it's an actual property
+
+- in node,
+  ex. .load person.js
+  ex. const tammy = new Person({first: 'Tammy', last: 'Chow'})
+  ex. tammy.fullName ~> WORKS!!
+
+  ex. tammy.save()!
+
+- now in mongo,
+  ex. use shopApp
+  ex. show collections ~>  'people'also shown! + 'products'
+
+- again, these virtuals ONLY exist in Mongoose side in JS, not available in db at all!
+
+- we use if often when we use something commonly, which we could derive from what we have already
+
+- Another thing - set! function (setter)
+~> we can use this to UPDATE
+
+- ex. personSchema.virtual('fullName').
+        set(function (v) {
+              this.name.first = v.substr(0,v.indexOf(' '));
+              this.name.last = v.substr(v.indexOf(' ') +1);
+        })
+
+
+  <br>
+
+
+
+
+
+
+
+
+
+
+
+#### 392. Defining Mongoose Middleware
+- this could easily be at least an hour of content
+- mongoosejs.com/docs/middleware.html ~> Middleware (also called pre and post *hooks*) are functions which are passed control during execution of asynchronous functions. Middleware is specified on the schema level and is useful for writing plugins.
+
+
+- Pre middleware functions are executed one after another, when each middleware calls next.
+: ex. const schema = new Schema(...);
+: ex. schema.pre('save',function(next){
+        //do stuff
+        next();
+      });
+
+- or can use a function which returns a Promise! in particular, can use Async/Await
+- note that async functions automatically return Promise for us
+
+: ex. personSchema.pre('save',async function(){
+          console.log("ABOUT TO SAVE!!!")
+      })
+      personSchema.post('save',async function(){
+          console.log("JUST SAVED!!!")
+      })
+
+    
+
+
+
+
+
+- ex. const k = new Person({first: 'Kristen', last: 'Sun'})
+  ex. k.save()
+  ~> Promise {<pending>}
+  ~> ABOUT TO SAVE!!!
+  ~> JUST SAVED!!!
+
+
+
+
+
+
+- could be useful if you wanna run something before or after a method
+
+
+- for example, for a review model, you can reflect the new review to the average reviews using post  
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 38. Putting It All Together: Mongoose With Express
+#### 393. What Matters In This Section
+- Crucial
+: Integrating Mongoose With Express
+: Defining Our Model
+: Products Index
+: Product Details
+: Creating Products
+: Updating Products
+
+: Deleting Products
+- Nice To Have 
+: Filtering By Category
+
+
+<br>
+
+
+
+
+#### 394. Express + Mongoose Basic Setup
+
+- new empty folder!
+- ex. npm init -y
+  ex. npm i express ejs mongoose
+
+  ex. touch index.js
+  ex. mkdir views
+  
+  ex. nodemon index.js
+
+~> note that MONGO D has to be running on the background!!
+
+<br>
+
+
+#### 395. Creating Our Model
+
+- GOAL: to have the full CRUD application with user interface and so on, which is connected to MongoDB
+~> Farm App!
+
+- let's call the model Product (fruit / veggie / dairy)
+
+- let's put all the MODELS in a separate folder!
+~> no problem if all the logics are in index.js
+~> but for typical applications, you will have many models
+
+- (folder)model
+  (file)product.js
+
+- in product.js,
+  ex. const mongoose = require ('mongoose');
+  ex. const productSchema = new mongoose.Schema({})
+  ex. const Proudct = mongoose.model('Product', productSchema)
+  ex. module.exports = Product;
+
+- let's make a file
+  : **seeds.js**
+  : to seed the database (give some initial data!)
+
+- in seeds.js,
+  : we require mongoose
+  : we require Model
+  : we connect to mongooset
+
+  ~> web app / server / express not invovled!
+  ~> this is the file we will run on its own anytime we want to get some new data in our database
+
+- .insertMany ( )
+
+- ex. node seeds.js
+
+
+
+<br>
+
+
+
+
+#### 396. Products Index
+- Recall. RESTful convetion (just one pattern)recommended
+  => '/proudcts' 
+
+- ex. app.get('/products', async (req, res) => {
+          const _products_ = await Product.find({})
+          
+          console.log(products)
+          res.send('ALL PRODUCTS WILL BE HERE!')
+      })
+  => to make sure that codes are working!
+
+<br>
+
+
+
+
+
+#### 397. Product Details
+- show.ejs
+
+<br>
+
+
+#### 398. Creating Products
+- we need a form & a route to submit the form to
+
+- the form
+  : app.get('/products/new', (req, res) => {
+        res.render('products/new')
+    })
+  
+- the route
+  : app.post('/products', async (req, res) => {
+        const newProduct = new Product(req.body);
+        await newProduct.save();
+        res.redirect(`/products/${newProduct._id}`)
+    })
+
+
+- even when restarted, the newly added data are still  there!!!
+
+<br>
+
+
+
+#### 399. Updating Products
+
+- app.get('/products/:id/edit', async (req, res) => {
+        const product = await Product.findById(id)
+        res.render('products/edit', {product})
+})
+
+- this time let's use PUT request (cuz we are changing everything! )
+
+- ex. npm i method-override
+
+- in index.js,
+  ex. const methodOverride = require('method-override')
+  ex. app.use(methodOverride('_method'))
+
+- ex. Product.findByIdAndUpdate() ~> refer to the doc! (validation especially)
+
+
+<br>
+
+
+
+
+
+
+#### 400. Tangent On Category Selector
+
+- Edit form to correctly show the category as the default option!
+
+- add logic to each option...
+  ex. <option ... <%= product.category === 'fruit' ? 'selected' : ''%>>
+  => but this is tedious and has to manually add to every single option
+
+- let's use loops instead.
+  : in index.js,
+    const categories = ['fruit', 'vegetable', 'dairy'];
+
+    app.get('/products/new', (req, res) => {
+        res.render('products/new', {categories});
+    })
+
+  : and then iterate over these categories and make an option for each one
+
+
+<br>
+
+
+
+#### 401. Deleeting Products
+- app.delete('/products/:id, async (req, res) => {
+      const {id} = req.params;
+      const deletedProduct = await Product.findByIdAndDelete(id)
+
+      res.redirect('/products');
+  }
+
+<br>
 
 
 
@@ -6271,10 +7214,43 @@ vs.
 
 
 
+#### 402. BONUS: Filtering By Category
+- how to construct urls?
+: several options
+: ex. /categories/dairy
+  ex. /products?category=dairy => looks better!
+  
+
+- show.ejs
+
+- index.js
+  : app.get('/products', async (req, res) => {
+        const {category} = req.query;
+        if (category){
+            const products = await Product.find({category});
+            res.render('products/index', {products, category});
+        }
+        else {
+            const products = await Product.find({});
+            res.render('products/index', {products, category: 'All'})'
+        }
+    });
+
+
+<br>
 
 
 
 
+
+
+
+
+
+
+## 39. YelpCamp: Campgrounds CRUD
+#### 403. Introducing YelpCamp: Our Massive Project
+- https://github.com/Colt/YelpCamp/tree/c12b6ca9576b48b579bc304f701ebb71d6f9879a
 
 
 
