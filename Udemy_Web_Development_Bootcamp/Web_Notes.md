@@ -4106,7 +4106,7 @@ ex. firstLi.remove()
               const rand = Math.random();
               setTimeout(() => {
                   if (rand < 0.7){
-                      resolve('YOUR FAKE DATA HERE');
+                      resolve('YOUR FAKE DATA HERE'); 
                   }
                   reject('Request Error!');
               }, 1000)
@@ -5071,7 +5071,13 @@ ex. touch greeter.js
 
 - ex. node app.js
       ~> {}!!!!!!!
-      ~> unlike outisde node, where linking js files using \<script> and the linked contents become available, you have to *specify* which you want to export out of the file
+      ex. const add = (x,y) => x+y;
+      ex. const math = {
+            add: add
+          }
+      ex. module.exports.math = math
+      ~> unlike outisde node, where linking js files using \<script> and the linked contents become available, you have to explicitly *specify* which you want to export out of the file
+      ~> using module.exports.~~~ or exports.~~~ (shorthand ) 
 
 - ex. in math.js,
   ex. module.exports = "HELLOOO"
@@ -5186,7 +5192,7 @@ ex. in app.js,
 
 - Global installation
 ~> SOMETIMES preferred! for Command Line Tools
-~> ex. npm -g cowsay
+~> ex. npm i -g cowsay
 
 => then package is installed in the global node-modules folder
 
@@ -5813,6 +5819,12 @@ ex. in home.ejs,
 
 
 <br>
+
+
+
+
+
+
 
 
 
@@ -7251,6 +7263,944 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 ## 39. YelpCamp: Campgrounds CRUD
 #### 403. Introducing YelpCamp: Our Massive Project
 - https://github.com/Colt/YelpCamp/tree/c12b6ca9576b48b579bc304f701ebb71d6f9879a
+
+<br>
+
+
+
+
+#### 404. How To Access YelpCamp Code
+- Resources & Codes for Each Section
+- Github -  downlod or look ON it
+
+<br>
+
+
+
+
+#### 405. Creating the Basic Express App
+- make a folder 'YelpCamp'
+
+
+
+
+
+
+- ex. npm init -y ~> package.json created
+  ex. npm i express mongoose ejs
+  ex. touch app.js
+
+- make views directory
+
+<br>
+
+
+
+
+
+#### 406. Campground Model Basics
+- let's make a folder 'models'
+- & 'campground .js' inside it
+
+- ex. const mongoose =  require('mongoose');
+  ex. const Schema = mongoose.Schema;
+
+  ex. const CampgroundSchema = new Schema({
+          title: String,
+          price: String,
+          description: String,
+          location: String
+      });
+
+      module.exports = mongoose.model('Campground', CampgroundSchema);
+
+- in app.js,
+  ex. const mongoose = require('mongoose');
+
+  ex. mongoose.connect('mongodb://localhost:27017/yelpcamp', {
+    
+    
+        //options to pass in!
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+      });
+
+  ex. const db = mongoose.connection;
+  ex. db.on(~~~)
+
+
+-  inmongo,
+  ex. use yelp-camp
+  ex. db.campgrounds.find()
+  ~> now can see the data
+
+- On: In this case, if there is an error, the on callback would run which would result into printing the error in console
+
+- Once: It is the callback to be executed when the given event is generated. In our case, the function will be called when the connection to mongodb is open i.e. the connection is successful.
+
+<br>
+
+
+
+
+
+
+
+#### 407. Seeding Campgrounds
+
+
+
+
+
+
+
+- https://github.com/Colt/YelpCamp/blob/c12b6ca9576b48b579bc304f701ebb71d6f9879a/seeds/cities.js
+
+- let's make some fake campgrounds to seed the database
+
+- cities.js ~> info on web
+- seedHelpers.js ~> set of descriptors and places
+- these will be sources for fake campsites
+=> move them to 'seeds'folder
+
+- in the seeds folder, a separate index.js to make these self-contained!
+~> don't need path and express
+~> but we do need mongoose and campground in it
+
+- we will run this file on its own, separately from the node app, anytime we want the seed database
+
+- in index.js (seeds)
+ex. const seedDB = async () => {
+      await Campground.deleteMany({});//delete everything
+      const c = new Campground({title: 'purple field'})
+      await c.save();
+    }
+
+- ex. const sample = array => array[Math.floor(Math.random() * array.length)]
+//to pick a random element from an array
+
+- ex. const seedDB = async() => {
+    await Campground.deleteMany({});//delete everything
+    for (let i=0;i<50;i++){
+        const random1000 = Math.floor(Math.random()*1000)+1
+        const camp = new Campground({
+            location: `${cities[random1000].city}, ${cities[random1000].state}`,
+            title: `${sample(descriptors)} ${sample(places)}`
+            //sample is a function so should invoke it with parens
+        })
+        await camp.save()
+    }
+}
+
+- ex. seedDB().then(() => {
+    //seedDB() returns promise because it's an async function
+    
+    mongoose.connection.close()
+    //make sure to close the db connection once done 
+})
+
+<br>
+
+
+#### 408. Campground Index
+
+- let's get some basic CRUD functionality
+
+
+- let's first set up different routes for campground index!
+
+- in app.js,
+  ex. app.get('/campgrounds', async (req, res) => {
+        const campgrounds = await Campground.find({});
+        res.render('campgrounds/index')
+  })
+
+- views>campgrounds>index.ejs
+: to show all campgrounds!  
+
+<br>
+
+#### 409. Campground Show
+- show.ejs
+- in app.js,
+ex. app.get ('/campgrounds/:id', async (req, res) => {
+        const campground = await Campground.findById(req.params.id) 
+        res.render('campgrounds/show', {campground})
+    })
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 410. Campground New & Create
+
+
+
+
+
+
+- in app.js,
+ex. app.get('/campgrounds/new', (req, res) => {
+        res.render('campgrounds/new');
+    })
+
+- in new.ejs,
+ex. <form action="/campgrounds" method = "POST">
+      <div>
+        <label for = ""></label>
+        <input type = "text" id = "title" name = "campground[title]">
+
+
+- here, campground[title] makes a group of entered items
+
+- in app.js, the order of app.get() matters
+
+: if we put app.get('/campgrounds/new',...) after app.get('/campgrounds/:id',...), "new" is treated as one of the "id's"
+
+- now include
+
+: app.post('/campgrounds'...) 
+
+- but before that, we have to "parse" the req.body (we don't see anything now)
+
+
+~> ex. app.use(express.urlencoded({extended: true}))
+
+- ex. app.post('/campground', async (req, res) => {
+        const campground = new Campground(req.body.campground);
+        await campground.save();
+        res.redirect(`/campgrounds /${campground._id}`)
+      })
+
+
+
+
+<br>
+
+
+
+
+#### 411. Campground Edit & Update
+
+- ex. app.get('/campgrounds/:id/edit',async (req, res) => {
+        const campground = await Campground.findById(req.params.id);
+        res.render('campgrounds/edit', {campground})
+})
+
+- edit.ejs
+
+- use method-override!
+ex. npm i method-override
+
+- in app.js,
+ex. app.use(methodOverride('_method' ))
+ex. const methodOverride = require('method-override')
+ex. app.put('/campgrounds/:id', async (req, res) => {
+        
+        
+        const {id} = req.params;
+        Campground.findByIdAndUpdate(id, {...req.body.campground})
+})
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+#### 412. Campground Delete
+- in app.js,
+ex. app.delete('/campgrounds/:id',async(req,res)=>{
+      const {id} = req.params;
+      await Campground.findByIdAndDelete(id);
+      res.redirect('/campgrounds');
+})
+
+- and need to make a form to send
+: 'delete' request! [show.ejs]
+
+
+<br>
+
+
+
+
+## 40. Middleware: The Key to Express
+#### 413. What Matters In This Section
+- Crucial
+: The concept of Middleware
+: Defining Custom Middleware
+
+- Nice To Have
+: Morgan Logging Middleware
+
+<br>
+
+
+#### 414. Intro to EXPRESS Middleware!
+- Express Middleware
+: Express middleware are func's that run during the request / response  lifecycle.
+
+- REQUEST -> MIDDLEWARE -> RESPONSE
+
+- ex. to "parse" : .json
+  ex. to server the static resourses like js and css: express-static
+
+- So Middleware...
+: are just functions
+: each middleware has access to the request and response objects
+: can end the HTTP request by sending back a response with methods like res.send()
+: OR can be chained together, one after another by calling next()
+
+- expressjs.com/en/guide/using-middleware.html
+: Middleware functions are functions that have access to the
+~> the request object (req)
+~> the response object (res)
+~> and the next middleware function in the app's request-response cycle
+
+: middlware functions can perform the following
+~> execute codes
+~> make changes to the request and the response objects
+~> end the request-response cycle
+~> call the next middleware function in the stack
+
+<br>
+
+
+
+
+
+#### 415. Using Morgan - Logger Middleware
+- https://github.com/expressjs/morgan
+
+- an external middleware!
+: HTTP request logger middleware for node.js
+
+
+=> very useful when debugging stuff
+=> lots of ppl like it when developing an app
+
+- in Middleware_Intro folder...
+ex. touch index.js
+ex. npm i morgan express
+
+- in order to use morgan,
+ex. const morgan = require('morgan')
+
+ex. app.use(morgan('tiny'))
+=> then now you can see the log of requests on the console
+
+ex. app.use(() => {})
+~> app.use function can be called as middleware! it runs every single time on any type of HTTP request
+
+~> for example, app.use(express.json()) runs on all requests to tell express to parse the body to json
+
+- morgan ~> several options too! (Ex. to customize, etc.)
+
+<br>
+
+
+
+
+#### 416. Defining Our Own Middleware
+- now let's define our very first simple middleware
+
+- there are lots of situations where we want to make and use our own middlewares!
+
+- https://expressjs.com/en/guide/writing-middleware.html
+
+- ex. app.use((req, res, next) => {
+          console.log('sth sth');
+          next();
+      })
+: here, next() will execute whatever the next middleware is!(has to be there to have the following codes run)
+
+: 'return next();' is also a nice and common convention
+
+<br>
+
+
+
+
+
+#### 417. More Middleware Practice
+- morgan: just a logger
+- and by having middlewares after that,
+- we can access the requests and handle (take/add/edit) data
+- BEFORE we reach the route handler
+
+
+- ex. in middleware, we can see if the request has an authentication token to see if it's a valid request
+
+- ex. "decorating" or "addding on" the request
+~> ex. var requestTime = function (req, res, next) {
+          req.requestTime = Date.now()
+          next()
+        });
+   ex. app.get('/', function (req, res) {
+            var response Text = `requested at ${req.requestTime}`
+            res.send(responseText)
+       });
+
+
+- ex. app.use((req, res, next)=>{
+          req.requestTime = Date.now() // --- (A)
+          console.log(req.method.toUpperCase(), req.path);
+          next();
+      });
+  ~> GET /dogs printed out
+  ~> (A) now we have access to req.requestTime
+
+- The order of the codes matters!!!
+
+<br>
+
+
+
+
+
+#### 418. Setting Up a 404 Route
+- more on app.use and how we can use it!
+- Express > Documentation > Application
+- app.use() ~> mounts the specified middleware function or functions at the specified path: the middleware function is executed when the base of the requested path matches *path*.
+
+- path can be basic or fancier with regular expressions
+
+ex. app.use('/dogs', (req, res, next) => {
+        console.log("I LOVE DOGS!!");
+        next();
+    });
+
+- usually at end
+ex. app.use((req, res) => {
+        res.status(404).send('NOT FOUND')
+    });
+
+
+
+<br>
+
+
+#### 419. Password Middleware Demo (NOT REAL AUTH)
+- ex. app.use((req, res, next) => {
+          const {password} = req.query;
+          if (password === 'chickennugget'){
+              next();
+          }
+          res.send('SORRY YOU NEED A PASSWORD!!')
+      });
+
+
+  <br>
+
+
+#### 420. Protecting Specific Routes!
+
+
+- instead of using 'app.use', we can use 'app.get'!
+- app.get()
+~> can get multiple callbacks which can work like middlewares
+ex. const verifyPassword = (req, res, next) => {
+        const {password} = req.query;
+        if (password === 'chickennugget'){
+            next();
+        }
+        res.send('SORRY YOU NEED A PASSWORD!!')
+    });
+    
+ex. app.get('/secret',verifyPassword, (req, res) => {
+        res.send('MY SECRET IS: Sometimes I wear headphones in public so that I do not have to talk to anyone!')
+    })
+
+
+
+
+
+
+<br>
+
+
+
+## 41. YelpCamp: Adding Basic Styles
+#### 421. A New EJS Tool For Layouts
+- https://github.com/Colt/YelpCamp/tree/509354878f5cbd0fc8325a2e0da347075c722740
+
+- https://github.com/JacksonTian/ejs-mate
+
+- we will add some Bootstrap!!
+
+- Package called 'ejs-mate'
+~> allows us to add some fun functionalities to EJS
+~> what we care about especially is: layout
+
+- "layout" : is going to allow us to define some boilerplates where we can have code to insert in between some content
+
+- in YelpCamp,ex. npm i ejs-mate
+
+- then in app.js,
+ex. const ejsMate = require ('ejs-mate');
+
+ex. app.engine('ejs', ejsMate)
+~> specifying that we will use ejsMate, instead of the default one, as the engine in order to handle ejs
+
+- now we can define a layout file!
+
+- in views directory,
+ex. mkdir layouts
+
+ex. touch layouts / boilerplate.ejs
+
+- in boilerplate.ejs
+: boilerplate
+: <body>
+    <h1>BEFORE</h1>
+    <%- body %>
+    <h1>AFTER</h1>
+  </body>
+
+- then in index.ejs,
+ex. <% layout('layouts/boilerplate') %>
+ex. then the bodycontent
+
+<br>
+
+
+#### 422. Bootstrap5! Boilerplate
+- https://getbootstrap.com/
+
+- Bootstrap 5!!!
+~> the best thing: does not depend on jQuery anymore
+
+- 'Migration'
+: for more info on what's new for Bootstrap 5
+
+- let's start by using CDN!
+: CSS cdn at head (boilerplate.ejs)
+: JS cdn at body
+
+- let's style
+~> <main class="container"> around the body
+
+<br>
+
+
+
+
+
+
+
+
+#### 423. Navbar Partial
+- Let's add a very basic navbar to a boilerplate!
+
+- navbar-dark bg-dark sticky-top
+
+- views > partials
+
+- <%- include('../partials/navbar')%>
+
+
+
+
+<Br>
+
+
+
+
+
+
+
+
+#### 424. Footer Partial
+- footer.ejs
+ex. <footer class = "footer bg-dark  py-5">
+      <div class="container">
+          <span class="text-muted">&copy; YelpCamp</span>
+      </div>
+    </footer>
+
+- let's make the footer to stay at the bottom, using FLEXBOX
+
+~> <body class="d-flex flex-column vh-100">
+// telling body to take the 100 view height (100)
+
+~> <footer class="footer bg-dark py-3 mt-auto">
+
+- here, 'mt-auto' used
+: as we want to move only one item
+: justify-content will move everything
+: and there's no justify-self or sth
+: so we use 'margin-auto' instead
+
+<br>
+
+
+
+
+
+
+
+
+
+#### 425. Adding Images
+- let's re-seed all the campground sites with images!
+
+
+- Unsplash Source API!!
+~> source.unsplash.com
+
+- update the model!
+~> models > campground.js
+~> const CampgroundSchema = new Schema({
+      ...
+      image: String,
+      ...
+   });
+
+
+- seeds > index.js
+<br>
+
+
+
+
+#### 426. Styling Campgrounds Index
+- bootstrap card!
+
+- in views > index.ejs
+
+
+
+
+ex. <div class =  "card mb-3">
+      <div class = "row">
+          <div class = "col-md-4">
+            <img class = "img fluid" src = "<%=campground.image%>">
+          </div>
+      </div>
+    </div>
+
+
+
+
+
+  
+- and more!
+
+<br>
+
+
+
+
+#### 427. Styling The New Form!
+- using some components
+
+<Br>
+
+#### 428. Styling The Edit Form!!
+
+- same! added some styling
+
+<br>
+
+
+
+
+
+#### 429. Styling The Show Page!
+
+- using cards component![kitchen sink]
+
+<Br>
+
+
+
+
+## 42. Handling Errors In Express
+#### 430. What Matters In This Section
+- Crucial
+: Defining Custom Error Handlers
+: Handling Async Errors
+: Defining Custom Error Class
+
+- Important
+: Express' Built-in Error Handler
+: Working With Mongoose Errors
+
+<Br>
+
+
+#### 431. Express' Built-in Error Handler!
+- back to Middleware > index.js
+
+
+- there are so many errors that could happen! (ex. API being down, validation not met, empty password and id, etc etc)
+- also so many things that may not be in our control
+- we want to anticipate and handle as many errors as possible
+
+- even now (without adding any additional code) we get back the error message
+~> in HTTP response format!
+(all done automatically by Express)
+
+- DEFAULT EXPRESS ERROR-HANDLING
+~> expressjs.com/en/guide/error-handling.html
+
+- also can do...
+ex. const verifyPassword = (req, res, next) => {
+        ...
+        res.status(401)
+        throw new Error('Password Required!)
+    }
+
+
+<br>
+
+
+
+
+#### 432. Defining Own Custom Error Handlers!
+- now let's move on from the built-in error handlers
+- to custom error handlers!
+
+- Error Handling Express Guide
+~> Writing Error Handlers
+~> Define error-handling middleware fn's in the same way except those have four arguments instead of three: (err, req, res, next)
+
+- put the custom error handler at the END!
+
+ex. app.use((err, req, res, next) => {
+      console.log("**error!!");
+      // next(); //--- (A)
+      next(err); // --- (B)
+})
+
+
+- (A): calls the next middleware
+  (B): calls the next error-handling middleare or the built-in
+
+- like other middlewares, if we do not call next(), the code stops there
+
+
+
+
+
+
+<br>
+
+
+#### 433. Our Custom Error Class
+- One of the strongly recommended practices with using Express, is that you define **custom error classes* to handle errors
+
+~> because...
+: when an error occurs, you wanna respond with a status code and some error messages
+
+: to make things easier, rather than typing res.status and others every single time, let's make an error-handling class and use it
+
+- new file
+: AppError.js
+ex. class AppError extends Error {
+        //extends the built-in Error
+        constructor(message, status){
+            super();
+
+            this.message = message;
+            this.status = status;
+        }
+    }
+
+    module.exports = AppError;
+
+
+
+
+
+- in index.js,
+ex. const AppError = require('./AppError')
+
+ex. ... throw new AppError('password required!', 401)
+
+
+- "Error Stack"
+
+- ex. const {status = 500, message =  'something went wrong'} = err;
+    res.status(status).send(message)
+
+
+- note that there are lots of templates to make the error pages pretty!
+
+- The built-in Error itself has a status code and msg
+~> it is why we can deconstruct them
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+#### 434. Handling Async Errors
+- Async_Errors
+- ex. node seeds.js
+  ex. node index.js
+
+- same error handling AppError and app.use for the farmstand [product] project!
+- there are tons of async functions! to await for database stuff and whatnot
+~> but AppError acts differently for async functions!
+~> in Express doc,
+: "For errors returned from asynchronous functions invoked by route handlers and middleware, you must pass them to the next() function, where Express will catch and process them."
+ex. app.get('/', function (req, res, next) {
+          fs.readFile('/file-does-not-exist', function (err, data) {
+              if(err){
+                  next(err) // Pass errors to Express
+              } else {
+                res.send(data)
+              }
+          })
+    })
+
+  
+
+
+- thus, pass AppError to next()!!
+~> again,next() looks for the next middleware, and next(sth) looks for the next error-handling middleware
+
+- ex. if(!product){
+          return next(new  AppError('Product Not Found',404))
+      }
+
+  ~> 'return' it so that the rest of the codes do not run
+
+
+<br>
+
+
+
+
+
+
+
+
+#### 435. Handling More Async  Functions!
+- there are other possible errors which are not thrown by us!
+ex. no productname for 'new' ~> failing 'required' validation + error thrown by Mongoose!
+
+~> we usually handle this kind of errors with TRY - CATCH!!
+
+
+
+
+
+
+
+
+
+
+ex. app.post('/products', async (req, res,next) => {
+    try{
+        const newProduct = new Product(req.body);
+        await newProduct.save();
+        res.redirect(`/products/${newProduct._id}`)
+    } catch (e) {
+        next(e);
+    }
+})
+
+
+~> handled Mongoose Errors!
+
+
+
+
+- you gotta wrap everything inside try-catch whenever there are async functions which may possibly go wrong
+
+- and using try-catch, we don't need to return new AppError to handle the errors thrown by us
+: as those will be caught by catch (e) as well!
+
+
+<br>
+
+
+
+
+#### 436. Defining An Async Utility
+- it's annoying to write try-catch for all the async functions, which happen a lot
+
+- so define a function that we pass the entire  callback to
+
+- 1) remove try-catch
+and 2) wrap the entire codes to another function (let. wrapAsync, catchAsync, etc.)
+
+
+- ex. function wrapAsync(fn) {
+          return function (req, res, next) {
+                fn (req, res, next).catch(e =>  next(e))
+          }
+      }
+
+  
+  ~> here, fn (inside and outside) refers to the entire codes
+  ~> 1) those codes are called as fn by Express
+     2) it returns another function
+     3) which will run those codes and catch the error if there's
+
+
+
+
+
+
+- in Express 5, errors from async functions would be automatically treated Too!
+
+<Br>
+
+
+
+
+
+
+
+
+#### 437. Differentiation of Mongoose Errors
+
+- common thing: validation error!
+
+- note: all mongoose errors have a property called name!
+
+
+
+
+
+- let's add a new middleware which logs the name of the error
+~> ex. app.use((err, req, res, next) => {
+            console.log (err.name)
+            next(err)
+      })
+
+
+
 
 
 
