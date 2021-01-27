@@ -8204,3 +8204,437 @@ and 2) wrap the entire codes to another function (let. wrapAsync, catchAsync, et
 
 
 
+
+
+~> ValidationError, CastError, And So On!
+
+- so to handle specific errors with specific resonse,
+ex. app.use((err, req, res,next) => {
+        if (err.name ===  "ValidationError") err = handleVaidationError(err)
+        next(err)
+    }))
+
+ex. const handleValidationError = err => {
+        return new AppError ('Validation Error.. ' +  err.message,  400)
+}
+
+- a lot more to learn and apply, but this is the basic logic
+
+
+<br>
+
+
+
+
+
+## 43. YelpCamp: Errors & Validating Data
+#### 438. Where to next with yelpcamp?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- client-side validation and error handler
+
+- server-side validation
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+#### 439. Client-Side Form Validations
+- can do 'required' using browser validation
+~> but impletation is spotty, depending on the browser
+~> does not give a clear reason why the form is not being submitted
+
+- BootStrap > Validation
+~> psuedo classes : valid & invalid
+
+~> how it works?
+: put "required" for all the inputs
+: then put "novalidate" for form
+
+: then we need to put some JS, which will prevent the users to submit the invalid form
+
+: on Bootstrap website,
+ex. // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.from(forms) // converting forms to an Array!!
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+
+: select the forms based on the specific class
+: loop over them and prevent submission
+
+: to provide instant feedbacks - "valid-feedback" and "invalid-feedback" classes
+ex. <div class="valid-feedback">Looks good! </div>
+- let's move the JS to boilerplate for now, so that we can apply the validation to "EDIT" as well!
+
+<br>
+
+
+
+
+
+
+#### 440. Basic Error Handler
+- Now, Price is set to be number, so if the input cannot be cast into a number, mongoose freaks out and the submission just keeps spinning
+~> it's also async error (happening after express couldn't catch before the form submission reaches mongoose!)
+~> gotta set up try-catch!
+~> and
+ex. app.use((err, req, res, next) => {
+    res.send('Oh Boy, something went wrong!')
+})
+
+<br>
+
+
+#### 441. Defining ExpressError  Classes!
+- something we have done already, but adding to YelpCamp
+
+- let's make another folder "utils"
+~> error class
+~> wrap async fn
+
+- utils > ExpressError.js
+ex. class ExpressError extends Error {
+        constructor(message, status){
+            super();
+
+
+            this.message = message
+            this.status = status
+        }
+    }
+
+    module.exports = ExpressError
+
+
+- utils > catchAsync.js
+
+
+ex. module.exports = func => {
+        return (req,res,next) => {
+          func(req, res, next).catch(next)
+        }
+    }
+
+
+- in app.js,
+ex. const catchAsync = require ('./utils/catchAsync')
+
+
+
+
+
+
+<br>
+
+
+
+
+
+#### 442. More Errors
+
+
+
+- ex. const ExpressError = require('./utils/ExpressError')
+
+- ex. app.all('*', (req, res, next) => {
+        next(new ExpressError("page not found", 404))
+      })
+  ex. app.use((err, req, res, next) => {
+        const {status = 500, message= 'error!'} = err;
+        res.status(status).send(message)
+
+      })
+
+- although we will adopt a different solution later, we can do this thing
+ex. app.post('/campgrounds', catchAsync(asyn (req, res, next) => {
+        if(!req.body.campground) throw new ExpressError('Invalid Campground Data!', 400)
+        ...
+    }))
+
+~> to deal with the new campground data error specifically
+~> before it reaches mongoose!
+
+~> and here, we "throw" a new error, because there's catchAsync, and if error is thrown, it will lead to the error handler app.use later
+
+
+- now we can catch both express-thrown errors and the errors that we threw!
+
+<br>
+
+
+
+
+
+
+
+
+#### 443. Defining Error Template
+
+- views > error.ejs
+
+~> let's start with a simple alert!
+~> in app.js,
+ex. app.use(... res.status(status).render('error', {err}))
+
+~> then showing <%=err.message%> and <%=err.stack%> (solely for development purpose) in the error page itself!
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+#### 444. JOI Schema Validationa
+- JOI.DEV/API/?V=17.3.0
+
+- joi lets you describe the data using a simple intuitive and readable language
+
+
+~> JavaScript validator tool
+
+
+
+- we have client-side validation, but barely have server-side one
+~> we do have
+ex. if (!req.body.campground) throw new ExpressError(...),
+~> but this only checks if "campground" property is there, and even if we're missing ex. campground[price], it will not throw an error
+
+~> we can manually check for all the error-generating cases, but it's a lot of work!
+
+
+
+
+- ex. in terminal,
+  ex. npm install joi
+
+- in app.js,
+  ex. const Joi = require('joi') 
+
+
+- now we need to define a schema!
+
+
+1. Define a Schema for some data in javascript
+ex. in our case, it will be a Schema for req.body
+2. Then can validate data by running it through Schema
+
+3. That will give us an error message if there's any error 
+
+- let's put our schema in
+ex. app.post(...)!!
+
+~> it's NOT mongoose schema: this schema will validate the data even before the data goes to mongoose!
+
+
+ex. const campgroundSchema = Joi.object({
+        campground: Joi.object({
+            title: Joi.string().required(),
+            price: Joi.number().required().min(0)
+        }).required()
+    })
+    const {error} = campgroundSchema.validate(req.body)
+
+    if (error){
+        const msg = error.details.map(el => el.message).join(',')
+        //joining elements in the object array (error.details)
+        //into a new array!
+
+        throw new ExpressError(msg,400)
+
+    }
+<br>
+
+
+
+
+
+
+
+
+
+
+#### 445. JOI Validation Middleware
+- now we have two layers of validations! one on server-side, the other on client-side
+
+- because we want to use the Joi validation at more than one place, let's separate it to a middleware
+
+ex. const validateCampground = (req, res, next) => {
+        const campgroundSchema = {...}
+        if (error) ...
+        else next()
+    }
+
+    //(req, res, next) to specify that this is a middleware function
+    
+    //we will eventually separate it into a new file after learning about ExpressRouter,etc.
+
+
+- Schemas.js
+: ex. const Joi = require('joi')
+: ex. module.exports.campgroundSchema = Joi.object({})
+
+- in app.js,
+ex. const {campgroundSchema} = require('schemas.js')
+
+
+<br>
+
+
+## 44. Data Relationships With Mongo
+#### 446. What Matters In This Section
+- Crucial!
+: One to Few
+: One to Many
+: One to Bajillions
+: Populate
+
+- Important
+: Mongo Schema Design
+
+- Nice To Have
+: SQL Relationships Overview
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+#### 447. Introduction to Mongo Relationships
+- relationships among data and Mongo!
+
+<br>
+
+
+
+
+#### 448. SQL Relationships Overview
+- "Relational Databases"
+- using multiple databases and relationships among data
+
+- at some point, spend some time in learning SQL!!
+: very useful
+
+<br>
+
+
+#### 449. One to Few
+
+- So, how to implement relational database in Mongo?
+
+
+- There are SO many ways to structure database in Mongo
+~> and what Colt is showing is just a tiny tiny bit of Mongo
+~> takes a lot of time to really master it!!
+
+
+1. One to Few
+2. One to Many
+3. One to Gajillions
+
+
+- One To Few
+: Embed the data directly in the document!
+
+ex. user - address
+~> little possibility that the user will have hundreds of addresses
+~> or that addresses will be used without the info of the user
+~> just store the address data directly under user data
+
+- in Mongo_Relationship folder,
+ex. npm init -y
+ex. npm install mongoose
+
+ex. mkdir Models
+
+ex. touch Models/user.js
+
+~> mongoose conenction
+
+~> mongoose Schema (userSchema)
+
+~> makeUser (instance!)
+
+
+- note. _id: {id:false}
+
+=> to turn off the automatic assignment of id!
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
