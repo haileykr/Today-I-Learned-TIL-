@@ -8624,6 +8624,265 @@ ex. touch Models/user.js
 
 => to turn off the automatic assignment of id!
 
+- second, let's make a "FARM" schema!!
+~> products: cf. MONGOOSE - POPULATE
+~> set the type of each product element as Object ID
+
+- cf. mongoosejs.com/docs/populate.html
+~> "Population is the process of automatically replacing the specified paths in the document with document(s) frm other collection(s). We may populate a single document, multiple documents, a plain object, multiple plain objects, or all objects returned from a query."
+~> "The ref option is what tells Mongoose which model to use for population"
+
+
+- ex. const mongoose = require ('mongoose');
+  ex. const {Schema} = mongoose;
+  
+  ex. products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
+
+- by specifying 'ref', instead of typing every single object id, the population is done quickly and easily
+
+
+- makeFarm()
+~> when you see db.farms.collections(),
+~> product is called as an object id!
+
+~> So MONGO stores Object Id's rather than the data itself in db!
+
+<br>
+
+
+
+
+
+#### 451. Mongoose Populate
+- this is where 'ref' comes in!
+
+
+
+
+
+- ex. Farm.findOne({name: 'Fully Belly Farms'})
+    .populate('products')
+    .then(farm => console.log(farm));
+
+
+
+
+
+
+<br>
+
+
+
+#### 452. One to "Bajillions"
+- One To Bajillions
+
+: With thousands or more documens it's more efficient to store a reference to the parent on the child document.
+
+ex. {
+        tweetText: 'adjfalkdfj',
+        tags: ['moron', 'yo'],
+        user: ObjectId('290128093821')
+    }
+
+~> rather than saving all the tweets (child) to the user (parent), more efficient to save the user info (parent) to each tweet (child)
+~> as we ususally don't need ALL the tweets at once, etc.
+
+- ex. tweet.js
+
+~> tweets - user model
+
+- each tweet has an object id as their user!
+
+
+- now we can populate the 'user' field in 'tweet'!!
+
+- you can even populate only the chosen fields!
+~> "Field Selection"
+~> ex. .populate('user', 'username')
+
+<br>
+
+
+
+
+
+
+
+
+
+
+#### 453. Mongo Schema Design
+- https://www.mongodb.com/blog/post/6-rules-of-thumb-for-mongodb-schema-design-part-3
+
+~> VERY USEFUL!!
+
+- "denormalization" : having some duplicate data
+
+~> in SQL, almost never do it
+~> but in Mongo, if it makes sense, you can store some frequently used data as duplicates
+
+<br>
+
+
+
+
+
+
+
+## 45. Mongo Relationships with Express
+#### 454. What Matters In This Section
+- Crucial
+: Deleting With Mongo Middleware
+
+- Important
+: NOTE - Farm and Product are just specifics here
+: Defining Our Farm & Product Models
+: Creating Farms
+: Farms Show Page
+
+
+<br>
+
+
+
+
+#### 455. Defining Our Farm & Product Models
+- Thought Process
+: we don't want to embed products to farms
+: as we would want to see all the products too
+
+: and would make sense to implement the two-way relationship!
+
+<br>
+
+
+
+
+
+#### 456. Creating New Farm
+
+- db name: farmStandTake2
+
+- here, we are simplifying
+~> but in the real world, you want to validate data & do some error handling!
+
+
+<br>
+
+
+
+
+
+#### 457. Farms Show Page!
+- similar to Products Show Page
+
+<br>
+
+
+
+
+#### 458. Creating Products For A Farm
+- for this app, let us make it possible to add a product to each farm
+
+- important: we will include the farm id inside the web route
+
+
+ex. /farms/:farm_id/products/new
+ex. and post the request to
+ex. /farms/:farm_id/products
+
+~> although of course, there are other ways to implement these!
+
+~> ex. hide the id and send it inside req.body or sth
+~> while what we are doing is a very common practice as well
+
+
+
+
+- ex. farm.products.push(products)
+  
+  ex. product.farm = farm
+
+  ex. await farm.save();
+
+  ex. await product.save();
+
+
+<Br>
+
+
+
+
+
+
+
+
+
+
+#### 459. Finishing Touches
+- we should show all the products for each of the farms
+
+
+
+- in index.js,
+ex. app.get('/farms/:id',async(req,res)=>{
+      const farm = await Farm.findById(req.params.id).populate('products');
+      res.render('farms/show',{farm})
+});
+<br>
+
+#### 460. Deletion Mongoose  Middleware
+
+- ex.app.delete('/farms/:id' , async (req, res) => {
+        const farm = await Farm.findByIdAndDelete(req.params.id);
+        res.redirect('/farms')
+})
+
+- when deleting a farm, we want to delete its products
+
+~> fist option: find the products with farm id and delete them
+
+~> second option : more work upfront but nicer
+: we will choose this way
+
+: using Mongoose  Middleware!
+
+- note. in doc, we can see that .findByIdAndDelete() triggers .findOneAndDelete()
+
+
+
+
+
+
+- findOneAndDelete ~> "Query middleware": 'this' refers to the query vs. "Document middleware" this refers to the doc
+
+- we need to wait until after the query has been completed so that we have access to the document found
+
+- note that mongoose middleware is not the same as express middleware
+
+- in the mongoose doc, instead of calling next() manually you can use a fn returning a promise i.e. async/await
+
+- in farm.js, below Schema definition,
+: before we compile  the actual model,
+ex. ...
+ex. farmSchema.pre("findOneAndDelete", async function (data) {
+        console.log(data)
+})
+ex. farmSchema.post("findOneAndDelete", async function (data) {
+        console.log(data)
+})
+
+=> we can see that the POST MIDDLEWARE has access to the deleted data
+
+ex. farmSchema.post("findOneAndDelete", async function(farm) {
+        const res=await Product.deleteMany({_id: {$in:  farm.products}})
+        
+
+
+})
+
+
+
 
 
 
