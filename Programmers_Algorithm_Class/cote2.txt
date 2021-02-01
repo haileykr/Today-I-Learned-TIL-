@@ -1,0 +1,33 @@
+function solution(m, v) {
+    let incompRow = []
+    let currW = 0
+    let countH = 0
+    
+    for (let el of v){
+        if (m - currW  >= el){
+            if (incompRow.length > 0){
+                for (let j=0;j<incompRow.length;j++){
+                    if(m - incompRow[j]>= el) {
+                        incompRow[j] += el;
+                        break;
+                    }
+                }
+            }
+            else {
+                currW += el
+            }
+        }
+        else  {
+            if (el > m){
+                if (currW !=0){
+                    return countH + 1
+                }
+                return countH;
+            }
+            incompRow.push(currW);
+            countH += 1
+            currW = el
+        }
+    }
+    return countH + 1; 
+}

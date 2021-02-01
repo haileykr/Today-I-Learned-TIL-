@@ -1,0 +1,22 @@
+function solution(n, record) {
+    const result = []
+    
+    for (let i=0;i<n;i++){
+        result[i] = []
+    }
+    
+    for (let i of record){
+        let [server, nickname] = i.split(" ")
+        
+        if (result[server-1].includes(nickname) == false){
+            
+            result[server-1].push(nickname)
+        }
+        if (result[server-1].length > 5){
+            result[server-1].shift()
+        }
+    }
+    
+    
+    return result.flat()
+}

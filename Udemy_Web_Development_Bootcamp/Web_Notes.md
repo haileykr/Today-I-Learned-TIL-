@@ -8882,6 +8882,71 @@ ex. farmSchema.post("findOneAndDelete", async function(farm) {
 })
 
 
+<Br>
+
+
+## 46. YelpCamp - Adding The Reviews Model
+
+
+#### 461. Defining The Review  Model
+
+- new model! with body and rating (review.js)
+
+<br>
+
+
+
+
+
+#### 462. Adding The Review Form
+- Add in a new form to make a new review!
+
+- let's start with a range slider
+
+- views > campgrounds>show.ejs
+
+<br>
+
+
+
+
+#### 463. Creating Reviews
+
+- Setting routes for the review and actually making one
+~> let's adopt the route '/campgrounds/:id/reviews'
+
+- in app.js,
+ex. const Review = require('./models/review.js')
+
+ex. app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
+        const campgrounds = await Campground.findById(req.params.id);
+        const review = new Review(req.body.review);
+        campground.reviews.push(review)
+        await review.save()
+        await campground.save()
+
+
+        res.redirect (`/campgrounds/${req.params.id}`)
+}))
+
+
+<br>
+
+
+
+
+#### 464. Validating Reviews
+-  slider: default present, so no validation required
+- textarea: make it required
+
+
+- recap...
+~> <form novalidate...>
+~> in JS (boilerplate.ejs),
+~> all forms : ".validated-form
+
+
+
 
 
 
