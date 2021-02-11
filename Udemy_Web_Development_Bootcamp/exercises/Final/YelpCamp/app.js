@@ -1,18 +1,44 @@
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
+
+
+
+console.log(process.env.SECRET)
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Campground = require('./models/campground.js');
 const ejsMate = require('ejs-mate');
+const flash = require('connect-flash')
 const methodOverride = require('method-override');
-const catchAsync =require('./utils/catchAsync'); 
-const ExpressError = require('./utils/ExpressError.js')
-const {campgroundSchema} = require('./schemas.js')
-const Review = require('./models/review.js');
+const session = require('express-session'); 
+const passport = require('passport');
+const LocalStrategy = require('passport-local')
+const mongoSanitize = require ('express-mongo-sanitize')
+const helmet = require ('helmet')
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp',{
+const catchAsync =require('./utils/catchAsync'); 
+const ExpressError = require('./utils/ExpressError.js');
+
+const {campgroundSchema, reviewSchema} = require('./schemas.js');
+
+const Campground = require('./models/campground.js');
+const Review = require('./models/review.js');
+const User = require('./models/user.js')
+
+const userRoutes = require ('./routes/users')
+const campgroundRoutes= require ('./routes/campgrounds')
+const reviewRoutes= require ('./routes/reviews');
+
+const MongoDBStore = require('connect-mongo')(session);
+
+const dbUrl = process.env.DB_URL||'mongodb://localhost:27017/yelp-camp'
+mongoose.connect(dbUrl,{
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify:false
 });
 
 const db = mongoose.connection;
@@ -22,43 +48,125 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
-const app = express();
 
+
+const app = express();
 
 app.engine('ejs',ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'views'))
 
-
-
-
-
-
-
-
-
-
-
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 
-const validateCampground = (req, res, next) => {
+app.use(express.static('public'))
 
-    const {error} =  campgroundSchema.validate(req.body)
 
-    if (error){
-        const msg = error.details.map(el => el.message).join(',')
-        //joining elements in the object array (error.details)into a new string!
+app.use(mongoSanitize({
+    replaceWith: '_'
+}))
 
-        
-        
-        
-        throw new ExpressError(msg, 400);  
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://cdn.jsdelivr.net",
+    "https://api.mapbox.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+
+                "https://res.cloudinary.com/dlhgkcxol/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
+
+
+const secret = process.env.SECRET || 'thisshouldbeabetterone!'
+const store = new  MongoDBStore({
+    url: dbUrl,
+    secret: secret,
+    touchAfter: 24 * 60 * 60
+})
+
+store.on("error", function(e){
+    console.log( 'session store error' , e)
+})
+
+const sessionConfig = {
+    store,
+    secret,
+    resave: false,
+    
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 *7
     }
-    else {
-        next();
-    }
+
 }
+
+app.use(session(sessionConfig))
+
+app.use(flash()); 
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy (User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req,res,next ) => {
+    //console.log(req.session)
+    console.log(req.query)
+    res.locals.currentUser = req.user;
+    res.locals.success=req.flash('success')
+    res.locals.error = req.flash('error')
+    next();
+}) //make sure to put it before any route
+
+app.get('/fakeUser', async (req, res) => {
+    const user = new User({email: 'colt@gmail.com', username: 'colttt'});
+    const newUser = await User.register(user, 'chicken')
+    res.send(newUser)
+});
+
+app.use('/',userRoutes)
+app.use('/campgrounds',campgroundRoutes) 
+app.use('/campgrounds/:id/reviews',reviewRoutes) 
+
 
 app.get('/', (req, res) => {
     res.render('home')
@@ -71,87 +179,17 @@ app.get('/', (req, res) => {
 //     res.send(camp)
 // });
 
-app.get('/campgrounds',  catchAsync(async (req, res) => {
-
-
-    const campgrounds = await Campground.find({})
-    res.render('campgrounds/index', {campgrounds})
-})
-)
-
-app.get('/campgrounds/new', (req, res) => {
-    res.render('campgrounds/new')
-})
-
-app.post('/campgrounds', validateCampground, catchAsync(async (req, res) => {
-    //res.send(req.body.campground);
-    // data saved under 'campground'
-
-    
-    //if (!req.body.campground)throw new ExpressError ("Invalid Campground Data!", 400)
-    const campground = new Campground(req.body.campground);
-    campground.save();
-    res.redirect(`/campgrounds/${campground._id}`) 
-    })
-)
-
-app.get('/campgrounds/:id', catchAsync(async (req, res) => {
-
-
-    const campground = await Campground.findById(req.params.id)
-    res.render('campgrounds/show', {campground})
-}))
-
-
-app.get('/campgrounds/:id/edit', catchAsync(async(req, res) => {
-    const campground = await Campground.findById(req.params.id)
-
-    res.render('campgrounds/edit', {campground})
-}))
-
-app.put('/campgrounds/:id', catchAsync(async (req, res) => {
-    // res.send('IT WORKED!')
-
-    const {id} = req.params; 
-
-    const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground})
-    res.redirect(`/campgrounds/${campground._id}`)
-}))
-app.delete('/campgrounds/:id', catchAsync(async(req,res) => {
-    const {id} = req.params;
-    await Campground.findByIdAndDelete(id);
-    res.redirect('/campgrounds')
-}))
-
-app.post('/campgrounds/:id/reviews', catchAsync(async(req, res) => {
-    const campground = await Campground.findById(req.params.id)
-    const review =new Review(req.body.review)
-    campground.reviews.push(review);
-    await review.save();
-    
-    
-    await campground.save();
-
-    res.redirect (`/campgrounds/${req.params.id}`)
-    
-}))
-
-
 app.all('*',(req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
 })
 
 app.use((err, req, res, next) => {
     //res.send('Oh Boy, something went wrong!')
-
-
-
     //const {status = 500, message = 'error'} = err;
     const {statusCode=500} = err;
     if(!err.message) err.message = 'Oh No, something went wrong'
     res.status(statusCode).render ('error',{err})
 })
-
 
 app.listen(3000, ()=> {
     console.log('Serving on port 3000')
