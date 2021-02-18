@@ -3,10 +3,6 @@ const app = express();
 const morgan = require('morgan');
 const AppError = require('./AppError')
 
-
-
-
-
 app.use(morgan('tiny'))
 
 app.use((req, res, next)=>{
@@ -38,10 +34,6 @@ const verifyPassword = (req, res, next) => {
 //     next();
 // });
 
-
-
-
-
 app.get('/', (req, res) => {
     res.send('here!')
 })
@@ -66,8 +58,6 @@ app.use((err, req, res, next) => {
     //console.log("**********************");
     //console.log("**************ERROR***********");
     //res.status(500).send('OH BOY, WE GOT AN ERROR');
-    
-    
     const {status = 500, message =  'something went wrong'} = err;
     res.status(status).send(message)
 

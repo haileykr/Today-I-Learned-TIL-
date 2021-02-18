@@ -7,13 +7,12 @@ const methodOverride = require('method-override');
 const Product = require('./models/product');
 const Farm =  require('./models/farm');
 
-
 mongoose.connect('mongodb://localhost:27017/farmStandTake2', {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
         console.log("MONGO CONNECTION OPEN!!");
     })
     .catch(err => {
-        console.log("MONGO RROR!");
+        console.log("MONGO ERROR!");
         console.log(err);
     })
 
@@ -24,20 +23,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
 //FARM ROUTES
-
-
-
-
-
 app.get('/farms', async (req, res) =>{
     const farms = await Farm.find({});
-    
-    
     res.render('farms/index', {farms});
-})
+});
 
 app.get('/farms/new', (req, res) => {
-
     res.render('farms/new')
 })
 
@@ -46,32 +37,20 @@ app.get('/farms/:id', async(req,res) => {
     res.render('farms/show', {farm})
 })
 
-
 app.delete('/farms/:id', async(req, res) => {
     console.log("DELETING")
     const {id} = req.params
     const farm = await Farm.findByIdAndDelete(id);
     res.redirect('/farms')
-}
-)
+})
 
 app.post('/farms', async (req, res)=>{
-    
-    
     const farm = new Farm(req.body);
     //in the real world, you def want to validate the data
     await farm.save();
     //also you want to include some error handling!
-
-    
-
-
-
-    
-
     res.redirect('/farms')
 })
-
 
 app.get('/farms/:id/products/new', async (req, res) => {
     const {id} = req.params;
@@ -84,26 +63,18 @@ app.post('/farms/:id/products',async (req,res)=>{
     const farm = await Farm.findById(id);
     const {name, price, category } = req.body;
     const product = new Product({name, price, category});
-    
-
 
     farm.products.push(product)
-
     product.farm = farm;
 
     await farm.save()
     await product.save()
 
     res.redirect (`/farms/${id}`)
-    
 })
-
-
 
 //PRODUCT ROUTES
 const categories = ['fruit', 'vegetable', 'dairy'];
-
-
 app.get('/products', async (req, res) => {
     const {category} = req.query;
     if (category){
@@ -114,7 +85,6 @@ app.get('/products', async (req, res) => {
         const products = await Product.find({});
         res.render('products/index', {products, category: 'All'});
     }
-    
 })
 
 app.get('/products/new', (req, res) => {
@@ -141,21 +111,17 @@ app.get('/products/:id/edit', async (req, res) => {
 })
 
 app.put('/products/:id', async(req, res) => {
-    
     const {id} = req.params;
     const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true, new: true})
     res.redirect(`/products/${product._id}`);
     // console.log(req.body);
     // res.send('PUT!!');
-    
 })
 
 app.delete('/products/:id'  ,  async (req, res) => {
     const {id} = req.params;
     const deletedProduct =  await Product.findByIdAndDelete(id);
-
     res.redirect('/products');
-
 })
 
 app.listen(3000, () => {

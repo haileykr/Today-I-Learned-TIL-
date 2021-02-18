@@ -1,0 +1,36 @@
+'''
+BaseN Game
+
+n - base n
+t - number of digits that the player has to say
+m - total number of players
+n - the order of the player
+
+01/2021
+'''
+
+def solution(n, t, m, p):
+    answer = ''
+    answers = [0]
+    keys = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F']
+    count = 1
+    
+    # get the number array
+    while len(answers) <=t*m:
+        tmp = []
+        i = count
+        while i > 0 :
+            div = i // n
+            mod = keys[i % n]
+            i = div
+            tmp.append(mod)
+        answers.extend( tmp[:: -1])  
+        
+        count += 1
+            
+    # get Tube's number
+    while len(answer) <t:
+        answer +=str(answers [p-1])
+        p += m
+        
+    return answer

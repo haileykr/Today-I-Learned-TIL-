@@ -1,9 +1,4 @@
 const mongoose = require('mongoose');
-
-
-
-
-
 const {Schema} = mongoose;
 
 mongoose.connect('mongodb://localhost:27017/relationshipDB', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
@@ -44,9 +39,7 @@ const Tweet = mongoose.model('Tweet', tweetSchema);
 // makeTweets();
 
 const findTweet = async () => {
-    
     const t = await Tweet.find({}).populate("user", "username")
-
     console.log(t)
 }
 findTweet()

@@ -3,7 +3,13 @@ const cities =require('./cities')
 const Campground = require('../models/campground.js');
 const {places, descriptors} = require('./seedHelpers')
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp',{
+
+
+
+
+const dbUrl = "mongodb+srv://our-first-user:eifImy7VrSVnBER9@cluster0.olnwy.mongodb.net/yelp-camp?retryWrites=true&w=majority"
+
+mongoose.connect(dbUrl,{
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -21,12 +27,14 @@ const sample = array => array[Math.floor(Math.random() * array.length)]
 
 const seedDB = async() => {
     await Campground.deleteMany({});//delete everything
-    for (let i=0;i<300;i++){
+    for (let i=0;i<50;i++){
         const random1000 = Math.floor(Math.random()*1000)+1
 
         const price = Math.floor(Math.random()* 20) +10;
         const camp = new Campground({
-            author: '601cbc9224a2cc02b44b4a11',
+            // author: '601cbc9224a2cc02b44b4a11',
+            //mongo atlas
+            author: '60254df20f744a00150a2fe2',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}` ,
             //sample is a function so should invoke it with parens
@@ -43,7 +51,7 @@ const seedDB = async() => {
 
             images: [
                 {
-                url: 'https://res.cloudinary.com/dlhgkcxol/image/upload/v1612792183/YelpCamp/trfqxtk636h1ayfmv8en.png',
+                url: 'https://res.cloudinary.com/dlhgkcxol/image/upload/v1613059127/3qbIc5Z_t4qo79.jpg',
                 filename: 'YelpCamp/trfqxtk636h1ayfmv8en'
 
 

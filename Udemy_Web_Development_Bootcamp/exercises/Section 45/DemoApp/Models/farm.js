@@ -2,9 +2,7 @@ const mongoose = require ('mongoose');
 const Product = require ('./product')
 
 const {Schema} =mongoose;
-
 const farmSchema = new Schema ({
-
     name: {
         type: String,
         require: [true, 'Farm must have a name!']
@@ -39,10 +37,4 @@ farmSchema.post('findOneAndDelete', async  function (farm) {
 })
 
 const Farm =mongoose.model('Farm', farmSchema);
-
-
-
-
-
-
 module.exports=Farm;

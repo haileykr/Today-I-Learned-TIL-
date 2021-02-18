@@ -1,11 +1,6 @@
 const BaseJoi = require('joi')
 const sanitizeHtml =  require('sanitize-html')
 
-
-
-
-
-
 const extension = (joi) => ({
     type: 'string',
     base: joi.string(),
@@ -21,13 +16,12 @@ const extension = (joi) => ({
                 });
             if (clean !== value) return helpers.error('string.escapeHTML',{value})
             return clean;
+            }
         }
     }
-}
+});
 
-})
-
-const Joi = BaseJoi.extend(extension)
+const Joi = BaseJoi.extend(extension);
 
 module.exports.campgroundSchema = Joi.object({
     campground: Joi.object({
@@ -36,14 +30,12 @@ module.exports.campgroundSchema = Joi.object({
         // images: Joi.string().required(),
         location: Joi.string().required().escapeHTML(),
         description: Joi.string().required().escapeHTML() 
-
     }).required(),
     deleteImages: Joi.array()
 });
 
 module.exports.reviewSchema = Joi.object({
     review: Joi.object({
-
         rating: Joi.number().required().max(5).min (1),
         body: Joi.string().required().escapeHTML()
     }).required()

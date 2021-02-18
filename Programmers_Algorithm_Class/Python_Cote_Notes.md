@@ -134,7 +134,7 @@ ex. def solution(n, lost, reserve):
         // 교집합
         lost = set(lost) - set1 //빌려야하는 집합
 
-        reserve = set(reserve) - s //빌려줄수있는 집합
+        reserve = set(reserve) - set1 //빌려줄수있는 집합
 
         for x in sorted(reserve): 
             if x - 1 in lost:
@@ -365,7 +365,7 @@ ex. def solution (scoville, K):
 (1) 5
 (2) 55, (1) +-/* (1) => 10 0 1 25
 (3) 555, (1) +-/* (2), (2) +-/* (1)
-=> 555 60 15 5 30 6 -50 -5 -20 4 275 50 0 125 11 2 20 -4 55
+=> 555 60 15 5 30 6 50 -5 -20 4 275 0 125 11 2 20 -4 55
 
 (4) 5555, (3) +-/* (1), (1) +-/* (3), (2) +-/* (2)
 (5) 55555, (3) +-/* (2), (2) +-/* (3), (1) +-/* (4), (4) +-/* (1)
@@ -527,6 +527,9 @@ ex. def solution(tickets):
             else:
                 stack.append(routes[top][-1])
                 routes[top] = routes[top][:-1]
+
+
+        return stack[::-1]
             
 
 

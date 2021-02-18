@@ -9,13 +9,11 @@ mongoose.connect('mongodb://localhost:27017/relationshipDB', {useNewUrlParser: t
     console.log(err)
 })
 
-
 const userSchema = new mongoose.Schema({
     first: String,
     last: String,
     addresses: [
         {
-
             _id:{id:false},
             street: String,
             city: String,
@@ -39,12 +37,12 @@ const makeUser = async () => {
         street: "123 Sesame Street",
         city: "New York",
         state: "NY",
-        country: "USA"
-             
+        country: "USA"    
     })
     const res = await u.save()
     console.log(res)
 }
+
 const addAddress=async(id) => {
     const user = await User.findById(id);
     user.addresses.push(

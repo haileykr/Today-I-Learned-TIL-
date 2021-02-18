@@ -6,14 +6,14 @@ const app = express();
 
 
 //To parse form data in POST request body:
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 // To parse incoming JSON in POST request body:
-app.use(express.json())
+app.use(express.json());
 // To 'fake' put/patch/delete requests:
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 // Views folder and EJS setup:
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // Our fake database:
 let comments = [
@@ -49,7 +49,7 @@ app.get('/comments', (req, res) => {
 // **********************************
 app.get('/comments/new', (req, res) => {
     res.render('comments/new');
-})
+});
 // **********************************
 // CREATE - creates a new comment
 // **********************************

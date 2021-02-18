@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
-
 const {Schema} = mongoose;
-
 //no need to connect to mongodb here
 //as this model will be required in
 //index.js which is already connected
-
 const productSchema = new Schema({
     name: {
         type: String,
@@ -26,7 +23,5 @@ const productSchema = new Schema({
         ref: 'Farm'
     }
 })
-
 const Product = mongoose.model('Product',productSchema);
-
 module.exports = Product;
