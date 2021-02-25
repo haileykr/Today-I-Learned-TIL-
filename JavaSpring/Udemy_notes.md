@@ -166,3 +166,36 @@
 ~> Encoding set to UTF-8
 (https://suzxc2468.tistory.com/174)
 
+#### 13. Installing Tomcat
+- http://tomcat.apache.org
+- Connection port: 8080 (default)
+- Admin loging: ID - admin, PW - admin
+- Installed Java
+(java.com/ko/download)
+
+- verify the Tomcat installation
+~> http://localhost:8080
+
+- bottom right: Tomcat icon!
+- Local services -> Apache Tomcat
+: can stop/restart here!
+
+~> Stopped it as we want to run it on Eclipse later
+
+<br>
+
+
+
+
+
+#### 14. Installing Eclipse
+- Installed the default one
+- then added Web Functionality
+(https://codevang.tistory.com/188)
+#### 15. Connecting Tomcat to Eclipse
+- Benefits
+: Start Tomcat from Eclipse
+: Easily deploy applications directly to Tomcat
+
+
+

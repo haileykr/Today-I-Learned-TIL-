@@ -6472,9 +6472,7 @@ ex. const seedDB = async () => {
 <br>
 
 #### 408. Campground Index
-
 - let's get some basic CRUD functionality
-
 
 - let's first set up different routes for campground index!
 
@@ -6497,28 +6495,9 @@ ex. app.get ('/campgrounds/:id', async (req, res) => {
         res.render('campgrounds/show', {campground})
     })
 
-
 <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
 #### 410. Campground New & Create
-
-
-
-
-
-
 - in app.js,
 ex. app.get('/campgrounds/new', (req, res) => {
         res.render('campgrounds/new');
@@ -6530,20 +6509,15 @@ ex. <form action="/campgrounds" method = "POST">
         <label for = ""></label>
         <input type = "text" id = "title" name = "campground[title]">
 
-
 - here, campground[title] makes a group of entered items
 
 - in app.js, the order of app.get() matters
-
 : if we put app.get('/campgrounds/new',...) after app.get('/campgrounds/:id',...), "new" is treated as one of the "id's"
 
 - now include
-
 : app.post('/campgrounds'...) 
 
 - but before that, we have to "parse" the req.body (we don't see anything now)
-
-
 ~> ex. app.use(express.urlencoded({extended: true}))
 
 - ex. app.post('/campground', async (req, res) => {
@@ -6552,16 +6526,9 @@ ex. <form action="/campgrounds" method = "POST">
         res.redirect(`/campgrounds /${campground._id}`)
       })
 
-
-
-
 <br>
 
-
-
-
 #### 411. Campground Edit & Update
-
 - ex. app.get('/campgrounds/:id/edit',async (req, res) => {
         const campground = await Campground.findById(req.params.id);
         res.render('campgrounds/edit', {campground})
@@ -6576,23 +6543,11 @@ ex. npm i method-override
 ex. app.use(methodOverride('_method' ))
 ex. const methodOverride = require('method-override')
 ex. app.put('/campgrounds/:id', async (req, res) => {
-        
-        
         const {id} = req.params;
         Campground.findByIdAndUpdate(id, {...req.body.campground})
 })
 
 <br>
-
-
-
-
-
-
-
-
-
-
 
 #### 412. Campground Delete
 - in app.js,
@@ -6605,11 +6560,7 @@ ex. app.delete('/campgrounds/:id',async(req,res)=>{
 - and need to make a form to send
 : 'delete' request! [show.ejs]
 
-
 <br>
-
-
-
 
 ## 40. Middleware: The Key to Express
 #### 413. What Matters In This Section
@@ -6775,8 +6726,6 @@ ex. app.get('/secret',verifyPassword, (req, res) => {
 
 ## 41. YelpCamp: Adding Basic Styles
 #### 421. A New EJS Tool For Layouts
-- https://github.com/Colt/YelpCamp/tree/509354878f5cbd0fc8325a2e0da347075c722740
-
 - https://github.com/JacksonTian/ejs-mate
 
 - we will add some Bootstrap!!
@@ -6816,7 +6765,6 @@ ex. then the bodycontent
 
 <br>
 
-
 #### 422. Bootstrap5! Boilerplate
 - https://getbootstrap.com/
 
@@ -6835,33 +6783,13 @@ ex. then the bodycontent
 
 <br>
 
-
-
-
-
-
-
-
 #### 423. Navbar Partial
 - Let's add a very basic navbar to a boilerplate!
-
 - navbar-dark bg-dark sticky-top
-
 - views > partials
-
 - <%- include('../partials/navbar')%>
 
-
-
-
-<Br>
-
-
-
-
-
-
-
+<br>
 
 #### 424. Footer Partial
 - footer.ejs
@@ -6886,17 +6814,8 @@ ex. <footer class = "footer bg-dark  py-5">
 
 <br>
 
-
-
-
-
-
-
-
-
 #### 425. Adding Images
 - let's re-seed all the campground sites with images!
-
 
 - Unsplash Source API!!
 ~> source.unsplash.com
@@ -6909,20 +6828,13 @@ ex. <footer class = "footer bg-dark  py-5">
       ...
    });
 
-
 - seeds > index.js
 <br>
-
-
-
 
 #### 426. Styling Campgrounds Index
 - bootstrap card!
 
 - in views > index.ejs
-
-
-
 
 ex. <div class =  "card mb-3">
       <div class = "row">
@@ -6931,23 +6843,15 @@ ex. <div class =  "card mb-3">
           </div>
       </div>
     </div>
-
-
-
-
-
   
 - and more!
 
 <br>
 
-
-
-
 #### 427. Styling The New Form!
 - using some components
 
-<Br>
+<br>
 
 #### 428. Styling The Edit Form!!
 
@@ -6955,18 +6859,10 @@ ex. <div class =  "card mb-3">
 
 <br>
 
-
-
-
-
 #### 429. Styling The Show Page!
-
 - using cards component![kitchen sink]
 
-<Br>
-
-
-
+<br>
 
 ## 42. Handling Errors In Express
 #### 430. What Matters In This Section
@@ -7174,17 +7070,7 @@ ex. const handleValidationError = err => {
 - client-side validation and error handler
 - server-side validation
 
-
-
-
-
 <br>
-
-
-
-
-
-
 
 #### 439. Client-Side Form Validations
 - can do 'required' using browser validation
@@ -7231,11 +7117,6 @@ ex. <div class="valid-feedback">Looks good! </div>
 
 <br>
 
-
-
-
-
-
 #### 440. Basic Error Handler
 - Now, Price is set to be number, so if the input cannot be cast into a number, mongoose freaks out and the submission just keeps spinning
 ~> it's also async error (happening after express couldn't catch before the form submission reaches mongoose!)
@@ -7246,7 +7127,6 @@ ex. app.use((err, req, res, next) => {
 })
 
 <br>
-
 
 #### 441. Defining ExpressError  Classes!
 - something we have done already, but adding to YelpCamp
@@ -7260,17 +7140,13 @@ ex. class ExpressError extends Error {
         constructor(message, status){
             super();
 
-
-            this.message = message
-            this.status = status
+            this.message = message;
+            this.status = status;
         }
     }
-
     module.exports = ExpressError
 
-
 - utils > catchAsync.js
-
 
 ex. module.exports = func => {
         return (req,res,next) => {
@@ -7278,35 +7154,21 @@ ex. module.exports = func => {
         }
     }
 
-
 - in app.js,
 ex. const catchAsync = require ('./utils/catchAsync')
 
-
-
-
-
-
 <br>
 
-
-
-
-
 #### 442. More Errors
-
-
-
 - ex. const ExpressError = require('./utils/ExpressError')
 
 - ex. app.all('*', (req, res, next) => {
-        next(new ExpressError("page not found", 404))
-      })
+        next(new ExpressError("page not found", 404));
+      });
   ex. app.use((err, req, res, next) => {
         const {status = 500, message= 'error!'} = err;
-        res.status(status).send(message)
-
-      })
+        res.status(status).send(message);
+      });
 
 - although we will adopt a different solution later, we can do this thing
 ex. app.post('/campgrounds', catchAsync(asyn (req, res, next) => {
@@ -7319,22 +7181,13 @@ ex. app.post('/campgrounds', catchAsync(asyn (req, res, next) => {
 
 ~> and here, we "throw" a new error, because there's catchAsync, and if error is thrown, it will lead to the error handler app.use later
 
-
 - now we can catch both express-thrown errors and the errors that we threw!
 
 <br>
 
-
-
-
-
-
-
-
 #### 443. Defining Error Template
-
 - views > error.ejs
-
+  
 ~> let's start with a simple alert!
 ~> in app.js,
 ex. app.use(... res.status(status).render('error', {err}))
@@ -7343,26 +7196,10 @@ ex. app.use(... res.status(status).render('error', {err}))
 
 <br>
 
-
-
-
-
-
-
-
-
-
-
-
 #### 444. JOI Schema Validationa
 - JOI.DEV/API/?V=17.3.0
-
 - joi lets you describe the data using a simple intuitive and readable language
-
-
-~> JavaScript validator tool
-
-
+~> JavaScript validator tool 
 
 - we have client-side validation, but barely have server-side one
 ~> we do have
@@ -7371,18 +7208,13 @@ ex. if (!req.body.campground) throw new ExpressError(...),
 
 ~> we can manually check for all the error-generating cases, but it's a lot of work!
 
-
-
-
 - ex. in terminal,
   ex. npm install joi
 
 - in app.js,
   ex. const Joi = require('joi') 
 
-
 - now we need to define a schema!
-
 
 1. Define a Schema for some data in javascript
 ex. in our case, it will be a Schema for req.body
@@ -7393,8 +7225,7 @@ ex. in our case, it will be a Schema for req.body
 - let's put our schema in
 ex. app.post(...)!!
 
-~> it's NOT mongoose schema: this schema will validate the data even before the data goes to mongoose!
-
+~> it's NOT mongoose schema: this schema will validate the data even before the data goes to mongoose!    
 
 ex. const campgroundSchema = Joi.object({
         campground: Joi.object({
@@ -7410,18 +7241,8 @@ ex. const campgroundSchema = Joi.object({
         //into a new array!
 
         throw new ExpressError(msg,400)
-
     }
 <br>
-
-
-
-
-
-
-
-
-
 
 #### 445. JOI Validation Middleware
 - now we have two layers of validations! one on server-side, the other on client-side
@@ -7433,11 +7254,9 @@ ex. const validateCampground = (req, res, next) => {
         if (error) ...
         else next()
     }
-
     //(req, res, next) to specify that this is a middleware function
     
     //we will eventually separate it into a new file after learning about ExpressRouter,etc.
-
 
 - Schemas.js
 : ex. const Joi = require('joi')
@@ -7446,9 +7265,7 @@ ex. const validateCampground = (req, res, next) => {
 - in app.js,
 ex. const {campgroundSchema} = require('schemas.js')
 
-
 <br>
-
 
 ## 44. Data Relationships With Mongo
 #### 446. What Matters In This Section
@@ -7690,29 +7507,18 @@ ex. farmSchema.post("findOneAndDelete", async function(farm) {
 
 ## 46. YelpCamp - Adding The Reviews Model
 #### 461. Defining The Review  Model
-
 - new model! with body and rating (review.js)
 
 <br>
 
-
-
-
-
 #### 462. Adding The Review Form
 - Add in a new form to make a new review!
-
 - let's start with a range slider
-
 - views > campgrounds>show.ejs
 
 <br>
 
-
-
-
 #### 463. Creating Reviews
-
 - Setting routes for the review and actually making one
 ~> let's adopt the route '/campgrounds/:id/reviews'
 
@@ -7722,24 +7528,17 @@ ex. const Review = require('./models/review.js')
 ex. app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
         const campgrounds = await Campground.findById(req.params.id);
         const review = new Review(req.body.review);
-        campground.reviews.push(review)
-        await review.save()
-        await campground.save()
-
-
-        res.redirect (`/campgrounds/${req.params.id}`)
-}))
-
+        campground.reviews.push(review);
+        await review.save();
+        await campground.save();
+        res.redirect (`/campgrounds/${req.params.id}`);
+    }));
 
 <br>
-
-
-
 
 #### 464. Validating Reviews
 -  slider: default present, so no validation required
 - textarea: make it required
-
 
 - recap...
 ~> we put
@@ -7758,25 +7557,16 @@ ex. app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
 - in app.js, require reviewSchema && set up a middleware
 ex. const {campgroundSchema,  reviewSchema} = require('./schemas.js')
 
-
 ex. const validateReview = ...
 
 - and again in app.js, add that middleware to app.post('.../reviews', validateReivew, ...)
 
-
 <br>
-
 
 #### 465. Displaying Reviews
 - in our route, we first need to **_populate_** the reviews so that they can be displayed, not in object id's anymore
-
 ex. app.get('/campgrounds/:id',....
-        
         const campground =await Campground.findById(req.params.id).populate("reviews"));
-
-
-
-
 
 - then in show.ejs,  let's display the reviews in a pretty way!
 
@@ -7785,27 +7575,17 @@ ex. <% for (let review of campground.reviews) {%>
             <p>Rating: <%= review.rating %></p>
             <p>Review: <%= review.body %></p>
           </div>
-
     <% }%>
-
 
 - if too many junk reviews,
 ex. db.reviews.deleteMany({})
 
-
 <BR>
 
-
-
-
-
-
 #### 466. Styling Reviews
-
 - with card class
 
 <br>
-
 
 #### 467. Deleting Reviews
 - new route!
@@ -7813,25 +7593,19 @@ ex. app.delete('/campgrounds/:id/reviews/:reviewId' , catchAsync(async (req, res
         res.send("DELETE ME!")
 })
 
-
 // we want to delete the reference in the campground and the review itself and that is why we access both id's
-
 
 - Add the delete form for each review
 
 - to remove the review reference in the campground object, we use the mongo operator $pull!!
-
-
-~> $pull  removes from an existing array all instances of a value or values that match a specified condition
++~> $pull  removes from an existing array all instances of a value or values that match a specified condition
 
 ex. {$pull: {<field1>: <value|condition>, <field2>: <value|condition>,...}
 
 ex. const {id, reviewId} = req.params;
 ex. await Campground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}})
 
-
 <br>
-
 
 #### 468. Campground Delete Middleware
 - mongoose middleware again!
@@ -7846,7 +7620,6 @@ ex. await Campground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}})
 ~> this function triggers findOneAndDelete()
 
 - So in campground.js,
-
 ex. CampgroundSchema.post('findOneAndDelete', async function(doc){
       if(doc){
           await Review.deleteMany({
@@ -7859,13 +7632,11 @@ ex. CampgroundSchema.post('findOneAndDelete', async function(doc){
 
 ~> "POST-middleware" which runs after "findOneAndDelete"
 
-
 - it could be confusing b/c this "query" middleware does not have "this"keyword we can use, which other middlewares have
 
 - NOTE. if we change the way that the campground is deleted (ex. NOT .findByIdAndDelete), the  query middleware written above will not work, as 'findOneAndDelete' is not triggered
 
 <br>
-
 
 ## 47. Express Router & Cookies
 #### 469. What Matters In This Section
@@ -8033,9 +7804,7 @@ ex. app.get('/setname', (req, res) => {
 - ex. app.use(cookieParser('thisismysecret')); //this string is used to sign the cookies
 
 - ex. app.get('/getsingedcookie',(req, res) => {
-        
         res.cookie('fruit', 'grape', {signed: true})
-
       })
 
       //we get back sth like '%3Agrape.LMNZojp%2FiR9Tsj50P0ysA22deJjrP0awUK0S8R3lT' as the cookie and we can indeed see 'grape' in it
@@ -8045,24 +7814,16 @@ ex. app.get('/setname', (req, res) => {
         res.send(req.singedCookies)
       })
 
-      //
-
 - Signed cookies are stored in a different object 'req.signedCookies'
 ~> express doc!
-
-
-
 
 - after cookies are signed, even if those cookies are manually changed or sth, it is noticed and req.signedCookies return ex. {'fruit':false}
 
 - if you change the key to cookieParser(key) the previous cookies become unavailable!
 
-
 <br>
 
-
 #### 476. OPTIONAL-HMAC Signing
-
 - freeformatter.com/hmac-generator
 
 - hmac - to validate the integrity (unchanged?) and authenticity (who sent it?)
@@ -8078,30 +7839,14 @@ ex. app.get('/setname', (req, res) => {
 - Important
 : Integrating Flash Messages
 
-
 <br>
 
-
-
-
-
-
-
-
-
 #### 478. Introduction to Sessions
-
 - Sessions!
-
 : it's not very practical (or secure) to store a lot of data client-side using cookies.
-
 : this is where sessions come in!
-
 : sessions are server-side data store which we use to make HTTP stateful!
-
-
 : instead of storing the data using cookies we store the data on the server-side and then send the browser a cookie that can be used to retrieve the data.
-
 : a diagram might be helpful
 
 - enabling some statefulness to HTTP that is inheritly stateless
@@ -8120,10 +7865,6 @@ ex. CLIENT                    / SERVER
           I have a cookie for you
           -- my session ID is 4 -->
 
-      
-
-
-
 <br>
 
 #### 479. Express Sessions
@@ -8132,9 +7873,6 @@ ex. CLIENT                    / SERVER
 - SessionDemo
 
 - require express sessions and use them as a middleware
-
-
-
 
 - configuring express sessions can be a one- or two-hour content tbh!
 
@@ -8156,7 +7894,6 @@ ex. app.use(session(sessionoptions))
         res.send("YOU HAVE VIEWED THIS PAGE X TIMES")
       })
 
-
 - now we see "connect.sid" cookie, which is generated by express-session
 
 ~> sid as session id
@@ -8165,10 +7902,9 @@ ex. app.use(session(sessionoptions))
 
 ~> that is why when we open a website in a differnt platform the browser does not have information about us
 
-- ex. app.get('/viewcounts', (Req, res) => {
+- ex. app.get('/viewcounts', (req, res) => {
           if (req.session.count) 
-              req.session.count +=1;
-              
+              req.session.count +=1; 
           } else {
               req.session.count = 1;
           }
@@ -8187,19 +7923,12 @@ ex. app.use(session(sessionoptions))
 
 ~> in the real world for production enviornment, we can use one of many options of sessionStores[ex. connect-redis, connect-mongo]
 
-
 - recap: the session has all the data, and gives back only one cookie, which is the session id. The session id is sent on all subsequent requests and express session looks for the appropriate data in the session store with the sid. And if there's data in the session store that is accessible through req.session
 
 <br>
 
 #### 480. More Express Sessions
-
 - refer to #### 479
-
-
-
-
-
 
 - whenever the web page is restarted we get the new sid and the new counts!
 
@@ -8209,11 +7938,7 @@ ex. app.use(session(sessionoptions))
 
 - Register & Greet
 
-
-
-
 <br>
-
 
 #### 481. Intro To Flash
 
@@ -8228,24 +7953,11 @@ ex. app.use(session(sessionoptions))
 
 ~> typically after some action & before you redirect somewhere
 
-
 - let's add functionalities to Section 45 Farm + Product App with Flash
-
-
-
-
-
 
 - npm install connect-flash
 
 - configure session! as connect-flash relies on sessions
-
-
-
-
-
-
-
 ex. const flash=require('connect-flash');
 ex. app.use(flash());
 
@@ -8255,9 +7967,7 @@ ex. app.use(flash());
 
 - key incl. 'error', 'info', 'success', etc..
 
-
 - usually flash right before redirect
-
 ex. app.post('/farms', async (req, res) => {
         const farm = new Farm(req.body);
 
@@ -8271,42 +7981,20 @@ ex. app.post('/farms', async (req, res) => {
 ex. ...
 ex. req.render('farms/index',{farms, messages: req.flash('success')})
 ex. ...
-
 //meaning if there is any req.flash w/'success' it will be passed through as messages
 
-
 - then in index.ejs,
-
 ex. <body>
       <%= messages %>
       ...
 
-
-
-
-
-
 <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
 #### 482. Flash and Res.locals
-
 - could be annoying to include 
 ex. messages: req.flash('key!')
 
 ~> what about having a middleware then?
-
 
 - express doc ~> res.locals!!
 
@@ -8337,9 +8025,7 @@ ex. res.locals.error
 
 <br>
 
-
 ## 49. YelpCamp: Restructuring & Flash
-
 #### 483. Breaking Out Campground Routes
 - let's break out /campgrounds & /reviews
 
@@ -8358,14 +8044,8 @@ ex. app.use('/campgrounds',campgrounds)
 
 <br>
 
-
-
-
 #### 484. Breaking  Out Review Routes
 - repeating the same process!
-
-
-
 
 - '/campgrounds/:id/reviews'
 
@@ -8376,20 +8056,13 @@ ex. const router =  express.Router({mergeParams: true})
 
 <br>
 
-
-
-
-
 #### 485. Serving Static Assets
-
 - we should add our public directory & serve the static assets!
-
 ~> for imgs, custom stylesheets and JS
 
 - public folder
 
 - usually src="/hello.js", not src="/public/hello.js", if they are in public folder!
-
 ~> in order to make it work, in app.js, 
 ex. app.use(express.static(path.join(__dirname,'public')))
 
@@ -8402,14 +8075,10 @@ ex. app.use(express.static(path.join(__dirname,'public')))
 
 <br>
 
-
 #### 486. Configuring Sessions
 - Now we want to set up Express sessions
 1. to use flash
 2. to introduce authentication and for that, we want session access
-
-
-
 
 - ex. npm install express-session
 
@@ -8426,8 +8095,6 @@ ex. const sessionConfig = {
           expires: Date.now() + 1000 * 60 * 60 * 24 * 7 ,
           maxAge: 1000 * 60 * 60 * 24 * 7
           //Date.now() is in ms
-
-
         }
     }
 
@@ -8436,20 +8103,11 @@ ex. const sessionConfig = {
 
 <br>
 
-
-
-
-
-
-
 #### 487. Setting Up Flash
 - install, require, use
-
 - in campground routes, let's use flash
 
-
 <br>
-
 
 #### 488. Flash Success Partial
 - partials / flash.ejs
@@ -8461,7 +8119,6 @@ ex. <%- if (success && success.length){ %>
       <%= success %>
       <button type="button" class="btn-close"data-bs-dismissible="alert" aria-label="Close">
       </button>
-      
     </div>
     <% } %>
 
@@ -8469,35 +8126,18 @@ ex. <%- if (success && success.length){ %>
 
 <br>
 
-
-
-
-
-
-
-
 #### 489. Flash Error Partial
-
 - do the same thing for error messages
 
 - ex. router.get('/:id',...
-      
         if(!campground) {
             req.flash('error', 'Campground not found!')
             return  res.redirect('/campgrounds')
         })
-
       ...
-
       )
 
 <BR>
-
-
-
-
-
-
 
 ## 50. Authentication From "Scratch"
 #### 490. What Matters In This Section
@@ -8513,12 +8153,7 @@ ex. <%- if (success && success.length){ %>
 
 <br>
 
-
-
-
-
 #### 491. Authentication vs. Authorization
-
 - Passport: Simple, unobtrusive authentication for Node.js
 ~> will use this later for YelpCamp!
 
@@ -8532,9 +8167,7 @@ ex. <%- if (success && success.length){ %>
 
 <br>
 
-
 #### 492. How to (not) Store Passwords
-
 - Rule #1 - Never Store Passwords
 
 - Hashing
@@ -8546,10 +8179,6 @@ ex. <%- if (success && success.length){ %>
 
 <br>
 
-
-
-
-
 #### 493. Cryptographic Hashing Functions
 - Cryptographic Hash Functions!
 1. One-way function which is infeasible to invert
@@ -8560,11 +8189,7 @@ ex. <%- if (success && success.length){ %>
 
 <br>
 
-
-
-
 #### 494. Passwords Salts
-
 - there are not THAT many hash functions suitable for passwords
 ~> we will use BCRYPT
 
@@ -8575,9 +8200,7 @@ ex. <%- if (success && success.length){ %>
 
 <br>
 
-
-#### 495. Into to Bcrypt!
-
+#### 495. Into to Bcrypt!S
 - github.com/keletiv/node.bcyrpt.js
 
 - Bcrypt itself has been there for a while, and it's been implemented in all sorts of languages
@@ -8603,14 +8226,14 @@ ex. <%- if (success && success.length){ %>
 ~> 'saltRounds' : number of rounds. difficulty level (proportional to process time)
 ~> 'ideal goal' is ~ 250 ms, and recommended number is ~12
 ~> as the saltRounds goes up, the time it takes will grow exponentially
+
 2. hash
 ~> takes the password and salt, and returns hashed pw
-
 ~> supported in callback functions / promises [async - await]
 ~> we will use the promise form!
 
 - ex. const bcrypt = require('bcrypt')
-ex. const hashPassword = async () => {
+ex. const hashPassword = async(pw) => {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(pw, salt)
         console.log(salt)
@@ -8624,15 +8247,10 @@ ex. hashPassword('monkey');
 ~> it can figure out which is the salt part and can compare only the rest,
 ~> so we do not need to store the salt data anywhere
 
-
 - then to compare..
 ex. bcrypt.compare(plainPassword, hash)
 
-
-
-
 ex. const login = async (pw, hashPassword) => {
-        
         const check = bcrypt.compare(pw, hashPassword)
         if (check){
           console.log("LOGGED YOU IN! SUCCESSFUL MATCH!!")
@@ -8641,19 +8259,16 @@ ex. const login = async (pw, hashPassword) => {
         }
     }
 
-
 - Note that we can generate Salt & Hashed PW at the same time
 ex. bcrypt.hash(plainPassword, saltRounds, function..)
 ex. ... bcrypt.hash(pw, 12)
 
 <br>
 
-
 #### 496. Auth Demo App
 - let's make a very simple app implementing the authentication
 
 - AuthDemo
-
 
 - ex. npm i express ejs mongoose bcrypt
 
@@ -8666,46 +8281,26 @@ ex. ... bcrypt.hash(pw, 12)
 
 <br>
 
-
-
-
-
-
-
-
 #### 497. Auth Demo: Register
-
 - connect to mongo
 
 - get id and pw from 'register' form
 ~> post to '/register' using the parsed (through express.urlencoded({extended: true}))req.body
 ~> take that username and that pw to create a new user! (the User model) after hashing the pw using Bcrypt
 
-
 - in index.js,
 ex. app.post(..)
 
 <br>
 
-
-
-
-
-
 #### 498. Auth Demo: LogIn
-
 - (1) create a form (2) set up a route to post
 
 - ex. app.get('/login', (req, res) => {
         res.render('login')
       })
 
-
-
-
 - login.ejs
-
-
 
 - index.js,
 ex. app.post('/login', async (req,res) => {
@@ -8724,7 +8319,6 @@ ex. app.post('/login', async (req,res) => {
     })
 
 <br>
-
 
 #### 499. Auth Demo: Staying Logged In With Session
 - npm install express -session
@@ -8746,7 +8340,6 @@ ex. app.use(session)
 
 <br>
 
-
 #### 500. Auth Demo: Logout
 - logging out <=> removing the user id in the session!
 
@@ -8755,13 +8348,11 @@ ex. app.use(session)
 ~> a "SIGNED" cookie is sent back to the client
 ~> and it won't be verified if it's faked, or a user sends their own sid as a part of malicious attack
 
-
 - so to log out, we need to rm user_id
 ex. app.post('/logout',(req, res) => {
         req.session.user_id = null;
         res.redirect('/login')
     })
-
 
 - secret.ejs ~> add post request form to /logout!
 
@@ -8769,36 +8360,21 @@ ex. app.post('/logout',(req, res) => {
 ex. req.session.destroy()
 ~> destroys all the information
 
-
-
 <br>
-
 
 #### 501. Auth Demo: Require Login Middleware
 - simple middleware to help verify if anyone is logged in/not!
 ~> b/c most of the times, what we want is to prevent MULTIPLE endpoints!
-
 ex. const requireLogin =(req, res, next)=>{
         if(!req.session.user_id){
             return res.redireect('/login')
         }
         next();
-    }
+    })
 
     //And pass this onto routes as necessary
 
-
-
-
-
-
-
-
 <br>
-
-
-
-
 
 #### 502. Auth Demo: Refactoring To Model Methods
 - we want to move as much as possible out of route handler itself
@@ -8816,8 +8392,7 @@ ex. app.post('/login', async (req,res) => {
           req.session.user_id = user._id;
           res.redirect('/secret')
       }
-      else {
-          
+      else {      
           res.redirect('/login')
       }
     
@@ -8829,9 +8404,7 @@ ex. app.post('/login', async (req,res) => {
 - in user.js,
 ex. userSchema.statics.findByUserIdAndValidate =async function(useranme, password){
         const foundUser = await this.findOne({username})
-        //this refers to the particular model or User
-
-
+        //this refers to the particular model or User f
         
         const isValid = await bcrypt.compare(password, foundUser.password)
         return isValid ? foundUser : false;
@@ -8857,30 +8430,16 @@ ex. app.post('/register',async (req, res)=>{
     })
 
 ~> what about making Mongoose set the hashed password
-
 ~> so that in the router, simply only username and password can be passed in
-
 ~> and in the user model, the password is saved
 
-
-
-
 ex. userSchema.pre ('save', async function ()  {
-        
         if (!this.isModified ('hashedPassword')) return next();
         this.hashedPassword = await bcrypt.hash(this.hashedPassword, 12);
         next()
     })
 
-
-
-
 <br>
-
-
-
-
-
 
 ## 51. YelpCamp: Adding In Authentication
 #### 503. Intro to Passport
@@ -8899,7 +8458,6 @@ ex. userSchema.pre ('save', async function ()  {
 
 or PASSPORT LOCAL MONGOOSE which makes authorizing with mongoose even easier
 
-
 - passport-local-mongoose depends on
 ~> passport-local and it depends on
 ~> passport
@@ -8908,10 +8466,6 @@ ex. npm install passport passport-local  passport-local-mongoose
 
 <br>
 
-
-
-
-
 #### 504. Creating Our User model!
 - Passport Usage
 ~> define the User schema however you like
@@ -8919,20 +8473,17 @@ ex. npm install passport passport-local  passport-local-mongoose
 ex. const passportLocalMongoose = require('passport-local-mongoose')
 ex. const userSchema = new Schema({..})
 ex. userSchema.plugin(passportLocalMongoose)
-
 => "Passport-local mongoose will add a usrname, hash and salt field to store the usrname, hashed pw & the salt val!"
 => "additionally adds some methods to your Schema!"
 
 <br>
 
 #### 505. Configuring Passport!
-
 - in app,
 ex. const passport = require('passport')
 ex. const LocalStrategy = require('passport-local')
 
 (note. Passport-Local-Mongoose is only in our Model)
-
 
 ex. app.use(passport.initialize());
 ex. app.use(passport.session)
@@ -8940,12 +8491,9 @@ ex. app.use(passport.session)
 ~> in passport docs, "in a Connect or Express-based application, passport.initialize() middleware is required to initialize Passport."
 ~> "If your application uses persistent login sessions, passport.session() middleware must also be used."
 
-
 - session should be used before passport-session
 
-
 - ex. const User = require('./model/user');
-
 ex. passport.use(new LocalStrategy(User.authenticate()))
 
 ~> 'Hello Passport, we'd like to use LocalStrategy (which we've downloaded and required), and for that LoacalStrategy, our authentication method will be located in the User model and is called .authenticate()'
@@ -8960,11 +8508,9 @@ ex. passport.deserializeUser(User.deserializeUser())
 ex. app.get('/fakeUser', async (req, res) => {
         const user = new User({email: 'colt@gmail.com', username: 'colttt'})
         const newUser = await User.register(user, 'chicken')
-
         
         res.send(newUser)
 })
-
 
 ~> Passport-Local-Mongoose : register(usr, pw, cb) convenience method to register a new usr instance with a given password. Checks if usrname is unique.
 
@@ -8972,32 +8518,16 @@ ex. app.get('/fakeUser', async (req, res) => {
 
 <br>
 
-
-
-
-
-
-
-
-
-
 #### 506. Register Form
 - routes > users.js
-
 - views > users > register.ejs
-
 - in app.js,
 ex. const userRoutes = require ('./routes/users');
 
 <br>
 
-
-
-
-
 #### 507. Register Route Logic
 - routes > users.js
-
 ex. router.post('/register', async (req, res) =>{
        try {
             const { username, email, password } = req.body
@@ -9015,7 +8545,6 @@ ex. router.post('/register', async (req, res) =>{
 <br>
 
 #### 508. Login Routes
-
 ex.router.get('/login)
 
 ~> passport.authenticate(*, **)
@@ -9023,22 +8552,12 @@ ex.router.get('/login)
 => ** is option
 => Passport Middleware
 
-
-
-
 ex.router.post('/login',   passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),(req, res) => {
     req.flash('success', 'Welcome Back!');
     res.redirect('/campgrounds') 
 })
 
-
 <br>
-
-
-
-
-
-
 
 #### 509. isLoggedIn Middleware
 - now that we have the login tool, let's 'protect' creating a new campground option!
@@ -9048,7 +8567,6 @@ ex.router.post('/login',   passport.authenticate('local', {failureFlash: true, f
 ~> reminder. auth from scratch => saving user_id to the session
 ~> Passport => using serialize/deserializeUser, info is saved to the session
 => use the helper method, ".isAuthenticated" : automatically added to the request object itself
-
 
 ex. router.get('/new', (req, res) => {
         if(!req.isAuthenticated()) {
@@ -9067,23 +8585,11 @@ ex. router.get('/new', (req, res) => {
 - middleware.js
 
 - in campgrounds and reviews.js,
-
 ex. const {isLoggedIn} = require('../middleware)
 
 - add to get and post routes
 
 <br>
-
-
-
-
-
-
-
-
-
-
-
 
 #### 510. Adding Logout
 - ex. router.get('/logout', (req, res) => {
@@ -9092,26 +8598,14 @@ ex. const {isLoggedIn} = require('../middleware)
         res.redirect('/campgrounds);
       })
 
-
-
-
-  
 - let's add a logout button on navbar!!
 
 <br>
-
-
-
-
-
 
 #### 511. currentUser Helper
 - let's hide some components depending on whether logged in or not!
 
 - req.user ~ contains the user info! no need to look into the session (it is in the session but we do not need to deal with it)
-
-
-
 
 => contains 'deserialized' info about that user
 
@@ -9132,17 +8626,10 @@ ex. <% if (!currentUser) { %>
         <a class="nav-link" href="/logout">Log Out</a>
     <% }%>
 
-
-
-
 <br>
 
-
 #### 512. Fixing Register
-
 - let's make a user logged in when they register
-
-
 
 - req.login(user, function(err){})
 ~> established the login session!
@@ -9161,10 +8648,6 @@ ex. router.post('/register', catchAsync(async (req, res) => {
     }
 
 <br>
-
-
-
-
 
 #### 513. ReturnTo Behavior
 - store info on "session" as it exists for that "statefulness"
@@ -9188,28 +8671,18 @@ ex. router.post('/login',   passport.authenticate('local', {failureFlash: true, 
       req.flash('success', 'Welcome Back!');
       const redirectURL = req.session.returnTo || '/campgrounds'
       
-      
       delete.req.session.returnTo;
       res.redirect(redirectURL)    
-  })
+  }) 
 
 <br>
 
-
-
-
-
-
-
-
-
-## 52. YelpCamp: Basic Autho
+## 52. YelpCamp: Basic Autho mm
 #### 514. Adding an Author to Campground
 - we will add a field to Campground
 ~> user_id, then we can look the user_id for each campground
 
 - models > campground.js
-
 ex. const CampgroundSchema = new Schema({
       ...,
       author: {
@@ -9224,9 +8697,6 @@ ex. const CampgroundSchema = new Schema({
 
 - ex. node seeds/index.js
 
-
-
-
 - routes/campgrounds.js,
 ex. const ampground =await Campground.findById(req.params.id).populate("reviews").populate("author")
 
@@ -9237,16 +8707,10 @@ ex. campground.author=req.user._id
 
 <br>
 
-
 #### 515. Showing and Hiding Edit / Delete
-
 - ex. <% if(currentUser &&campground.author.equals(currentUser._id))%>
 
 <br>
-
-
-
-
 
 ### 516. Campground Permissions
 - let's do more than merely hiding those buttons!
@@ -9272,9 +8736,6 @@ ex. router.put('/:id', isLoggedIn, catchAsync(async (req, res) => {
 
 <Br>
 
-
-
-
 #### 517. AUthorization Middleware
 - in middleware.js
 
@@ -9289,22 +8750,10 @@ ex. module.exports. isAuthor = async (req, res, next) => {
     }
 
 ex. and take middleware functions into this file as a part of cleanup!
-
-    
   
 <br>
 
-
-
-
 #### 518. Review Permission
-
-
-
-
-
-
-
 - in review.js,
 ex. const reviewSchema =new Schema({
       ...,
@@ -9321,11 +8770,8 @@ ex. const reviewSchema =new Schema({
 ~> apply isLoggedIn to post route
 ~> review.user=req.user._id
 
-
 #### 519. More Reviews Authorization!
-
 - display the username of the reviewer
-
 ~> here, we gotta first populate the review and then populate its author
 
 ex. const campground = await Campground.findById(req.params.id).populate({
@@ -9347,10 +8793,8 @@ ex. module.exports.isReviewAuthor = async (req, res, next) => {
       const review = await Review.findById(reviewId)
       if (!review.author.equals(req.user._id){
           req.flash('error', 'You do not have permission to do it')
-
           return res.redirect(`/campgrounds/${id})
-      }
-      
+      }     
       next();
 }
 
@@ -9358,15 +8802,6 @@ ex. module.exports.isReviewAuthor = async (req, res, next) => {
 ~>isReviewAuthor
 
 <br>
-
-
-
-
-
-
-
-
-
 
 ## 53. YelpCamp: Controllers & Star Ratings
 #### 520. Refactoring To Campgrounds Controller
@@ -9387,31 +8822,13 @@ ex. module.exports.index, ...
 
 <br>
 
-
-
-
 #### 521. Adding a Reviews Controller
 - Controllers > reviews.js
 - Controllers >users.js
 
 <br>
 
-
-
-
-
-
-
-
 #### 522. A Fancy Way To Restructure Routes
-
-
-
-
-
-
-
-
 - Express Doc > Router
 ~> router.route(path)
 ~> defines a single route with different verbs
@@ -9423,10 +8840,6 @@ ex.router.route('/')
 - be careful of the order of routes!
 
 <br>
-
-
-
-
 
 #### 523. Displaying Star Ratings
 - entity codes for stars - &#9734; &#9733;
@@ -9444,40 +8857,21 @@ ex.router.route('/')
 ~> you could link that stylesheet in boilerplate.ejs (to use that in every page), or link only where you need it (ex. show.ejs)
 
 ex. to show,
-ex. <p class="starability-result" data-rating="<%=review.rating">
-      
-
+ex. <p class="starability-result" data-rating="<%=review.rating"%>
       Rating: <%=review.rating%>
     </p>
 
-
-
-
-<Br>
-
-
-
-
-
-
-
+<br>
 
 #### 524. Star Rating FOrm
 - To replace the slider with the stars...
 ~> use the same CSS! no JS required
-
-
-
 
 ~> include a bunch of HTML codes which include radio buttons!
 
 ~> where the slider currently is, in show.ejs
 
 <br>
-
-
-
-
 
 ## 54. YelpCamp:Image Upload
 #### 525. Intro to Image Upload Process
@@ -9506,19 +8900,6 @@ ex. <p class="starability-result" data-rating="<%=review.rating">
 
 <Br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### 526. The Multer Middleware
 - again if we use the default HTML form,
 ~> the file info is not sent 
@@ -9531,7 +8912,7 @@ ex. <p class="starability-result" data-rating="<%=review.rating">
 ex. <form... enctype= "multipart/form-data">
 
 - then add in the input for file!
-ex. <input type="file"name="image">'
+ex. <input type="file"name="image">
 
 - but in order to PARSE the MULTIPART form
 ~> you need another middleware!
@@ -9566,14 +8947,7 @@ ex. router.route('/').post(upload.single('image'),...)
 + req.files
 ~> can upload multiple
 
-
 <br>
-
-
-
-
-
-
 
 #### 527. Cloudinary Registration
 - u need the credentials to use Cloudinary service!
@@ -9586,20 +8960,13 @@ ex. router.route('/').post(upload.single('image'),...)
 
 <br>
 
-
-
-
-
-
-
 #### 528. Environment Variables with dotenv
 - We store credentials in a file, which we don't include when we submit to Github, etc.
 ~> the file that stays on our machine locally
 ~> called .env file [the dot makes it hidden!]
 
-
 - npmjs.com/package/dotenv
-
+  
 - How to Set Up a .env File?
 ~> .env (at the top level)
 ~> then define key - value pairs!
@@ -9627,16 +8994,6 @@ ex. CLOUDINARY_API_KEY=
 ex. CLOUDINARY_SECRET=
 
 <br>
-
-
-
-
-
-
-
-
-
-
 
 #### 529. Uploading To Cloudinary Basics
 - an easy tool "Multer Storage Cloudinary"
@@ -9668,25 +9025,15 @@ ex. cloudinary.config({
     //"folder" inside Cloudinary
 
     module.exports = {
-
         cloudinary,
         storage
-        
     }
 
 - in campgrounds.js,
-
 ex. const {storage} = require('../cloudinary')
-
 ex. const upload =multer({storage});
 
 <br>
-
-
-
-
-
-
 
 #### 530. Storing Uploaded Image Links In Mongo
 - better to save both **path** and **filename** 
@@ -9713,20 +9060,9 @@ ex. module.exports.createcampground = (async (req, res) => {
 
   //map over the array added to req.files thanks to multer to make array of objects, add them to campground, then save
 
-
-
-
-
-
 - schemas.js ~> remove'image'requirements
 
 <br>
-
-
-
-
-
-
 
 #### 531. Displaying Images In A Carousel
 - Bootstrap > Carousel!
@@ -9752,24 +9088,11 @@ ex. <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
 
       </div>
 
-
 - and there are lots of other things you can display with Cloudinary!
 ~> ex. compress images
 ~> ex. create thumbnails
 
 <br>
-
-
-
-
-
-
-
-
-
-
-
-
 
 #### 532. Fixing Seeds
 - modify the seeds.js file so that the campground has image's' objects
@@ -9781,7 +9104,6 @@ ex. <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
 <Br>
 
 #### 533. Adding Uploads To Edit Page
-
 - Edit page!
 ~> will do excatly the same thing
 
@@ -9799,13 +9121,6 @@ ex. const imgs = campground.images =req.files.map(f => ({url: f.path, filename:f
 
 <br>
 
-
-
-
-
-
-
-
 #### 534. Customizing File Input
 - Bootstrap > Form Controls > File input
 
@@ -9822,24 +9137,6 @@ ex. https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.
 
 <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### 535. A Word of Warning!
 - think about
 
@@ -9848,18 +9145,6 @@ ex. https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.
 ~> limiting the max. size of an image
 
 <br>
-
-
-
-
-
-
-
-
-
-
-
-
 
 #### 536. Deleting Images Form
 - let's update the edit form so that the user can see the currently uploaded images and delete some of they if they want
@@ -9875,13 +9160,6 @@ ex. <div class = "mb-3">
 
           <%})%>
 
-
-
-
-
-
-
-
 - schemas.js,
 ex. module.exports.campgroundSchema = Joi.object({
       campground: Joi.object({
@@ -9895,28 +9173,9 @@ ex. module.exports.campgroundSchema = Joi.object({
       deleteImages: Joi.array()
     }));
 
-
 - when you check the checkboxes, the chcked image filenames are stores inside the array deleteImages[]
 
 <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #### 537. Deleting Images Backend
 - in controllers > campgrounds.js
@@ -9924,7 +9183,7 @@ ex. module.exports.campgroundSchema = Joi.object({
 ex. const  {cloudinary}=require('../cloudinary')
 ex. module.exports.updateCampground = async(req,res)=>{
         ...
-        if(req.body.deletImages){
+        if(req.body.deleteImages){
           for (let filename of req.body.deleteImages){
             await cloudinary.uploader.destroy(filename)
           }
@@ -9967,52 +9226,6 @@ ex. module.exports.updateCampground = async(req,res)=>{
 => instead, let's use the Cloudinary functionality!
 
 - cloudinary.com/documentation/image_tranformation_reference
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 - Image Transformation API reference
 :https://res.cloudinary.com/<cloud_name>/<asset_type>/<delivery_type>/<transformations>/<version>/<public_id_full_path>.<extension>
