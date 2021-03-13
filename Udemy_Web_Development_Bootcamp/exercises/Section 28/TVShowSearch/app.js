@@ -8,14 +8,8 @@ form.addEventListener('submit', async function(e) {
     //const res = await axios.get('http://api.tvmaze.com/search/shows?q='+searchTerm)
     const res = await axios.get( 'http://api.tvmaze.com/search/shows',config)
     
-
-    
     makeimages(res.data)
-
     form.elements.query.value=''
-    
-    
-    
 })
 
 const makeimages = (shows) =>{
@@ -28,11 +22,9 @@ const makeimages = (shows) =>{
     }
 }
 
-
-
 const clearimages = ()=>{
     const allimages = document.body.querySelectorAll('img')
     for(let each of allimages) {
         each.remove()
     }
-    }
+}

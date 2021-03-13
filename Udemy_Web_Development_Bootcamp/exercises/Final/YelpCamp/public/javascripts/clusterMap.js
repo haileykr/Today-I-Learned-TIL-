@@ -5,8 +5,6 @@ const map = new mapboxgl.Map({
     center: [-103.59179687498357, 40.66995747013945],
     zoom: 3
 });
- 
-
 
 map.addControl(new mapboxgl.NavigationControl());
 
@@ -55,9 +53,6 @@ map.on('load', function () {
             ]
         }
     });
-    
-    
-    
     map.addLayer({
         id: 'cluster-count',
         type: 'symbol',
@@ -69,7 +64,6 @@ map.on('load', function () {
             'text-size': 12
         }
     });
-    
     map.addLayer({
         id: 'unclustered-point',
         type: 'circle',
@@ -82,7 +76,6 @@ map.on('load', function () {
             'circle-stroke-color': '#fff'
         }
     });
-    
     // inspect a cluster on click
     map.on('click', 'clusters', function (e) {
         const features = map.queryRenderedFeatures(e.point, {
@@ -100,7 +93,6 @@ map.on('load', function () {
             });
         }
     );
-
 });
     
 // When a click event occurs on a feature in
@@ -109,10 +101,6 @@ map.on('load', function () {
 // description HTML from its properties.
 map.on('click', 'unclustered-point', function (e) {
     //console.log(e.features[0])
-
-    
-    
-
     const {popUpMarkup} = e.features[0].properties
     const coordinates = e.features[0].geometry.coordinates.slice();
     // var mag = e.features[0].properties.mag;

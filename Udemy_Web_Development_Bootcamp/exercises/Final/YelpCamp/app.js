@@ -2,8 +2,6 @@ if (process.env.NODE_ENV !== 'production'){
     require('dotenv').config();
 }
 
-// console.log(process.env.SECRET)
-
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -23,10 +21,10 @@ const {campgroundSchema, reviewSchema} = require('./schemas.js');
 
 const Campground = require('./models/campground.js');
 const Review = require('./models/review.js');
-const User = require('./models/user.js');
+const User = require('./models/user.js')
 
-const userRoutes = require ('./routes/users');
-const campgroundRoutes= require ('./routes/campgrounds');
+const userRoutes = require ('./routes/users')
+const campgroundRoutes= require ('./routes/campgrounds')
 const reviewRoutes= require ('./routes/reviews');
 
 const MongoDBStore = require('connect-mongo')(session);
@@ -50,16 +48,16 @@ const app = express();
 
 app.engine('ejs',ejsMate);
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname,'views'));
+app.set('views', path.join(__dirname,'views'))
 
-app.use(express.urlencoded({extended: true}));
-app.use(methodOverride('_method'));
+app.use(express.urlencoded({extended: true}))
+app.use(methodOverride('_method'))
 
-app.use(express.static('public'));
+app.use(express.static('public'))
 
 app.use(mongoSanitize({
     replaceWith: '_'
-}));
+}))
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
@@ -67,7 +65,7 @@ const scriptSrcUrls = [
     "https://api.mapbox.com/",
     "https://kit.fontawesome.com/",
     "https://cdnjs.cloudflare.com/",
-    "https://cdn.jsdelivr.net",
+    "https://cdn.jsdelivr.net"
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com/",
@@ -75,7 +73,7 @@ const styleSrcUrls = [
     "https://api.mapbox.com/",
     "https://api.tiles.mapbox.com/",
     "https://fonts.googleapis.com/",
-    "https://use.fontawesome.com/",
+    "https://use.fontawesome.com/"
 ];
 const connectSrcUrls = [
     "https://api.mapbox.com/",
@@ -100,38 +98,35 @@ app.use(
                 "https://res.cloudinary.com/dlhgkcxol/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
                 "https://images.unsplash.com/",
             ],
-            fontSrc: ["'self'", ...fontSrcUrls],
+            fontSrc: ["'self'", ...fontSrcUrls]
         },
     })
 );
 
-
-const secret = process.env.SECRET || 'thisshouldbeabetterone!';
+const secret = process.env.SECRET || 'thisshouldbeabetterone!'
 const store = new  MongoDBStore({
     url: dbUrl,
     secret: secret,
     touchAfter: 24 * 60 * 60
-});
+})
 
 store.on("error", function(e){
     console.log( 'session store error' , e)
-});
+})
 
 const sessionConfig = {
     store,
     secret,
     resave: false,
-    
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 *7
     }
-};
+}
 
-app.use(session(sessionConfig));
-
+app.use(session(sessionConfig))
 app.use(flash()); 
 
 app.use(passport.initialize());
@@ -143,26 +138,27 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next ) => {
     //console.log(req.session)
-    console.log(req.query);
+    console.log(req.query)
     res.locals.currentUser = req.user;
-    res.locals.success=req.flash('success');
-    res.locals.error = req.flash('error');
+    res.locals.success=req.flash('success')
+    res.locals.error = req.flash('error')
     next();
-}); //make sure to put it before any route
+}) //make sure to put it before any route
 
 app.get('/fakeUser', async (req, res) => {
     const user = new User({email: 'colt@gmail.com', username: 'colttt'});
-    const newUser = await User.register(user, 'chicken');
+    const newUser = await User.register(user, 'chicken')
     res.send(newUser)
 });
 
-app.use('/',userRoutes);
-app.use('/campgrounds',campgroundRoutes) ;
-app.use('/campgrounds/:id/reviews',reviewRoutes);
+app.use('/',userRoutes)
+app.use('/campgrounds',campgroundRoutes) 
+app.use('/campgrounds/:id/reviews',reviewRoutes) 
+
 
 app.get('/', (req, res) => {
-    res.render('home');
-});
+    res.render('home')
+})
 
 // #### 406
 // app.get('/makecampground', async(req, res) => {
@@ -172,22 +168,18 @@ app.get('/', (req, res) => {
 // });
 
 app.all('*',(req, res, next) => {
-    next(new ExpressError('Page Not Found', 404));
-});
+    next(new ExpressError('Page Not Found', 404))
+})
 
 app.use((err, req, res, next) => {
     //res.send('Oh Boy, something went wrong!')
     //const {status = 500, message = 'error'} = err;
     const {statusCode=500} = err;
-    if(!err.message) err.message = 'Oh No, something went wrong';
+    // if(!err.message) err.message = 'Oh No, something went wrong'
     res.status(statusCode).render ('error',{err});
 });
 
-// const port = process.env.PORT || 3000
-// app.listen(port, ()=> {
-//     console.log(`Serving on port  ${port}`)
-// });
-
-app.listen(3000, ()=> {
-    console.log(`Serving on port  3000!`);
+const port = process.env.PORT || 3000
+app.listen(port, ()=> {
+    console.log(`Serving on port  ${port}`)
 });

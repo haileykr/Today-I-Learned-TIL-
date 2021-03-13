@@ -1,8 +1,8 @@
-const express = require ('express');
-const router = express.Router();
+const express = require ('express')
+const router = express.Router()
 
-const campgrounds = require('../controllers/campgrounds');
-const catchAsync = require('../utils/catchAsync');
+const campgrounds = require('../controllers/campgrounds')
+const catchAsync = require('../utils/catchAsync')
 
 const Campground = require('../models/campground')
 const Review= require ('../models/review')
@@ -23,8 +23,7 @@ router.route('/')
         // const campgrounds = await Campground.find({})
         // res.render('campgrounds/index', {campgrounds})
     // }
-    )
-    )
+    ))
     .post(
         isLoggedIn,
         upload.array('image'),
@@ -51,11 +50,6 @@ router.route('/:id')
         catchAsync(campgrounds.updateCampground))
     .delete(isLoggedIn,isAuthor,catchAsync(campgrounds.destroyCampground))
 
-
-
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.renderEditForm))
-
-
-
 
 module.exports = router;

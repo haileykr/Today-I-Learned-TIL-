@@ -3,10 +3,6 @@ const cities =require('./cities')
 const Campground = require('../models/campground.js');
 const {places, descriptors} = require('./seedHelpers')
 
-
-
-
-
 const dbUrl = "mongodb+srv://our-first-user:eifImy7VrSVnBER9@cluster0.olnwy.mongodb.net/yelp-camp?retryWrites=true&w=majority"
 
 mongoose.connect(dbUrl,{
@@ -48,27 +44,18 @@ const seedDB = async() => {
                     cities[random1000].latitude
                 ]
             },
-
             images: [
                 {
                 url: 'https://res.cloudinary.com/dlhgkcxol/image/upload/v1613059127/3qbIc5Z_t4qo79.jpg',
                 filename: 'YelpCamp/trfqxtk636h1ayfmv8en'
-
-
-
-
-
                 }
-
             ]
         })
         await camp.save();
     }
-    
 }
 
 seedDB().then(() => {
     //seedDB() returns promise because it's an async function
-    
     mongoose.connection.close()
 })

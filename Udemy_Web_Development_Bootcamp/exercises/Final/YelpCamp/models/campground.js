@@ -9,7 +9,7 @@ const ImageSchema = new Schema({
     filename: String
 })
 
-ImageSchema.virtual('thumbnail').get(function() {
+ImageSchema.virtual('thumbnail').get(function() {    
     return this.url.replace('/upload','/upload/w_200')
 })
 
@@ -28,8 +28,8 @@ const CampgroundSchema = new Schema({
             type: [Number],
             required: true
         }
-    },
 
+    },
     price: Number,
     description: String,
     location: String,
@@ -45,7 +45,7 @@ const CampgroundSchema = new Schema({
     ]
 },opts);
 
-CampgroundSchema.virtual('properties.popUpMarkup').get(function () {
+CampgroundSchema.virtual('properties.popUpMarkup' ).get(function () {
     return `
     <strong><a  href=  "/campgrounds/${this._id}">${this.title}</a> </strong>
     <p>${this.description.substring(0,20)}...</p>`

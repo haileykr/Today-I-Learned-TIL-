@@ -31,11 +31,8 @@
                         <img src= "<%=img.thumbnail%>" alt=""  class="img-thumbnail">
                         <div class="form-check-inline">
                             <input type="checkbox"id="image-<%=index%>" name="deleteImages[]" value= "<%=img.filename%>">
-
                         </div>
                             <label for="image-<%=index%>">Delete?</label>
-  
-
                         <% })%>
 
                 </div>
@@ -51,11 +48,8 @@
                 <!-- </div> -->
 
                 <div class=" mb-3">
-
                     <label for="price" class="form-a">Price</label>
                     <div class="input-group">
-
-
                         <span class="input-group-text" id="price">$</span>
                         <input name="campground[price]" required type="text" class="form-control" id="price"
                             value="<%=campground.price%>" aria-describedby="price-label" placeholder="-">
@@ -72,14 +66,8 @@
                 <div class="mb-3">
                     <button class="btn btn-success">Update Campground</button>
                 </div>
-
-
-
-
                 <div>
                     <a href="/campgrounds/<%= campground._id%>">Back to Campground</a>
-
-
                 </div>
             </form>
         </div>

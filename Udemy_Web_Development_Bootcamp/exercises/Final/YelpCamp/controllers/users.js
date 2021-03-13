@@ -1,6 +1,5 @@
 const User = require('../models/user')
 
-
 module.exports.renderRegister = (req, res) => {
     res.render('users/register');
 }
@@ -14,12 +13,11 @@ module.exports.register = async (req, res) => {
             if(err){
                 return next(err);
             }
-        //console.log(registeredUser)
-        req.flash('success', 'Welcome to YelpCamp!')
-        res.redirect('/campgrounds');
+            //console.log(registeredUser)
+            req.flash('success', 'Welcome to YelpCamp!')
+            res.redirect('/campgrounds');
         })
     } catch (e) {
-
         req.flash('error', e.message)
         res.redirect('register')
     }

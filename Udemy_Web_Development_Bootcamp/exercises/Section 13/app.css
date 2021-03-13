@@ -1,7 +1,5 @@
-
 body {
     background-color: #f5d9d5;
-
     font-family: "Nunito", sans-serif;
 }
 
@@ -13,15 +11,11 @@ body {
 #mainNavbar   .navbar-brand{
     color: #ea1c2c;
     font-size: 1.5rem;
-
 }
 
 #mainNavbar .nav-link:hover {
-
     color: #ea1c2c;
 }
-
-
 
 #mainNavbar .nav-link {
     color: white;
@@ -35,8 +29,6 @@ body {
 #headingGroup h3 {
     font-weight: 100;
     font-size: 4rem;
-
-
 }
 
 @media (max-width: 1200px) {
@@ -44,9 +36,6 @@ body {
         font-size: 3rem;
     }
 }
-
-
-
 
 .blurb h2 {
     color:  #ea2cea;
@@ -60,13 +49,10 @@ body {
     line-height: 2;
 }
 
-
-
 .content {
     margin-top: 100px;
     margin-bottom: 100px;
 }
-
 
 .navbar.scrolled {
     background: rgb(222, 192, 222);
