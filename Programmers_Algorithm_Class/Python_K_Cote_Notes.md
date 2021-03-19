@@ -825,3 +825,155 @@ def solution(board):
                 visited.append(next_pos)
 
     return 0
+```
+
+# 안경잡이 개발자 - 알고리즘 강의 - 나동빈
+
+## 17. Union - Find (합집합 찾기)
+- 유니온 파인드는 대표적인 그래프 알고리즘.
+- "합집합 찾기"
+- 서로소 집합 (Disjoint-Set) 알고리즘이라고도 부름
+- 구체적으로 여러 노드가 존재할 때 두 개의 노드를 선택해서, 현재 이 노드가 같은 그래프에 속하는 지 판별
+
+- 처음엔 모든 노드가 자기 자신을 '부모'로 가졌다고 생각
+
+- 두 개의 노드가 연결되면, *더 작은 값을 부모값*으로 설정
+ex. 1과 2가 연결되면, 2의 부모 노드 - 1이 됨!
+
+- 여러 노드가 연결되었을 때 연결성을 확실히 알기 위해, *재귀함수*가 쓰임
+ex. 2과 3이 연결되면, 3이 부모노드는 2였다가, 재귀함수를 통해 1임을 알게 되어 1로 바뀐다
+=> 그렇다면 1, 2, 3노드 모두 부모 노드가 1이 되어 같은 그래프에 속함을 알 수 있음!
+
+- *Find알고리즘*은 두 개의 노드의 부모 노드를 확인하여 현재 같은 집합에 속하는 지 확인하는 알고리즘
+
+```c
+#include <stdio.h>
+
+// 부모 노드를 찾는 함수
+int getParent(int parent[], int x){
+    if (parent[x] == x) return x;
+    return parent[x] = getParent(parent, parent[x]);
+}
+
+// 두 부모노드를 합치는 함수
+int unionParent(int parent[], int a, int b){
+    a = getParent(parent, a);
+    b = getParent(parent, b);
+    if (a < b) parent[b] = a;
+    else parent[a] = b;
+}
+
+// 같은 부모를 가지는 지 확인
+int findParent (int parent[], int a, int b){
+    a = getParent(parent, a);
+    b = getParent(parent, b);
+    if (a == b) return 1;
+    return 0;
+}
+
+int main(void) {
+    int parent[11];
+    for (int i = 1;i <= 10; i ++){
+        parent[i] = i;
+    }
+    unionParent(parent, 1, 2);
+    unionParent(parent, 2, 3);
+    unionParent(parent, 3, 4);
+    unionParent(parent, 4, 5);
+    unionParent(parent, 5, 6);
+    unionParent(parent, 6, 7);
+    unionParent(parent, 7, 8);
+
+    printf("are 1 and 5 connected?: %d\n",findParent(parent,1,5))
+}
+```
+
+## 18. 최소비용 신장트리 - Kruskal Algorithm - 유투브
+- 최소 비용 신장트리에서, 솔루션의
+=>간선 숫자 = 노드 숫자 - 1
+
+- 핵심 개념 ~> "간선을 거리가 짧은 순으로 그래프에 포함시키면 어떨까?"
+
+- 일단 모든 노드를 최대한 적은 비용으로 "연결만" 시키면 되기 때문에 모든 간선 정보를 *오름차순*으로 정렬한 후, **비용이 적은 것부터 차근 차근 그래프에 포함**시키면 됨
+
+- 중요!
+1. 정렬된 순서에 맞게 그래프에 포함
+2. 포함시키기 전에는 **사이클 테이블을 확인**
+3. 사이클을 형성하는 경우 간선을 포함하지 않음
+
+- 사이클이 발생하는 지는 Union-Find방법 사용
+
+- 값이 작은 간선부터 선택, 선택하면서는 사이클 테이블의 부모 - 자식 관계를 update 해준다!
+
+```c++
+#include <iostream>
+
+#include <vector>
+
+#include <algorithm>
+
+using namespace std;
+
+// 재귀함수
+int getParent(int parent[], int x){
+    if (parent[x] == x) return x;
+    return parent[x] = getParent(parent, parent[x]);
+}
+
+
+// 두 부모노드를 합치는 법
+int unionParent(int parent[], int a, int b){
+    a = getParent(parent, a);
+    b = getParent(parent, b);
+    if (a < b) parent[b] = a;
+    else parent[a] = b;
+}
+// 같은 부모를 가지는 지 확인
+int findParent(int parent[], int a, int b){
+    a = getParent(parent, a);
+    b = getParent(parent, b);
+    if (a == b) return 1;
+    return 0;
+}
+
+// 간선 클래스 선언
+class Edge {
+public:
+    int node[2];
+    int distance;
+    Edge(int a, int b,int distance){
+        this->node[0] = a;
+        this->node[1] = b;
+        this->distane = distance;
+    }
+    bool operator <(Edge &edge){
+        return this->distance < edge.distance;
+    }
+};
+
+int main(void) {
+    int n = 7;
+    int m = 11;
+
+    vector <Edge> v;
+    v.push_back(Edge(1, 7, 12));
+    ...
+
+    // 간선의 비용을 오름차순 정렬
+    sort(v.begin(), v.end()) ;
+
+    // 각 정점이 포함된 그래프가 어디인 지 저장
+    int parent[n];
+    for (int i = 0; i < n; i++){
+        parent[i] = i;
+    }
+    int sum = 0;
+    for (int i = 0;i < v.size(); i++){
+        //사이클이 발생하지 않는경우, 그래프에 포함
+        if (!findParent(parent, v[i].node[0] - 1, v[i].node[1] - 1)){
+            sum += v[i].distance;
+            unionParent(parent, v[i].node[0] - 1, v[i].node[1] - 1);
+        }
+
+    }
+}
