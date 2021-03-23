@@ -4,10 +4,12 @@ import { Form, Input,Button } from 'antd';
 import Link from 'next/link';
 
 import styled from 'styled-components'; 
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 
 
 import useInput from '../hooks/useInput'
+import {loginAction} from '../reducers/user';
 
 const ButtonWrapper = styled.div`
     margin-top: 10px;
@@ -21,7 +23,9 @@ const FormWrapper = styled(Form)`
 
 
 
-const LogInForm = ({setIsLoggedIn}) => {
+const LogInForm = () => {
+
+    const dispatch =useDispatch();
 
     const [id, onChangeId] = useInput('');
     // const [id, setId] = useState('');
@@ -35,7 +39,9 @@ const LogInForm = ({setIsLoggedIn}) => {
     
     const onSubmitForm = useCallback(() => {
         console.log(id, password);
-        setIsLoggedIn(true);
+        // setIsLoggedIn(true);
+        
+        dispatch(loginAction({id, password}));
     }, [id, password]);
 
     const style = useMemo(() => ({marginTop: 10}), []);
@@ -70,9 +76,11 @@ const LogInForm = ({setIsLoggedIn}) => {
 }
 
 
-LogInForm.propTypes = {
-    setIsLoggedIn: PropTypes.func.isRequired,
+// LogInForm.propTypes = {
+//     setIsLoggedIn: PropTypes.func.isRequired,
 
-}
+// }
+//리덕스 intro다음엔 필요없음!
+
 
 export default LogInForm;

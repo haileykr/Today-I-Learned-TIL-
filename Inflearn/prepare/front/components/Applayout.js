@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import {Menu, Input, Row, Col }from 'antd';
 import styled from 'styled-components';
+import {useSelector} from 'react-redux';
 
 import UserProfile from '../components/UserProfile';
 import LogInForm from '../components/LogInForm';
@@ -12,7 +13,8 @@ const SearchInput = styled(Input.Search)`
 `
 
 const Applayout = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const isLoggedIn = useSelector((state)=>state.user.isLoggedIn);
     return (
         <div>
             <Menu mode="horizontal">
@@ -31,9 +33,9 @@ const Applayout = ({ children }) => {
             </Menu>
             <Row gutter = {8}>
                 
-                
                 <Col xs={24} md={6}>
-                    {isLoggedIn ? <UserProfile setIsLoggedIn = {setIsLoggedIn}/> : <LogInForm setIsLoggedIn={setIsLoggedIn}/>}
+                    {/* {isLoggedIn ? <UserProfile setIsLoggedIn = {setIsLoggedIn}/> : <LogInForm setIsLoggedIn={setIsLoggedIn}/>} */}
+                    {isLoggedIn ? <UserProfile /> : <LogInForm />}
                 </Col>
                 <Col xs={24} md={12}>
                     {children}
