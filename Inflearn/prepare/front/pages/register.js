@@ -3,15 +3,20 @@ import Head from 'next/head';
 import {Form, Input,Checkbox , Button} from 'antd';
 import styled from 'styled-components';
 
+
 import Applayout from '../components/Applayout';
+import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../hooks/useInput'
+import { SIGN_UP_REQUEST } from '../reducers/user';
 
 const ErrorMessage = styled.div`
     color: red;
     `;
 
 const Register = () => {
-    const [id, onChangeId]=useInput('');
+    const dispatch = useDispatch();
+    const { signUpLoading } = useSelector((state) => state.user);
+    const [email, onChangeEmail]=useInput('');
     const [nickname, onChangeNickname] = useInput('');
     const [password, onChangePassword] = useInput('');
 
@@ -40,8 +45,12 @@ const Register = () => {
             return setTermError(true);
         }
 
-        console.log(id, nickname, password);
-    },[password, passwordCheck, term]);
+        console.log(email, nickname, password);
+        dispatch({
+            type: SIGN_UP_REQUEST,
+            data: { email, password, nickname },
+        })
+    },[email, password, passwordCheck, term]);
 
     return (
         <>
@@ -52,9 +61,9 @@ const Register = () => {
             </Head>
             <Form onFinish = {onSubmit}>
                 <div>
-                    <label htmlFor = "user-id">ID</label>
+                    <label htmlFor = "user-email">Email</label>
                     <br />
-                    <Input name = "user-id" value = {id} required  onChange = {onChangeId}/>
+                    <Input name = "user-email" type="email" value = {email} required  onChange = {onChangeEmail}/>
                 </div>
                 <div>
                     <label htmlFor = "user-nickname">Nickname</label>
@@ -83,7 +92,7 @@ const Register = () => {
                     {termError &&  <ErrorMessage>You must agree to Terms and Conditions.</ErrorMessage>}
                 </div>
                 <div style={{marginTop: 10}}>
-                    <Button type = "primary" htmlType = "submit">Register</Button>
+                    <Button type = "primary" htmlType = "submit" loading = {signUpLoading}>Register</Button>
                 </div>
                 </Form>
             </Applayout>

@@ -1,12 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
 
-
-
-
-
-
-
-
 import {combineReducers} from 'redux';
 
 import user from './user';
@@ -33,7 +26,6 @@ import post from './post';
 //     type: 'CHANGE_NICKNAME',
 //     data: 'BM'
 // }
-
 // store.dispatch(changeNickname('MT'));
 
 // (이전상태, 액션) => 다음상태

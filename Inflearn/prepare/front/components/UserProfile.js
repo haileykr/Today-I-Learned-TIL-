@@ -1,35 +1,33 @@
-
-
-import React, {useCallback} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
 import { Card, Avatar, Button } from 'antd';
 
-import {logoutAction} from '../reducers/user';
+import { logoutRequestAction } from '../reducers/user';
 
 const UserProfile = ({setIsLoggedIn}) => {
     const dispatch = useDispatch();
+    const { me, isLoggingOut } = useSelector((state) => state.user)
     const onLogOut = useCallback(() => {
         //setIsLoggedIn(false);
-        dispatch(logoutAction());
+        dispatch(logoutRequestAction());
     }, []);
 
     return (
         <Card
             actions = {[
-                <div key = "tweet">PI equals 3.141592..<br />0</div>,
-                <div key = "followings">Following<br />0</div>,
-                <div key = "followers">Followers<br />0</div>,
+                <div key = "tweet">Tweets<br />{me.Posts.length}</div>,
+                <div key = "followings">Followings<br />{me.Followings.length}</div>,
+                <div key = "followers">Followers<br />{me.Followers.length}</div>,
             ]}
         >
             <Card.Meta
-                avatar = {<Avatar>BP</Avatar>}
-                title = "Bluberry Pie"
+                avatar = {<Avatar>{me.nickname[0]}</Avatar>}
+                title = {me.nickname}
             />
-            <Button onClick={onLogOut}>Log Out</Button>
+            <Button onClick={onLogOut} loading = {isLoggingOut}>Log Out</Button>
         </Card>
     );
 
 };
-
 
 export default UserProfile;
