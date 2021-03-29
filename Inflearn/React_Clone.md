@@ -1675,6 +1675,15 @@ const dummyPost = (dadta) => ({
 - 흐름: saga => reducer => useEffect 실행 => 화면바뀜
 => 불변성 지키면서 수정
 
+### 게시글 삭제 saga 작성하기
+- 위의 ADD_COMMENT_SUCCESS부분 너무 복잡하다!
+=> **immer**쓰면 훨씬 편함
+
+- 개념 복습!
+=> data관련은 다 reducer에서
+- reducers/user.js
+=> dummyData에 Followings,Followers넣으면 숫자가 뜬다!
+
 
 
 
