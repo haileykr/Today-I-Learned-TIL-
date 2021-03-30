@@ -283,6 +283,106 @@ export default Control;
 
 2. mode 전환 기능
 
+3. 데이터 추가
+
+- NOTE. 배열[state]에 값을 추가
+: push - original data바꿈
+=> debugging 어려움!
+: concat - 복사본 만듦
+=> 수정할 때에는 이걸로 사용!
+
+### shouldComponentUpdate
+- shouldComponentUpdate(newProps, newState){
+    if (this.props.data === newProps.data){
+      return false;
+    }
+    return true; //변경 있을 때만 render함수 호출
+  }
+
+- TOC.js에 적용!
+
+### immuTable (불변)
+- note. 복사본 만드는 다른 방법[for 배열] - Array.from(original)
+- 복사본 만드는 방법[for 객체]- Object.assign({}, a)
+
+
+### Update, Delete 구현
+- UpdateContent.js
+
+- this.props.data.title이런 식으로 데이터를 받으면 read-only이기 때문에, 문제가 생길 수 있음
+=> 따라서 먼저 editable하게 state화 시켜주자!
+```javascript
+
+constructor(props){
+        super(props);
+        this.state = {
+            id: this.props.data.id,
+            title: this.props.data.title,
+            desc: this.props.data.desc
+        }
+        this.inputFormHandler = this.inputFormHandler.bind(this);
+    }
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+### 구현 - delete
+- Control.js에서
+
+### 수업을 마치며
+- Immutability중요
+
+=> 쓸 수 있는 라이브러리
+
+1. immutable-js
+ex.
+```javascript
+<script src = "immutable.min.js"></script>
+<script>
+  var map1 = Immutable.Map({a: 1, b: 2, c: 3})
+  var map2 = map1.set('b', 50);
+  map1.get('b'); //2
+  map2.get('b'); //50
+</script>
+```
+
+2. router
+- URL만으로 페이지를 찾아올 수 있게
+- React Router
+=> url에 따라서 적당한 컴포넌트를 실행시킬 수 있음
+=> npm등으로 설치
+
+3. create-react-app
+=> npm run eject로 감춰진 여러 설정 제어 가능
+
+4. redux
+=> 컴포넌트가 많아지면 부모-자식간의 소통이 복잡해짐!
+=> state-props 통신 과정에서 event bubbling이 정말 많이 생길 수 있음
+=> 중앙 저장소를 만들고 모든  comnponent는 그 저장소와 직접 연결
+=> 그 중앙 저장소의 데이터가 변경되면, 이와 연결된 모든 component가 변경됨
+
+5. react server side rendering
+- 서버 쪽에서 웹페이지를 완성한 후에, 클라이언트로 완성된 html을 전송하는 걸로 어플리케이션 구동 시작 가능
+=> 초기 구동 시간 단축
+=> JS 앱 특유의 로딩 없는 특성 유지 가능
+
+6. react native
+=> react와 같은 문법으로 native앱 구성 가능
+=> native앱이란, ios, android같은 플랫폼 의미
+
+
+
+
 
 
 

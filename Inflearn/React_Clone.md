@@ -1684,6 +1684,222 @@ const dummyPost = (dadta) => ({
 - reducers/user.js
 => dummyData에 Followings,Followers넣으면 숫자가 뜬다!
 
+- 게시글에도 사실 id는 다 붙여줘야 함
+- user.js (reducers)
+ex. Posts: [{id: 1}],
+
+- post.js (reducers)
+=> id: 1 게시글 아이디가 동일하므로 '내가 쓴 게시글'로 판단
+```javascript
+export const initialState = {
+    ...
+    Comments: [{
+            id: shortId.generate(),
+            User: {
+                nickname: 'hero'
+            },
+            content: 'Saving $$$ for it!*'
+        },{
+            id: shortId.generate(),
+            User: {
+                nickname: 'nero',
+            },
+            content: 'wanna buy it sooooon!!'
+        }],
+    ...
+```
+=> Comments처럼 대문자로 시작하는 것들은
+=> 서버에서 주는 것들: 아이디가 고유하게 붙어있음
+: Images등도 다 id 부여 필요! => KEY로 쓰기 때문에
+
+
+- 이제 **게시글을 쓸 때***...
+=> 게시글은
+=> reducers/post.js에서
+`case ADD_POST_SUCCESS`
+
+=> 반면 dummyUser, userData부분은
+=> reducers/user.js에 있음
+
+- 문제는,
+=> post를 하나 추가할 떄,
+=> dummyUser.Posts에도 하나가 추가되어야 함
+=> 삭제 또한 마찬가지
+
+=> 각 reducer에서, 그 안에 있는 정보들만 건들 수 있기 떄문에 문제!
+
+
+- 원리를 다시 생각해봅시다...
+=> User reducer 상태는
+=> action으로만 바꿀 수 있음
+=> 따라서 action을 만들어주면 됨
+```javascript
+export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
+```
+=> User reducer 상태를 바꿀 수 있는 action을 이렇게 하나 만들고
+=> 걔를 post saga에서 호출
+(saga에서 유저 액션 호출 가능)
+```javascript
+function* addPost(action){
+    try {
+        const id = shortId.generate();
+        yield put({
+            type: ADD_POST_SUCCESS,
+            data: {
+                id,
+                content: action.data
+            }
+        });
+        yield put({
+            type: ADD_POST_TO_ME,
+            data: id,
+        });
+        ..
+```
+=> 사가는 여러 action을 dispatch해줄 수 있음
+=> 어떤 action이 reducer의 데이터를 동시에 바꿔야한다고 하면,
+=> action을 여러 번 호출해 주면 되는 것임.
+=> Post reducer에서는 post reducer action으로 데이터 바꾸고
+=> User reducer에서는 user reducer action으로 데이터 바꾸고
+
+- 이제 reducers/post.js에서 업뎃
+=> case ADD_POST_SUCCESS:
+=> action.data가 id와 content가 들어있는 객체
+```javascript
+const dummyPost = (data) => ({
+    id:data.id,
+    content: data.content,
+    ..
+    
+```
+
+- reducers/user.js에서는 또
+=> post에 하나 추가해야 함
+```javascript
+case ADD_POST_TO_ME:
+    return {
+        ...state,
+        me: {
+            ...state.me,
+            Posts: [{id: action.data}, ...state.me.Posts],
+        }
+    };
+```
+
+=> 불변성 지키는 게 정말 정신 없음!
+
+
+- 이제 delete구현
+=> reducers/user.js에서
+```javascript
+case REMOVE_POST_OF_ME:
+            return {
+                ...state,
+
+                 me: {
+                    ...state.me,
+                    Posts: state.me.Posts.filter((v) => v.id !== action.data),
+                }
+            }
+}
+```
+
+=> reducers/post에서
+```javascript
+...
+case REMOVE_POST_SUCCESS:
+            return {
+                ...state,
+                mainPosts: state.,mainPosts.filter((v)=> v.id !== action.data),
+                //제일 위에 보여주기 위해 앞에다 추가
+                removePostLoading: false,
+                removePostDone: true,
+            };
+...
+```
+=> 삭제는 보통 Filter로 Immutability지키면서 많이 함
+
+=> sagas/post.js에서
+```javascript
+export default function* postSaga() {
+    yield all([
+        fork(watchAddPost),
+        fork(watchRemovePost),
+        fork(watchAddComment)
+```
+=> 이외에 모든 코드들 더해줌
+`function removePostAPI(data)`
+`function* removePost(action)`
+`function* watchRemovePost()`
+
+ex.
+```javascript
+function removePostAPI() {
+    return axios.delete('/api/post', data)
+}
+
+function* removePost(action) {
+    try {
+        //const result = yield call(addPostAPI, action.data)
+        yield delay(1000)
+        const id = shortId.generate();
+        // post reducer조작
+        yield put({
+            type: REMOVE_POST_SUCCESS,
+            data: {
+
+
+                id,
+                content: action.data
+            }
+        });
+        //user reducer조작
+        yield put({
+            type: REMOVE_POST_OF_ME,
+            data: id,
+        });
+    } catch (err) {
+        yield put({
+
+            type: REMOVE_POST_FAILURE,
+            data: err.response.data,
+        });
+    }
+
+
+function* watchRemovePost() {
+    yield takeLatest(REMOVE_POST_REQUEST,removePost);
+}
+```
+
+=> function* removePost(action)에서, 액선 한 방에 둘 다 못 바꾸니
+=> 액션 두 개로 두 개의 상태 모두 바꿔줌
+
+
+- 이제 다시 PostCard.js
+`<Button type="danger"onClick ={onRemovePost}>Remove</Button>
+`
+
+```javascript
+const PostCard = ({ post }) => {
+    const dispatch = useDispatch();
+    const onRemovePost = useCallback(() => {
+            dispatch({
+            
+                type: REMOVE_POST_REQUEST,
+                data: post.id
+            })
+...
+```
+
+
+
+
+
+
+
+
 
 
 
