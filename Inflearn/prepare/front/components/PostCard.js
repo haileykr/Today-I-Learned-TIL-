@@ -40,7 +40,6 @@ const PostCard = ({ post }) => {
     const id = me?.id;
     // "optional chaining 연산자!"
     return (
-
         <div style={{ marginBottom: 20 }}>
             <Card
                 // cover와 actions모두 antd기능

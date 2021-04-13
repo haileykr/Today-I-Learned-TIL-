@@ -8,6 +8,8 @@ return a list which has the i's of songs in the following order
 3. list the song with the lower i when multiple songs have the same number of plays in one genre
 4. list max.2 songs from each genre
 
+https://programmers.co.kr/learn/courses/30/lessons/42579
+
 01/2021
 '''
 

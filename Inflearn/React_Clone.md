@@ -1893,6 +1893,108 @@ const PostCard = ({ post }) => {
 ...
 ```
 
+### immer도입
+- 지금 reducers/post.js를 보면 정말 복잡하다!
+```javascript
+case ADD_POST_SUCCESS:
+    return {
+        ...state,
+        mainPosts: [dummyPost(action.data),...state.mainPosts],
+        addPostLoading: false,
+        addPostDone: true,
+    }
+```
+
+=> 이런 식으로 불변성을 지켜주려다보니 코드가 복잡해짐
+=> immer 사용!!
+
+- ex. npm i **immer**
+
+=> 리덕스 뿐만 아니라
+=> 리액트도 불변성 지켜줘야 함
+=> useState/setState등으로
+=> 이런 데도 쓸 수 있어서
+=> immer는 필수템!
+=> HOOK 버전을 원하면 use-immer가 있음
+=> use-immer가 있으면 useState같은 것도 대체할 수 있음
+
+- immer는 보통
+: **produce**라는 이름으로 많이 import한다
+```javascript
+import produce from 'immer'
+
+
+// state-> draft 대체
+// immer가 알아서 불변성 관리함
+const reducer = (state = initialState, action) => {
+    return produce(state, (draft) => {
+
+    })
+}
+```
+
+- immer하려면 parameter reassign해야되기 때문에,
+eslintrc에서 "no-param-reassign":"off"
+
+### faker로 실감나는 더미데이터 만들기
+- 좀 멋들어진 더미 데이터  원할 때
+- npm i install
+- 예시
+: reduce/posts
+```javascript
+import faker from 'faker';
+
+initialState.mainPosts = initialState.mainPosts.concat(
+    Array(20).fill().map(() => ({
+        id: shortId.generate(),
+        Images: [{
+            src: faker.image.imageUrl(),
+        }],
+        Comments: [{
+            User: {
+                id: shortId.generate(),
+                nickname: faker.name.findName(),
+            },
+
+            content: faker.lorem.sentence(),
+        }],
+        User: {
+            id: shortId.generate(),
+            nickname: faker.name.findName(),
+        },
+
+        content: faker.lorem.paragraph,
+    }
+)
+
+```
+=> 여기선 20개만 했지만
+=> 성능 최적화 보여주려면 수천개로 보여주는 게 좋으다.
+
+- Placeholder.com도 유용한 사이트
+
+- 로그인 안 하면 Profile 페이지 안 보이게,
+pages>profile.js
+```javascript
+useEffect(() => {
+    if (!me && me.id) {
+        Router.push('/');
+    }
+}, [me && me.id]);
+
+if (!me){
+    return null;
+}
+
+```
+
+
+- Redux Toolkit 따라가면 좋음
+ex. createReducer()쓰면 switch문 안 쓰고 쉽게 쓸 수도 있음
+
+
+
+
 
 
 
