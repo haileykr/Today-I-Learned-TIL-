@@ -1245,6 +1245,127 @@ ex. javascript:document.body.remove()
 : various sites which make those for you
 
 
+## OAuth2.0
+
+- opentutorials.org/course/3405
+
+#### 1. 수업 소개
+- 나의 사이트에 접속하고자 하는 User가 제3사이트 (ex. Google, Facebook, Twitter)를 통해서 접속하고 싶어할 때, 그곳의 ID/PW를 내게 전달하는 것은 모두에게 위험함
+=> OAuth를 통해 Access Token (ID/PW공유 안 하고 몇가지 필요한 정보만 공유)
+
+#### 2. 용어
+- User: Resource Owner
+- Mine (ex. OpenTutorials.org) : Client
+- Their (ex. Google, Facebook, Twitter) : Resource Server | Authorization Serer
+
+#### 3. 등록
+- Client -> Resource Server : **REGISTER**
+- 등록 절차는 사이트마다 =/=
+: 하지만 전체적인 것은 
+
+ex. Create App
+: Client ID - 1 //클라이언트 아이디
+: Client Secret - 2 //클라이언트 비번
+: Authorized redirect URIs - https://client/callback
+=> 예시는 페이스북 통해서 보여주심
+
+#### Resource Owner의 승인
+- OAuth의 첫 번째 절차는 Resource Owner가 Resource Server에 Client 접근을 승인한다는 걸 알리는 것.
+
+- Resource Owner가 Client를 통해 로그인하면,
+https://resource.server/?client_id=1&scope=B,C&redirect_uri=https://client/callback 이런식으로 정보 전달 됨
+
+- Resource Server가 그러면 그들이 갖고 있는 client_id, scope, redirect_uri 와 비교함
+
+#### Resource Server의 승인
+- Resource Server는 Client가 등록된 Client가 맞는 지 확인하기 위해, Resource Owner에게 *Authorization Code*를 전달함
+ex. Location: https://client/callback?code=3
+
+- Resource Owner는 받은 주소를 통하여 Client에 접속 with authorization code=3이라는 정보!
+
+- Client에서는 그 정보와 이미 갖고 있던 정보를 결합하여 Resource Server에 정보 전송!
+
+
+EX. https://resource.server/token?grant_type=authorization_code&code=3&redirect_uri=https://client/callback?client_id=1?client_secret=2
+
+- 이 정보들이 Resource Server가 갖고 있는 정보들과 모두 일치한다면 다음 단계로 감
+
+#### Access Token
+- 이 전단계 에서 중요한 건, Client 가 Resource Server에게, 외부에는 절대 알려선 안되는 client_secret이라는 정보를 **직접** 전달하는 것이다
+
+- 이미 인증을 완료했기 때문에, accessToken 정보를 Resource Server와 Client 사이드 모두에서 지워버림 -> 그래야 더 이상 인증 x
+
+
+
+
+- 이제 Resource Server에서 access Token을 발급하여 Client에게 전달
+ex. accessToken = 4
+=> 이 토큰은 user_id와 이에 해당하는 scope 정보를 포함함
+
+#### API 호출
+- API (Application Programming Interface)
+
+
+예시: Google Calendar API ~ GET users/me/calendarList 
+=>
+{
+      ...
+      "location": "Authorization" //인증이 필요한 API라는 뜻
+      ...
+}
+
+- 인증은 accessToken을 통해 할 수 있음
+
+- Google *google api access token oauth*
+: https://developers.google.com/identity/protocols/OAuth2WebServer
+
+: *After your application obtains an access token, you can use the token to make calls to a Google API on behalf of a given user account or service account.*
+: *To do this, include the access token in a request to the API by including either an access_token query parameter*
+: ex. www.googleapis.com/.../<access_token>
+: *or an Authorization:Bearer_HTTP header (preferred - not to show info in server logs)*
+: *or can use a client library to set up your calls to Google APIs*
+
+: *curl* 명령어로 테스트 가능
+
+#### Refresh Token
+- Access token은 expire합니다. 이 때 새로운 access token을 발급받는 방법이 refresh token입니다. 이것에 대해서 알아보겠습니다.
+
+- Google "OAuth 2.0 RFC"
+
+- API마다 다르지만 구글의 경우에는
+```javascript
+POST /oauth2/v4/token HTTP/1.1
+Host: www.googleapis.com
+Content-Type: application/x-www-form-urlencoded
+
+client_id=<your_client_id>&
+client_secret=<your_client_secret>&
+refresh_token=<refresh_token>&
+grant_type=refresh_token
+```
+이렇게 보내면
+
+```javascript
+{
+      "access_token": "1/fFAGRNJru1FTz70BzhT3Zg",
+      "expires_in": 3920,
+      "token_type": "Bearer"
+}
+```
+와 같이
+새롭게 발급된 토큰이 돌아옴
+
+
+#### 수업을 마치며
+- "Federated Identity"
+
+
+
+
+
+
+
+
 
 
 
