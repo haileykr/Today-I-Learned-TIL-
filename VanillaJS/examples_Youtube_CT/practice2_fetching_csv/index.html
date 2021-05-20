@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch and Graph CSV</title>
+
+    <script src = "https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+</head>
+<body>
+    
+    
+    <canvas id="chart" width="500" height="500"></canvas>
+    <script>
+        // Data from : https://data.giss.nasa.gov/gistemp/
+        
+        getData();
+        
+        async function getData(){
+            const response = await fetch('ZonAnn.Ts+dSST.csv');
+            const data = await response.text();
+            //console.log(data);
+
+            const table = data.split('\n').slice(1); // to remove the first row
+            table.forEach(row => {
+                const columns = row.split(',');
+                const year = columns[0];
+                const temp = columns[1];
+            })
+            
+            console.log(table);
+        }
+    </script>
+</body>
+</html>

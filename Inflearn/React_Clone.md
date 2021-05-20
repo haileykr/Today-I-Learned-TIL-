@@ -1993,6 +1993,132 @@ if (!me){
 ex. createReducer()쓰면 switch문 안 쓰고 쉽게 쓸 수도 있음
 
 
+### 인피니트 스크롤링 도입
+- 이제 dummy data를 빼주고 액션을 도입할 것
+
+- generateDummyPost 부분을 함수로 빼주자
+
+- LOAD_POST_REQUEST 액션 정의
+
+- 그리고 index.js에서
+메인 페이지 불러올 때 useEffect로 바로 LOAD_POSTS_REQUEST디스패치할 수 있도록 한다
+
+```javascript
+const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({
+            type: LOAD_POSTS_REQUEST,
+        })
+    }, []);
+```
+
+- actions들 추가
+- LOAD_POST_SUCCESS에서는 상태 변화
+: draft.mainPosts = action.data.concat(draft.mainPosts);                
+draft.hasMorePost = draft.mainPosts.length < 50; //50개 이상은 안 가져오겠다
+
+
+
+- initialStates에 hasMorePosts도 추가
+~> 더 이상 불러올 것 없을 상황을 대비
+
+- saga/post.js에도 코드 추가!
+: LOAD_POST관련...
++ 
+```javascript
+function* loadPost(action) {
+    try {
+        //const result = yield call(loadPostAPI, action.data)
+        yield delay(1000)
+        const id = shortId.generate();
+        yield put({
+            type: LOAD_POST_SUCCESS,
+            data: generateDummyPost(10)
+        });
+```
+
+- 인피니트 스크롤링
+```javascript
+useEffect(() => {
+        function onScroll(){
+            //많이 쓰는 세 가지
+            // scrollY: 얼마나 내렸는 지
+            // clientHeight: 화면 보이는 길이
+            // scrollHeight: 총 길이
+            // 따라서 끝까지 내렸을 때
+            // scrollY + clientHeight=scrollHeight!!
+
+            if (window.scrollY + document.documentElement.clientHeight === document.documentElement.scrollHeight){
+                dispatch({
+                    type: LOAD_POST_REQUEST,
+                });
+            }
+        }
+        window.addEventListener('scroll', onScroll);
+        //useEffect에서 window함수 쓸 때 중요한 건
+        //이렇게 해제해주는 것
+        //메모리 누수 방지
+        return() => {
+            window.removeEventListener('scroll', onScroll);
+        };
+```
+
+- 너무 요청 많이 들어가니
+```javscript
+yield throttle(5000, LOAD_POST_REQUEST, loadPost)
+```
+해줌
+~> 하지만 이는 앞의 request를 취소하지 않은 채 5초만 지켜주기 때문에 비슷한 오류를 품고 있음
+
+- 따라서
+loadPostLoading이 request때만 true이고,
+success나 failure때는 false로 바뀌는 것에 착안,
+&& !loadPostLoading으로 한 단계 더 막을 씌워준다!
+
+- + 모바일은 상대적으로 메모리가 적어서
+너무 많이 불러오면 메모리가 모자랄수 있음
+
+=> react-virtualize 사용!!
+
+- 백엔드와 연동 시작하면,
+LOAD_POST_REQUEST에서 DATA를 넣어줘야 함
+~> EX. limit & offset
+=> 하지만 이는 좋지 않다! 만약 게시글이 추가 / 삭제 된다면 limit과 offset이 꼬여 버리니
+
+~> therefore, limit & lastId형식을 많이 씀
+~> 예를 들어, 백엔드 에서
+```javascript
+const posts = await Post.findAll({
+    //where: {id: lastId},
+    limit: 10,
+    order: [['createdAt', 'DESC']],
+    include: [{
+        //항상 완성된 데이터를 돌려줘야 함
+        model: User,
+        attributes: ['id','nickname']
+    },{
+        model: Image,
+    },{
+        model: Comment,
+        include: [{
+            model: User,
+            attributes: ['id','nickname'],
+        }]
+    }],
+})
+
+res.status(200).json(posts);
+```
+이런 식으로 하고
+
+~> 프론트 에서는
+
+
+
+
+
+
+
 
 
 

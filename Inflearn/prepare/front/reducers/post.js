@@ -3,42 +3,17 @@ import faker from 'faker'
 import produce from 'immer'
 
 export const initialState = {
-    mainPosts: [{
-        id: 1,
-        User: {
-            id: 1,
-            nickname: 'BP'
-        },
-        content: 'First article #GME #APL',
-        
-        Images: [{
-            id: shortId.generate(), 
-            src: 'http://image.yes24.com/momo/TopCate1860/MidCate008/185975276.jpg'
-        },{
-            id: shortId.generate(),
-            src: 'https://miro.medium.com/max/1200/1*ZDDuzNRgvV0pJukSOw-UDA.jpeg'
-        },{
-            id: shortId.generate(),
-            src: 'https://image.aladin.co.kr/product/23331/95/cover500/e332537164_1.jpg'
-        }],
-    
-        Comments: [{
-            id: shortId.generate(),
-            User: {
-                nickname: 'hero'
-            },
-            content: 'Saving $$$ for it!*'
-        },{
-            id: shortId.generate(),
-            User: {
-                nickname: 'nero',
-            },
-            content: 'wanna buy it sooooon!!'
-        }],
-    }],
+    mainPosts: [
+    ],
+
+    hasMorePost: true,
 
     imagePaths: [],
 
+    loadPostLoading: false,
+    loadPostDone: false,
+    loadPostError: null,
+    
     addPostLoading: false,
     addPostDone: false,
     addPostError: null,
@@ -52,29 +27,33 @@ export const initialState = {
     addCommentError: null,
 }
 
-initialState.mainPosts = initialState.mainPosts.concat(
-    Array(20).fill().map(() => ({
+export const generateDummyPost = (number) => Array(number).fill().map(() => ({
+    id: shortId.generate(),
+    User: {
         id: shortId.generate(),
-        Images: [{
-            src: faker.image.imageUrl(),
-        }],
-        Comments: [{
-            User: {
-                id: shortId.generate(),
-                nickname: faker.name.findName(),
-            },
-
-            content: faker.lorem.sentence(),
-        }],
+        nickname: faker.name.findName(),
+    },
+    content: faker.lorem.paragraph(),
+    Images: [{
+        src: faker.image.image(),
+    }],
+    Comments: [{
         User: {
             id: shortId.generate(),
             nickname: faker.name.findName(),
         },
-
-        content: faker.lorem.paragraph,
-    }
-)),
+        content: faker.lorem.sentence(),
+    }],
+})
 );
+
+//initialState.mainPosts = initialState.mainPosts.concat(generateDummyPost(10));
+
+
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+// 액션 이름을 상수로 지어주면 오타로 인한 에러 줄이는 데 도움됨
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 // 액션 이름을 상수로 지어주면 오타로 인한 에러 줄이는 데 도움됨
@@ -88,6 +67,12 @@ export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
+
+export const loadPost = (data) => ({
+    type: LOAD_POST_REQUEST,
+    data,
+})
 
 export const addPost = (data) => ({
     type: ADD_POST_REQUEST,
@@ -122,6 +107,24 @@ const dummyComment = (data) => ({
 const reducer = (state = initialState, action)=>{
     return produce(state, (draft) => {
         switch (action.type){
+            case LOAD_POST_REQUEST:
+                draft.loadPostLoading = true;
+                draft.loadPostDone = false;
+                draft.loadPostError = null;
+                break;
+            case LOAD_POST_SUCCESS:
+                //제일 위에 보여주기 위해 앞에다 추가
+                draft.loadPostLoading = false;
+                draft.hasMorePost = draft.mainPosts.length < 50;
+                draft.loadPostDone= true;
+                draft.mainPosts = action.data.concat(draft.mainPosts);      
+                break;
+            case LOAD_POST_FAILURE:
+                
+                draft.loadPostLoading = false;
+                draft.loadPostError = action.error;
+                break;
+            
             case ADD_POST_REQUEST:
                 draft.addPostLoading = true;
                 draft.addPostDone = false;
