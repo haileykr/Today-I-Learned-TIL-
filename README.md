@@ -60,12 +60,11 @@ _____
 ##### HTML 수업
 - [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Web_Basics.md)
 ##### 겁나 빠른 웹 레시피
-- [Notes*Taken*필기](https://https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Web_Recipe.md)
+- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Web_Recipe.md)
 
 ## Computer Science
 #### CS50 (by Prof. David Malan @Harvard)
 - [Repository](https://github.com/haileykr/CS50)
-
 
 #### ACBS (Academic Credit Bank System) in South Korea
 - [Tistory_Blog(Korean)](https://piaflu.tistory.com/category/%ED%95%99%EC%A0%90%EC%9D%80%ED%96%89%EC%A0%9C)
@@ -121,12 +120,12 @@ _____
 #### Open Tutorials (생활코딩)_POSIX CLI
 - [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Others/POSIX_CLI_%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9_Notes.md)
 #### About Markdown
-- [Notes*Taken*필기](<https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Markdown%20(md)/Markdown.md>)
+- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Markdown%20(md)/Markdown.md)
 
 ## Java + Spring(on pause)
 #### Open Tutorials (생활코딩)_Java 입문
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Java_Notes.md)
-  #### Udemy_Java Intro
+- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Java_Intro_Notes.md)
+#### Udemy_Java Intro
 - [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/JavaUdemy/Udemy_Java.md)
 
 #### Udemy_Master Microservices with Spring Boot and Spring Cloud
