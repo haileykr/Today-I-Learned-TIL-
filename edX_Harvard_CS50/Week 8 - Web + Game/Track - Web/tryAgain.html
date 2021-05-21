@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Hello!</title>
+  <script>
+    function greet() {
+      let name = document.querySelector("#name").value;
+      if (name === " ") {
+        name = "world";
+      }
+      alert("Hello, " + name + "!");
+      document.querySelector("#result").innerHTML = "Hello, " + name + "!";
+    }
+
+    let counter = 0;
+    function increment() {
+      counter++;
+      document.querySelector("#counter").innerHTML = counter;
+    }
+  </script>
+</head>
+<body>
+  <h1 class="try">Hello, world!</h1>
+  <h2 class="try">Hello, town</h2>
+  <form onsubmit="increment(); return false">
+    <input type="text" name="q" id="name" />
+    <input type="submit" value="Submit Form" />
+  </form>
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYj3JR0nm83pixFBE-teuakWceRRzfysctLQ&usqp=CAU"
+  />
+  <a href="Go to Harvard">Harvard</a>
+  <div id="result">Hello!</div>
+  <div id="counter">0</div>
+</body>
