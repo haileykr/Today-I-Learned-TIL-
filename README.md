@@ -7,7 +7,7 @@ Repository of things I learned today
 
 ## Table of Contents
 * [Web development](#Web-Development)
-    * [Udemy_Web development bootcamp](#Udemy_Web-Development-Bootcamp-(by-Colt-Steele))
+    * [Udemy_Web development bootcamp](#Udemy_Web Development Bootcamp (by Colt Steele))
     * [Open Tutorials (생활코딩)](#Open-Tutorials-(생활코딩))
         * [HTML 수업](#HTML-수업)
         * [겁나 빠른 웹 레시피](#겁나-빠른-웹-레시피)

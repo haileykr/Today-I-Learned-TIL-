@@ -111,10 +111,10 @@
 - HTML ELEMENTS
 : To write HTML, we pick from a set of standardized Elements that all browsers recognize
 : Common Elements include:
-~> <p> element - represents a paragraph of text
-~> <h1> element - represents the main header on a page
-~> <img> element - embeds an image
-~> <form> element - represents a form
+* <p> element - represents a paragraph of text
+* <h1> element - represents the main header on a page
+* <img> element - embeds an image
+* <form> element - represents a form
 
 - HTML TAGS
 : we create elements by writing *tags*
