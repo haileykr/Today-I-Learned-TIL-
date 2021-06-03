@@ -1,0 +1,11 @@
+React -> Next.js
+
+1) pages 안에 구조대로 route 자동으로 됨
+2) react-router-dom 대신 
+`import Link from 'next/link';
+`<Link href="/profile"><a>프로필</a></Link>`
+3) import React from 'react'필요없음
+
+4) 코드 바뀌면 바로 적용되어서 서버 다시 실행
+~> "React Hot-Loader"
+~> Next.js에는 이것도 자동으로 포함
