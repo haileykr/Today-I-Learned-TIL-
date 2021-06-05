@@ -99,7 +99,7 @@ _____
 
 ## MySQL
 #### Udemy_MySQL_by Colt Steele
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Udemy_SQL/SQL%20Notes.md)
+- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/tree/main/Udemy_SQL/SQL%20Notes.md)
 
 ## Git + GitHub
 #### GitHub Tutorials
