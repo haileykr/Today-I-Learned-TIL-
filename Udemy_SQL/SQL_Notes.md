@@ -323,16 +323,15 @@ CREATE TABLE cats3
     );
 
 INSERT INTO cats3() VALUES();
-// 'a', 99
-// here you can still set thigns to be NULL
+-- 'a', 99
+-- here you can still set thigns to be NULL
 
 CREATE TABLE cats4
     (
         name VARCHAR(100) NOT NULL DEFAULT 'a',
         age INT NOT NULL DEFAULT 99
     );
-
-// NULL is not allowed AND you have default values!
+-- NULL is not allowed AND you have default values!
 
 ```
 <br />
@@ -368,7 +367,7 @@ CREATE TABLE unique_cats2 (cat_id INT NOT NULL AUTO_INCREMENT
 
 ```sql
 INSERT INTO unique_cats2(name, age)  VALUES('BlueSteele',4);
-//cat_id automatically given
+--cat_id automatically given
 ```
 <br/>
 
@@ -441,7 +440,7 @@ SELECT name FROM cats;
 
 SELECT name, age FROM cats;
 SELECT cat_id, name, age FROM cats;
-//order matters
+--order matters
 ```
 <br/>
 
@@ -450,7 +449,7 @@ SELECT cat_id, name, age FROM cats;
 SELECT * FROM cats WHERE age = 4;
 SELECT * FROM cats WHERE name='George Michael';
 SELECT * FORM cats WHERE name='GEORGE MICHAEL';
-//both work
+--both work
 ```
 <br/>
 
@@ -474,7 +473,7 @@ UPDATE cats SET age=14 WHERE name='Misty';
 #### 80. Introduction to DELETE 
 ```sql
 DELETE FROM cats WHERE name='Egg';
-DELETE FROM cats; //deletes everything!be careful
+DELETE FROM cats; --deletes everything!be careful
 ```
 <br />
 
@@ -603,10 +602,10 @@ FROM books;
 * SUBSTRING: Work with parts of strings
 ```sql
 SELECT SUBSTRING('Hello World', 1, 5);
-//'Hello'
-SELECT SUBSTRING('Hello World', 7); //World
+--'Hello'
+SELECT SUBSTRING('Hello World', 7); --World
 
-SELECT SUBSTRING('Hello World', -3);//rld
+SELECT SUBSTRING('Hello World', -3);--rld
 
 SELECT CONCAT(SUBSTRING(title, 5), '...') AS 'first_few_title' FROM books;
 ```
@@ -697,7 +696,7 @@ SELECT author_lname FROM books ORDER BY author_lname;
 ```sql
 SELECT title,  author_fname,author_lname
 FROM books ORDER BY 2 ;
-//order by author_fname
+-- order by author_fname
 ```
 * Order by multiple column criteria
 ```sql
@@ -761,3 +760,385 @@ SELECT
 FROM books
 ORDER BY author_lname;
 ```
+<br />
+
+### 9. The Magic of Aggregate Functions
+<br />
+
+#### 134. The Count Function
+* Built-in SQL functions to aggregate and induce something meaningful
+* COUNT
+```sql
+SELECT COUNT(*) FROM books;
+
+SELECT COUNT(DISTINCT author_fnames) FROM books;
+
+SELECT COUNT(DISTINCT author_fnames) author_lnames) FROM books;
+
+SELECT COUNT(*) FROM books WHERE title LIKE '%the%';
+```
+<BR/>
+
+#### 136. The Joys of Group By
+* GROUP BY summarizes or aggregates identical data into single rows
+```SQL
+SELECT title, author_lname FROM books;
+
+SELECT title, author_lanme FROM books GROUP BY author_lname;
+-- now that they are grouped by author last name, we can achieve many things like 'how many books each author has written so far?'
+
+SELECT author_lname, COUNT(*) FROM books GROUP BY author_lname;
+
+SELECT title, author_fname, author_lname FROM books;
+
+SELECT author_fname, author_lname, COUNT(*) FROM books GROUP BY author_lname, author_fname;
+
+SELECT released_year, COUNT(*) FROM books GROUP BY  released_year;
+```
+<br/>
+
+#### 139. Min and Max Basics
+* Min and Max w/o GROUP BY
+  * Find the min released_year
+  * ` SELECT MIN(released_year) FROM books; `
+
+<br/>
+
+#### 141. A Problem with Min and Max
+* What is the title of longest book?
+* SubQuery
+  ```SQL
+  SELECT * FROM books
+  WHERE pages = (SELECT MAX(pages) FROM books);
+  ```
+  * problem ~> SLOW! with separate queries
+* ORDER BY
+  ```SQL
+  SELECT * FROM books
+  ORDER BY pages  DESC LIMIT 1;
+  ```
+<br/>
+
+#### 143. Using Min and Max w/ GROUP BY
+* Find the year each author published their first book
+```SQL 
+SELECT MIN(released_year),
+    author_fname,
+    author_lname
+FROM books
+GROUP BY author_fname,
+    author_lname;
+```
+* Get the longest page count for each author
+```SQL
+SELECT MAX(pages),
+    author_fname,
+    author_lname
+FROM books
+GROUP BY author_fname,
+    author_lname;
+```
+<br/>
+
+#### 145. The Sum Function
+* Sum all pages in the entire database
+```SQL
+SELECT SUM(pages) FROM books;
+```
+
+* Sum all pages each author has written
+```SQL
+SELECT SUM(pages), author_fname, author_lname FROM books GROUP BY author_fname, author_lname;
+```
+<br/>
+
+
+#### 147. Avg function
+* Calculate the average released_year across all books
+```SQL
+SELECT AVG(released_year ) FROM books;
+```
+* Calculate the average stock quantity for books released in the same  year!
+```SQL
+SELECT AVG(stock_quantity) FROM books GROUP BY released_year;
+```
+<br/>
+
+
+#### 150. Aggregate Function Challenge
+```SQL
+SELECT COUNT(*) FROM books;
+
+SELECT released_year, COUNT(*) FROM GROUP BY released_year;
+
+SELECT SUM(stock_quantity) FROM books;
+
+SELECT AVG(released_year)
+    ,CONCAT(author_fname,author_lname) 
+FROM books
+GROUP BY author_fname, author_lname;
+
+SELECT CONCAT(author_fname, author_lname)
+FROM books
+ORDER BY pages  DESC
+LIMIT 1;
+
+SELECT released_year AS year, COUNT(*) AS "# books", AVG(pages) AS "avg pages" FROM books GROUP BY released_year;
+```
+<br/>
+
+### 10. Revisiting Data Types
+<br/>
+
+#### 153. (VAR)CHAR
+* CHAR has a fixed length! (Even if you're saving 'ab' to CHAR(4), 4 Bytes Are Used)
+* CHAR(3) -> only 3 characters are allowed
+* CHAR is faster for fixed length text - EX. P/F 
+```SQL
+CREATE TABLE dogs (name CHAR(5), breed VARCHAR(10 ));
+
+INSERT INTO dogs (name, breed) VALUES ('Bob', 'Beagle'),
+('Robby', 'Corgi'),
+('Princess Jane', 'Retriever'); --exceeds limit
+```
+
+* VARCHAR ~> ' ' also takes 1 Byte, and 'abcd' takes 5 Bytes!!
+<br />
+
+#### 156. DECIMAL
+* DECIMAL(5, 2) ~> 5: Total Number of Digits (0 - 65), 2:  Digits After Decimal Point (0 - 30)
+* EX. 999.99
+```SQL
+CREATE TABLE items (price DECIMAL(5, 2));
+
+INSERT INTO items(price) VALUES(7), --7.00 
+                        (78787923749), --Error
+                        (343.88), --343.88
+                        (298.999); --299.00
+```
+<br />
+
+#### 158. FLOAT and  DOUBLE
+> "The  DECIMAL data type is a fixed point type and calculations are exact."
+> "The  FLOAT and DOUBLE data types are floating-point types and calculations are approximate"
+* FLOAT and  DOUBLE store larger numbers using less space
+* BUT it comes at the cost  of precision
+types | memory needed | precision issue
+:---:|:---:|:---:
+FLOAT|4 Bytes | ~7 digits
+DOUBLE | 8 Bytes | ~15 digits
+* So if you need to choose between the two, DOUBLE is better in terms of precision
+* And DECIMAL is quite preferred for precision!
+```SQL
+CREATE TABLE thingies (price FLOAT);
+INSERT INTO thingies(price) VALUES (88.45);
+SELECT * FROM thingies;
+
+INSERT INTO thingies(price) VALUES (99938913.521); --99938900
+
+```
+<br />
+
+#### 161. DATE, TIME, and DATETIME
+* DATE - Values With a Date But No Time - 'YYYY-MM-DD'
+* TIME - Values With a Time But No Date - 'HH:MM:SS'
+* DATETIME - Values With a Date AND Time -'YYYY-MM-DD HH:MM:SS'
+
+<br/>
+
+#### 162. Creating Our  DATE Data 
+```SQL
+
+CREATE TABLE people (
+    name VARCHAR(100),
+    birthdate DATE,
+    birthtime TIME,
+    birthall DATETIME
+);
+
+INSERT INTO people (name, birthdate, birthtime, birthall)
+VALUES ('Padma', '1983-11-11','10:07:35', '1983-11-11 10:07:35');
+```
+<br />
+
+#### 164. CURDATE, CURTIME, and NOW
+* CURDATE - DATE, CURTIME - TIME, NOW - DATETIME
+
+```SQL
+INSERT INTO people(name,birthdate, birthtime, birthall)
+VALUES('Blooo', CURDATE(), CURTIME(), NOW());
+```
+<br />
+
+
+
+
+#### 166. Formatting Dates
+* There are a lot more date and time functions for SQL
+```SQL
+SELECT name, birthdate FROM people;
+
+SELECT name, DAY (birthdate) FROM people;
+
+SELECT name, birthdate, DAYNAME(birthdate) FROM people;
+```
+
+* Formatting Dates!
+* "DATE_FORMAT(date, format)
+```SQL
+SELECT DATE_FORMAT(birthall, "%W %M %Y") FROM people;
+
+
+SELECT DATE_FORMAT(birthall, "%m/%d/%Y") FROM people;
+```
+<br />
+
+
+#### 168. Date Math
+
+* DATEDIFF(expression1, expression2)
+```SQL
+SELECT DATEDIFF(NOW(), birthall) FROM people;
+```
+
+* DATE_ADD(date, INTERVAL expr unit)
+```SQL
+SELECT birthall, DATE_ADD(birthall, INTERVAL 1 MONTH) FROM people;
+
+SELECT birthall, birthall + INTERVAL 1 MONTH FROM people;
+
+SELECT
+    birthall,
+    birthall + INTERVAL 15 MONTH + INTERVAL 10 HOUR 
+FROM people;
+```
+<br/>
+
+#### 170. Working With TIMESTAMPS
+
+* DATETIME VS. TIMESTAMP
+  * DATETIME ranges from '1000-01-01 00:00:00' to '9999-12-31'
+  * TIMESTAMP ranges from '1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07'  UTC 
+```SQL
+CREATE TABLE comments (
+    content VARCHAR(100),
+    created_at TIMESTAMP DEFAULT NOW() --DEFAULT NOW() is crucial part in this case!!
+);
+
+INSERT INTO comments (content) VALUES ('lol what a funny article!');
+INSERT INTO VALUES('I found this offensivee!'); 
+```
+
+* CURRENT_TIMESTAMP = NOW
+* order to be able to CHANGE the timestamp,
+```SQL
+CREATE TABLE commentss(
+    content  VARCHAR(100),
+    changed_at  TIMESTAMP DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO commentss(content) VALUES('ajofsdjlfkjdsl'), ('lololol');
+
+UPDATE commentss SET content = 'hahahah' WHERE content = 'lololol'; 
+```
+<br/>
+
+#### 173. Data Types Exercises Solution
+
+
+```SQL
+CREATE TABLE inventory
+(
+    item_name VARCHAR(100),
+    price DECIMAL(10, 2),
+    quantity INT
+)
+
+SELECT CURTIME();
+
+SELECT CURDATE();
+
+SELECT NOW();
+
+SELECT DAYOFWEEK(CURDATE());
+
+SELECT DATE_FORMAT(NOW(), '%w');
+
+SELECT DAYNAME(NOW());
+
+SELECT DATE_FORMAT(NOW(), '%m/%d/%y');
+
+SELECT DATE_TIME(NOW(), '%M %D at %h:%i');
+
+CREATE TABLE tweets
+(
+    content VARCHAR(140),
+    username VARCHAR(20),
+    created_at TIMESTAMP DEFAULT NOW
+);
+```
+<BR/>
+
+### 11. The Power of Logical Operators!
+<br/>
+
+#### 176. Not Equal
+* !=
+```SQL
+
+SELECT title, released_year FROM books WHERE released_year != 2017;
+```
+<br/>
+
+#### 178. Not Like
+* "NOT LIKE"
+```SQL
+SELECT title FROM books WHERE title NOT LIKE "%W";
+```
+<br/>
+
+
+#### 180. GREATER THAN
+* >
+```SQL
+SELECT * FROM books WHERE released_year > 2000;
+```
+* GREATER THAN OR EQUAL TO: >=
+```SQL
+SELECT * FROM books WHERE stock_quantity >= 200;
+
+SELECT 99 > 1; --1 (True)
+SELECT 99 > 101; --0 (False)
+
+SELECT 'A' > 'a'; --0 (False)
+SELECT 'A' = 'a'; --1(True)
+```
+<br/>
+
+#### 182. Less Than
+* <
+* LESS THAN OR EQUAL TO: <=
+```SQL
+SELECT title, released_year FROM books WHERE released_year <1995;
+
+SELECT title, released_year FROM books WHERE released_year <=1990;
+
+SELECT 'Q'<'q'; --0(False)
+```
+<br/>
+
+#### 184. LOGICAL AND
+* && (deprecated) or AND 
+```SQL
+SELECT * FROM books WHERE author_lname='Eggers' && author_fname = 'David' AND released_year >= 2010;
+```
+
+<br/>
+
+
+
+#### 186. LOGICAL OR
+* ||(deprecated) or OR
+  
+```SQL
+SELECT * FROM books WHERE author_lname = 'Eggers' OR author_fname = 'Dave' OR released_year > 2010;
