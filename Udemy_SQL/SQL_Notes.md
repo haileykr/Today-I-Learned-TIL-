@@ -1142,3 +1142,338 @@ SELECT * FROM books WHERE author_lname='Eggers' && author_fname = 'David' AND re
   
 ```SQL
 SELECT * FROM books WHERE author_lname = 'Eggers' OR author_fname = 'Dave' OR released_year > 2010;
+
+```
+<br />
+
+#### 188. Between
+* BETWEEN
+```sql
+SELECT * FROM books WHERE released_year >= 2004 AND released_year <= 2015;
+
+SELECT * FROM books WHERE released_year BETWEEN 2004 AND 2015;
+```
+
+* NOT BETWEEN
+
+* Comparing time and dates:
+* best to cast first to guarantee the consistency in formats
+```sql
+SELECT CAST('2017-05-02' AS DATETIME);
+
+SELECT * FROM people WHERE birthdt BETWEEN CAST('1981-01-01' AS DATETIME) AND CAST('2000-12-29' AS DATETIME);
+```
+<br/>
+
+#### 190. In And Not In
+* IN (A, B, C)
+```sql
+SELECT * FROM books
+WHERE author_lname IN ('Smith', 'Lahiri');
+
+
+SELECT *  FROM books
+WHERE released_year >= 2000 AND
+released_year % 2 != 0;
+```
+<br/>
+
+#### 192. CASE STATEMENTS
+* conditionals
+```sql
+SELECT *,
+    CASE
+        WHEN released_year >=2000 THEN 'Modern Lit'
+        ELSE '20th Century Lit'
+    END AS GENRE
+FROM books;
+
+SELECT title, 
+    CASE
+        WHEN stock_quantity BETWEEN 0 AND 50 THEN '*'
+        WHEN stock_quantity BETWEEN 50 AND 100 THEN '**'
+        ELSE '***'
+    END AS STOCK
+FROM books;
+
+SELECT title,
+    CASE
+        WHEN stock_quantity <= 50 THEN '*'
+        WHEN stock_quantity <= 100 THEN '**'
+        ELSE '***'
+    END AS STOCK
+FROM books;
+```
+<br/>
+
+#### 194. Logical Operator Challenge    
+* solutions
+
+```SQL
+SELECT * FROM books
+WHERE released_year <= 1980;
+
+SELECT * FROM books
+WHERE author_lname IN ('Eggers',  'Chabon');
+
+SELECT * FROM books
+WHERE author_lname =  'Lahiri' AND released_year > 2000; 
+
+SELECT * FROM books
+WHERE pages BETWEEN 100 AND 200;
+
+SELECT * FROM books
+WHERE author_lname LIKE 'C%'  OR
+    author_lname LIKE 'S%';
+
+SELECT * FROM books
+WHERE SUBSTR(author_lname, 1, 1) IN ('C','S');
+
+SELECT title, 
+CASE
+    WHEN title LIKE '%stories%' THEN 'short stories'
+    WHEN title IN ('Just Kids', 'A Heartbreaking Work') THEN 'memoir'
+    ELSE 'novel'
+    END AS TYPE
+FROM books;
+
+SELECT title, author_lname, 
+    CASE
+        WHEN COUNT(*) = 1 THEN CONCAT(COUNT(*), ' book')
+        ELSE CONCAT(COUNT(*), ' books')
+    END AS COUNT
+
+FROM books
+GROUP BY author_lname,  author_fname;
+```
+
+
+<br />
+
+### 12. ONE TO MANY
+#### 198. Real World Data Is Messy
+* relationships all over!
+<br />
+
+#### 199. Types of Relationships
+* Three Types
+1. One to One
+2. One to Many
+3. Many to Many
+   
+<br/>
+
+#### 200. ONE TO MANY
+* EX. CUSTOMERS & ORDERS
+
+* We Want To Store...
+  * A customer's first and last names
+  * A customer's email
+  * the date of the purchaes
+  * the price of the order
+
+    => this could be stored in one table
+    => but splitting it into two, CUSTOMERS and ORDERS tables, will be BETTER!
+    => less  duplicates!
+
+* BETTER WAY
+customers | orders
+:---:|:---:
+customer_id|order_id
+first_name | order_date
+last_name | amount
+email|customer_id
+
+* PRIMARY KEY - "unique"
+* in orders table, customer_id is referring to customer_id in customers table
+  * customer_id in orders table is the "FOREIGN KEY"!
+  * order_id in orders table is the "PRIMARY KEY"!
+
+<br/>
+
+#### 201. Working With Foreign Keys
+* creating tables
+```SQL
+CREATE TABLE customers(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name  VARCHAR(100),
+    last_name  VARCHAR(100),
+    email  VARCHAR(100),
+);
+
+CREATE TABLE orders(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_date DATE,
+    amount DECIMAL(8,2),
+    customer_id  INT,
+    FOREIGN KEY(customer_id) REFERENCES customers(id)
+);
+
+INSERT INTO customers (first_name, last_name, email)
+VALUES ('Boy', 'George', 'george@gmail.com'),
+       ('George', 'Michael', 'gm@gmail.com'),
+       ('David', 'Bowie', 'david@gmail.com'),
+       ('Blue', 'Steele', 'blue@gmail.com'),
+       ('Bette', 'Davis', 'bette@aol.com');
+
+INSERT INTO orders (order_date, amount, customer_id)
+VALUES ('2016/02/10', 99.99, 1),
+       ('2017/11/11', 35.50, 1),
+       ('2014/12/12', 800.67, 2),
+       ('2015/01/03', 12.50, 2),
+       ('1990/04/11', 450.25, 5);
+```
+<br />
+
+
+#### 203.Cross Join
+* you rarely use cross joins
+* or Cartesian Join/generating all possible combinations!
+
+```SQL
+SELECT * FROM customers, orders;
+
+```
+<br />
+
+
+
+
+
+#### 205. Inner Join
+* joining only the ones that are relevant
+
+```sql
+
+-- IMPLICIT INNER JOIN
+SELECT * FROM customers,orders WHERE customers.id = orders.customer_id;
+
+
+
+
+
+-- EXPLICIT INNER JOIN("BETTER CONVENTION!")
+SELECT * FROM customers
+JOIN orders
+    ON customers.id = orders.customer_id;
+
+
+SELECT * FROM orders
+JOIN customers
+    ON customers.id = orders.customer_id;
+
+SELECT *, SUM(amount) AS total_spent FROM orders
+JOIN customers
+    ON customers.id = orders.customer_id
+GROUP BY orders.customer_id;
+```
+
+
+<br/>
+
+#### 208. Left Join
+* select everything from a table and anything that matches another table too
+
+
+
+
+
+```sql
+
+SELECT * FROM customers
+LEFT JOIN orders
+    ON customers.id   =   orders.customer_id;
+    -- even if Mr.Bowie and Ms.Steele have not bought anything they still show up in the table
+
+SELECT 
+    first_name,
+    last_nmme,
+    IFNULL(SUM(amount),0) AS total_spent
+
+FROM customers
+LEFT JOIN orders
+    ON customers.id = orders.customer_id
+GROUP BY customers_id
+ORDER BY total_spent;
+```
+
+<br />
+
+#### 210. Right Join
+* similar logic to left join
+
+```sql
+-- RIGHT JOIN
+SELECT * FROM customers
+RIGHT JOIN orders
+    ON customers.id = orders.customer_id;
+```
+
+* on  delete  cascade
+```SQL
+
+-- ON DELETE  CASCADE
+CREATE TABLE orders(
+    ...
+    customer_id INT,
+    FOREIGN KEY(customer_id)
+        REFERENCES customers (id)
+        ON DELETE CASCADE,
+        
+);  
+```
+
+<br/>
+
+#### 216. Our First Joins
+* STUDENTS & PAPERS
+
+```SQL
+CREATE TABLE students (
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100)
+);
+
+CREATE TABLE papers (
+    title VARCHAR(100),
+    grade INT,
+    student_id INT,
+    FOREIGN KEY(student_id) REFERENCES students(id) ON DELETE CASCADE 
+);
+
+INSERT ...
+
+SELECT * FROM students
+INNER JOIN papers ON students.id = papers.student_id;
+
+SELECT first_name, title, grade FROM students
+INNER JOIN papers ON students.id = papers.student_id ORDER BY grade DESC;
+
+SELECT first_name, title,grade FROM students LEFT JOIN papers ON students.id = papers.student_id ORDER BY grade DESC;
+
+SELECT 
+    first_name, 
+    IFNULL(title, 'MISSING'),
+    IFNULL(grade, 0)
+FROM students
+LEFT JOIN papers ON students.id = papers.student_id
+ORDER BY grade DESC;
+
+
+SELECT first_name, IFNULL(AVG(grade),0)FROM students
+LEFT JOIN papers ON students.id = papers.student_id
+GROUP BY students.id  ORDER BY AVG(grade)  DESC;
+
+
+SELECT first_name, IFNULL(AVG(grade),0) AS average,CASE 
+    WHEN AVG(grade) >= 75 THEN 'PASSING'
+    ELSE 'FAILING' 
+END AS passing_status
+FROM students
+LEFT JOIN papers
+    ON students.id = papers.student_id
+GROUP BY students.id
+ORDER BY AVG(grade);
+
+```
