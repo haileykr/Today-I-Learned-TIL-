@@ -1477,3 +1477,306 @@ GROUP BY students.id
 ORDER BY AVG(grade);
 
 ```
+<br/>
+
+### 13. Many To Many Relationship
+<br/>
+
+#### 221. Many To Many Basics
+* we are building a *tv show reviewing application*
+* Series Data (tv shows) <-> Reviewers Data (names) : Connect them with a Reviews Table!
+Reviewers | Reviews  | Series
+:---:|:---:|:---:
+**id** | **id** | **id** 
+first_name|rating|title
+last_name|series_id|released_year
+`|reviewer_id|genre
+
+<br/>
+
+#### 222. Creating Our Tables
+* Create Tables
+
+```sql
+CREATE TABLE reviewers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100), 
+    last_name VARCHAR(100) 
+);
+
+CREATE TABLE series (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    released_year YEAR(4),
+    genre VARCHAR(100)
+);
+
+INSERT INTO reviewers...
+
+INSERT INTO series... 
+
+CREATE TABLE reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rating DOUBLE(2, 1),
+    series_id INT,
+    reviewer_id INT,
+    FOREIGN KEY (series_id)
+        REFERENCES series(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (reviewer_id)
+        REFERENCES reviewers(id)
+        ON DELETE CASCADE
+
+);
+
+INSERT INTO reviews...
+```
+<br/>
+
+#### 224. TV Joins Challenge 1
+
+* title | rating
+```SQL
+
+SELECT title, rating FROM series
+INNER JOIN reviews ON series.id = reviews.series_id;
+```
+<br/>
+
+
+#### 226. TV Joins Challenge 2
+* title | avg_rating
+```SQL
+
+SELECT 
+    title,
+    AVG(rating) as avg_rating
+FROM series
+INNER JOIN reviews 
+    ON series.id = reviews.series_id
+GROUP BY series.id ORDER BY avg_rating
+```
+<br/>
+
+#### 228. TV Joins Challenge 3
+* first_name | last_name | rating
+```SQL
+
+SELECT 
+    first_name,
+    last_name,
+    rating
+FROM reviewers
+INNER JOIN reviews
+    ON reviewers.id = reviews.reviewer_id
+ORDER BY first_name DESC;
+```
+<br/>
+
+#### 230. TV Joins Challenge
+* unreviewed series
+```SQL
+SELECT
+    title 
+FROM series
+LEFT JOIN reviews
+    ON series.id = reviews.series_id
+WHERE reviews.rating IS NULL;
+```
+<br/>
+
+#### 232. TV Joins Challenge
+* genre |avg_rating
+```SQL
+SELECT
+    genre,
+    ROUND(AVG(rating),2) as avg_rating
+FROM series
+INNER JOIN reviews 
+ON series.id = reviews.series_id
+GROUP BY genre;
+```
+<BR/>
+
+
+#### 235. TV Joins
+* first_name | last_name | COUNT | MIN | MAX | AVG| STATUS
+```SQL
+
+SELECT 
+    first_name,
+    last_name,
+    IFNULL(COUNT(reviews.rating),0) AS COUNT,
+    IFNULL(MIN(reviews.rating),0) AS MIN,
+    IFNULL(MAX(reviews.rating),0) AS MAX,
+    IFNULL(AVG(reviews.rating),0) AS AVG,
+    
+    --IF(COUNT(reviews.rating) = 0, 'INACTIVE', 'ACTIVE')
+    CASE 
+        WHEN COUNT(reviews.rating) = 0 THEN 'INACTIVE'
+        ELSE 'ACTIVE'
+    END AS STATUS
+FROM reviewers
+LEFT JOIN reviews
+ON reviewers.id = reviews.reviewer_id
+GROUP BY reviewers.id;
+```
+
+<br/>
+
+#### 236. TV Joins Challenge
+* title, rating, reviewer
+```SQL
+SELECT title, rating, 
+    CONCAT(first_name,  ' ',last_name)
+FROM  reviewers
+INNER JOIN reviews
+    ON reviewers.id = reviews.reviewer_id
+INNER JOIN series
+    ON series.id = reviews.series_id
+ORDER BY title;
+```
+<br/>
+
+### 14. Instagram Clone
+<br/>
+
+#### 239. Intro to Instagram Clone Schema
+
+* users, comments, likes, hashtags, photos, followers/followings
+
+```SQL
+
+CREATE TABLE users (
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE TABLE photos(
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image_url VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,  
+
+
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (user_id)
+        REFERENCES users  (id)
+
+);
+    
+    
+CREATE TABLE comments(
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    comment_text VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+    photo_id INT NOT NULL,
+    created_at TIMESTAMP  DEFAULT NOW( ),
+
+    FOREIGN KEY(user_id) REFERENCES users(id),
+
+
+    FOREIGN KEY(photo_id) REFERENCES photos(id)
+    
+);
+
+CREATE TABLE likes(
+    user_id INT NOT NULL,
+    photo_id INT NOT NULL,
+    
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(photo_id) REFERENCES photos(id),
+    PRIMARY KEY(user_id,photo_id)--ensuring the unique set of it
+);
+
+
+CREATE TABLE  follows(
+    follower_id INT NOT NULL,
+    followee_id INT NOT NULL,
+    created_at TIMESTAMP  DEFAULT NOW(),
+    
+    FOREIGN KEY(follower_id) REFERENCES users(id),
+    FOREIGN KEY(followee_id) REFERENCES users(id),
+    PRIMARY KEY (follower_id, followee_id)
+)
+
+
+
+
+
+```
+<br/>
+
+#### 251. Cloning Instagram's Hashtags
+* three major ways to represent hashtags
+1. Solution 1
+id | image_url | tags
+:---:|:---:|:---:
+1|'/ajdlfkjdl'|'#cat#pets#animals'
+* super easy to implement
+
+* limited num of tags only
+* cannot store additional information
+* have to be careful with searching
+
+2. Solution 2
+* two tables - photos(id, image_url), tags table(tag_name, photo_id)
+
+* unlimited num of tags
+* slower than previous solution
+
+3. Solution 3
+* three tables
+    * photos table - id, image_url
+    * tags - id, tag_name
+    * photo_tags table - photo_id, tag_id
+
+* unlimited num of tags
+* can add additional information
+* more work with inserting/updating
+* have to worry about cascade
+
+CREATE TABLE hashtags(
+
+)
+
+
+  
+<br/>
+
+#### Extras - MySQL Tutorials.org
+* mysqltutorial.org
+
+
+1. MySQL Recursive CTE (Common Table Expression)
+* a CTE is defined using **WITH**
+* in MySQL, every query generates a temporary result or relation.
+
+* recursive CTE is defined using **WITH RECURSIVE** clause
+* series of generation & traversal of hierarchical or tree-structured data!
+
+```SQL
+WITH RECURSIVE
+cte_name [(col1, col2, ...)]
+AS (subquery)
+Select col1, col2, .. from cte_name;
+```
+
+* Examples
+```SQL
+WITH RECURSIVE
+odd_no (sr_no, n) AS
+(
+    SELECT 1, 1
+    union all
+    SELECT sr_no+1, n+2 from  odd_no where sr_no < 5
+)
+SELECT * FROM odd_no;
+
+
+```
+
+
