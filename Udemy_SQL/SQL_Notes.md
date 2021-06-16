@@ -864,7 +864,6 @@ SELECT AVG(stock_quantity) FROM books GROUP BY released_year;
 ```
 <br/>
 
-
 #### 150. Aggregate Function Challenge
 ```SQL
 SELECT COUNT(*) FROM books;
@@ -923,10 +922,10 @@ INSERT INTO items(price) VALUES(7), --7.00
 > "The  FLOAT and DOUBLE data types are floating-point types and calculations are approximate"
 * FLOAT and  DOUBLE store larger numbers using less space
 * BUT it comes at the cost  of precision
-types | memory needed | precision issue
-:---:|:---:|:---:
-FLOAT|4 Bytes | ~7 digits
-DOUBLE | 8 Bytes | ~15 digits
+| types  | memory needed | precision issue |
+| :----: | :-----------: | :-------------: |
+| FLOAT  |    4 Bytes    |    ~7 digits    |
+| DOUBLE |    8 Bytes    |   ~15 digits    |
 * So if you need to choose between the two, DOUBLE is better in terms of precision
 * And DECIMAL is quite preferred for precision!
 ```SQL
@@ -970,9 +969,6 @@ VALUES('Blooo', CURDATE(), CURTIME(), NOW());
 ```
 <br />
 
-
-
-
 #### 166. Formatting Dates
 * There are a lot more date and time functions for SQL
 ```SQL
@@ -988,14 +984,11 @@ SELECT name, birthdate, DAYNAME(birthdate) FROM people;
 ```SQL
 SELECT DATE_FORMAT(birthall, "%W %M %Y") FROM people;
 
-
 SELECT DATE_FORMAT(birthall, "%m/%d/%Y") FROM people;
 ```
 <br />
 
-
 #### 168. Date Math
-
 * DATEDIFF(expression1, expression2)
 ```SQL
 SELECT DATEDIFF(NOW(), birthall) FROM people;
@@ -1015,7 +1008,6 @@ FROM people;
 <br/>
 
 #### 170. Working With TIMESTAMPS
-
 * DATETIME VS. TIMESTAMP
   * DATETIME ranges from '1000-01-01 00:00:00' to '9999-12-31'
   * TIMESTAMP ranges from '1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07'  UTC 
@@ -1044,8 +1036,6 @@ UPDATE commentss SET content = 'hahahah' WHERE content = 'lololol';
 <br/>
 
 #### 173. Data Types Exercises Solution
-
-
 ```SQL
 CREATE TABLE inventory
 (
@@ -1085,7 +1075,6 @@ CREATE TABLE tweets
 #### 176. Not Equal
 * !=
 ```SQL
-
 SELECT title, released_year FROM books WHERE released_year != 2017;
 ```
 <br/>
@@ -1096,7 +1085,6 @@ SELECT title, released_year FROM books WHERE released_year != 2017;
 SELECT title FROM books WHERE title NOT LIKE "%W";
 ```
 <br/>
-
 
 #### 180. GREATER THAN
 * >
@@ -1132,17 +1120,12 @@ SELECT 'Q'<'q'; --0(False)
 ```SQL
 SELECT * FROM books WHERE author_lname='Eggers' && author_fname = 'David' AND released_year >= 2010;
 ```
-
 <br/>
-
-
 
 #### 186. LOGICAL OR
 * ||(deprecated) or OR
-  
 ```SQL
 SELECT * FROM books WHERE author_lname = 'Eggers' OR author_fname = 'Dave' OR released_year > 2010;
-
 ```
 <br />
 
@@ -1155,7 +1138,6 @@ SELECT * FROM books WHERE released_year BETWEEN 2004 AND 2015;
 ```
 
 * NOT BETWEEN
-
 * Comparing time and dates:
 * best to cast first to guarantee the consistency in formats
 ```sql
@@ -1170,7 +1152,6 @@ SELECT * FROM people WHERE birthdt BETWEEN CAST('1981-01-01' AS DATETIME) AND CA
 ```sql
 SELECT * FROM books
 WHERE author_lname IN ('Smith', 'Lahiri');
-
 
 SELECT *  FROM books
 WHERE released_year >= 2000 AND
@@ -1208,7 +1189,6 @@ FROM books;
 
 #### 194. Logical Operator Challenge    
 * solutions
-
 ```SQL
 SELECT * FROM books
 WHERE released_year <= 1980;
@@ -1247,7 +1227,6 @@ FROM books
 GROUP BY author_lname,  author_fname;
 ```
 
-
 <br />
 
 ### 12. ONE TO MANY
@@ -1277,12 +1256,12 @@ GROUP BY author_lname,  author_fname;
     => less  duplicates!
 
 * BETTER WAY
-customers | orders
-:---:|:---:
-customer_id|order_id
-first_name | order_date
-last_name | amount
-email|customer_id
+|  customers  |   orders    |
+| :---------: | :---------: |
+| customer_id |  order_id   |
+| first_name  | order_date  |
+|  last_name  |   amount    |
+|    email    | customer_id |
 
 * PRIMARY KEY - "unique"
 * in orders table, customer_id is referring to customer_id in customers table
@@ -1325,38 +1304,24 @@ VALUES ('2016/02/10', 99.99, 1),
 ```
 <br />
 
-
 #### 203.Cross Join
 * you rarely use cross joins
 * or Cartesian Join/generating all possible combinations!
-
 ```SQL
 SELECT * FROM customers, orders;
-
 ```
 <br />
 
-
-
-
-
 #### 205. Inner Join
 * joining only the ones that are relevant
-
 ```sql
-
 -- IMPLICIT INNER JOIN
 SELECT * FROM customers,orders WHERE customers.id = orders.customer_id;
-
-
-
-
 
 -- EXPLICIT INNER JOIN("BETTER CONVENTION!")
 SELECT * FROM customers
 JOIN orders
     ON customers.id = orders.customer_id;
-
 
 SELECT * FROM orders
 JOIN customers
@@ -1368,18 +1333,11 @@ JOIN customers
 GROUP BY orders.customer_id;
 ```
 
-
 <br/>
 
 #### 208. Left Join
 * select everything from a table and anything that matches another table too
-
-
-
-
-
 ```sql
-
 SELECT * FROM customers
 LEFT JOIN orders
     ON customers.id   =   orders.customer_id;
@@ -1396,22 +1354,18 @@ LEFT JOIN orders
 GROUP BY customers_id
 ORDER BY total_spent;
 ```
-
 <br />
 
 #### 210. Right Join
 * similar logic to left join
-
 ```sql
 -- RIGHT JOIN
 SELECT * FROM customers
 RIGHT JOIN orders
     ON customers.id = orders.customer_id;
 ```
-
 * on  delete  cascade
 ```SQL
-
 -- ON DELETE  CASCADE
 CREATE TABLE orders(
     ...
@@ -1419,7 +1373,6 @@ CREATE TABLE orders(
     FOREIGN KEY(customer_id)
         REFERENCES customers (id)
         ON DELETE CASCADE,
-        
 );  
 ```
 
@@ -1427,10 +1380,8 @@ CREATE TABLE orders(
 
 #### 216. Our First Joins
 * STUDENTS & PAPERS
-
 ```SQL
 CREATE TABLE students (
-
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100)
 );
@@ -1460,11 +1411,9 @@ FROM students
 LEFT JOIN papers ON students.id = papers.student_id
 ORDER BY grade DESC;
 
-
 SELECT first_name, IFNULL(AVG(grade),0)FROM students
 LEFT JOIN papers ON students.id = papers.student_id
 GROUP BY students.id  ORDER BY AVG(grade)  DESC;
-
 
 SELECT first_name, IFNULL(AVG(grade),0) AS average,CASE 
     WHEN AVG(grade) >= 75 THEN 'PASSING'
@@ -1475,7 +1424,6 @@ LEFT JOIN papers
     ON students.id = papers.student_id
 GROUP BY students.id
 ORDER BY AVG(grade);
-
 ```
 <br/>
 
@@ -1485,12 +1433,12 @@ ORDER BY AVG(grade);
 #### 221. Many To Many Basics
 * we are building a *tv show reviewing application*
 * Series Data (tv shows) <-> Reviewers Data (names) : Connect them with a Reviews Table!
-Reviewers | Reviews  | Series
-:---:|:---:|:---:
-**id** | **id** | **id** 
-first_name|rating|title
-last_name|series_id|released_year
-`|reviewer_id|genre
+| Reviewers  |   Reviews   |    Series     |
+| :--------: | :---------: | :-----------: |
+|   **id**   |   **id**    |    **id**     |
+| first_name |   rating    |     title     |
+| last_name  |  series_id  | released_year |
+|     `      | reviewer_id |     genre     |
 
 <br/>
 
@@ -1526,7 +1474,6 @@ CREATE TABLE reviews (
     FOREIGN KEY (reviewer_id)
         REFERENCES reviewers(id)
         ON DELETE CASCADE
-
 );
 
 INSERT INTO reviews...
@@ -1534,20 +1481,16 @@ INSERT INTO reviews...
 <br/>
 
 #### 224. TV Joins Challenge 1
-
 * title | rating
 ```SQL
-
 SELECT title, rating FROM series
 INNER JOIN reviews ON series.id = reviews.series_id;
 ```
 <br/>
 
-
 #### 226. TV Joins Challenge 2
 * title | avg_rating
 ```SQL
-
 SELECT 
     title,
     AVG(rating) as avg_rating
@@ -1561,7 +1504,6 @@ GROUP BY series.id ORDER BY avg_rating
 #### 228. TV Joins Challenge 3
 * first_name | last_name | rating
 ```SQL
-
 SELECT 
     first_name,
     last_name,
@@ -1598,11 +1540,9 @@ GROUP BY genre;
 ```
 <BR/>
 
-
 #### 235. TV Joins
 * first_name | last_name | COUNT | MIN | MAX | AVG| STATUS
 ```SQL
-
 SELECT 
     first_name,
     last_name,
@@ -1621,7 +1561,6 @@ LEFT JOIN reviews
 ON reviewers.id = reviews.reviewer_id
 GROUP BY reviewers.id;
 ```
-
 <br/>
 
 #### 236. TV Joins Challenge
@@ -1642,33 +1581,24 @@ ORDER BY title;
 <br/>
 
 #### 239. Intro to Instagram Clone Schema
-
 * users, comments, likes, hashtags, photos, followers/followings
-
 ```SQL
-
 CREATE TABLE users (
-
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 CREATE TABLE photos(
-
     id INT AUTO_INCREMENT PRIMARY KEY,
     image_url VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,  
 
-
     created_at TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (user_id)
         REFERENCES users  (id)
-
 );
     
-    
 CREATE TABLE comments(
-
     id INT AUTO_INCREMENT PRIMARY KEY,
     comment_text VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
@@ -1676,7 +1606,6 @@ CREATE TABLE comments(
     created_at TIMESTAMP  DEFAULT NOW( ),
 
     FOREIGN KEY(user_id) REFERENCES users(id),
-
 
     FOREIGN KEY(photo_id) REFERENCES photos(id)
     
@@ -1692,7 +1621,6 @@ CREATE TABLE likes(
     PRIMARY KEY(user_id,photo_id)--ensuring the unique set of it
 );
 
-
 CREATE TABLE  follows(
     follower_id INT NOT NULL,
     followee_id INT NOT NULL,
@@ -1702,20 +1630,15 @@ CREATE TABLE  follows(
     FOREIGN KEY(followee_id) REFERENCES users(id),
     PRIMARY KEY (follower_id, followee_id)
 )
-
-
-
-
-
 ```
 <br/>
 
 #### 251. Cloning Instagram's Hashtags
 * three major ways to represent hashtags
 1. Solution 1
-id | image_url | tags
-:---:|:---:|:---:
-1|'/ajdlfkjdl'|'#cat#pets#animals'
+|  id   |  image_url   |        tags         |
+| :---: | :----------: | :-----------------: |
+|   1   | '/ajdlfkjdl' | '#cat#pets#animals' |
 * super easy to implement
 
 * limited num of tags only
@@ -1739,17 +1662,428 @@ id | image_url | tags
 * more work with inserting/updating
 * have to worry about cascade
 
-CREATE TABLE hashtags(
+* we will use the third one
 
-)
+```SQL
+CREATE TABLE tags (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    tag_name VARCHAR(255)  UNIQUE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
 
-
-  
+CREATE TABLE photo_tags (
+    photo_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    FOREIGN KEY(photo_id) REFERENCES photos(id),
+    FOREIGN KEY(tag_id) REFERENCES tags(id),
+    PRIMARY KEY(photo_id, tag_id)
+);
+```
 <br/>
+
+### 15. Working with lots of instagram data
+<br/>
+
+#### 257. Loading the JUMBO dataset
+```SQL
+mysql> C:\Users\SAMSUNG\Documents\GitHub\til\Udemy_SQL\practice
+```
+<br/>
+
+#### 259. INSTA Challenge
+1. Find the 5 oldest users
+
+```SQL
+SELECT * FROM  users
+ORDER BY created_at  DESC LIMIT 5;
+```
+2. What day of the week do most users register on?
+
+```SQL
+SELECT DAYNAME(created_at) AS day, COUNT(*) AS count
+FROM users
+GROUP BY day
+ORDER BY count  DESC
+LIMIT 1;
+```
+3. Find the users who've never posted a photo
+
+```SQL
+SELECT username
+FROM users
+LEFT JOIN photos
+    ON users.id = photos.user_id
+WHERE photos.id IS NULL;
+```
+4. who got the most likes on a single photo?
+
+```SQL
+SELECT 
+    username,
+    photo_id, 
+    photos.image_url,
+    COUNT(*) AS total
+FROM photos
+INNER JOIN likes
+    ON photos.id = likes.photo_id
+INNER JOIN users
+    ON photos.user_id = users.id
+GROUP BY  photos.id
+ORDER BY total DESC
+LIMIT 1;
+```
+5. How many times does the average user post?
+```SQL
+SELECT
+    (SELECT COUNT(*) FROM photos) / (SELECT COUNT(*) FROM users) AS  AVG;
+```
+
+6. What are the top 5 most commonly used hashtags?
+```SQL
+SELECT tag_name, COUNT(*) AS count FROM photo_tags 
+INNER JOIN tags
+ON photo_tags.tag_id = tags.id
+GROUP BY tags.id
+ORDER BY count  DESC
+LIMIT 1;
+```
+
+7. Find users who have liked every single photo on the site
+```SQL
+SELECT username, COUNT(*) AS num_likes FROM users
+INNER JOIN likes
+    ON users.id = likes.user_id
+GROUP BY likes.user_id
+HAVING num_likes =(SELECT COUNT(*) FROM photos);
+```
+<br/>
+
+### 16. Introducing to Node
+<br/>
+#### 276. MySQL and Other Languages
+* MySQL & PHP, Node, Ruby, C#, C++, Java, Python, ...
+* How do we interact with MySQL thorugh external code?
+  * Client's Computer -> NodeJS -> MySQL  database
+
+#### 278. Intro to JOIN US App
+* "A Startup Mailing List Application"
+
+<br/>
+
+#### 283. Introduction to NPM & Faker!!
+* NPM - Node Package Manager
+* `npm install faker`
+* refer to documentations!
+<br/>
+
+#### 285. Introducing the MySQL Package
+* MySQL Node Package
+  * connecting MySQL AND Nodejs
+<br />
+
+#### 287. Connecting Node to MySQL
+* Create A Database
+* `CREATE DATABASE join_us`
+
+1. Connect to MySQL
+```javascript
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'some_username',
+    database: 'some_database'
+})
+```
+
+2. Run Queries
+
+```SQL
+const a = 'SELECT 1 + 1 AS solution';
+
+const b = 'SELECT CURTIME() as time, CURDATE() as date, NOW() as now';
+
+connection.query(b, function (error, results, fields){
+
+    if (error) throw error;
+  console.log("answer is: ", results[0].time, results[0].date, results[0].now);
+});
+
+connection.end();
+```
+
+* 'for_study@localhost' by '';
+<br/>
+
+#### 289. Creating Our Users Table!
+* Creating Our Schema
+```SQL
+CREATE TABLE users (
+    email VARCHAR(255) PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+<br/>
+
+#### 291. Selecting Using Node
+* Inserting Values
+```SQL
+INSERT INTO users(email) VALUES
+('Katie@yahoo.com'), ('Tunde@gmail.com');
+```
+
+```javascript
+const a = " SELECT * FROM users";
+
+connection.query(q, (error, results, field) => {
+    if (error) throw error;
+    console.log(results);
+});
+
+connection.end();
+```
+
+<br/>
+
+#### 293. Insert Using Node
+* To INSERT a user
+```javascript
+const user = {email: 'jenny12345@gmail.com'};
+connection.query('INSERT INTO users SET ?', user, function(error, results){
+    if (error) throw error;
+    console.log(results);
+});
+```
+
+<br/>
+
+#### 295. Some MySQL/Node Magic
+* ex. faker.date.past() format does not match sql's
+* but magic! MySQL automatically converts the date object to the right str format!
+<br/>
+
+#### 296. Bulk Inserting 500 Users!
+* let's make a bulk data then insert
+* inserting multiple users
+```javascript
+const data = [
+    ['blah@gmail.com', '2017-05-01 03:51:37'],
+    ['ugh@gmail.com', '2017-05-01 03:51:37'],
+    ['meh@gmail.com', '2017-05-01 03:51:37']
+];
+
+const query = 'INSERT INTO users (email, created_at) VALUES ?';
+
+connection.query(query, [data], function(err, result) {
+    console.log(err);
+    console.log(result);
+});
+```
+<br />
+
+#### 298. 500 Users Exercise
+1. Find the Earliest Data A User Joined
+```SQL
+SELECT DATE_FORMAT(MIN(created_at), '%m %D %Y') AS earliest_date
+FROM users;
+```
+2. Find Email Of The First User
+```SQL
+SELECT email FROM users WHERE created_at = (SELECT MIN(created_at) FROM users);
+```
+3. Users According TO THe Month They Joined
+```SQL
+SELECT MONTHNAME(created_at) AS month, COUNT(*) AS count FROM users
+GROUP BY month
+ORDER BY count DESC;
+```
+4. Count Number of Users With Yahoo Emails
+```SQL
+SELECT COUNT(*) AS yahoo_users FROM users
+WHERE email LIKE '%yahoo%';
+```
+5. Calculate Total Number of Users for Each Email Host
+```SQL
+SELECT 
+    CASE
+        WHEN email LIKE '%@yahoo.com' THEN 'yahoo'
+        WHEN email LIKE '%@gmail.com' THEN 'gmail'
+        WHEN email LIKE '%@hotmail.com' THEN 'hotmail'
+        ELSE 'other'
+    END AS provider,
+    COUNT(*)AS total_users
+FROM  users
+GROUP BY provider
+
+ORDER BY  total_users DESC;
+```
+<br/>
+
+### 17. Building Web App
+<Br/>
+
+#### 303. Introducing Express
+* install express
+```javascript
+npm init
+npm install  express --save
+```
+
+<br/>
+
+#### 306. Our Web App!
+* starting place
+```javascript
+const express = require('express');
+const app = express();
+
+app.get('/', function (req, res){
+    res.send("HELLO FROM OUR WEB");
+});
+
+app.listen(3000, function(){
+    console.log("App Listening on #3000...");
+})
+```
+
+<br/>
+
+#### 310. Connecting Express and MySQL
+* use query inside app.get
+```javascript
+app.get('/', function (req, res){
+     // Respond with That Count
+    const query = "SELECT COUNT(*) AS count FROM users";
+    connection.query(query, function(error, results){
+        if (error) throw error;
+        res.send("we have " + results[0].count + " users in our db");
+    });
+```
+<br/>
+
+#### 312. Adding EJS Template
+* Working with Views - Adding HTML to Our Web
+* Install EJS Package
+```javascript
+app.set("view engine", "ejs");
+```
+
+<br/>
+
+#### 314. Connecting The Form
+* app.post('/register', function (req, res){
+  * ...
+* })
+* Install bodyParser
+  * npm install --save body-parser
+  * app.use(bodyParser.urlencoded({extended:true}));
+
+* Actually bodyParser is deprecated and express.urlencoded also Works!
+* app.use(express.static('public'));!!!
+
+<br/>
+
+### 18. Database Triggers!
+* SQL statements that are automatically run when a specific table is changed
+* The Syntax
+```sql
+CREATE TRIGGER trigger_name
+    trigger_time trigger_event ON table_name FOR EACH ROW
+    BEGIN
+    ...
+    END;
+```
+
+* trigger_time - BEFORE, AFTER
+* trigger_event - INSERT, UPDATE, DELETE
+* table_name - photos, users
+
+* always better to set some limitations on the client-side, but this is good to know
+
+<br/>
+
+#### 320. Writing Our Trigger1
+* Example 1 - A Simple Validation!
+```SQL
+DELIMETER $$
+
+CREATE TRIGGER must_be adult
+    BEFORE INSERT ON people FOR EACH ROW
+    BEGIN
+        IF NEW.age < 18
+        THEN
+            SIGNAL SQLSTATE '45000'
+                SET MESSAGE=TEXT = "Must be an adult!'";
+        END IF;
+
+    END;
+$$
+
+DELIMETER;
+```
+
+* NOTE:
+  * 45000 - reservd for exceptional errors
+  * DELIMETER $$ - changing the delimeter to be $$ instead of ; temporarily!
+
+<br />
+
+#### 323. Preventing Instagram Self-Followers With Triggers
+* example 2
+```sql
+DELIMETER $$
+
+CREATE TRIGGER prevent_self_follows
+    BEFORE INSERT ON follows FOR EACH ROW
+    BEGIN 
+        IF NEW.followee_id = NEW.follower_id
+        THEN
+
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT =  "You cannot follow yourself!";
+        END IF;
+    END;
+$$
+
+DELIMETER ;
+```
+
+<br/>
+
+#### 324. Creating Logger Triggers
+* Example 3 - Logging Unfollows
+* Create unfollows table
+```sql
+CREATE TRIGGER unfollows_trigger
+    AFTER  DELETE ON follows
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO unfollows(follower_id, followee_id) VALUES(OLD.follower_id,  OLD.followee_id);
+        -- INSERT INTO unfollows
+        --    SET 
+        --    follower_id = OLD.follower_id,
+        --    followee_id = OLD.followee_id;
+    END
+```
+
+* then try
+```sql
+DELETE FROM follows WHERE follower_id = 2 AND followee_id = 1;
+
+SELECT * FROM unfollows;
+```
+
+<br/>
+
+#### 325. Managing Triggers and Warnings!
+* show triggers;
+* drop trigger trigger_namel;
+* triggers can make debugging harder actually!
+<br />
 
 #### Extras - MySQL Tutorials.org
 * mysqltutorial.org
-
 
 1. MySQL Recursive CTE (Common Table Expression)
 * a CTE is defined using **WITH**
@@ -1776,7 +2110,5 @@ odd_no (sr_no, n) AS
 )
 SELECT * FROM odd_no;
 
-
 ```
-
 
