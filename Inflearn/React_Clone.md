@@ -2382,3 +2382,142 @@ app.use('/post', postRouter);
 ~> 노드는const express = require('express'), module.exports = router 이런 식으로 씀
 ~> 프론트에서 쓰는 방식도 사실은 webpack이 후자로 변환시켜 줌
 ~> 노드에서는 webpack 안 쓰기 때문에 아직 안 됨 - 나중에는 통일 될 수도 있을것
+<br/>
+
+
+### MySQL! 연동
+* npm i sequelize sequelize-cli
+* npm i mysql2 //node, mysql을 연결해주는  driver!
+
+* sequelize는 javascript를 sql로 바꿔주는 library
+* SQL에 자신 있으면 그냥
+* mysql2만 사용해도 된다!
+
+* npx sequelize init으로 세팅해준다!
+  * config>config.json, migrations, models, seeders 생김!
+  * config.json에 내 비밀번호 넣고, database는 react-nodebird로 바꿈!
+
+* 데이터베이스는 보통 development / test / production으로 나눠서 한다!
+  * typ. host = 127.0.0.1, port = 3306
+
+* made a new user! nodebird identified by "chicken"!! 
+
+* 기본으로 주어지는 models>index.js는 별로여서 제로초님은 변형해서 씀
+```javascript
+const Sequelize = require('sequelize');
+const env = process.env.NODE_ENV || 'development'; // 기본 값 development 설정
+const config = require('../config/config')[env]; // development에 해당하는 설정 가져옴
+const db = {};
+
+const sequelize= new Sequelize(config.database, config.username, config.password, config);
+```
+
+<br/>
+
+### 시퀄라이즈 모델 만들기
+
+* user먼저!
+  * models>user.js!
+  * module.exports = (sequelize, DataTypes) => {const User = sequelize.define('User', {//mysql에서는 자동으로 users로 테이블이 저장된다!  })}
+  * 그리고 이제 하나 하나 적어주면 된다!
+* post도 만들어준다!
+  * charset: 'utf8', collate:'utf8_general_ci'는 한글저장 위함
+  * charset: 'utf8mb4'는 이모티콘 위해서
+* comment
+* hashtag
+* image
+
+* 각각의 datatype은 sequelize.define내에서 해준다!
+* password는 해시되므로 넉넉히 잡아줌
+<br/>
+
+### 시퀄라이즈 관계 설정하기!
+* 관계 설정은 ###.associate = (db) => {} 에서 함!
+* ex. db.User.hasMany(db.Post) // User와 Post의 1대 다 관계!
+* ex. db.Post.belongsTo(db.User); //1대 1 관계! (.hasOne도 있음)
+
+* ex. db.Hashtag.belongsToMany(db.Post, {through:'PostHashtag '});  //다대 다 관계!
+
+* belongsTo가 있으면 해당하는 column (ex. PostId, UserId)를 자동으로 만들어서 관계를 관리한다!
+
+* ex. db.Post.belongsToMany(db.User, {through: 'Like', as:'Likers'}) //db.User를Likers로 참조할 수가 있다!
+
+* ex. db.User.belongsToMany(db.User, {through: 'Follow', as:'Followers', foreignKey: 'FollowingId'})//외래키로 컬럼키 바꿈
+
+* 다대 다 관계에서는  자동적으로 중간 테이블이 생긴다!
+<br/>
+
+### 시퀄라이즈sync + nodemon
+* index.js에서 불러온다
+```javascript
+
+db.Comment = require('./comment')(sequelize, Sequelize);
+db.Hashtag = require('./hashtag')(sequelize, Sequelize);
+...
+
+Object.keys(db).forEach(modelName=>{
+  if (db[modelName].associate){
+    db[modelName].associate(db);
+  }
+});//데이터베이스 돌면서 관계설정해줌!
+```
+
+* 백엔드 app.js에선 const db = require('./models');로 가져와줌
+* + db.sequelize.sync()
+
+* 그리구 react_nodebird 데이터베이스를 만들어주기 위해서는
+
+```javascript
+npx sequelize db:create
+```
+
+* 해주면 됨!!
+
+* node app.js하면 mysql이 자동으로 실행되면서 - 우리가 넣은 코드로- 필요한 테이블들이 생성됨
+  * 테이블 만들 땐
+  * CREATE TABLE IF NOT EXISTS로 실행되기 때문에
+  * 여러 번 실행되어도 중복 생성 안 된다고 안심할 수 있다!
+
+* DataGrip - erd 만들기 위함!
+
+* 서버 변경 시마다 새롭게 런치해주는  `npm i -D nodemon@2` 설치!
+* package.json에 "scripts."dev":"nodemon app"
+
+
+
+
+<br/>
+
+
+### 회원가입 구현하기
+* 이제 서버를 두 개 실행시켜야 함! - 프론트 1, 백 1
+* 백엔드 app.js에 userRouter 또한 연동
+
+```javascript
+const userRouter = require('./routes/user');
+app.use('/user', userRouter);
+```
+
+* routes > user.js
+  
+```javascript
+const {User} =require('../models');
+
+router.post('/',async (req,res)=>{ // POST /user/
+    await User.create({
+        email: req.body.email,
+        nickname: req.body.nickname,
+        password: req.body.password
+    })
+    res.json()
+
+});
+```
+
+* index.js에서 db 안에 User를 담아서 module.exports를 해줬으니, require('../models');에서 구조분해해서 User에 접근할 수 있는 것이다
+* async - await으로 테이블에 데이터 넣는 과정을 기다려 줌
+
+* req.body 쓰기 위해서,  app.js에 app.use(express.json()) - json형식, app.use(express.urlencoded({extended: true}))- form submit 추가해줌!
+  * [미들웨어]
+* 비밀번호 암호화 위해 npm install bcyrpt 
+
