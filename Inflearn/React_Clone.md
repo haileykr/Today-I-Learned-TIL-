@@ -2501,15 +2501,33 @@ app.use('/user', userRouter);
 * routes > user.js
   
 ```javascript
+const bcrypt = require('bcrypt');
+
 const {User} =require('../models');
 
-router.post('/',async (req,res)=>{ // POST /user/
+router.post('/',async (req,res, next)=>{ // POST /user/
+
+  try {
+    // 이메일 중복 체크!
+    const exUser = await User.findOne({ //비동기니까 await 써줌
+      where: {
+        email: req.body.email,
+      }
+    });
+    if (exUser) {
+      return res.status(403).send('이미 사용중인 이메일입니다');
+    }
+    const hashedPassword = bcrypt.hash(req.body.password, 10);
     await User.create({
         email: req.body.email,
         nickname: req.body.nickname,
-        password: req.body.password
+        password: hashedPassword
     })
-    res.json()
+    res.status(201).send('OK');
+  } catch (error) {
+    console.error(error);
+    next(error); //한 방에 처리할 수있음 - status 500 (서버 쪽에서 난 에러)
+  }
 
 });
 ```
@@ -2521,3 +2539,272 @@ router.post('/',async (req,res)=>{ // POST /user/
   * [미들웨어]
 * 비밀번호 암호화 위해 npm install bcyrpt 
 
+* 보통 bcrypt hash값은 10 - 13 //1초 정도 걸리는 값으로 맞추면 좋다.
+
+* 200 성공, 300 리다이렉트, 400 클라이언트 에러, 500 서버 에러
+
+<br/>
+
+### CORS 문제 해결하기
+* 이제 서버를 두 개 띄워준다!
+* CORS 문제 뜸: 브라우저 단에서 띄워주는 에러!
+  * CORS 문제는 브라우저에서 서버로 리퀘스트 보낼 때만 생기고, 서버에서 서버로 보내면 안 뜸!
+
+* 해결하는 방법 두 가지 - (1) proxy 서버 사용, (2) Access-Allow-Cross-Origin header 사용
+  * 우리는 두 번째 방법을 사용함!
+  * routes / user.js 에  `res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3060');` 넣어줌!
+  * 혹은 **미들웨어**로 많이 처리한다
+  * `npm i cors`
+  * app.js에서 사용! 
+
+
+* "classNames did not match" - SSR 과 CSR을 같이 활용하는 경우 컴포넌트 생성하는 순서에 따라 식별자가 달라져 스타일링이 잘 적용되지 않을 수 있음
+* 이런 식별자 생성 과정을 정규화해주는 라이브러리 설치!
+* `npm i --save-dev babel-plugin-styled-components`
+* 최상단에 .babelrc파일도 넣어줌
+  * 프론트 폴더 안에 넣어주니 해결!
+
+<br/>
+
+### 로그인 구현!
+* back / routes / user => router.post('/login', ..)
+
+* front에서도 backend와 연동해준다!
+
+* 공통되는 url (이 경우 http://localhost:3065)는 index.js(redux-saga)에서 묶어줌!
+```javascript
+import axios from'axios';
+
+axios.defaults.baseURL = "http://localhost:3065"
+```
+
+* 복잡한 로그인 과정을 잘 처리하는 라이브러리가 있다! passport
+  * 그 중 보통 이메일 로그인은 passport-local이 처리 가능
+  * `npm i passport passport-local`
+  * 백엔드 쪽에!
+
+* 백엔드 폴더에 passports / index.js 만듦!
+  * 패스포트 설정 파일
+
+```javascript
+const passport = require('passport');
+const local =  require('./local');
+
+module.exports = () => {
+    passport.serializeUser(() => {
+
+    });
+    passport.deserializeUser(() => {
+
+    });
+
+    local();
+}
+```
+
+  * local.js에서는 local strategy설정을 해준다
+
+```javascript
+// local login strategies
+const passport = require('passport');
+const { Strategy: LocalStrategy} = require('passport-local');
+
+module.exports = () => {
+    passport.use(new LocalStrategy({
+      passport.use(new LocalStrategy({
+        usernameField: "email",//data got from the form submit
+
+        passwordField: "password",
+    }));
+}
+```
+
+  * app.js를 중앙통제소로 생각하면 된다!
+
+```javascript
+const passportConfig=require('./passports/index');
+
+passportConfig();
+```
+
+* 코드 확인!
+
+* 미들웨어 확장, middleware 확장, passport.authenticate, server or client error
+
+<br/>
+
+### 쿠키, 세션과 전체 흐름
+* login form ~> saga/users에서 데이터 받아서 리퀘스트 보내줌 ~> routes/user에 router.post('login'...)에서 req.body에 들어가서 passport.authenticate거침 ~> 그 단계에서 passports/local.js에서 로컬 전략 거침 ~> 여기서 성공하면 rerturn done(null, user)로 넘어감 ~> 다시 routes/user에서 콜백에 가서 다른 에러들 없으면 passport login을 시도 ~> 다른 문제 없으면 프론트로 return res.status(200).json (user); 응답해줌
+
+* 패스포트가 로그인 해줄 때 세션이 쓰이기 때문에 back/app.js에서 npm i express-session 해주고
+
+```javascript
+
+app.use(cookieParser());
+
+app.use(session());
+app.use(passport.initialize());
+app.use(passport.session());
+```
+해줘야 함!!
+* cookie-parser도 설치함
+
+* 서버 쪽에 통째로 들고 있는 게 세션, 클라이언트 쪽에 보내주는 랜덤 (해킹 불가)한 것이 쿠키
+
+* 하지만 서버 쪽에 (아이디, 비밀번호, 닉네임, 게시물, 댓글, ..) 모두 저장하면 서버에 너무 과부하가 심할 것이다!
+  * 서버엔 id만 저장하고, 쿠키도 id에 해당하는 값만 보내준다 ~> 나머지 정보는 데이터베이스와 소통하며 얻어냄!
+
+* req.login했을 때 동시에 실행되는 게 passports/index.js의 serializeUser
+
+* index.js에다가
+
+```javascript
+app.use(session({
+    saveUninitialized: false,
+    resave: false,
+    secret: 'nodebirdsecret'
+}));
+```
+
+
+* 하지만 이렇게 password와 sercret key를 소스 코드에 넣으면 안전 x
+  * => `npm install dotenv`
+  
+```javascript
+COOKIE_SECRET=...
+
+DB_PASSWORD=...
+```
+
+* 그리구 process.env.COOKIE_SECRET이런 식으로 고쳐줌
+
+* app.js에선
+```javscript
+const dotenv = require('dotenv');
+
+dotenv.config();
+```
+* config/config.json도 config.js로 바꿔서 dotenv사용할 수 있도록 하자
+
+* 로그인 흐름: 로그인 폼 ~> routes>user ~> 전략 통해서 실행 ~> 오류 없으면 return done(null, user)~> 패스포트 로그인 ~> passport.serializeUser ~> connect.sid쿠키 보내짐 ~>한 번 로그인 성공한 후에는, deserializer에서 유저 정보 복구
+
+* 로그아웃은 req.logout(), req.session.destroy(), res.send('ok')
+<br/>
+
+### 로그인 문제 해결
+* 에러 뜨는 이유 - me.Posts 등이 없어서!
+* routes > user.js에서 User를 고쳐줌! (관계 설정 include: model: 통해서! 해주고 password는 exclude해준다)
+
+* 이제 me에 정보가 제대로 뜨는 걸 볼 수 있다!
+
+* 새로고침 했을 때 정보 날라가는 것은 SSR 통해서 해결할 수 있다
+
+* Router.push는 뒤로가기 했을 때 그 전 페이지가 나옴. 이거 원하지 않으면 Router.replace쓰기
+
+* 소셜 로그인은 passport-### 설치하고 각 사이트 developers page에서 앱을 만들면 됨
+
+* 자동 로그인은 정책이 다들 다름
+   
+* OAuth부분은 passport-google-oauth20읽기 추천 하심!
+<br/>
+
+### 미들웨어로 라우터 검사하기
+* 로그인 안 한사람이 로그아웃하고 그런 거 막기 위해 미들웨어 사용!
+* routes > middlewares.js
+* 미들웨어 ~> next() 안에 뭐라도 넣으면 error 처리하러 가고, 안에 안 넣으면 다음 미들웨어로 감
+
+* 에러처리 미들웨어는 보통 app.use와 app.listen 사이에 자동으로 구현됨. 만약 에러 페이지를 따로 띄워주고 싶다던가 하는 방식으로 고쳐주고 싶으면 app.use((err, req, res, next)=>{});이런 코드로 customizing 가능.
+<br/>
+
+### 게시글, 댓글 작성하기
+* 이젠 더미 말고 실제 작성 포스트 올려주기!
+  * 백엔드 - post router
+  * 프론트엔드 - post saga
+
+<br/>
+
+### credentials로 쿠키 공유하기
+* app.use(cors({
+    origin: '*', // fix it when in production
+    credentials: true//로 해줘야 쿠키도 공유됨!
+}));
+* 프론트에서도 addPost, addComment 등에 withCredentials: true해줘야 함
+* 이 부분은 중복되니까 index.js - saga에서 axios.defaults.withCrendentials = true;하면 쉬움
+
+* 다만 이제 cookie같은 민감한 정보를 withCredentials:true를 통해서 보내니까 origin은 '*'가 되면 안 됨. 좀 더 구체적으로 적어줘야 한다.
+
+* 게시글 등록하면 에러남. images가 없기 때문. fullPost에 include: model:해줘서 해결
+
+<br/>
+
+### 내 로그인 정보 매번 불러오기
+* 로그인 새로고침할 때마다 풀림 ~> 쿠키는 가지고 있는데 새로고침할 때 서버로 전달이 안 돼서 로그인이 풀린 것처럼 보인다
+* useEffect ~> LOAD_MY_INFO_REQUEST넣어서 새로고침할 때마다 불러올 수 있게 하자 (with populated models)! 서버사이드렌더링하면 깜빡이는 현상 없앨 수 있음. 서버에서 렌더링 해서 보내주기 때문에!
+
+<br/>
+
+### 게시글 불러오기!
+* 무한스크롤 - posts Router 만들자!
+1. 리밋 & 오프셋 ~> 데이터베이스에서 제공하는 기능
+  * 하지만 이거는 중간에 새로운 게시글이 추가되거나 기존 게시글이 삭제되면 순서가 이상해짐
+  * 그리고 앞에서부터 탐색하기 때문에 시간이 오래걸림
+
+2. 리밋 & 라스트아이디
+  * 또한 정보를 가져올 땐 항상 완성해서 가져와야 됨 ~> include로 처리!
+
+
+
+
+* 백엔드에 `npm i morgan` ~> 프론트에서 백에 요청 보낼 때 어떤 요청이 보내지는 지 콘솔에 뜬다!
+  * `const morgan = require("morgan"); app.use(morgan("dev"));`
+
+
+* 코멘트 인클루드해서 다 가져와준다!
+
+<br/>
+
+### 게시글 좋아요
+* onLike, onUnlike ~> PostCard.js
+
+* 액션도 만들어 줌!
+* like는 PATCH, unlike는 DELETE로 구현해주자!
+* Router에서 구현!
+
+* NOTE. 관계 설정을 해주면 추가 메서드가 생긴다!
+  * ex. db.Post.belongsTo(db.Post, {as: 'Retweet'}); //post.addRetweet
+  * ex. db.Post.hasMany(db.Image); //post.addImages , post.removeImages
+  * ex. db.Post.belongsToMany(db.User, { through: "Like", as: "Likers" });//post.addLikers, post.removeLikers
+
+* add, get, set, remove 생김! 활용 잘 가능
+
+<br/>
+
+### 게시글 제거 / 닉네임 변경
+* 백엔드 라우터 
+
+* 보안은 수정 및 삭제 때 더욱 철저히 해야된다!
+  * 조건 강화!
+
+<br/>
+
+### 팔로우,언팔로우
+* 이둘 또한 패치 / 딜리트로 구현해주자!
+* 팔로우 및 팔로잉 목록은? GET으로 구현해주자!
+  * 라우터
+  * profile페이지
+  * FollowList컴포넌트
+```javascript
+  const onCancel = (id) => () => { //useful in loop
+    dispatch({
+      type: UNFOLLOW_REQUEST,
+      data:id,
+    });
+  };
+  ```
+* 팔로잉 차단 기능도 만들어줌
+
+<br/>
+
+### 이미지 업로드를 위한 multer
+* 이미지 올리면 enctype은 "multipart/form-data"형식으로 올라감!
+  * 이 형식 처리하려면 multer library 설치해주자!

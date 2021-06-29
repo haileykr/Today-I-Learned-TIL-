@@ -15,11 +15,7 @@ app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 
-
-
-
-
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.get("/", function (req, res) {
   // Find Count of Users in DB
