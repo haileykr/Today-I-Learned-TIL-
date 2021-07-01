@@ -2808,3 +2808,263 @@ dotenv.config();
 ### 이미지 업로드를 위한 multer
 * 이미지 올리면 enctype은 "multipart/form-data"형식으로 올라감!
   * 이 형식 처리하려면 multer library 설치해주자!
+
+* router.post("/images",...)
+
+* multer는 앱에다 적용해줄 수도 있지만, 각 router마다 이미지를 처리하는 방식이 다르기 때문에, router마다 새롭게 설정을 만들어 적용해주는 것이 편하다!
+
+```javascript
+const upload = multer({
+  storage: multer.diskStorage({ //on disk for now
+    destination(req, file, done) {
+      done(null, 'uploads'); //"uploads"folder
+    },
+    filename(req, file, done){ // 제로초.png
+      const ext = path.extname(file.originalname); //확장자 추출 (png)
+      const basename = path.basename(file.originalname, ext); //제로초
+
+      done(null, basename + new Date().getTime() + ext); //제로초1518471289.png
+    }
+  }),
+  limits: {fileSize: 20 * 1024* 1024} // 20MB
+});
+```
+
+* 일단은 "uploads"라는 폴더에 [하드디스크] 저장. 나중엔 AWS S3같은 곳에 저장.
+  * 요청을 많이 받으면 server scaling을 해줘야하는데, 하드디스크에 파일이 저장되어 있다면 이들도 같이 복사된다. 메모리의 낭비됨!
+* filename은 같으면 node.js는 기본적으로 덮어씌움.
+  * filename에 날짜를 덧붙여주자!
+  * path는 노드에서 제공
+
+* 동영상 같은 건 서버를 거치는 것만으로도 부담을 주기 때문에, 클라이언트에서 바로 클라우드로 올리고 그런 방식을 도입해봐야 한다!
+1. 한 번에 이미지 + 내용 보내기
+  * 백엔드 설계에선 편하다
+  * 하지만 프론트에서 이미지 사용이 불편 (ex. 미리보기 등)
+2. 두 번에 (1) 이미지 보내고 (2) 파일 이름 받고 (3) 그거 바탕으로 미리보기 / 리사이징 등 하고 (4) 내용과 함께 백엔드로 다시 보냄
+  * 게시글 작성 안 하거나 하면 이미지만 남게 됨
+  * 이를 굳이 지워줄 수도 있겠지만
+  * 이미지도 다 자산이기 때문에 (ex. 머신러닝) 보통 안 지움!
+
+* PostForm
+```javascript
+const onChangeImages = useCallback((e) => {
+        // 파일이 어떻게 저장되는 지 확인!
+        console.log("images", e.target.files);
+        const imageFormData = new FormData(); // with FormData you can send images as "multipart" 
+
+        [].forEach.call(e.files.target,(f) => {
+            imageFormData.append('image', f); //"image" == the "name" of the input
+        });
+        dispatch({
+
+            type:UPLOAD_IMAGES_REQUEST,
+            data: iamgeFormData            
+        })
+    })
+```
+* 리듀서에도 추가
+
+* fs 조작해서 디렉토리도 만들어주자!
+```javascript
+
+const fs = require("fs");
+
+try {
+  fs.accessSync("uploads");
+} catch (error) {
+  console.log("uploads 폴더가 없으므로 생성합니다.");
+  fs.mkdirSync("uploads");
+
+}
+```
+
+<br/>
+
+
+### express.static 미들웨어
+* 파일 경로를 잘 고쳐줄 수 있음
+  * path.join은 운영체제에 따라 다른 디렉토리 표기법 통일해줌!
+
+```javascript
+app.use("/", express.static(path.join(__dirname,"uploads")));
+```
+
+* 이미지 미리보기
+* 이미지 제거
+  * 동기 액션!
+  * 백엔드에서도 지우고 싶으면 비동기 액션들 만들면 됨!
+
+* 이제 포스트 업로드할 때 content text와 imagePaths까지 보내줌!
+  * imagepaths는 string이어서 그냥 json으로 보내도 되긴 한다!
+  * 하지만 multer의 upload.none()써보기 위해 formData에 붙여서 보내줄 것
+  * axios에서 보낼 때, formData는 반드시 {content : data} 이런 식으로 쓰면 안되고,  data 이런 식으로 보내줘야 한다
+
+* multer는 images나 files이면 req.file, req.files 이런 식으로 되지만 나머진 req.body.content, req.body.image(imagepath)이런 식으로 된다
+
+* PostForm Component
+
+```javascript
+router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
+  // POST /post
+  try {
+    const post = await Post.create({
+      content: req.body.content,
+      UserId: req.user.id,
+    });
+    if (req.body.image) {
+      if (Array.isArray(req.body.image)){ // if multiple images are uploaded : [a.png, b.png] array is sent
+       const images = await Promise.all(req.body.image.map((image) =>Image.create({src: image})));//sequelize create
+       // inside the parentheses, each one is a Promise
+       // images are saved in the server, and only the filenames are saved in the database
+       await post.addImages(images);
+      } else {//if a single image is uploaded: a.png string is sent
+        const image =await Image.create({src: image});
+        await post.addImages(image);
+      
+      }
+    }
+```
+
+* 이미지는 보통 데이터베이스에 저장하지 않는다
+  * 부담이 너무 크고, cdn등을 통한 캐싱도 불가하기 때문
+  * thus the database usually only has image paths
+
+<br/>
+
+### 해시태그 등록하기
+* routes > post.js
+```javascript
+  const hashtags = req.body.content.match(/#[^\s#]+/g);
+  if (hashtags){
+    const result = await Promise.all(hashtags.map(tag => Hashtag.findOrCreate({
+      where:{name:tag.slice(1).toLowerCase()}
+    }))); 
+    //"#" 떼주기 위해서 tag.slice(1)한다!
+
+    //findOrCreate ~> [[노드, true], [리액트,true]] this format is used!! so 
+    await post.addHashtags(result.map((v) =>v[0]))
+  }
+
+```
+* findOrCreate는 일단 찾아보고 이미 있지 않음 그 때 생성함!
+
+<br/>
+
+### 리트윗!
+* onRetweet function 만들어주기!
+* 더블체크하자! ~> 서버에서 꼭 해줘야하지만 프론트에서도 ex. 로그인 안 하면 return alert 이런 거 넣어주기!
+
+* retweet때 체크할 것 여러 개
+```javascript
+
+router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({
+      where: {id: req.params.postId},
+      include : [{
+        model: Post,
+        as: 'Retweet' //post.Retweet Available!
+      }]
+    });
+    if (!post){
+      return res.status(403).send('The post does not exist.');
+    }
+    if (req.user.id === post.UserId || (post.Retweet && post.Retweet.UserId === req.user.id)){
+    
+      return res.status(403).send('You cannot retweet your own post.');
+    }
+    const retweetTargetId = post.RetweetId || post.id; //if the post we're retweeting retweeted another post, refer to the original post id!
+    const exPost = await Post.findOne({
+      where: {
+        UserId: req.user.id,
+        RetweetId: retweetTargetId,
+      }
+    });
+    if (exPost){
+      return res.status(403).send('You already retweeted this post.');
+    }
+    const retweet=await Post.create({
+      UserId: req.user.id,
+      RetweetId: retweetTargetId,
+      content: 'retweet',
+    });
+    const retweetWithPrevPost = await Post.findOne({
+      where: {id: retweet.id},
+      inclde: [{
+        model: Post,
+        as: 'Retweet'
+      }, {
+        model: User,
+        attributes: ['id','nickname']
+      }, {
+        model: Image,
+      }, {
+        model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id','nickname']
+        }]
+      }, {
+        model: User,
+        as: 'Likers',
+        attributes: ['id']
+      }]
+    })
+  } catch(error){
+    console.error(error);
+    next(error);
+  }
+});
+```
+~> 지금 정도면 괜찮지만
+~> 이렇게 불러올 때 include가 길어지면 데이터베이스에서 정보를 불러오는 속도가 너무 느려질 수 있음
+~> 앱 크기가 커지면 쪼개는 것 고려 ex. retweeted post 먼저 불러오고, 댓글은 댓글 아이콘 누르면 따로 action써서 불러오고 등등
+
+<br/>
+
+### 쿼리스트링과 lastID방식
+* GET은 데이터를 보내줄 때 쿼리 스트링 방식으로 됨
+* 데이터 캐싱이 url을 통해서 가능!
+* EX.  return axios.get(`/posts?lastId=${lastId}`);
+<br/>
+
+# Next.js 서버사이드렌더링
+
+### 서버사이드렌더링 준비
+* CSR로는 형식만 먼저 브라우저 <-> 프론트 서버 로 불러오고
+  * 데이터는 브라우저 <-> 프론트 <-> 백 이렇게 두 번 만에 불러옴
+* SSR 사용함 처음부터 브라우저 <-> 프론트 <-> 백이 되어서 데이터 불러오기 전 깜빡거린다든지 등의 이질적 느낌이 덜 듬
+
+
+* 버전 9에서는 withReduxSaga 필요x 
+
+* "next-redux-wrapper"로 만든 wrapper를 사용해 우리 app.js를 감싸고 있음
+  * 이를 이용해 개별 페이지에 SSR를 적용할 것
+* 원래는 next.js에서 SSR용 메소드  4가지 제공
+  * 하지만 리덕스와 같이 쓰면 문제가 좀 있기때문에
+  * "next-redux-wrapper"를  쓸 것
+
+* useEffect ~> 컴포넌트 마운트 이후 실행됨
+  * 컴포넌트 마운트 되기 전에 액션이 실행되면 데이터 채워진 상태로 화면이 그려질 것
+  * next 8버전 ~> Home.getInitialProps
+    * 이건 곧 deprecated될 것!!
+
+
+* Store> configStore에서 정의했던 wrapper를 두고 두고 씀!
+  * export const getServerSideProps ...
+  * "export const"라고 쓰여있는 부분은 서버가 미리 실행함 (export default Home보다 먼저)
+  * 이 안에 원하는 useEffect액션을
+  * 넣으면 SSR이 된다!!
+  * 여기서 실행된 부분이 store에 들어감
+
+* "@@INIT"에선 초기 상태 그대로 있음
+* "getServerSideProp"실행 후 그 안에서 실행된 부분을 "case HYDRATE"으로 보냄
+
+  * reducers > index.js에서 구조 설정함!!
+
+* 리퀘스트 보내고 Success될 때까지 기다린 상황을 전달받기를 원함
+  * pages>index.js
+  * import {END} from "redux-saga";
+  * context.store.dispatch(END); await context.store.sagaTask.toPromise(); //sagaTask는 configStore 안에 정의 
+  * 이제 "@@INIT"안에서는 데이터가 안 차있는데, 그 밑에 액션에선 차 있는 걸 볼 수 있다!
+
