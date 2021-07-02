@@ -3068,3 +3068,362 @@ router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
   * context.store.dispatch(END); await context.store.sagaTask.toPromise(); //sagaTask는 configStore 안에 정의 
   * 이제 "@@INIT"안에서는 데이터가 안 차있는데, 그 밑에 액션에선 차 있는 걸 볼 수 있다!
 
+<br/>
+
+### SSR시 쿠키보내기!
+* 지금은 로그인 정보가 안 뜬다!
+  * CSR할 때는 브라우저 -> 프론트 -> 백 에서 쿠키가 axios를 통해 자동으로 전달되었음
+  * SSR할 때는 주체가 브라우저가 아니라 프론트! 프론트 -> 백 (getServerSideProps 는 프론트 쪽에서 실행) (브라우저는 개입 안 함)
+  * 여기서 withCredentials설정 했던 것이 적용 안 되는 것임
+
+* routes > user.js에서 console.log(req.headers)해서 쿠키가 헤더에 전달되는 지 확인해보자!
+  * 쿠키 미포함
+
+  * getServerSideProps안에
+    * const cookie = context.req ? context.req.headers.cookie : '';
+    * axios.defaults.headers.Cookie=cookie;
+    * 이제 로그인 부분도 SSR이 된다! Cookie안에 connect.sid가 있기 때문에 정보 저장
+
+* 다만! 위와 같이 하면 서버 쪽에서 로그인이 처리되기 때문에 로그인이 다른사용자들과 공유되는 상황이 발생!
+  * if(context.req && cookie) { ... } 부분 넣어줌!
+
+<br/>
+
+### getStaticProps 사용!
+* getServerSideProps 말고 다른 기능!
+* pages > about.js
+* 남의 정보 가져오는 거니까 route에서 중요 정보 빼고 돌려줌
+
+* getStaticProps ~> 언제 접속해도 데이터가 바뀔 일 x (ex. 블로그 게시글 ~> 웬만하면 안 바뀜, 웹사이트 이벤트 페이지)
+  * 아예 정적인 HTML로 뽑아 줌
+* getServerSideProps ~> 접속할 때마다 데이터가 변할 수 있다면 (웬만한 경우엔 다 이거 쓰게 됨)
+  * EX. load_user_request할 때 user 아이디가 항상 다르다면 getStaticProps쓰는 게 별로일 것 ~> HTML로 미리 빌드한 의미가 없어지기 때문
+
+<br/>
+
+### 다이나믹 라우팅
+* 예를 들어 포스트를 공유하고 싶다 하면 ~> post/1.js, post/2.js, ...를 다 만들어야 할 것
+* 이를 다이나믹하게 만들어줄 수 있음
+  * post > [id].js
+
+* favicon ~> front > public > favicon.ico
+
+* SSR되면 검색엔진에도 내용이 차 있는 상태로 전해지게 된다!
+
+<br/>
+
+### CSS 서버사이드렌더링
+* .babelrc
+
+```javascript
+{
+    "presets": ["next/babel"],
+    "plugins": [
+        ["babel-plugin-styled-components", {
+          "ssr": true, 
+          "displayName": true}] //개발모드 때 외계어같이 보이는 className이 알아보기 쉽게 보인다
+      ]
+}
+```
+
+* pages > _app.js 위에 있는 것이 바로 _document.js!
+* 이걸 hooks로 바꿀 수 있는 방법은 아직 찾지 못해 class형으로 진행!
+
+* getInitialProps ~> 아직 _app.js와 _document.js에선 씀. 다른 페이지들에선 안 씀
+  * 특수한 SSR 메소드
+  * 하라는 대로 따라 치면 됨 (documentation참조)
+
+* 라이브러리/객체 최신 버전 호환시켜주는 (babel이 못하는 - 최신 문법이 아니니) Polyfill.io 스크립트  <NextScript /> 위에 올려놔준다!
+  * IE에서도 작동됨
+
+* _document.js는 거의 안 쓰이고, SSR과 같은 특수 상황에서만 쓰임!
+
+<br/>
+
+### 사용 게시글, 해시태그 게시글
+* 다이나믹 라우팅 여러 개 만들 수 있음
+
+* pages > user > [id].js
+
+* pages > hashtag>[id].js
+
+* 액션 리듀서 상태는 한 페이지에 액션이 같이 있지 않는 이상 공유될 수 있다! ~> 이에 맞게 재사용
+
+* URL에 한글 있으면 에러날 수 있음 ~> encodeURIComponent(data)감싸줌
+  * 백 쪽에선 decodeURIComponent해줌!
+
+<br/>
+
+### getStaticPaths
+* 다이나믹 라우팅일 때 getServerSideProps말고 getStaticProps써도 된다
+  * 그리고 그걸 쓰기 위해선 무조건 export async function  getStaticPaths(){ return { paths: [], fallback: false}}넣어줘야 함
+  * pages > post > [id].js!
+
+```javascript
+export async function getStaticPaths(){
+  return {
+    paths: [ 
+      { params: {id: '1'}},
+      {params:{id: '2'}},
+      {params: {id: '3'}}, //pages for these are built on server as HTML beforehand
+      //used with export const getStaticProps (if used) below
+    ],
+   fallback: true //this way, pages with id >= 4 do not result in error
+  }
+}
+
+export const getStaticProps = ..
+```
+
+* fallback일어날 때 CSR을 기다려 주도록
+```javascript
+  if (router.isFallback) {
+    return <div>Loading..</div>
+  }//used with getStaticPaths & getStaticProps
+
+```
+* 이와 같이 추가!
+
+* html로 미리 만들만한 것들에 적용해야 함
+  * 따라서 사용 까다로움
+  * 하지만 사용할 수 있다면 로딩 속도가 빨라지는 장점이 있음
+
+<br/>
+
+### swr 사용해보기
+* "SWR" is derived from "stale-while-revalidate", a HTTP cache  invalidation strategy popularized by HTTP RFC 5861. React Hooks library for data fetching.
+  * GET 요청 좀 더 간편히 할 수 있다
+  * next에서 만듦
+  * SSR도 된다!(SSR하는 코드에서 return { props: {data: 123} }로 돌려주면 해당 페이지에 props로 전해지고, 이것을 fetcher 다음에, initialData로 세번째 파라미터로 넣음 됨! )
+
+*  `npm install swr`
+*  pages>profile.js
+```javascript
+
+import useSWR from "swr";
+
+const fetcher = (url) => axios.get(url, {withCredentials: true}); //어떻게 정보를 fetch할 지 설정.
+
+//fetcher를 다르게 설정하면 graphql도 사용 가능
+
+const {data, error } = useSWR('http://localhost:3065/user/followers', fetcher).then(result => result.data);
+// data, error 둘 다 비어있음 아직 로딩중이란 것
+```
+
+* router.get("/:userId", ...)에서 "/followings"가 걸릴 수 있다!
+  * 와일드카드 들어간 주소는 항상 밑에 두는 것이 좋음!
+
+* 더보기 누르면 limit수를 늘려 한 번에 3, 6, 9씩 볼 수 있게 해준다
+
+* SWR로 하면 간편! fetcher는 따로 util로 빼놔 필요할 때마다 import해도 좋다.
+
+  * 굳이 SSR 필요 없다면 추천! (액션 따로 없어도 됨)
+
+<br/>
+
+### 해시태그 검색하기
+* Applayout
+
+<br/>
+
+### moment와 next 빌드하기
+* 날짜 library
+  : moment ~ 70KB
+  : date-fns (불변성 지키기 좋음)
+  : luxon
+  : dayjs ~ 2KB (데이터 용량 효율적임)
+* npm install moment
+
+* PostCard.js
+  * import moment from "moment";
+  * moment.locale("ko"); //한글로 변환
+
+
+* moment 여러 기능이 매우 편함!
+
+* 배포할 때 moment가 문제를 많이 일으켜서 일부러 설치해 본 것!!
+  * 그 전에 빌드를 해야 함
+  * 빌드하면 HTML, CSS, JAVASCRIPT요롷게 결과물이 나옴
+  * 이 결과물들을 웹 서버에 올려두면 유저들의 브라우저로 전달되는 것!!
+  * 개발 서버는 너무 느리기 때문에 빌드과정을 거쳐 실제 필요한 것들만 남겨 둔다!
+
+* 빌드해보기!! 두구두구
+  * `next build`
+  
+* NOTE!! **cicd** tool on GitHub
+  ~> tells you when there would be errors during the build of codes you pushed 
+* EX. JENKINS, CIRCLE CI, TRAVIS CI
+
+* 각 페이지 별로 1MB가 안 넘으면 한국에서 서비스할 만 함!
+  * 넘으면 code-splitting이나 next/lazy, suspense사용
+
+* 람다 - SSR 적용 [getServerSideProps]
+* 검은 똥그라미 - SSR 적용 [getStaticProps]
+* 하얀 똥그라미 - 처음부터 정적인 HTML페이지
+
+* Next.js에서 에러 페이지 추가할 수 있음
+
+* 참고 ~> 에러 내용을 사용자에게 안 보여주는 게 좋다! 되도록이면 "잠시 후에 시도해보세요" 등의 모호한 메시지를 보여주는 게 좋음!!
+
+* 용량 큰 걸 분석해보고 싶은데?
+  * `npm i @next/bundle-analyzer`
+<br/>
+
+### 커스텀 웹팩 & bundle-analyzer
+* front > next.config.js
+
+```javascript
+// require("dotenv").config(); //then we can manipulate env settings
+// or you can run script like "scripts" : "build" : "ANALYZE=true NODE_ENV=production next build" ~> settings for each run! 
+// but!! this doesn't run on windows
+// thus install cross-env
+
+const withBundleAnalyzer = require("@next/bundle-analyzer") ({
+    enabled: process.env.ANALYZE=== "true",
+});
+
+module.exports = withBundleAnalyzer({
+    compress: true,
+
+    webpack(config, {webpack}){
+        const prod = process.env.NODE_ENV ==='production';
+        const plugins = [...config.plugins]; 
+
+        // if (prod) {
+        //     plugins.push(new CompressPlugin()); //from compression-webpack-plugin: is now built-in!
+        // }//creates gzip files
+        
+        return {
+            ...config,
+            mode: prod ? 'production':'development',
+            devtool: prod ? 'hidden-source-map': 'eval', //가려줌
+            plugins,
+            // module: {//if wanna change modules!
+            //     ...config.module,
+            //     rules : [
+            //         ...config.module.rules,
+            //         {
+
+            //         }
+            //     ],
+            // }
+        };
+    }
+});
+```
+
+* 설정 위해 npm i cross-env
+* "scripts": "build" : "cross-env ANALYZE=true NODE_ENV=production next build "
+* 돌려봄 프론트 / 서버 용량 도식적으로 볼 수 있음
+  * concatenate된 건 어쩔 수 없음
+  * 덩어리로 큰 것들을 줄일 방법을 생각
+  * moment.locale 용량이 매우 큰 걸 볼 수 있다! regex로 줄여주자
+
+* tree-shaking
+
+* 기능 구현을 다 하고! 앱 완성 후에 이렇게 줄여나가는 과정 bundle-analyzer로 함
+  * (배포 직전)
+
+<br/>
+
+### 배포 전 질문 및 답변
+* Model 최신문법 사용
+* 클래스와 스태틱 사용!!
+  * models > comment.js
+  * sequelize.define --> Model.init
+  * 이렇게 바꿔주면 됨
+
+* 나중에 TypeScript쓸 때도 이 방법이 더욱 더 도움이 됨.
+
+* immer 도입 이후로 IE에서 작동이 안 된다!
+  * IE11 정도는 아직 지원해 줘야 함
+  * front > util > produce.js
+  * produce function 새로 만듦!
+  * enableES5를 immer에서 import!
+  * 원래는 이걸 entry point (프론트 최상단 ~> react-dom, render) 에 놓으면 되는데
+  * next는 그게 없어서 따로 작업해 줌
+
+* import  produce from "../util/produce";를 reducer의 각각 위에다가 넣기!
+
+* build할 때는 항상 back-end server 켜놓기!
+* SSR되고 있는 지 확인하는 방법?
+  * 크롬에서 disable JavaScript하고 새로고침 해보자!
+  * CSS까지 적용돼서 나옴
+<br/>
+
+# AWS에 배포!
+
+### EC2 생성하기
+* "scripts" : "start": "cross-env NODE_ENV=production next start -p 3060"
+
+* 리마인더! server라는 건 '컴퓨터'.
+* 내 컴퓨터 써도 되고 남의 컴퓨터 써도 된다
+* 하지만 내 컴퓨터는 항상 가동해야 돼서 전력 문제, 메모리 문제 등 생길 수 있을것!
+* AWS는 99.98%의 가동률을 보여준다!
+
+* 계정 새로 만들기 ~> 회원가입
+* 매니지먼트 화면
+  * console.aws.amazon.com/
+  * 지역 ~> 서울로 변경!
+
+
+* 프론트 
+* 백엔드 //두 개 가동!
+
+* EC2 ~> 인스턴스 생성!
+  * Ubuntu 프리 티어니 선택
+  * 실무에선 monitoring 선택 (but 요금 발생)
+  * 보안 그룹 구성 ~> HTTP(Port#80), HTTPS(Port#443)추가로선택!
+  * HTTP, HTTPS는 모두 접근가능하게 해놓고, SSH만 내 IP로 지정한다는 식으로 보안을 강화하는 걸 고려해보자
+  * 키페어 ~> 새 키 페어 생성!
+    * react_nodebird
+    * 다운로드! 잘 갖고 있자
+
+* 이렇게 EC2 두 개 만듦 ~> front+back
+* 실습할 때만 쓸거면 인스턴스 ~> 중지 / 종료 해서 돈 안 나가게 하자!
+
+* EC2에 올리는 방법은 여러 가지
+  * AWS에서 제공하는 툴 통해 FTP로 보낼 수도 있고
+  * GitHub에 Repository를 끌고 올 수도 있고
+    * AWS에서 "인스턴스에 연결"
+    * prepare 
+    * 폴더에서 ssh경로 복사해 붙여넣기
+    * ubuntu로 쉘이 바뀌면 (AWS의 컴퓨터임!)
+    * git clone https://github.com/해당주소
+    * front 폴더로 가줌
+<br/>
+
+### 우분투에 노드 설치
+* sudo apt-get update
+* suto apt-get install -y build-essential
+* sudo apt-get install curl
+* curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash --
+* sudo apt-get install -y nodejs
+
+* node -v
+* npm -v
+* 설치 잘됐나 확인!
+
+* 프론트 폴더에서 npm i 
+
+
+
+* 백 서버도 똑같이 해주자!
+
+* 배포 서버이기 때문에 dev가 아니라 build를 하고 start를 할 거임!
+  * 프론트 시도
+
+* 빌리고 있는 컴퓨터 메모리가 너무 작으면 에러날 수 있음
+  * 그러면 메모리 더 큰 옵션을 선택하는 수밖엔 없음
+
+* 흐름! 깃허브에 push ~> 원격에서 git pull origin master~> npm install ~> npm run build~> npm run start
+* 이런 귀찮은 것을 자동으로 해주는 게 cicd tools!
+
+* note. server scaling하려면 새로운 컴퓨터마다 노드 깔고 그런 과정이 또 지루할 거다!
+  * Docker가 해결!
+  * 서버 한 대 띄우면서 명령어 쫙 적어놓음 docker가 실행되면 그 명령어들도 순서대로 다 실행되면서 기존 서버와 똑같은 서버 만들어 냄
+<br/>
+
+### 우분투에 MySQL설치
+* 원래는 데이터베이스 서버 따로 두는 게 좋다
+* 하지만 그럼 유료로 전환될 수 있으니 그냥 백엔드 서버에 포함해서 배포해봄!
