@@ -3427,3 +3427,395 @@ module.exports = withBundleAnalyzer({
 ### 우분투에 MySQL설치
 * 원래는 데이터베이스 서버 따로 두는 게 좋다
 * 하지만 그럼 유료로 전환될 수 있으니 그냥 백엔드 서버에 포함해서 배포해봄!
+
+* sudo apt-get install -y mysql-server
+  * now version 8 is installed!
+  * 밑에 꺼 할 필요x
+* wget -c https://repo.mysql.com//mysql-apt-config_0.8.13-1_all.deb 
+* sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
+
+* sudo su해서 root계정으로 전환
+* mysql_secure_installation
+
+* mysql -u root -p
+* exit;
+
+* back > package.json에 "scripts":"start":"node app"추가
+
+* 하지만 mysql 연결 안 될 것 ~> dotenv파일이 gitignore돼서 안 올라가기 때문
+
+* vim .env로 새로 만들어주자 (원격 백에서)
+  * "a" 혹은 "i" 누르면 insert 모드
+  * dotenv 안의 내용 그대로 넣자
+  * esc 한 번 누르고~> 명령모드로 전환!! 
+  * :wq (저장 + 나감)
+
+* ls -a 쳐보면
+  * .env확인할 수 있다!
+  * cat .env로 쳌!
+
+* 다시 npm start
+
+* 안되면 sudo su해서 mysql -u root -p해서 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '해당 비밀번호'
+
+* npx sequelize db:create
+
+* 지금은 포트가 3065로 설정되어 접근x
+  * EC2인스턴스 생성 시 80과 443만 열어놨기 떄문!
+
+* vim app.js해서 포트 넘버 바꿔줌!
+
+* EACCES에러
+  * Linux system에선 포트 넘버 1024 밑은 root access 필요
+  * sudo su해서 실행하면 된다!
+
+
+* 이제
+* AWS EC2 IPv4주소로 들어가면 Express연결된 것 볼 수 있다!
+<br/>
+
+### pm2 사용하기
+* 백엔드 서버를 exit; 해서 내 컴퓨터로 돌아오면 서버가 더 이상 작동 x
+* 노드가 foreground process ~ 터미널 끄면 같이 꺼짐 여서 생기는 문제
+* vs. background process ~ 터미널 꺼도 안 꺼짐
+* 이 문제 해결하기 위해 pm2 설치할 것임!
+
+* npm install pm2
+* package.json에서 "scripts":"start":"pm2  start  app.js"
+* sudo npm start (root계정으로 넘어가지 않았음)
+
+* 에러나는 경우엔 npx pm2 monit
+* 여기 아무 에러도 안 뜨면 실행도 안 되었다는 것 (IP Address 찾아갔을 때 안 뜬단 전제하에)
+* 끄는 방법 ~ npx pm2 kill 
+* 로그 보려면
+  * npx pm2 logs (--error)
+
+* 리스트 보려면
+  * npx pm2 list
+
+* 서버들 리로드 하려면
+  * npx pm2 reload all
+
+* AWS는 탄력적IP하면 IP가 고정되지만 아니면 계속 변함
+  * 탄력적IP 해서 IP고정시키면 대신 돈이 나감
+  * IP변하면 SSH 연결 Link 바뀔 수 있음!
+
+* back > app.js부분을 좀 더 개발 모드에 맞게 설정해주자!
+  * morgan("combined") 쓰면 더 자세히 사용자 로그 같은 것도 볼 수 있음 ~> 해킹 시도 유저 등 찾기 용이!
+  * app.use(hpp());
+  * app.use(helmet()); 꼭 넣어주기! 보안에 도움되는 패키지
+  * 내 컴퓨터로 가서 npm i pm2 cross-env helmet hpp
+
+* 노드에서 프로덕션 서버 만들 땐 helmet, hpp는 필수라 생각하면 된다!
+
+```javascript
+
+if (process.env.NODE_ENV === 'production'){
+    app.use(morgan('combined'));
+    app.use(hpp());
+    app.use(helmet());
+} else {
+    app.use(morgan('dev'));
+}
+
+app.use(cors({
+    origin:['http://localhost:3000', 'nodebird.com'],
+    credentials: true
+}));
+
+```
+
+* package.json에선
+```javascript
+      "start":"cross-env NODE_ENV=proudction pm2 start app",
+  ```
+
+* 커밋 앤드 푸시
+
+* abort 뜨면 git reset --hard
+* git pull
+
+* vim app.js에서 포트 넘버 다시 한 번 확인해줌!
+
+* sudo npx pm2 list했을 때 무언가 실행되고 있으면
+
+  * sudo lsof -i tcp:3065 (or :80)
+
+* sudo npm  i
+
+
+* sudo npm start
+
+* 안 되면 package.json 명령에 pm2 app.js 확장자 썼는 지 확인!
+
+* 실행 후엔 항상 직접 IP Address 들어가 잘 작동되는 지 확인!
+
+<br/>
+
+### 프론트 서버 배포하기
+* about 페이지에서 데이터베이스에 정보가 안 차있음 에러남
+  * getStaticProps는 이미 데이터가 차 있어 성공적으로 페이지를 빌드할 수 있어야 에러가 안 나기 때문에
+
+* 프론트에서도 npm i pm2 해주고
+* 프론트, 백 둘 다 pm2 써줌
+  * background process로 만들어주기위해!
+
+* 프론튼 SSR쓰기 때문에
+  * 백엔드 서버 안 키면 에러날 것
+  * 그리고 개발 땐 localhost:3065로 타겟 주소 잡아줬지만 
+  * 배포 시엔 프론트, 백 다른 IP Address에 다른 컴퓨터
+
+* 이 때 IP Address는 계속 변할텐데 바뀔 때마다 바꿔주는 게 어려우니
+  * config 폴더를 만들어 따로 관리해주는 것이 좋을 것이다
+  * export const backurl = "http://###.###.###";
+
+* 프론트 서버 pm2 통해서 하는 법!
+  * sudo npm run build 먼저 하고 [프론트 소스 코드 바뀌면 빌드 먼저 해야 함 | 백엔든 안 해도 된다]
+  * sudo npx pm2 start npm -- start
+
+* Reminder!
+  * Front - sudo npx pm2 start npm -- start && sudo npx pm2 monit
+  * Back - sudo npm start && sudo npx pm2 monit
+  * (sudo npx pm2 reaload  all)
+
+* mysql 테이블이 소문자로 시작하도록 생성되는 지도 확인!
+
+<br/>
+
+### 도메인 연결하기
+* 지금은 "domain is invalid"하기 때문에 cookie가 제대로 안 간다.
+* 요청이 가는 곳과 요청을 받는 곳의 도메인이 다름 ~> 이러면 쿠키가 공유 x
+* 이를 nodebird로 통일해 줄거다!
+  * 다른 이름으로도
+  * 도메인 구매! (싼 데서 사자!)
+
+* 도메인 산 곳에서
+  * "네임 서버 설정" ex. 가비아
+  * AWS | Route53 | 호스팅영역생성
+  * 영역 이름은 해당 도메인 이름으로! (내 경우 babbleheehaw.shop)
+  * At first, there are two types
+    * NS, SOA
+* NS (Name Server) 에 있는 URL들을 다 "네임 서버 설정"에 넣어줌!
+  * 그래야 AWS에서 관리가 가능
+
+* AWS - EC2 탄력적 ip 두 개 할당 받는다!
+  * 원래 할당 받을 떄 돈이 들지만
+  * 연결 눌러 인스턴스 하나 당 연결하면 무료
+
+* 인스턴스 지우면 탄력적 IP도 연결 해제하는 것 잊지 마라!
+
+* 탄력적 IP 할당받고 연결한 이후에는 IP주소가 고정이 된다!
+
+* 호스팅 영역 ~ 유형 A | 프론트 IP // 유형 A | 이름 앞에 api.~~ |백IP
+* // 유형 CNAME  설정하면 www.로 접속해도 들어가 짐!!
+
+* http://api.babbleheehaw.shop [https://api.wesoodaa.site] ~> 접속 확인!
+
+* NOTE. **HSTS 정책 ** : 한 번 https로 접속하면 일정 시간동안은 계속 https로 접속됨
+* 설정 안 하는 법 검색함 됨
+
+* 이젠 도메인 이름을 backUrl로 넣어주면 된다!
+  * api.~
+
+* 그리고 back > app.js에서 쿠키공유를 위해서 추가 설정 해준다!
+```javascript
+app.use(session({
+
+  ...
+  cookie: {
+      httpOnly: true, //not accessible via JavaScript
+      secure: false, //http
+      domain: process.env.NODE_ENV === 'production'&& '.babbleheehaw.shop' //cookie shared between api.~ and ~
+    }
+  })
+);
+```
+
+<br/>
+
+### S3 연결하기
+* 지금 문제 ~>
+  * 백엔드 서버 자체에 이미지 업로드 중이어서
+  * 서버 스케일링되면 이미지들도 다같이 복사됨
+
+
+* S3에 업로드하면 편함! 백업도 처리해 준다
+* 백엔드에 저장하는 게 아니라 프론트에서 올릴 떄 바로 S3로 올릴 것36
+* S3- 버킷 만들기
+  * 퍼블릭 접근 풀어줘야 브라우저에서 접근할 수 있다(비활성화)
+  * 버킷 정책
+```javascript
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    { 
+      "Sid": "AddPerm",
+      "Effect": "Allow",//중요
+      "Principal": "*",
+      "Action": [
+        "s3:GetObject",//중요
+        "s3:PutObject"//중요
+      ],
+      "Resource":"arn:aws:s3:::babbleheehaw/*"//버킷이름과동일
+    }
+  ]
+}
+```
+
+* 그리고 액세스 키를 하나 만들어야 한다
+  * "내 보안 자격 증명"
+  * "새 액세스 키 만들기"
+    * "dotenv"같은 데에 넣어두면 된다
+
+* 백엔드 폴더로 돌아와서  `npm install multer-s3 aws-sdk`
+  * multer-s3 : multer 통해서 s3에 올릴 때 사용
+  * aws-sdk : s3접근 권한 얻을 때 사용
+
+* "dotenv"에 S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY넣기!
+  * production 모드에서도 따로 vim .env로 넣어준다
+
+* NOTE. 실무에서는 Access Key보다는 IAM방식으로 더 많이 함 (access key는 권한이 너무 강력)
+
+
+* back > routes > post.js
+```javascript
+const upload = multer({
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: 'babbleheehaw',
+    key(req, file, cb){//storage name
+      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`)
+    }
+  })
+});
+
+
+router.post("/images", isLoggedIn, upload.array("image"), async (req, res, next) => {
+    //upload.array for multiple images, upload.single for a single image
+    //upload.none() for json/text only
+
+    //this portion is ran once logged in, and the files are uploaded
+    // res.json(req.files.map((v) => v.filename));
+    res.json(req.files.map((v) => v.location));//with AWS S3
+  }
+);
+```
+
+* 프론트엔드에서도 수정을 좀 해줘야 한다
+  * backUrl 안에 저장소가 생기는 게 아니라
+  * S3용 주소가 따로 생기기 때문
+  * EX. PostForm, PostImages, ImagesZoom 에서 backUrl넣은 거 필요x
+
+
+* 만약 에러에 missing Credential 문제 나오면 S3인증 관련일 수 있음!
+
+* 이미지 업로드 성공
+  * 후엔 이미지 path 확인해보자 ~> AWS S3경로!
+  * AWS S3버킷 가면 업로드된 이미지도 볼 수 있음!
+
+* S3 이후 계에속 권한 401 문제 떴는데, npm install 안 해줘서 그렇다..!! 드뎌 해결..이 아니뮤ㅠㅠㅠㅠㅠㅠㅠㅠㅠ gggggggggggg
+  * 이미지 source 떄문이었던 듯?!?!?!?! {`${v.src}`}, not {v.src}
+
+<br/>
+
+### Lambda로 이미지 리사이징 하기
+* 이미지 리사이징 이라는 작업은 성능적으로 무리가 많이 가는 작업
+  * 게시글의 사진이나 모바일 화면 등에서는 작게 봐도 될텐데, 굳이 고해상도의 이미지를 그대로 가져올 필요 x
+    * 클릭 시 ImageZoom때나 원본으로 보여줘도 됨
+
+* 새 서버를 이미지 작업만을 위해서 두는 건 비용적으로 무리가 됨
+* 이 떄 람다를 쓰면 좋다!!
+  * 작은 컴퓨터 혹은 작은 함수라고 생각하면 된다!
+  * 이미지 리사이징을 하는 "함수"를 만들어서, 함수를 그 때 그 때 실행해주면 된다
+  * 직접 사용할 수도 있다 - 주소 사용 통해
+  * 혹은 "트리거"설정으로 "S3 실행될 때!"등으로 지정해 사용도 가능
+
+* "serverless"앱도 만들 수 있음 - EC2 안 쓰고, lambda 여럿, S3등만을 이용해서
+
+* 람다는 프론트도 아니고 백도 아니니 람다 폴더를 따로 만들어준다!
+  * npm init
+  * npm install aws-sdk
+  * npm install shart //이미지리사이징
+  * git add package.json  package-lock.json
+
+* lambda > index.js
+  * AWS.config.update안함!왜냐하면 람다는 AWS에 업로드를 하는데 이 때
+    * lambda 실행될 때마다 알아서 내 정보 불러오기 때문! 따라서 키 같은 거 넣어줄 필요 x
+    * [vs. 백서버는 EC2서버이기 때문에 따로 정보 넣어줘야 했음]
+
+
+* lambda function name can be anything!
+
+* sudo git pull하고
+  * 람다 폴더에서 npm install함!  (권한 문제 발생 시 sudo su하고 거기선 sudo npm i)
+
+* lambda에 생긴 파일들 묶어줄 것임!
+  * 리눅슨 파일 묶기와 압축이 따로 있음
+  * 묶기만 할 것임!
+  * sudo apt install zip
+  * zip -r aws-upload.zip  ./*
+  * ls하면 새로운 묶음 파일 생긴 걸 확인할 수 있음
+
+* $  sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o   "awscliv2.zip"  
+
+  * unzip awscliv2.zip 
+
+  * sudo ./aws/install
+
+
+* 이제 aws명령어 사용 가능!
+* 이유: EC2에서
+  * S3로 소스 코드 보내려고 ~ 아까 묶은 폴더
+
+* $ aws configure
+  * default output : json
+
+* $ aws s3 cp "aws-upload.zip"  s3://babbleheehaw
+
+* 아마존 S3에 버킷 올라왔는 지 확인!
+
+* 람다 ~ 함수 생성
+  * 함수 이름 ~ image-resize
+
+* 함수 코드 ~ Amazon S3에서 파일 업로드 [https://babbleheehaw.s3.us-east-2.amazonaws.com/aws-upload.zip]
+
+* 기본설정 ~ 제한시간 30초로 늘려줌! 메모리는 256MB 정도!
+
+  * 역할은 ~ AWS정책 템플릿에서 새 역할 생성 - S3객체 읽기 전용 권한 선택!
+
+
+* trigger setting ~ S3
+  * prefix ~original/
+    * 이거 안 넣어주면 original 안 이미지가 편집되어 thumb폴더에 들어가면 또 trigger되어 infinite loop 생김!
+  * activate trigger option
+  * recursive call option
+
+<br/>
+
+### 카카오톡 공유 & 강좌마무리
+
+* 이제 프론트에서 thumb폴더 거를 받아오면 될 것
+
+  * router.post('/images', ...
+    * res.json(req.files.map((v) =>v.location.replace(/\/original\//, '/thumb/'))));
+
+* 상세보기 할 때만 원본 보여줌
+  * ImagesZoom-index
+  * 미리보기할 때도 thumb으로 변환할 때까지 시간 걸리니 원본 보여줌!
+
+* 백엔드 서버재시작 해도 로그인 안 풀리려면 Redis 써야 함!
+
+* CloudWatch에서 로그 확인
+
+* thumb이 계속 안 됐는데,
+  * S3 버킷에 다음과 같이 두 개를 써줘야 했기 때문!
+  * "Resource": [
+                "arn:aws:s3:::wesoodaa/*",
+                "arn:aws:s3:::wesoodaaa"
+            ]
+
+* 0706 ~> EC2 us-east-2에서 ap-northeast-2로 이동 (idk why)
+  * bucket 새로 생성해주고 
+
+
+
