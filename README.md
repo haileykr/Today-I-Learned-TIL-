@@ -26,7 +26,7 @@ Repository of things I learned today
       - [Nomad Coders_노마드 코더](#nomad-coders_노마드-코더)
         - [VaillaJS101](#vaillajs101)
         - [PaintJS 수업](#paintjs-수업)
-    - [TypeScript](#typescript)
+  - [TypeScript](#typescript)
       - [Academind_Udemy_TypeScript_for_Beginners_by Maximilian Schwarzmüller](#academind_udemy_typeScript_for_beginners_by-maximilian-schwarzmüller)
   - [Python](#python)
       - [Udemy_Python BootCamp_by Pierian Data](#udemy_python-bootcamp_by-pierian-data)
