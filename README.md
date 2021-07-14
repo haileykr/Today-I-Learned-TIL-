@@ -58,13 +58,13 @@ _____
 - HTML, CSS, JavaScript, Node.js, MongoDB, Express, Heroku
 - DOM, Events, Async/Await, AJAX, API, OOP, RESTful Routes, MVC, Middleware, Error Handling, Session & Cookie and so on
 - [Repository](https://github.com/haileykr/Today-I-Learned-TIL-/tree/main/Udemy_Web_Development_Bootcamp)
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Udemy_Web_Development_Bootcamp/Web_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Udemy_Web_Development_Bootcamp/Web_Notes.md)
 
 #### Open Tutorials_생활코딩
 ##### HTML 수업
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Web_Basics.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Web_Basics.md)
 ##### 겁나 빠른 웹 레시피
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Web_Recipe.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Web_Recipe.md)
 
 ## Computer Science
 #### CS50_by Prof. David Malan @Harvard
@@ -75,50 +75,54 @@ _____
 
 ## React
 #### Open Tutorials_생활코딩_React 입문
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/React_Basics.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/React_Basics.md)
 #### Inflearn_인프런_React Clone NodeBird_by 제로초
 - [Respository](https://github.com/haileykr/Today-I-Learned-TIL-/tree/main/Inflearn)
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Inflearn/React_Clone.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Inflearn/React_Clone.md)
 
 ## JavaScript
 #### Dream Coding_드림코딩_VanillaJS Intro_by 엘리쌤
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Dream_Coding_VanillaJS.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Dream_Coding_VanillaJS.md)
 #### W3School
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/W3Schools_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/W3Schools_Notes.md)
 #### Youtube_CT
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Youtube_CT.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Youtube_CT.md)
 #### Nomad Coders_노마드 코더
 ##### VaillaJS101
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Nomad_Coder_VanillaJS_101.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Nomad_Coder_VanillaJS_101.md)
 ##### PaintJS 수업
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Nomad_Coder_Paint.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/VanillaJS/Nomad_Coder_Paint.md)
+
+## TypeScript
+#### Academind_Udemy_TypeScript_for_Beginners_by Maximilian Schwarzmüller
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/TypeScript/Academind_Notes.md)
 
 ## Python
 #### Udemy_Python BootCamp_by Pierian Data
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Udemy_PythonBootcamp/Python%20Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Udemy_PythonBootcamp/Python%20Notes.md)
 
 ## MySQL
 #### Udemy_MySQL_by Colt Steele
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/tree/main/Udemy_SQL/SQL_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/tree/main/Udemy_SQL/SQL_Notes.md)
 
 ## Git + GitHub
 #### GitHub Tutorials
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Git%2BGitHub/GitHub%20Guides.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Git%2BGitHub/GitHub%20Guides.md)
 #### Open Tutorials_생활코딩_Git 입문
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Git%2BGitHub/Git%20-%20%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Git%2BGitHub/Git%20-%20%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9.md)
 
 ## Data Structure
 - [Implementation](https://github.com/haileykr/Today-I-Learned-TIL-/tree/main/Data%20Structure)
 
 ## Coding Test + Algorithm
 #### Programmers_파이썬 코딩 테스트 입문 수업
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Programmers_Algorithm_Class/Python_Cote_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Programmers_Algorithm_Class/Python_Cote_Notes.md)
 
 #### Programmers_알고리즘 입문 수업
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Programmers_Algorithm_Class/Algorithm_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Programmers_Algorithm_Class/Algorithm_Notes.md)
 
 #### Programmers_파이썬 코딩 테스트 심화 수업_by 나동빈님
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Programmers_Algorithm_Class/Python_K_Cote_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Programmers_Algorithm_Class/Python_K_Cote_Notes.md)
 
 ## C
 #### Academic Credit Bank System 학점은행제_C언어 I
@@ -126,18 +130,18 @@ _____
 
 ## Others!
 #### Open Tutorials_생활코딩_POSIX CLI
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Others/POSIX_CLI_%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Others/POSIX_CLI_%EC%83%9D%ED%99%9C%EC%BD%94%EB%94%A9_Notes.md)
 #### About Markdown
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Markdown%20(md)/Markdown.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Others/Markdown.md)
 
 ## Java + Spring_on pause
 #### Open Tutorials_생활코딩_Java 입문
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Java_Intro_Notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/OpenTutorials/Java_Intro_Notes.md)
 #### Udemy_Java Intro
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/JavaUdemy/Udemy_Java.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/JavaUdemy/Udemy_Java.md)
 
 #### Udemy_Master Microservices with Spring Boot and Spring Cloud
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/JavaSpring/Udemy_notes.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/JavaSpring/Udemy_notes.md)
 
 #### Udemy_Spring Hibernate
-- [Notes*Taken*필기](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Spring_Hibernate_Beginners/Udemy_Spring_Hibernate.md)
+- [필기_Notes](https://github.com/haileykr/Today-I-Learned-TIL-/blob/main/Spring_Hibernate_Beginners/Udemy_Spring_Hibernate.md)
