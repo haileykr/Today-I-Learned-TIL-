@@ -3816,6 +3816,237 @@ router.post("/images", isLoggedIn, upload.array("image"), async (req, res, next)
 
 * 0706 ~> EC2 us-east-2에서 ap-northeast-2로 이동 (idk why)
   * bucket 새로 생성해주고 
+  * 다시 연결해 줌
+
+* 카카오톡 공유 시 정보 잘 나옴 ~> SSR잘 되어 메타 택 잘 적용된다는 뜻임
+
+* 검색엔진최적화[SEO]도 된다!
+
+<br/>
+
+### 보안 https + nginx 적용하기
+* 옛날엔 gridlock express를 이용해 https적용했는데
+  * gridlock이 불안정한 상태여서  nginx로 대신 적용
+
+* Nginx도 웹 서버의 일종
+  * https 붙이는 거, redirection, 정적 파일제공
+  * 등 장점 많음 ~> 노드랑 같이쓰면 좋음
+  * Nginx의 기능들은 노드로도 모두 구현 가능하지만
+  * Nginx가 더 빠른 점들이 분명 있음
+
+
+* https붙이면 
+  * 원래는 next에 포트 80/443으로 붙여졌지만
+  * 이젠 nginx가 포트 80/443붙고 next에 3060부여
+  * 요청이 443으로 와도 443으로 보내고, 80으로 와도 443으로 보냄 ~> 그 후에 next(3060)에!
+
+* nginx가 next를 "reverse  proxying"함
+* nginx에 먼저 요청이 보내지고 (443으로든 80으로든), nginx가 next에 (3060으로) 전달하는 모양
+* nginx에서 캐싱, 정적파일제공, 리다이렉션 등 제공하도록 하고,
+  * node +  database관련 로직은 next에 맡긴 이중적 구조를 취하자!
+
+* sudo apt-get install nginx (FRONT -  SSH)
+* sudo su
+* vim /etc/nginx/nginx.conf
+  * http, tcp 헤더, ssl, gzip등 기능 할 수 있다
+
+  * 다음내용 "VIRTUAL HOST CONFIGS"에 추가
+
+
+```javascript
+##
+
+include /etc/nginx/conf.d/*.conf;
+include /etc/nginx/sites-enabled/*;
+server {
+  server_name wesoodaa.site;
+  listen 80;
+  location / {
+    proxy_set_header HOST $host;
+    proxy_pass http://127.0.0.1:3060 ; 
+    proxy_redirect off;
+  }
+}
+```
+
+* https는 인증서가 필요, 인증서는 공개키 방식을 따름! [서버에 비밀키 있고, 브라우저에 공개키 있고]
+* 인증서를 dl.eff.org에서 3개월 단위로 무료로 제공
+* 초기설정 잘 하면
+* 갱신도 자동으로 할 수 있음
+
+* wget https://dl.eff.org/certbot-auto
+* chmod a+x certbot-auto //모든 유저에게 권한을 줌
+* 이 방법 이제 안 됨
+
+* https://www.zerocho.com/category/NodeJS/post/5ef450a5701d8a001f84baeb
+
+* snap + nginx => letsencrypt
+
+
+* sudo snap install certbot --classic
+* sudo apt-get install nginx
+* sudo certbot --nginx
+* 이메일 입력, 약관 동의 후 원하는 도메인 입력 시 인증서 발급된다!
+
+* 지금은 프론트서버가 sudo lsof -i  tcp:80 에서 보듯이 이미 80번 포트에서 돌아가서 안 됨
+
+* sudo kill -9 <PID>//이렇게 안됨
+* npx pm2 kill로 처리해줌
+
+* sudo systemctl start  nginx로 실행시
+* 바로 다음 라인으로 넘어가면
+* 제대로 실행된것
+
+* 다시 sudo lsof -i tcp:80하면 
+* nginx가 포트80 잡고있음을 확인할 수 있음
+
+* 그 후 다시 sudo certbot --nginx
+* Congratulations!뜸 ㅎㅎ
+* 또한 Certificate  is saved @:/etc/letsencrypt/live/wesoodaa.site/fullchain.pem
+* Key is saved at: /etc/letsencrypt/live/wesoodaa.site/privkey.pem
+  * 이런 메세지 뜬다
+  * 경로기억!
+
+* 'Certbot has set up a scheduled task to automatically renew this certificate in the background.'메세지도 뜸! 
+
+* if not, crontab으로 automatic renewal할 수 있음!
+
+* 또 vim /etc/nginx/nginx.conf해보면 ssl부분 certbot이 setting넣어놨음을 confirm할수있단다!
+  * 443은 certbot이 설정해 준 것!
+  * 글고 80의 redirection또한 certbot이 설정해줬음
+
+* 줄바꿈만 해서 굳이 필요없지만 원래는 설정 바꾸면 sudo systemctl restart  nginx해야 함!
+
+* 이젠 프론트 서버에서 3060포트로 바꿔줘야 함!
+* front>에선vim package.json
+  * "Scripts":"start"에서 포트 넘버 바꿔줌
+
+* 정리 ~>원래 next가 :80쓰고 있었는데 이제 nginx가 써주니까 next에는 다른 포트넘버 ex. :3060을 부여!
+
+* 다시 프론트 서버 시작!
+
+* 이제 https적용된 것을 볼 수 있다!!
+  * 예잉!! :'D
+  * 눌러 봄 "인증서 유효", 그리고 갱신할 기간도 나와있음!
+
+
+<br/>
+
+### 백엔드에https적용
+* 백엔드 SSH에서 nginx쳐서  Install돼 있는 지 확인
+* 안 됐음 sudo apt-get install nginx
+
+* 다시 sudo snap install certbot --classic
+* sudo su
+* vim /etc/nginx/nginx.conf
+
+* 또다시 VIRTUAL~ 에 서버 설정 넣어 줌!
+
+* nginx가 포트:80을 차지해야 하니 다시
+
+  * sudo npx pm2 kill하고 나서
+
+  * sudo systemctl start  nginx
+
+  * sudo lsof -i tcp:80
+
+
+* nginx가 잡고 있음 확인 후, sudo certbot  --nginx
+
+* 그런데 한 컴퓨터에서 두 개 서버 돌릴 때랑 (front + back on one) 두 개의 컴퓨터에 각각 돌릴 때랑 인증서 받는 형식이 좀 다름
+  * 우린 후자의 경우
+  * 전자의 경우 와일드카드 쓰고 그래야함 (ex.*.wesoodaa.site)
+    * 여기에 (dns)같은 것도 써야돼서 복잡해 짐
+
+  * fullchaim, privkey나오고 automatically renewing
+
+* 또 vim /etc/nginx/nginx.conf에서 들여쓰기 함!
+* 이제 ubuntu에서 vim app.js
+  * 포트번호 3065로 바꿈
+
+* sudo npm start
+
+* 체크 ~>sudo  lsof  -i  tcp:3065 
+
+* 그런데 https://api.weesooda .site하면 502 bad gateway 뜸
+* sudo npx  pm2 monit에 로그가 안 뜬다는 건,
+  * nginx에서 문제가 있다는 것!
+
+  * nginx의 로그를 봐야 함!
+  * tail /var/log/nginx/error.log
+
+  * 에러 이유는
+    * nginx.conf에 로컬 호스틀 https가 아니라 http로 해줘야 하기 때문!
+    * 바꾸고
+
+
+* sudo systemctl restart  nginx 
+
+* 이제 https://api.wesooda .site가 다시 실행됨!
+
+
+* 나우 mixed Content 에러 뜬다
+  * front에서 backUrl바꿔줌! https://로
+
+
+* 이젠 CORS 에러가 뜬다
+  * back에서 vim app.js에서  URL바꿔줌
+  * https설정했으니 cookie도 secure : T 로 바꿔줌!
+
+
+<br/>
+
+### nginx와 콘솔 에러 해결
+* 참고 - 다방은 리덕스 구조 공개 ~> 실무 패턴 확인하기 좋음
+
+* front에서 next.config.js에서 "hidden-source-map"쓰지 않으면 webpack설정 볼수도 있음
+
+* 지금 console에 로그가 다 뜸
+
+  * loggerMiddleware에서 console.log있어서 그렇다
+  * loggerMiddleware말고 sagaMiddleware만 적용하게 바꿈!
+
+
+  * reducers > index.js에서도 HYDRATE안에 콘솔 록 지움
+
+
+* Link쓴 곳에 prefetch={false}넣어주면 모든 링크를 미리 불러와 생기는 에러 방지할 수 있음 -PostCard, PostCardContent 등등
+  * post/<num>처럼 하나 하나 볼 땐 prefetch써주면 좋을 것이다!
+  * 하지만 모든 게시글 볼때처럼 불러야 할 것들이 너무 많으면 생산성 측면에서 prefetch false하는 것이 좋을 것이당
+
+
+* 로그인 후 Profile 가면 안 나옴
+  * reverse proxying을 사용하고 있어서
+  * 공식 문서 봐서
+  * back에서 vim app.js후
+  * app.set('trust proxy', 1)넣어주며,
+  * app.use(session{
+    * ...
+    * proxy: true..})해주구
+  * vim /etc/nginx/nginx.conf에
+    * 서버 설정에
+      * proxy_set_header X-Forwarded-Proto $scheme;도추가
+      * sudo systemctl restart  nginx
+  * 쿠키에 secure: true설정 되어 해결될 것!
+
+
+<br/>
+
+### 게시글 수정하기
+* 리트윗한 게시글은 수정할 수 없게 바꿈
+* 수정 기능 추가 ~> reducer, saga, router 모두 수정
+* PostCard에서 추가 코드 입력
+* Ex. PostCardContent에 editMode가 거짓이면 기존 게시글 보여주고
+  * editMode가 참이면 textArea 보여 준다!
+* PostCardContent에서도 추가 입력
+* router에서 해시태그 수정 코드도 추가!
+* 이미지 수정도 시간되면 해봐라!
+
+
+
+
+
+
 
 
 
