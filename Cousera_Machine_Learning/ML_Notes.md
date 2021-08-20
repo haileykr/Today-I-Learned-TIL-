@@ -247,3 +247,13 @@ A_inv = inv(A)
 % What is A^(-1)*A? 
 A_invA = inv(A)*A
 ```
+
+## Week 2 - Multiple Features
+
+### Multivariate Linear Regression
+* Linear regression with multiple variables is also known as "multivariate linear regression".  We now introduce notation for equations where we can have any number of input variables.
+* The multivariable form of the hypothesis function accommodating these multiple features is as follows:
+* hθ(x)=θ_0 + θ_1 * x_1 + θ_2 * x_2 + θ_3 * x_3 +⋯+θ_n * x_n
+
+* In order to develop intuition about this function, we can think about θ_0 as the basic price of a house, θ1 as the price per square meter, θ_2 as the price per floor, etc. 
+* Thus, hθ(x) = θ^T x X
