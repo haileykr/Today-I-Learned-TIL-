@@ -6,6 +6,7 @@
 - 07/08/2021 회사
 
 ### What is TypeScript?
+
 - a JavaScript superset
   - Adds new Features + Advantages to JavaSciprt
   - Browser CAN'T execute it! (Node.js also CAN'T execute it!)
@@ -13,11 +14,13 @@
     - (New - on top of regular JS) Features are compiled to JS 'workarounds' possible errors are thrown
 
 ### Why TypeScript?
+
 - TypeScript is a "Tool" that helps developers write better codes!
 
 <br/>
 
 ### Installing & Using TypeScript
+
 - Form ~> takes inputs as string
 - for example,
 
@@ -47,6 +50,7 @@ const input1 = document.getElementById("num1")! as HTMLInputElement;
 ```
 
 - "!" means that the value will definitely be there! (the line will never yield null)
+
 ```javascript
 function add(num1: number, num2: number) {
 ...
@@ -64,7 +68,9 @@ button.addEventListener("click", function () {
 <br/>
 
 ### TypeScript Overview!
+
 - TypeScript adds...
+
 1. Types!
 2. Next-gen JS features, compiled down for older browsers!
 3. Non-JS features like Interfaces or Generics
@@ -75,6 +81,7 @@ button.addEventListener("click", function () {
 <br/>
 
 ### Course Outline
+
 1. Getting Started
 2. TypeScript Basics
 3. Compiler & Configuration Deep Dive
@@ -92,23 +99,28 @@ button.addEventListener("click", function () {
 <br/>
 
 ### How to Get the Most out of the Course!
+
 1. Watch videos
 2. Code Along
 3. Practice
 4. Debug & Search
 5. Ask & Answer
-<br/>
+   <br/>
 
 ### Course Project Setup
+
 - In order not to compile and reload every time there is a change, install
+
   - `npm init`, `npm install --save-dev lite-server`
 
 - in package.json, "scripts": "start": "lite-server"
 - now npm start then it will save the time to re-run the server! you still need to re-compiletho
-<br/>
+  <br/>
 
 ### Working With Types - Core Syntax & Features
+
 - Core Types
+
 1. number (ex. 1, 5.3,-10) ~ all numbers, no differentiation between integers and floats
 2. string (ex. 'Hi', "Hi", `Hi`) ~ all text
 3. boolean (ex. true, false) ~ just these two, no 'truthy'/'falsey' values
@@ -121,7 +133,9 @@ button.addEventListener("click", function () {
 <br>
 
 ### Object Types
+
 4. object (ex. {notes: 'abc'}) ~ Any JavaSciprt object, more specific types (type of object) are possible
+
 ```javascript
 const person: {
   name: string,
@@ -141,7 +155,9 @@ const person = {
 <br/>
 
 ### Array Types
+
 5. Array (ex.[1, 2, 3]) ~ Any JS array, type can be flexible or strict (regarding the element types)
+
 ```javascript
 let favorites = string[];
 favorites = ['Sports', 'Read'];
@@ -150,7 +166,9 @@ favorites = ['Sports', 'Read'];
 <br/>
 
 ### Tuple Types
+
 6. Tuple (ex. [1, 2]) ~ Added by TS - Fixed-length array
+
 ```javascript
 const person = {
   hobbies: ['Sports', 'Read'];
@@ -173,7 +191,9 @@ const person : {
 <br/>
 
 ### Enum Types
+
 7. Enum (ex. enum {NEW, OLD}) ~ Added by TS: Automatically enumerated global constant identifiers
+
 ```javascript
 const ADMIN = 0;
 const READ_ONLY = 1;
@@ -184,6 +204,7 @@ const person = {
 ```
 
 - introduce enum to easily infer what val it should be!
+
 ```javascript
 enum Role {ADMIN = 0, READ_ONLY, AUTHOR = 2, EXTRA = 'EXTRA'};
 const person = {
@@ -194,13 +215,16 @@ const person = {
 <br/>
 
 ### Any Type
+
 8. Any (ex. \*) ~ Any kind of value, no specific type assignment
    ~> avoid anywhere possible!
 
 <br/>
 
 ### Union Types
+
 - A or B or C or..
+
 ```javascript
 number | string;
 ```
@@ -208,6 +232,7 @@ number | string;
 <br/>
 
 ### Literal Type
+
 - 'A' or 'B' or 'C' or..
   ~> especially useful working with the union type
 
@@ -225,7 +250,9 @@ function combine (
 <br/>
 
 ### Type Aliases / Custom Types
+
 - making a custom type!
+
 ```javascript
 type Combinable = number | string;
 function combine (
@@ -239,7 +266,9 @@ type User = {name:string, age:number}
 <br/>
 
 ### Function Return Types & "Void"
+
 - Example
+
 ```javascript
 function add(n1: number, n2: number) {
   return n1 + n2;
@@ -250,10 +279,12 @@ function add(n1: number, n2: number) {
 - void type
 - undefined type (do not use it as a return type of functions)
   ~> undefined is still something, so you're expected to STILL return sth in the function
-<br/>
+  <br/>
 
 ### Functions as Types
+
 - Example
+
 ```javascript
 let combineValues: Function;
 combineValues = printRes;
@@ -261,10 +292,13 @@ combineValues = printRes;
 // combineValue2 should take any function which takes two numbers as inputs and returns a number
 let combineValues2: (a: number, b: number) => number;
 ```
+
 <br/>
 
 ### Function Types & Callbacks
+
 - Example
+
 ```javascript
 function addAndHandle(n1: number, n2: number, cb: (num: number) => void) {
   const result = n1 + n2;
@@ -277,7 +311,9 @@ function addAndHandle(n1: number, n2: number, cb: (num: number) => void) {
 <br/>
 
 ### "unknown" type
+
 - similar to any ~> can store any type
+
 ```javascript
 let userInput: unknown;
 let userName: string;
@@ -296,8 +332,10 @@ if (typeof userInput === "string") {
 <br/>
 
 ### "never" type
+
 - when developers know the function will "never" return something
 - relatively newer syntax
+
 ```javascript
 function generateError(message: string, code: number): never {
   //void is assumed and it's fine to leave it like that, but never can be specified if you want to be very specific!
@@ -312,18 +350,21 @@ generateError("Error occured!", 500);
 <br/>
 
 ### Using "Watch Mode"
+
 - ctrl + c if you want to quit
 - `tsc app.ts --watch (or -w)`
 
 <br/>
 
 ### Compiling the Entire Project
+
 - `tsc --init`
 - tsconfig.json created!
 - now this manages how the entire project is compiled
   <br/>
 
 ### Including & Excluding Files
+
 - exclude : node_modules ~> default
 - include: once you specify sth, you need to specify ALL THE FILES which you want to be included
 - files: individual projects spcified~> not used often
@@ -331,10 +372,12 @@ generateError("Error occured!", 500);
 <br/>
 
 ### Setting a CompilationTarget
+
 - target : which target JavaScript version you'd like to have
   <br/>
 
 ### Understanding TypeScript Core Libs
+
 - "lib": [
   "dom",
   "es6",
@@ -344,6 +387,7 @@ generateError("Error occured!", 500);
   <br/>
 
 ### Working with Source Maps
+
 - also shows .ts files on browser
 - can use breakpoints and whatnot on browser
 - super useful for debugging!
@@ -351,12 +395,15 @@ generateError("Error occured!", 500);
 <br/>
 
 ### rootDir and outDir
+
 - can specify where to store compiled javascript files + location of srcFiles
   <br/>
 
 ### Strict Compilation!
+
 - "strict": true turns on all the following options!
 - "strictNullChecks" ~> checks for the possibility of NULL VALUES!!
+
 ```javascript
 const button = document.querySelector(button); //error, as it might be null - no button may be found
 const button = document.querySelector(button)!; //! implies that we know that there will be a button for sure
@@ -379,6 +426,7 @@ if (button){
 <br/>
 
 ### Rest
+
 - rest params make inputs into an array!
 - useful when you dont know how many parameters you will get
 
@@ -397,7 +445,9 @@ const addedNumbers = add(5, 10, 2, 3, 7);
 <br/>
 
 ### What are Classes?
+
 - What is Object-Oriented Programming, or OOP?
+
   - Work with (real-life) entities in your code
 
 - Objects
@@ -412,6 +462,7 @@ const addedNumbers = add(5, 10, 2, 3, 7);
 <br />
 
 ### Creating a First Class
+
 - constructor runs when the object is created! thus allows some initialization!
 - EX.
 
@@ -431,9 +482,11 @@ const accounting = new Department("Accounting");
 ### Constructor Functions & The "this" Keyword
 
 ### "private" and "public" Access Modifiers
+
 - properties and methods can be private
 - only accessible within the class
 - EX.
+
 ```javascript
 class Department {
   name: string;
@@ -477,7 +530,9 @@ acountingCopy.describe();
 <br/>
 
 ### Shorthand Initialization!
+
 - EX.
+
 ```javascript
 private id: string;
 public n: string; //public is default actually
@@ -493,7 +548,9 @@ constructor(public n: string) {  // public / private명시
 <br/>
 
 ### "readonly" Properties
+
 - EX.
+
 ```javascript
 constructor(private readonly id: string )
 ```
@@ -503,7 +560,9 @@ constructor(private readonly id: string )
 <br/>
 
 ### Inheritance
+
 - EX.
+
 ```javascript
 class ITDepartment extends Department {
   constructor(id: string, public admins: string[]){
@@ -519,11 +578,13 @@ const accounting = new ITDepartment('d1');
 <br/>
 
 ### Overriding Properties & The "protected" Modifier
+
 - can override class
 - "protected"~> like private, but accessible also in classes that inherit
-<br/>
+  <br/>
 
 ### Getters & Setters
+
 - GETTER ~ a property where you execute a method, where you retrieve a value that allows developers to add more complex logic
   - has to return something
 - EX.
@@ -567,7 +628,9 @@ console.log(accounting.mostRecentReport); //get-can call like a property and doe
 <br/>
 
 ### Static Methods & Properties: **GROUPING MECHANISM**
+
 - stacis properties and methods
+
   - ~ allow you to add properties and methods to classes which are not accessed on an instance of the class
   - ~ no need to call "new"
   - ~ but you access directly on the class
@@ -603,6 +666,7 @@ console.log(Department.snack); //true
 <br/>
 
 ### Abstract Classes
+
 - when you have 1+ abtract method, the class has to be abstract too.
 - `abstract describe(this: Department): void;`//specifying how the structure of this method should look like
 - abstract method has to be declared and used in any class based on The Abstract Class.
@@ -612,12 +676,14 @@ console.log(Department.snack); //true
   - lets the Instances of this (class ITDepartment extends Department))complete the implementations!
   - cannot be instantiated on its own
   - it's just a boilerplate
-<br />
+    <br />
 
 ### Singletons & Private Constructors
+
 - "SINGLETONS PATTERN": a pattern in OOP where you ensure that there is ONLY ONE instance of a certain class. Can be useful in scenarios when you somehow can't use static properties/but you still want to make only one object/instance of the class
   - sometimes useful, not always used!
 - Ex.
+
 ```javascript
 abstract class Department {
   static fiscal Year = 2020;
@@ -660,8 +726,10 @@ class AccountingDepartment extends Department {
 <br/>
 
 ### Intro to Interface
+
 - explains the structure of an object
 - ex.
+
 ```javascript
 interface Person {
   name: string;
@@ -684,10 +752,13 @@ user1.greet();
 <br/>
 
 ### Using Interfaces with Classes
+
 - Inteface is ONLY used to define structure of Objects
+
   - can use type as well but using interface will be clearer
   - plus, classes can **implement!!** interfaces
   - ex.
+
   ```javascript
   class Pseron implements Greetable {
     name: string;
@@ -709,9 +780,11 @@ user1.greet();
 <br/>
 
 ### Readonly Interface
+
 - cannot set things like abstract, public, private, but can set readonly
   - that variable can only be set once then read only
 - ex.
+
 ```javascript
 interface Greetable {
   readonly name: string;
@@ -725,9 +798,11 @@ user1.name ='Manu';//ERROR
 <br/>
 
 ### Extending Interfaces
+
 - you can also extend interfaces, even multiple
   - recall. you can only extend one class
 - ex.
+
 ```javascript
 interface Greetable extends Named, Another {
   greet(phrase: string): void;
@@ -737,6 +812,7 @@ interface Greetable extends Named, Another {
 <br/>
 
 ### Interfaces as Function Types
+
 - recall. with type, we could define how the function should look like
 - ex. `type AddFn = (a: number, b: number) => number;`
 - ex. `let add: AddFn;`
@@ -746,6 +822,7 @@ interface Greetable extends Named, Another {
 - interfaces are there to define objects
 - but objects are just functions
 - thus as an "exception" interfaces can be used to define function types
+
 ```javascript
 interface AddFn {
   (a: number, b: number): number;
@@ -755,24 +832,31 @@ interface AddFn {
 <br/>
 
 ### OPtional Parameters & Properties
+
 - optional: ex. `outputName ?: string;`
 - for methods!
+
   - ex.
+
   ```javascript
   optional!=> myMethod?(){..}
   ```
 
 - optional parameters are okay too ex. n?: string, or n:string = '' ~fallbackValue!
 - NOTE. interfaces are TypeScript-Only features
+
   - cannot be instantiated and compiled (to js)
     vs. classes can be instantiated and compiled
 
   <br/>
 
 # Some Advanced Types
+
 ### Intersection Types
+
 - combining different interfaces
 - ex.
+
 ```javascript
 type Admin = {
   name: string,
@@ -792,6 +876,7 @@ const el: ElevatedEmployee = {
 ```
 
 - the following results in the same indeed
+
 ```javascript
 interface Admin {
   name: string;
@@ -809,6 +894,7 @@ type ElevateEmployee = Admin & Employee;
 ```
 
 - intersection types can be useful for other types as well
+
 ```javascript
 type Combinable = string | number;
 type Numberic = number | boolean;
@@ -819,7 +905,9 @@ type Universal = Combinable & Numeric;
 <br/>
 
 ### Type Guard
+
 - with if check!
+
 ```javascript
 type UnknownEmployee = Employee | Admin;
 
@@ -844,8 +932,10 @@ function printEmployeeInformation(emp: UnknownEmployee) {
 <br/>
 
 ### Discriminated Unions
+
 - when you know that a certain property exists in both union-ed interfaces for sure
 - can use that for a check
+
 ```javascript
 interface Play {
   type: 'verb'
@@ -866,12 +956,15 @@ switch (company.type){
 ```
 
 - no error and useful + no need to mis-type
-<br/>
+  <br/>
 
 ### Type Casting
+
 - Two ways to achieve Type Casting
+
 1. ex. <HTMLInputElement>document.getElementById('#input')!;
 2. ex. document.getElementById('#input')! as HTMLElement ;
+
 - ! notes that the selected element will never be null
 - useful especially when selecting
   - the dom elements!!
@@ -879,9 +972,11 @@ switch (company.type){
 <br/>
 
 ### Index Properties
+
 - when you are not sure what the key value will be
   - but know its type!
   - restriction ~ ALL the key-value types should follow that format
+
 ```javascript
 interface Login {
   [props: string]: string;
@@ -891,8 +986,10 @@ interface Login {
 <br/>
 
 ### Function Overloads
+
 - The feature that allows us to define function signatures
 - Ex.
+
 ```javascript
 type Combinable = string | number;
 
@@ -913,8 +1010,10 @@ const result = add('Max', 'Schwarzz'); //now it knows which type to return
 <br/>
 
 ### Optional Chaining
+
 - in case you're not sure if there will be actually data
 - lets you access nested data without having errors
+
 ```javascript
 const fetchedUserData = {
   id: "u1",
@@ -930,8 +1029,10 @@ console.log(fetchedUserData?.job?.title);
 <br/>
 
 ### Nullish Coalescing
+
 - || or ??
 - Ex.
+
 ```javascript
 const userInput = ""; //treated as  'falsey' value for || operator
 
@@ -942,10 +1043,13 @@ const storedDataa = userInput ?? "DEFAULT"; //'' ~> unless the value is null or 
 <br/>
 
 # Generics
+
 ### Built-in Generics & What are Generics?
+
 - Generic type does not exist in vanilla JS, but does in TS and many other languages
 - Generic type is a type which is kinda 'connected' with some other types, and is quite flexible with which exactly the other types are
 - Ex.
+
 ```javascript
 const names: Array = []; //Array<T> : genertic type
 
@@ -960,6 +1064,7 @@ const namez: Array<string | number> = [];
 
 - Another useful Generic type ~> Promise Type
   - note: promise is built-in JS feature
+
 ```javascript
 const promise = new Promise((resolve, reject) => { //Promise<unknown>
   setTimeout(() => {
@@ -977,8 +1082,10 @@ promise.then(data=> {
 <br/>
 
 ### Creating a Generic Function
+
 - it's about being specific!
 - Ex.
+
 ```javascript
 function merge(objA: object, objB: object) {
   return Object.assign(objA, objB);
@@ -997,8 +1104,10 @@ console.log(mergedObj2.age); //now TS knows for sure
 <br/>
 
 ### Working with Constraints
+
 - Generics allow you to keep working in a TS-optimal way
 - Ex.
+
 ```javascript
 function merge<T extends object, U extends object>(objA: T, objB: U){
   return Object.assign(objA, objB);
@@ -1009,7 +1118,9 @@ const mergedObj = merge({name: 'Max', hobbies: ['Sports']}, 30);//now it gives a
 <br/>
 
 ### Another Generic Fn
+
 - More example!
+
 ```javascript
 interface Lengthy {
   length: number;
@@ -1030,7 +1141,9 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
 <br/>
 
 ### The 'keyof' constraint
+
 - Ex.
+
 ```javascript
 funciton extractAndConvert<T extends object, U extends keyof T>(obj: T, key:  U) { //again, make sure that it's there
   return 'Value: ' + obj[key];
@@ -1041,7 +1154,9 @@ extractAndConvert({name: 'Max'} , 'name');
 <br/>
 
 ### Generic Classes
+
 - Ex.
+
 ```javascript
 class DataStorage<T extends number | string | boolean>{
   private data: T[] = [];
@@ -1067,12 +1182,16 @@ numberStorage.addItem(1);
 ```
 
 - All in All, Generic types give flexibility + type-safety
-<br/>
+  <br/>
 
 ### Generic Utility Types
+
 - again, these types only exist in TS thus only prior to compilation
+
 1. Partial
+
 - Ex.
+
 ```javascript
 interface CourseGoal {
   title: string;
@@ -1094,7 +1213,9 @@ function createCourseGoal2(title:string, description:string, date:Date):CourseGo
 ```
 
 2. Readonly
+
 - Ex.
+
 ```javascript
 const names: Readonly<string[]> = ["Max", "Anna"];
 names.push("Manu"); //error
@@ -1108,4 +1229,147 @@ names.push("Manu"); //error
 # Decorators
 
 ### A First Class Decorator
-- first, turn on
+
+- ES6 feature!
+- so in the tsconfig file
+
+  - : target: "es6"
+  - : experimentalDecorators: true
+
+- so decorators are all about classes
+
+- "decorators": functions that apply to "something (ex. classes)" in certain ways
+
+* example
+
+```javascript
+function Logger(constructor: Function) {
+  // common practice to capitalize the decorator name
+  console.log("Logging...");
+  console.log(constructor);
+}
+
+@Logger
+class Person {
+  name = "Max";
+  constructor() {
+    console.log("Creating person object...");
+  }
+}
+
+const pers = new Person();
+console.log(pers);
+```
+
+- note that the decorator runs without instantiating the class!
+  (runs when javascript finds the class definition)
+  <br/>
+
+### Working with Decorator Factories
+
+- can define a decorator factory,which returns a decorator fn while allowing to configure it when we assign it "as a decorator" to something
+
+```javascript
+function Logger(logString: string) {
+  return function (constructor: Function) {
+    console.log(logString);
+    console.log(constructor);
+  };
+}
+@Logger("LOGGING-PERSON")
+class Person {
+  name = "Max";
+  constructor() {
+    console.log("Creating person object...");
+  }
+}
+
+const pers = new Person();
+console.log(pers);
+```
+
+<br/>
+
+### Building More Useful Decorators
+
+- can do more of "meta-programming"
+- example
+
+```javascript
+function WithTemplate(template:string, hookId:string){
+  return function (constructor: any) {
+    const hook_element = document.getElementById(hookId);
+
+    const p = new constructor();
+    if (hook_element) {
+      hook_element.innerHTML = template;
+      hook_element.querySelector('h1')!.textContent = p.name;
+    }
+  };
+}
+
+// @Logger0
+// @Logger("LOGGING-PERSON")
+@WithTemplate("<h1>My Person Object</h1>", "app")
+class Person {
+  name = "Max";
+  constructor() {
+    console.log("Creating person object...");
+  }
+}
+
+const pers = new Person();
+console.log(pers);
+}
+```
+<br/>
+
+
+
+
+
+
+
+
+
+### Adding Multiple Decorators
+* what is the order of execution
+* when multiple decorators are used!
+  * bottom - up!
+  * while factory function is executed top-bottom!
+
+
+<br/>
+### Diving into Property Decorators
+
+* Example
+```javascript
+function Log(target: any, propertyName: string | Symbol) {
+  console.log("Property Decorators!");
+  console.log(target, propertyName);
+}
+
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error("invalid price");
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  getPriceWithTax(tax: number) {
+    return this._price * (1 + tax);
+  }
+}
+```
+* 브라우저에서 보면 constructor fn이 출력된 것을 볼 수 있다!
