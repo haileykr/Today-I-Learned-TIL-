@@ -1,14 +1,18 @@
 # Web Socket Zoom Clone Coding
+
 ## Nico Fastapi
+
 - https://nomadcoders.co/noom/lectures/3075
 - Nomad Coders
-<br/>
+  <br/>
 
 ### Requirements
+
 - Nodejs, Express, app.get(), Pug, template, (req, res)
-<br/>
+  <br/>
 
 ### Server Setup
+
 - `npm init -y`
 - `npm install nodemon -D`
 - `nodemon.json` and `babel.config.json`
@@ -19,6 +23,7 @@
   <br/>
 
 ### FrontEnd Setup
+
 - Making static files to deliver..
 
 - `src/public/app.js`
@@ -33,15 +38,19 @@
 - in home.pug,
   - `script(src="/public/js/app.js")`
 - let's use MVP CSS to make all the default tags look better!
-<br/>
+  <br/>
 
 ### Recap
+
 - server.js on backend and app.js on frontend in our case
-<br/>
+  <br/>
 
 ## Chat with WebSocket
+
 ### Introduction
+
 ### HTTP vs. WebSockets
+
 - both are protocols
 - HTTP: servers are built on this. stateless. backend forgets about who the user is after responding to a request
 - Web Socket (ws) // Secure Web Socket (wss)
@@ -52,9 +61,10 @@
 - websocket is again just a protocol
   - not dependent on single language
   - or just frontend - backend
-<br/>
+    <br/>
 
 ### WebSockets in JS
+
 - start building a websocket server using NodeJs!!
 
 - ws:a Node.js WebSocket library
@@ -63,6 +73,7 @@
 - we will add ws functionality to express http server, rather than making two separate servers, each for http and ws
 - so let's change how the express server is started
 - we'll use http package built-in to all node.js
+
 ```javascript
 import http from "http";
 import WebSocket from "ws";
@@ -73,9 +84,11 @@ const server = http.createServer(app); //creating a http server using express
 const wss = new WebSocket.Server({ server }); // wss + http - doing it b/c we want them in the same port!
 server.listen(3000, listenHandle);
 ```
+
 <br/>
 
 ### WebSocket Events
+
 - now we will make the first connection - backend and frontend
 - Browsers alreay have implementation for WebSocket connection!! Whoa!!!
   - so we dont need to do more on frontend
@@ -85,6 +98,7 @@ server.listen(3000, listenHandle);
   - using ws is more like using event listeners
 - socket is **someone** who's connected!
   - so we need to save it somewhere
+
 ```javascript
 function handleConnection(socket) {
   console.log(socket);
@@ -103,10 +117,12 @@ wss.on("connection", handleConnection);
 - b/w browser and server!
   - in `server.js` socket is the browser connected
   - in `app.js` socket is the server connected!!
-<br/>
+    <br/>
 
 ### WebSocket Messages
+
 - in `server.js`,
+
 ```javascript
 wss.on("connection", (socket) => {
   // console.log(socket)
@@ -117,6 +133,7 @@ wss.on("connection", (socket) => {
 
 - now in frontend (`app.js`)
 - receive the message ("event!!")
+
 ```javascript
 socket.addEventListener("open", () => {
     console.log("Connected to Server ✔")
@@ -133,6 +150,7 @@ socket.addEventListener("close", () => {
 
 - now send messages from frontend to backend
 - in `app.js`,
+
 ```javascript
 setTimeout(() => {
   socket.send("hello from the browser!");
@@ -140,17 +158,21 @@ setTimeout(() => {
 ```
 
 - in `server.js`,
+
 ```javascript
 socket.on("mesage", (message) => {
   console.log(message);
 });
 ```
+
 <br/>
 
 ### Chat Completed
+
 - make a form on the frontend side
 - in both frontend and backend sides, socket.send(message)..
 - make a fake database for connection among multiple users!
+
 ```javascript
 const sockets = []; //fake database
 
@@ -159,9 +181,11 @@ wss.on("connection", (socket) => {
   // ...
 }
 ```
+
 <br/>
 
 ### Nickname part 1
+
 - let's show messages we get on the app!
 - by adding li to ul
 - adding nicknames
@@ -170,10 +194,12 @@ wss.on("connection", (socket) => {
 - so from now on, we will send JSON insteadof text to distinguish which is which
   - but we can only send text! so we gotta use
   - JSON.stringify and JSON.parse
-<br/>
+    <br/>
 
 ### Nickname part 2
+
 - socket is like an object where we can set key - value pairs!
+
 ```javascript
 socket.on("message", (message) => {
   const parsedMessage = JSON.parse(message);
@@ -189,15 +215,19 @@ socket.on("message", (message) => {
   }
 });
 ```
+
 <br/>
 
 ## SocketIO
+
 ### SocketIO vs. WebSockets
+
 - let's now use a framework
 - that makes everything so much easier!
 - Socket.IO: "enables real-time, bidirectional and event-based communication. It works on every platform, browser or device, focusing equally on reliability and speed "
 
 - SocketIO is not an implementation of web socket
+
   - it is more resilient than web socket
     - even if some device does not support web socket, socket io still works
   - it is a framework that sometimes use web socket to provide its functionalities
@@ -207,9 +237,10 @@ socket.on("message", (message) => {
 - How it works: the Bidirectional channel between the Socket.IO server (Node.js) and the Socket.IO client (browser, Nodejs, or another programming language)
 - ofc SocketIO is heavier than WebSocket but it's not too big and is worth it
 - syntax is also very similar to that of web socket
-<br/>
+  <br/>
 
 ### Installing SocketIO
+
 - `npm i socket.io`
 - Recap ... using Web Socket:
   - Created a http server
@@ -235,15 +266,18 @@ socket.on("message", (message) => {
   - `const socket = io();`
   - io function auto detects the server that is using socket.io
 - you get Socket (vs. WebSocket) : which has more functionalities! ex. sockets auto lists all the frontends which are using the socketio server
-<br/>
+  <br/>
 
 ## SocketIO is Amazing!
+
 - Concept of "Rooms"
+
   - when a user connects,he will see a form to make a room or join a room
   - so let's make a form first
 
 - frontend
 - `app.js`
+
   ```javascript
   function handleRoomSubmit(event) {
     event.preventDefault();
@@ -258,6 +292,7 @@ socket.on("message", (message) => {
 
 - backend
 - `server.js`
+
   ```javascript
   const io = SocketIO(httpServer);
   io.on("connection", (socket) => {
@@ -274,12 +309,14 @@ socket.on("message", (message) => {
   1. can handle any kind of event (more than just basic JS events)
   2. can transfer JS Objects not just text over socket
   3. can specify a function to launch in backend from frontend, while that function will run in frontend eventually
-<br/>
+     <br/>
 
 ### Recap
 
 ### Rooms
+
 - socket io provides room features
+
 ```javascript
 // in server.js
 socket.on("enter_room", (roomName, done) => {
@@ -288,12 +325,15 @@ socket.on("enter_room", (roomName, done) => {
   console.log(socket.rooms);
 });
 ```
+
 - socket.join, socket.leave, socket.to
 - once you join a room, send message to all in that room
-<br/>
+  <br/>
 
 ### Room Msg
+
 - sample codes
+
 ```javascript
 io.on("connection", (socket) => {
   // to one room
@@ -309,11 +349,14 @@ io.on("connection", (socket) => {
   socket.to(/* another socket id */).emit("hey");
 });
 ```
+
 - added messages to the whole room!
-<br/>
+  <br/>
 
 ### Room Notifications
+
 - sample code !
+
 ```javascript
 io.on("connection", (socket) => {
   socket.on("disconnecting", (reason) => {
@@ -321,19 +364,20 @@ io.on("connection", (socket) => {
   });
 });
 ```
+
 - event "disconnecting" ~> when the client is going to be disconnected but hasn't left room
-<br/>
+  <br/>
 
 ### Nicknames
+
 - adding key - value pair to socket
-<br/>
+  <br/>
 
 ### Room Count part One
+
 - **Adapter** is a server-side component which is responsible for broadcasting events to all or a subset of clients
 - synchronizes the real-time application among multiple servers
-
   - sample - `console.log(io.sockets.adapter)`
-
   - in "rooms" and "sid" fields, we can see which rooms are open and which sockets are on \* if room.id === sid, private room
     <br/>
 
@@ -348,15 +392,12 @@ io.sockets.emit("room_change", publicRooms());
 ```
 
 - frontend : paint the rooms
-
-<br/>
+  <br/>
 
 ### User Count
 
 - for each room, set.size!
-
 - there are SO MANY MORE to SOCKET.IO!!
-
   - ex. socketjoin ~> make a user join a specific room
   - ex. socket.to(#id) ~> allow private msgs
 
@@ -365,30 +406,27 @@ io.sockets.emit("room_change", publicRooms());
 ### Admin UI
 
 - Socket.IO UI!
-
   - you can see all your sockets,rooms, etc
-
 - `npm i @socket.io/admin-ui`
 - then import 'instrument'
 
 - in our server,
-  `javascript
 
-  import {instrument} from '@socket.io/admin-ui'
-  import { Server } from 'socket.io'
+  ```javascript
+  import { instrument } from "@socket.io/admin-ui";
+  import { Server } from "socket.io";
 
   const io = new Server(httpServer, {
-  cors: {
-  origin: ['https://admin.socket.io'],
-  credentials: true
-  }
-  })
+    cors: {
+      origin: ["https://admin.socket.io"],
+      credentials: true,
+    },
+  });
 
-instrument(io, {
-auth: false
-})
+  instrument(io, {
+    auth: false,
+  });
+  ```
 
-```
 
 - now you can access your admin panel from https://admin.socket.io
-```
