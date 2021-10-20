@@ -430,3 +430,12 @@ io.sockets.emit("room_change", publicRooms());
 
 
 - now you can access your admin panel from https://admin.socket.io
+
+<br/>
+
+## Video Call
+### User Video
+
+* now video chat part!
+* you can delete everything related to the chat part
+  * in server.js, pug, app.js
