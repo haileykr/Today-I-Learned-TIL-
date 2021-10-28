@@ -428,14 +428,46 @@ io.sockets.emit("room_change", publicRooms());
   });
   ```
 
-
 - now you can access your admin panel from https://admin.socket.io
 
 <br/>
 
 ## Video Call
+
 ### User Video
 
-* now video chat part!
-* you can delete everything related to the chat part
-  * in server.js, pug, app.js
+- now video chat part!
+- you can delete everything related to the chat part
+  - in server.js, pug, app.js
+- now we will use socket io to help us building
+- we first need to get the video from the user
+- some settings req'd:
+  - get the video from the user and show it
+  - make some buttons - mic mute, camera on/off, front/back camera
+- get the video first
+
+  - home.pug
+
+  ```javascript
+    main
+      video#myFace(autoplay,playsinline,width="400",height="400
+  ```
+
+- stream = video+sound
+
+<br/>
+
+#### Call Controls
+
+- cool thing about the stream : we have access to "tracks - video, audio, subtitles"
+- ex. app.js
+
+```javascript
+myStream.getAudioTracks();
+myStream.getVideoTracks();
+```
+
+- retrieve all the camera info
+  - getUserMedia();
+  - enumerateDevices();
+  - in app.js, `function getCameras()`
