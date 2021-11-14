@@ -471,3 +471,61 @@ myStream.getVideoTracks();
   - getUserMedia();
   - enumerateDevices();
   - in app.js, `function getCameras()`
+
+* lets make sth with which the user can select the cameras
+* home.pug
+<br/>
+
+
+#### Camera Switch
+* Now let's make program detect the camera switch
+* app.js
+```javascript
+function handleCameraChange() {
+  console.log(cameraSelect.value);
+}
+cameraSelect.addEventListener("input", handleCameraChange);
+```
+  * now we have camera id
+  * this id is important because it is what can make the video restart forcefully
+
+* getMedia() ~> copy&modify a bit
+```javascript
+async function getMedia2(deviceId) {
+  try {
+    myStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
+    myFace.srcObject = myStream;
+    await getCameras();
+  } catch (e) {
+    console.log(e);
+  }
+}
+```
+* to see which camera is currently in use,
+` myStream.getVideoTracks()`
+<br/>
+
+#### Introduction to WebRTC !!
+* Web Real-Time Communication
+* peer-to-peer
+  * my media goes directly goes to another user
+  * doesnt pass a server => thus being very fast
+  * we still need a server for "signaling"
+  * browser connects to another browser
+
+* what is NOT peer-to-peer then?
+  * websocket 
+  * user sends a message to server, then the server sends the message to another user
+
+* signaling
+  * my browser sends the server my location in the internet, settings, configuration, firewall/router information, etc
+  * the server sends these information to  another browser
+<br/>
+
+#### WebRTC Roomz
+* in home.pug,  `div#call`
+* 
+
