@@ -474,22 +474,25 @@ myStream.getVideoTracks();
 
 * lets make sth with which the user can select the cameras
 * home.pug
-<br/>
-
+  <br/>
 
 #### Camera Switch
-* Now let's make program detect the camera switch
-* app.js
+
+- Now let's make program detect the camera switch
+- app.js
+
 ```javascript
 function handleCameraChange() {
   console.log(cameraSelect.value);
 }
 cameraSelect.addEventListener("input", handleCameraChange);
 ```
-  * now we have camera id
-  * this id is important because it is what can make the video restart forcefully
 
-* getMedia() ~> copy&modify a bit
+- now we have camera id
+- this id is important because it is what can make the video restart forcefully
+
+- getMedia() ~> copy&modify a bit
+
 ```javascript
 async function getMedia2(deviceId) {
   try {
@@ -504,28 +507,108 @@ async function getMedia2(deviceId) {
   }
 }
 ```
-* to see which camera is currently in use,
-` myStream.getVideoTracks()`
-<br/>
+
+- to see which camera is currently in use,
+  ` myStream.getVideoTracks()`
+  <br/>
 
 #### Introduction to WebRTC !!
-* Web Real-Time Communication
-* peer-to-peer
-  * my media goes directly goes to another user
-  * doesnt pass a server => thus being very fast
-  * we still need a server for "signaling"
-  * browser connects to another browser
 
-* what is NOT peer-to-peer then?
-  * websocket 
-  * user sends a message to server, then the server sends the message to another user
+- Web Real-Time Communication
+- peer-to-peer
 
-* signaling
-  * my browser sends the server my location in the internet, settings, configuration, firewall/router information, etc
-  * the server sends these information to  another browser
-<br/>
+  - my media goes directly goes to another user
+  - doesnt pass a server => thus being very fast
+  - we still need a server for "signaling"
+  - browser connects to another browser
+
+- what is NOT peer-to-peer then?
+
+  - websocket
+  - user sends a message to server, then the server sends the message to another user
+
+- signaling
+  - my browser sends the server my location in the internet, settings, configuration, firewall/router information, etc
+  - the server sends these information to another browser
+    <br/>
 
 #### WebRTC Roomz
-* in home.pug,  `div#call`
-* 
 
+- in home.pug, `div#call`, `div#welcome`
+- app.js
+  - all required codes
+  - however, no getMedia() function because it is what starts everything
+  - make div#welcome and div#call mutually exclusive
+- front end is ready
+  - now lets submit the data to backend
+  - `socket.emit("join_room",input.value);`
+- now back to server - src/server.js
+
+  - welcome part
+  - and we gotta do something when someone joins our room
+  - Socket Codes
+
+- Peer A <-> Signaling Server <-> Peer B
+  <br/>
+
+#### Offers
+
+- browsers gotta be connected before sharing media
+- app.js
+
+```javascript
+async function startMedia() {
+  welcome.hidden = true;
+  call.hidden = false;
+  await getMedia();
+}
+```
+
+- is where both browsers run and thus where connection should begin
+
+  - make "makeConnection" function
+  - `let myPeerConnection` so that it's accessible always
+  - put audio and video trks to conn
+
+- make an "offer"
+
+```javascript
+// Socket Code
+socket.on("welcome", async () => {
+  const offer = await myPeerConnection.createOffer();
+
+  console.log(offer);
+});
+```
+
+- offer : exmple like
+
+```javscript
+RTCSessionDescription {type: 'offer', sdp: 'v=0\r\no=- 1841970980217389894 2 IN IP4 127.0.0.1\r\ns…3699 label:532ad46d-caef-493b-93da-72c9a0c328dc\r\n ' }
+```
+
+- it is creating an invitation for others to join
+
+```javascript
+socket.on("welcome", async () => {
+  console.log("Somebody joined");
+  const offer = await myPeerConnection.createOffer();
+  myPeerConnection.setLocalDescription(offer);
+  socket.emit("offer", offer, roomName); // sending the offer to  roomName (via the server)
+});
+socket.on("offer", (offer) => console.log(offer));
+```
+<br/>
+
+#### Answers
+* app.js
+```javascript
+socket.on("offer", (offer) => {
+  myPeerConnection.setRemoteDescription(offer);
+}); 
+```
+  * emits errors because everything happens real quick and myPeerConnection is not configured yet
+
+* therefore, let startMedia happen before we  join the room
+* now that we made an offer and sent it let's make an answer
+  * create an answer and set it as a local description
