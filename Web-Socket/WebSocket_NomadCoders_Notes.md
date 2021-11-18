@@ -598,17 +598,65 @@ socket.on("welcome", async () => {
 });
 socket.on("offer", (offer) => console.log(offer));
 ```
+
 <br/>
 
 #### Answers
-* app.js
+
+- app.js
+
 ```javascript
 socket.on("offer", (offer) => {
   myPeerConnection.setRemoteDescription(offer);
-}); 
+});
 ```
-  * emits errors because everything happens real quick and myPeerConnection is not configured yet
 
-* therefore, let startMedia happen before we  join the room
-* now that we made an offer and sent it let's make an answer
-  * create an answer and set it as a local description
+- emits errors because everything happens real quick and myPeerConnection is not configured yet
+
+- therefore, let startMedia happen before we join the room
+- now that we made an offer and sent it let's make an answer
+  - create an answer and set it as a local description
+    <br/>
+
+#### Ice Candidates
+
+- when we are done with offer and answer, both of our peer-to-peer connections would fire an event called 'ice candidate'
+- Internet Connectivity Establishment
+- "An ICE candidate describes the protocols and routing needed for WebRTC to be able to communicate with remote devices
+
+- when we make a peer connection, we want to immediately listen to that specific event
+- ` myPeerConnection.addEventListener("icecandidate", handleIce)`
+
+```javascript
+function handleIce(data) {
+  console.log("got ice candidate");
+  console.log(data);
+}
+```
+
+- to see when the ice candidates are created and how they are showing
+- you can see that multiple icecandidates are created and shown on each browser
+
+  - they need to be sent to each other!
+
+- src/server.js!
+
+```javascript
+socket.on("ice", (ice, roomName) => {
+  socket.to(roomName).emit("ice", ice);
+});
+```
+
+- src/app.js
+
+```javascript
+function handleIce(data) {
+  socket.emit("ice", data.candidate, roomName);
+}
+```
+
+- once completed with ice candidate exchange, let's work on addStream
+  - `myPeerConnection.addEventListener("addstream", handleAddStream)`
+
+* now that we have access to peer's stream too,
+* let's show the peer's stream!
