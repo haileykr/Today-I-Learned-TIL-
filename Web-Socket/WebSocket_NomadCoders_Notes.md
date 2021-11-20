@@ -138,11 +138,9 @@ wss.on("connection", (socket) => {
 socket.addEventListener("open", () => {
     console.log("Connected to Server ✔")
 })
-
 socket.addEventListener("message", (message)=>{
     console.log("Just got this message: ",message.data);
 });
-
 socket.addEventListener("close", () => {
     console.log("Disconnected from Server ✔")
 }
@@ -286,7 +284,6 @@ socket.on("message", (message) => {
       console.log("in front-end, specify a function to be run from server!!");
     }); // more than just a message. can even emit an event
   }
-
   form.addEventListener("submit", handleRoomSubmit);
   ```
 
@@ -400,8 +397,7 @@ io.sockets.emit("room_change", publicRooms());
 - there are SO MANY MORE to SOCKET.IO!!
   - ex. socketjoin ~> make a user join a specific room
   - ex. socket.to(#id) ~> allow private msgs
-
-<br/>
+    <br/>
 
 ### Admin UI
 
@@ -429,8 +425,7 @@ io.sockets.emit("room_change", publicRooms());
   ```
 
 - now you can access your admin panel from https://admin.socket.io
-
-<br/>
+  <br/>
 
 ## Video Call
 
@@ -445,17 +440,15 @@ io.sockets.emit("room_change", publicRooms());
   - get the video from the user and show it
   - make some buttons - mic mute, camera on/off, front/back camera
 - get the video first
-
   - home.pug
 
-  ```javascript
-    main
-      video#myFace(autoplay,playsinline,width="400",height="400
-  ```
+```javascript
+  main
+    video#myFace(autoplay,playsinline,width="400",height="400
+```
 
 - stream = video+sound
-
-<br/>
+  <br/>
 
 #### Call Controls
 
@@ -555,7 +548,6 @@ async function getMedia2(deviceId) {
 
 - browsers gotta be connected before sharing media
 - app.js
-
 ```javascript
 async function startMedia() {
   welcome.hidden = true;
@@ -565,24 +557,20 @@ async function startMedia() {
 ```
 
 - is where both browsers run and thus where connection should begin
-
   - make "makeConnection" function
   - `let myPeerConnection` so that it's accessible always
   - put audio and video trks to conn
 
 - make an "offer"
-
 ```javascript
 // Socket Code
 socket.on("welcome", async () => {
   const offer = await myPeerConnection.createOffer();
-
   console.log(offer);
 });
 ```
 
 - offer : exmple like
-
 ```javscript
 RTCSessionDescription {type: 'offer', sdp: 'v=0\r\no=- 1841970980217389894 2 IN IP4 127.0.0.1\r\ns…3699 label:532ad46d-caef-493b-93da-72c9a0c328dc\r\n ' }
 ```
@@ -598,65 +586,134 @@ socket.on("welcome", async () => {
 });
 socket.on("offer", (offer) => console.log(offer));
 ```
-
 <br/>
 
 #### Answers
-
 - app.js
-
 ```javascript
 socket.on("offer", (offer) => {
   myPeerConnection.setRemoteDescription(offer);
 });
 ```
-
 - emits errors because everything happens real quick and myPeerConnection is not configured yet
-
 - therefore, let startMedia happen before we join the room
 - now that we made an offer and sent it let's make an answer
   - create an answer and set it as a local description
     <br/>
 
 #### Ice Candidates
-
 - when we are done with offer and answer, both of our peer-to-peer connections would fire an event called 'ice candidate'
 - Internet Connectivity Establishment
 - "An ICE candidate describes the protocols and routing needed for WebRTC to be able to communicate with remote devices
 
 - when we make a peer connection, we want to immediately listen to that specific event
 - ` myPeerConnection.addEventListener("icecandidate", handleIce)`
-
 ```javascript
 function handleIce(data) {
   console.log("got ice candidate");
   console.log(data);
 }
 ```
-
 - to see when the ice candidates are created and how they are showing
 - you can see that multiple icecandidates are created and shown on each browser
-
   - they need to be sent to each other!
-
 - src/server.js!
-
 ```javascript
 socket.on("ice", (ice, roomName) => {
   socket.to(roomName).emit("ice", ice);
 });
 ```
-
 - src/app.js
-
 ```javascript
 function handleIce(data) {
   socket.emit("ice", data.candidate, roomName);
 }
 ```
-
 - once completed with ice candidate exchange, let's work on addStream
   - `myPeerConnection.addEventListener("addstream", handleAddStream)`
-
 * now that we have access to peer's stream too,
 * let's show the peer's stream!
+<br/>
+
+#### Senders
+
+- atm switching camera on one browser does not get reflected on the other
+- note: handleCameraChange()
+  - everytime we change cameras, we create completely new streams
+  - just like this, let's update tracks to peers everytime we make peer connections
+- Senders : allow us to control and obtain details about the MediaStreamTrack sent to our peer!
+- still an issue ~> would not work on mobile
+- to test it, let's use --localtunnel--
+  - `npm install -g localtunnel`
+  - localtunnel allows u to share the server with the world temporarily
+  - for example `lt --port 3000 `
+- STUN Server Required!!
+
+<br/>
+
+#### STUN !!!!!
+
+- when phone and laptop are not on the same wifi, they don't get stream from each other
+- STUN server needed!!
+  - STUN:Session Traversal Utilities for NAT
+  - STUN server allows computers to find public wifi
+  - when you request something on the web, STUN server tells you who you are on the internet - tells you your public ip address
+- we will add the list of STUN servers used
+  - we will use something Google made
+  - though professionally, we need to make one
+  - app.js
+```javascript
+myPeerConnection = new RTCPeerConnection({
+  iceServers: [
+    {
+      urls: [
+        "stun:stun.l.google.com:19302",
+        "stun:stun1.l.google.com:19302",
+        "stun:stun2.l.google.com:19302",
+        "stun:stun3.l.google.com:19302",
+        "stun:stun4.l.google.com:19302",
+      ],
+    },
+  ],
+});
+```
+- these are just for testing, they shouldn't be used for legit applications
+  <br/>
+
+#### Conclusions
+
+- Further things
+  1. Data Channel
+  - the createDataCHannel() method on the RTCPeerConnection interface makes a new channel linked with remote peer, over which any kind of data may be transmitted
+  - ex. file, text, gamepacket, images, etc
+  - ex. can create a chat tool without socketio
+  - ex. peer-to-peer video game
+  - ex. file transfer without a server
+
+  2. Drawbacks
+  - when there are many peers, it's bad!
+    - duplicate stream upload and download required to multiple peers
+  - "MESH ARCHITECTURE !"
+  - maybe up to 3 people, it's good
+
+  3. SFU
+  - Selective FOrwading Unit
+  - Depends on a server
+  - this server knows who's talking, who's sharing screen, etc
+  - compresses multiple streams and let's each browser to download it ,rather than making it download every stream of the highest quality
+
+<br/>
+
+#### Data Channels
+1. Step#1 - the socket that offers somethign has to create a data channel
+- create a data channel before creating an offer
+2. Step#2 - the other peer does not need to make a new data channel
+- event-listen to it
+3. Step#3 - try sending message now! `myDataChannel.send("hello")`
+<br/>
+
+#### Code Challenges
+
+1. Improve CSS
+2. Make a Chat using Data Channels
+3. When a peer leaves the room, remove the stream
