@@ -555,15 +555,10 @@ CMD ["npm", "start"]
 * let's make mongodb username and pw to be env var too
 ```dockerfile
 FROM node
-
 WORKDIR /app
-
 COPY package.json
-
-RUN npm install
-
+RUN npm instal
 COPY . .
-
 EXPOSE 3000
 
 ENV MONGODB_USERNAME=root # default
@@ -572,12 +567,11 @@ ENV MONGODB_PASSWORD=secret # default
 CMD ["npm", "start"]
 ```
 * `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@mongodb/..`
-
+  
 ### 87. Live Source Code Updates for the React Container (with Bind Mounts)
 * frontend
 * `docker run -v /Users/max/dev/udemy/docker-ls/frontend/src:/app/src --name goals-frontend --rm -p 3000:3000 -it goals-react`
 * for windows users,
-    * 
     * micro-soft (https://devblogs.microsoft.com/commandline/access-linux-filesystems-in-windows-and-wsl-2/) 
 ### 88. Module Summary
 * room for improvment
@@ -669,7 +663,6 @@ services: # 'children' <=> 'containers'
     env-file:
       - ./env/backend.env
     depends_on:
-
       - mongodb # needed for docker-compose cuz multiple containers run at the same time
   mongodb:
     image: 'mongo'
@@ -687,27 +680,25 @@ services: # 'children' <=> 'containers'
 volumes: # named volumes are located here/ anonymous vol or bind mount dont have to be written down here
   data: 
   logs:
-
 ```
 
 * commands for ref!
-    ```bash
-    
-    docker build -t goals-node .
-    
-    docker run --name goals-backend \
-        -e MONGO_USERNAME=max\
-        -e MONGO_PASSWORD=secret\
-        -v logs:/app/logs \
-        -v /Users/max/dev/udemy/docker-ls/backend
-        -v /app/node_modules \
-        --rm \
-        -d \
-        --network goals-net \
+```shell
+docker build -t goals-node .
 
-        -p 80:80 \
-        goals-node
-    ```
+docker run --name goals-backend \
+    -e MONGO_USERNAME=max\
+    -e MONGO_PASSWORD=secret\
+    -v logs:/app/logs \
+    -v /Users/max/dev/udemy/docker-ls/backend
+    -v /app/node_modules \
+    --rm \
+    -d \
+    --network goals-net \
+
+    -p 80:80 \
+    goals-node
+```
 
 * container names set by docker-compose are different from what we specify, but we can still use what we specify as names in our code
     * unless you specify container_name field
@@ -774,17 +765,6 @@ services: # 'children' <=> 'containers'
 * can also do `docker-compose build`
 
 ## 7. Working with "Utility Containers" & Executing Commands in Containerz
-
-
-
-
-
-
-
-
-
-
-
 ### 102. Utility Containers: Why would you use them?
 * [env] => [`docker run mynpm init`] => [executes or appends custom commands]   
 
@@ -798,7 +778,6 @@ services: # 'children' <=> 'containers'
 FROM node:14-alpine #extra-slim node base image
 WORKDIR /app
 ```
-
 * `docker run -t node-util .`
 
 * then you can run node commands with this
@@ -809,7 +788,6 @@ WORKDIR /app
     - `docker run -v /Users/max/dev/udemy/docker:/app  -it npm init`
 * now package.json is in the local folder too!
 
-
 ### 105. Utilizing ENTRYPOINT
 * kind of security measure to prevent malicious use of commands
 
@@ -818,7 +796,6 @@ WORKDIR /app
 * the typed command overwrites  the `CMD` command
 
 * vs. **ENTRYPOINT**
-
     * any command typed in CLI is **appended** to the ENTRYPOINT command
 
 * for example
@@ -828,7 +805,6 @@ FROM node:14-alpine
 WORKDIR /app
 
 ENTRYPOINT ["npm"]
-
 ```
 
 * `docker run -it -v /Users/../docker:/app mynpm  init`
@@ -836,8 +812,6 @@ ENTRYPOINT ["npm"]
 
 ### 106. Using Docker Compose
 * dokcer-compose for this ex
-
-
 ```yaml
 version: "3.8"
 services:
@@ -849,23 +823,16 @@ services:
       - ./:/app
 ```
 
-
 * `docker-compose run` allows users to up a single container by its name
 
-
 * `docker-compose run --rm npm init`
-
-
-
 
 ### 107. Utility Containers, Permissions & linux
 * user permissions as set by Docker  when working with "Utility Containers" and how you should tweak them
 * (https://www.udemy.com/course/docker-kubernetes-the-practical-guide/learn/lecture/22167140#questions/12977214/)
 
-
 ## 8. A More Complex Setup : A Laravel & PHP Dockerized Project
 ### 112. Adding a Nginx (Web Server) Container
-
 * refer to nginx docker webpage for descriptions too!
 * blueprint
 ```yaml
@@ -903,7 +870,6 @@ server {
 }
 ```
 
-
 ### 113. Adding a PHP Server
 * create a folder named dockerfiles and put php.dockerfile on localhost
 ```dockerfile
@@ -913,7 +879,6 @@ WORKDIR /var/www/html
 
 RUN docker-php-ext-install pdo pdo_mysql # php extensions we need
 ```
-
 * you NEED a php-fpm image for the Nginx config used
     * in this project!
 * NOTE: docker-compose php section
@@ -937,27 +902,19 @@ php:
 
     # so we actually don't need to talk to php server from our localhost machine
 
-
     # just change the config to be php:9000
 
 ```
 
-
-
-
-
 ### 114. Adding a MySQL container
-
 * mysql image also is provided officially
 ```yaml
-
 mysql:
   image: mysql:5.7
 
   env_file:
     - ./env/mysql.env
 ```
-
 * create a folder named env
     * create mysql.env file
 
@@ -975,10 +932,8 @@ FROM composer:latst
 WORKDIR /var/www/html
 ENTRYPOINT ["composer", "--ignore-platform-reqs"]
 ```
-
 * docker-compose
 ```yaml
-
 composer:
   build:
     context: ./dockerfiles
@@ -987,4 +942,265 @@ composer:
     - ./src:/var/www/html
 ```
 
+### 118. Launching Only Some Docker Compoee Services
+* in docker-compose file,
+```yaml
+server:
+  volumes:
+    - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+  depends_on:
+    - php
+    - mysql
+```
+* with  `depends_on`, the starting command can be simplified to `docker-compose up -d server`
 
+* `docker-compose up -d --build server`
+  * makes docker rebuild images with change
+
+### 119. Adding More Utility Containers
+* docker-compose.yaml
+```yaml
+artisan: 
+  build:
+    context: ./dockerfiles
+    dockerfile: php.dockerfile
+  volumes:
+    - ./src:/var/www/html
+  entrypoint: ['php', '/var/www/html/artisan'] # can override
+npm: 
+  image: node:14
+  working_dir: /var/www/html
+  entrypoint: ['npm']
+  volumes:
+    - ./src:/var/www/html
+```
+
+### 120. Dokcer Compose with and without Dockerfiles
+* adding "docker file instructions" ex. working_dir ,entrypoint => optional in docker-compose
+* can do them in separate dockerfile
+
+* NOTE: bind-mounts => only proper for development (the local folders are not available on other machines)
+
+### 121. Bind Mounts and COPY: When to Use What
+* becuase of that drawback of bind-mount
+
+* it may be better to have a separate dockerfile to have a 'snapshot' of the image and let docker-compose specify the bind mount part
+
+* nginx.dockerfile
+```dockerfile
+FROM nginx:stable-alpine
+
+WORKDIR /etc/nginx/conf.d
+
+COPY nginx/nginx.conf .
+
+RUN mv /etc/nginx/conf.d/nginx.conf defualt.conf
+
+WORKDIR /var/www/html
+
+COPY src .
+```
+* we ensure that the source code is always snapshot and we're not just relying on the bind mount
+
+```dockerfile
+FROM php:7.4-fpm-alpine
+WORKDIR /var/www/html
+COPY src .
+RUN docker-php-ext-install pdo pdo-mysql
+RUN chown -R www-data:www-data /var/www/html # to fix permission problem with php
+# php base image does not allow editing
+# so give the user 'www-data' (auto generated default)
+```
+
+## 9. Deploying Docker Containers
+### 123. Module Introduction
+* We will focus on web app Deployment!
+
+### 124. From Dev to Prod
+
+* Things to Watch Out For!
+  * **Bind Mounts shouldn't** be used in Proudction!
+  * Containerized apps **might need a build step** (e.g. React apps)
+  * **Multi-COntainer projects** might need to be **split** (or should be split) across multiple hosts / remote machines
+  * **Trade-offs** between **control** and **responsibility** may be worth  it
+
+### 125. Deployment Process & Providers
+* A Basic First Example: Standalone NodeJS App
+  * Jusst NodeJS, no db, nothing else
+  * => 1 image and container
+* Possible Deployment Approach
+  * Install DOcker on a remote host (e.g. via SSH), push and pull image, run container based on image on remote host
+* **DIAGRAM**
+* Hosting Prodivers [for docker]
+  * documentation**
+  * there are hundreds!
+* Three major hosting providers - AWS, Azure, GoogleCloud
+* AWS in this lecture => EC2
+
+### 124. Getting Started w/ an Example
+* AWS EC2 is a service that allows you to spin up and manage your own remote machines
+* 3 Steps
+  1. Create and launch EC2 instance - VPC and security group
+  2. Configure security group to expose all required ports to WWW
+  3. Connect to instance (SSH), install Docker and run container
+
+### 127. Bind Mounts in Production
+* In Dev
+  * COntainers should encapsulate the runtime env but not necessarily the code
+  * use 'Bind Mounts' to provide your local host project files to the running container
+  * allows for instant updatedswithout restarting the cont
+* In Prod 
+  * Image/Container is the 'single source of truth'
+  * A container should really work standalone, you should NOT have source code on your remote machine
+  * use COPY to copy code snapshot into an image
+  * ensures that every image runs without any extra, surrounding configuration or code
+
+### 128. Introducing AWS & EC2
+* AWS Management Console => EC2
+* Launch instance
+
+### 129. Connecting to an EC2 instance
+* Amazon Linux2 AMI (hvm), ssd Volume Type
+  * create vpc
+* launch => key pair
+* SSH (Secure Shell) - protocol for connecting a remote and a local machine via terminal
+    * for Windows : use WSL2 or PuTTY
+    * a standalone ssh client
+
+* for Linux and Mac
+* `chmod 400 <key_file_name>`
+* `ssh -i "<key_file_name>" ec2-user@ec2-18-218-126-91.us-east-2.compute.amazonaws.com`
+  * these ran in virtual machine
+
+### 130. Installing Docker on Virtual Machine
+* `sudo yum update -y` 
+
+* `sudo amazon-linux-extras install docker`
+* `sudo service docker start`
+  * sudo ensures the command is executed as a root user /w/ sufficient permissions
+
+* `docker run`  
+
+### 131. Installing Docker on Linux in general!
+* In the last lecture, you saw the AWS-specific command for installing Docker on a Linux machine:
+`amazon-linux-extras install docker`
+* Of course you might not always want to install it on a AWS EC2 instance though - maybe you are using a different provider.
+
+* In that case, you can always follow the Linux setup instructions you find on the official Docker page: https://docs.docker.com/engine/install/ (under "Server").
+
+### 132. Pushing our local image to the CLoud
+* Deploy SOurce Code vs Image
+1. Option 1: Deploy Source
+ * Build image on remote machine
+ * Push source code to remote machine, run `docker build` and then `docker run`
+ * unnecessary complexity
+2. Option 2: Deploy Built Image
+ * Build image before deployment (e.g. on local machine)
+ * Just execute `docker run`
+ * avoid unnecessary remote server work
+ * can use DockerHub for that
+
+### 133. Running and Publishing the app (on EC2)
+* `sudo docker run -d --rm -p 80:80 academind/node-example-1`
+  * if you check the EC2 page online you see that you don't see the app (ip)
+  * securiy feature
+  * by default your ec2 instance is disconnected from all other stuff on the web
+    * only YOU can connect via SSH
+* "Security Groups"
+* "Edit inbound rule" to change "http" to source from 'anywhere'
+
+### 134. Managing & Updating the Container/Image
+* to reflect changes in source code => rebuild image, push, pull, then run again
+* to completely stop and remove ec2 instance go to the ec2 dashboard
+
+### 135. Disadvantages of our Current Approach
+* Docker is Awesome
+  * Only Docker needs to be installed (no Other runtimes or tools)
+  * Uploading "codes" is very easy
+  * It is the exact same app and env as on our localmachine
+* "DIY" Approach - Disadvanta
+  * we fully "own"  the remote machine => we're responsible for it (and its security!)
+  * Keep essential software updated
+  * Manage network and security groups/firewalls!
+  * SSHing into the machine to manage it can be annoying
+
+### 136. From Manual Deployment[EC2] to Managed Services
+* Your Own Remote Machine
+  * ex. AWS EC2
+  * you need to create, manage, update, monitor, and scale them etc
+  * Great if you're an experienced Admin/Cloud Expert
+* Managed Remote Machine
+  * ex. AWS ECS
+  * Creation, management, updating are handled automatically, monitoring and scaling are simplified
+  * Great if you simply want to deploy your app/container
+* Note that other cloud providers also have similar service plans
+
+### 137. Important: AWS, Pricing and ECS
+* Unlike EC2, it's NOT covered by the AWS free tier - you can check the "Free Tier" page to see what's included: https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc
+
+* You should therefore only follow along actively, if you are okay with incurring some costs. You'll only be charged a few dollars if you follow along as shown (and you then remove all resources thereafter) - to learn more about the AWS pricing, please visit their pricing page: https://aws.amazon.com/pricing/
+
+* Important: You really should double-check to remove ALL created resources (e.g. load balancers, NAT gateways etc.) once you're done - otherwise, monthly costs can be much higher!
+
+### 138. Deploying with AWS ECS: A Managed Docker COntainer Service
+* Amazon Elastic COntainer Service - ECS
+  - AMazon ECS makes it easy to deploy, manage, and scale Docker containers running applications, services, and batch processez. ECS plaecs containers across your cluster based on ur resource needs and is integrated with familiar features like Elastic Load Balancing, EC2 security groups, EBS volumes and IAM roles.
+* ECS manages containers for us
+* AWS ECS thinks in four categories
+1. Cluster
+2. Service
+3. Task Definition
+4. COntainer Definition
+
+* in the side drawer you define how  `docker run` should be executed later
+  * lot of which can be defined with  `docker run  --options`
+
+* "Task"
+  * A blueprint for your app, describes one or more containers through attributes
+  * Compatibilities - FARGATE : serverless mode
+  * could swtich to "EC2" telling AWS to create EC2 instance for your containers instead
+
+* "Service"
+  * controls how the task (this configured application and container) should be executed
+
+* "Cluster"
+  * the overall network in which our services run
+
+### 139. More on AWS
+* Academind website
+* FARGATE - server is run only when it is required
+
+### 140. Updating Managed Container
+* Make changes, build image, push to the hub again!
+* make a new task and the AWS will use the most recent image on the hub!
+* an alternative would be to not create a new task revision but just use "UPdate Service" and select "Force new Deployment"
+
+### 141. Preparing a Multi-Container App
+* referring another container by its name (under the same docker network) does not work on AWS => becuase it's not guaranteed that they will work on the same machine
+* however, you can instead refer it by 'localhost' if you define those in a single task =>then it is guaranteed that they work on the same machine
+
+### 142. Configuring the NodeJS Backend Container
+<TAKE THOSE LATER>
+
+
+### 146. Our Current Architecture!
+* AWS ECS
+* ECS Task
+  1. NodeJS REST API <=AWS Load Balancer
+  2. MongoDB => VOlume => AWS EFS Storage
+
+### 147. Databases & Containers : An Importance COnsideration
+* You can absolutely manage your own Database containers
+* but..
+  * Scaling and managing availability can be challenging
+  * Performance (also during traffic spikes) could be  bad
+  * Taking care about backups and security can be challenging
+* Consider using a Managed DB Service e.g. AWS RDS, MongoDB Atlas, ..
+
+### 148. Moving to MongoDB Atlas
+* setup cluster
+* change mongodb url
+
+* edit database accesses
+
+### 149. Using MongoDB Atlas in Proudction
