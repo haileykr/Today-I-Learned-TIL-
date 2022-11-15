@@ -1078,7 +1078,6 @@ RUN chown -R www-data:www-data /var/www/html # to fix permission problem with ph
 * `sudo amazon-linux-extras install docker`
 * `sudo service docker start`
   * sudo ensures the command is executed as a root user /w/ sufficient permissions
-
 * `docker run`  
 
 ### 131. Installing Docker on Linux in general!
@@ -1182,7 +1181,6 @@ RUN chown -R www-data:www-data /var/www/html # to fix permission problem with ph
 ### 142. Configuring the NodeJS Backend Container
 <TAKE THOSE LATER>
 
-
 ### 146. Our Current Architecture!
 * AWS ECS
 * ECS Task
@@ -1204,3 +1202,283 @@ RUN chown -R www-data:www-data /var/www/html # to fix permission problem with ph
 * edit database accesses
 
 ### 149. Using MongoDB Atlas in Proudction
+* Create a new revision
+* with modification to env var
+```yaml
+MONGODB_USERNAME=max
+MONGODB_PASSWORD=Bjaerjioaefjjdkl
+MONGODB_URL=cluster0.ntrwp.mongodb.net (not localhost anymore)
+MONGODB_NAME=goals-dev
+```
+* update service
+
+### 150. Our Updated & Target Architecture
+* For Our Final App Architecture,
+=> Multi-container app
+=> AWS Load balancer -> React SPA -> NodeJS API -> MongoDB Atlas
+
+
+### 151. Understanding Common Problem
+* SOme apps / projects require a *build setup*
+* e.g. optimization script that needs to be executed AFTER development but BEFORE deployment
+* Development Setup <=> IS NOT EQUAL TO (not entirely!) <=> Productino Setup
+    * e.g. React App
+        - Uses live-reloading development server, uses unoptimizaed/unsupported JS features
+        - NO attached server, optimized, fully browser-compatible code
+
+* SPA codes should be  'transformed' to sth taht browsers can understand
+* "npm start" starts a development server which is a basic web server which serves the frontend application!
+
+* "npm start" is not meant to run in productino!
+    * not optimized for that
+    * the entire file compilation process ways too much resource
+
+* "Build" script => code compilation and optimization
+    => we get the files not server
+    => does not start any reachable process
+* "Start" => runs server but not good for production
+
+### 152. Creating a "build-only" contaier
+* React app need be executed differently in development and in productin
+    * set up two different environments
+
+* NodeJS needed just for development <= uses npm start command
+
+* New file named 'Docker.prod'! for different env settings
+```dockerfile
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY package.json
+
+RUN npm install
+
+COPY . .
+
+CMD ["npm" , "run", "start"] 
+# no port exposes, because we won't start any versive
+```
+=> this gives us optimized files, but no server 
+* Introducing Multi-Stage Builds
+
+### 153. Introducing Multi-Stage Builds
+* allows us to  have one Dockerfile
+but have multiplze build/setup steps so called "stages" inside of that file
+* stages can copy results from each other, so we can have one stage to create the optimized files!
+* and another stage to serve them
+
+* we can either build the entire Dockerfile going through all stages, step by step from top to bottom
+
+* ONE Dockerfile, MUltiple Build / Setup Steps ("Stages")
+    * Stages can copy results (created files and folders) from each other
+    * You can buil the complete image or select individual stages
+
+
+* THus with multi-stage builds,
+```dockerfile
+FROM node:14-alpine as build
+
+WORKDIR /app
+
+COPY package.json . 
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+# as we get here node is not needed anymore
+
+FROM nginx:stable-alpine
+# multi-stage build!
+
+COPY --from=build /app/build /usr/share/nginx/html
+# copying final product of the previous stage
+# with the from option, we are telling 
+# /usr~ : default folder where nginx will try to serve files
+
+EXPOSE 80
+# default port that nginx exposes
+
+CMD ["nginx", "-g", "daemon off;"]
+# from official docs
+# if starting by ourselves
+```
+
+* final container will only include the second stage 
+* but first build the first stage to derive the final stage
+
+
+* let's use nginx! ligthweight and serves our purpose here!
+
+* to use multiple base images, "multi-stage build" is required
+
+
+* Every **FROM** intruction **creates a new stage** in your Dockerfile.
+* Even if you use the **same image** as in the previous step
+### 154.  Building a Multi-Stage Image
+* first verify whether our code needs any adjustment
+
+    * actually one thing!
+    * we are calling 'localhost' a lot
+    * Note that the frontend codes run on **end user's browser** not inside a container
+    * thus 'localhost' refers to their own machine not to task or cnotainer or ECS managed service
+
+* and the url depends on how we will deploy our app
+    * we plan on deploying this in the same task as NodeJS API
+    * so they will be available in the same domain
+
+```javascript
+await fetch('http://localhost/goals/')
+
+// =>
+await fetch('/goals/')
+```
+
+*  `docker build -f ruruewio  frontend/Dockerfile.prod  -t academind/goals-react ./frontend/`
+*  `docker push academind/goals-react`
+* now deploy to AWS ECS
+
+### 155. Deploying a Standalone Frontend App
+* AWS ECS
+
+* Problem! both backend and frontend run on Port 80
+    1. Make a separate task for frontend
+    2. Merge two so that it's one container
+
+* because they run on differnt tasks, we need to specify urls again
+```javascript
+const backendUrl = process.env.NODE_ENV==='development' ? 'http://localhost:3000' : 'ecs-1278971049823.us-east-2..elb.amazonaws.com'
+# get the prod url from the load balancer
+```
+
+
+
+
+* set up a new load balancer
+    * the security group **opens port 80**and just port 80 to incoming traffic - we need that both for the backend and the frontend 
+
+
+### 156. Development vs Production Differences
+
+### 157. Understanding Multi-stage Build Targets
+* `docker build --target build -f frontend/Dockerfile.pord ./frontend`
+
+### 158. Beyond AWS
+* AWS was just the example in this section
+
+
+1. Manual Installation of Docker + managemne tof the underlying server
+    * EC2
+    * possible with any provider that gievs you fully controlled remote hosts/instances
+2. Managed Container/Docker Services like ECS
+    * Many cloud providers offer managed Docker / Container Services
+
+### 159. Module Summary
+* 
+### 10. Docker & Containers - A Summary
+### 162. Images & Containers
+* Container: Isolated box or environment required to run that code
+    * single-task-focused
+        * e.g. we don't run a web server, frontend, db all at once
+    * sharable, reproducable
+    * stateless (plus volumes)
+
+* Images: created with dockerfiles/pulled from docker hub
+    * contain the code and the env
+    * as described in the dockerfile
+    * blueprints for containers!
+    * read-only / does not run
+    * can be built and shared
+    * Created with insturctions (layers)
+
+### 163. Key Commands
+* Build an image based on a Dokcerfile
+* `docker build .`
+    * . is the build context
+* Run a container based on a remote or local image
+* `docker run --name NAME --rm -d IMAGE`
+* Share (push) an Image to a Registry (defualt: DockerHub)
+* `docker push REPOSITORY/NAME:TAG`
+* Fetch (pull) an Image from a Registry (default: DockerHub)
+`docker pull REPO/NAME:TAG`
+
+### 164.Data VOlumes & Networking
+* containers are isolated and statelss
+* isolated = containers have their own data and filesystem, detached from the host machine filesystem
+    * use Bind Mounts to connect hos machine folders
+    * `-v /local/path:/container/path `
+* stateless - they can store data internally, but data will be lost if the container is removed and replaced by a new one
+    * use volumes to persist data
+    *  `-v NAME:/container/path`
+
+* Containers are isolated but can be connected to send requests to each other (e.g. http)
+1. OPtion 1: Determine container IP and use that
+    * IP might change, determining it is unnecessary (manual) work
+2. Option 2: Create a Docker network and add both containers
+    * Containers can use each other's names as request addresses
+
+### 165. Docker Compose
+* Repeating long `docker build` and `docker run` commands gets annoying - especially when working **with multiple containers**
+* **Docker Compose** aloows you to pre-define build and run configuration in a .yaml file
+    * `docker-compose up` - build missing images and start all containers
+    * `docker-compose down` - stop all started containers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 166. Local vs Remote
+* Local Host/Development
+    * isolated, encapsulated, reproducible development environments
+    * no depencdency or software clashes
+
+* It's perfectly fine to use Docker (and Docker Compose) for local development!
+    * Encapsulated : environments for =/= projects
+    * No Global Installation of tools
+    * Easy to share and re-produce
+
+* Remote Host/Production
+    * isolated, encapsulated, reproducible environments
+    * Easy updates: simply 
+
+### 167. Deployment
+* Replace **Bind Mounts** with **Volumes** or **COPY**
+
+* Multiple containers might need **multiple hosts**
+* But they can also run on the **same host** (depends on application)
+* **Multi-stage builds** help with apps that need a **build step**
+
+* Control vs ease - of - use
+    * you can launch a remote server, install Docker and run your containers
+        * full control but you also need to manage everything
+    * you can use a managed service instead
+        * less control and extra knowledge required but easier to use, less responsibility
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 11. Getting Started with Kubernetes

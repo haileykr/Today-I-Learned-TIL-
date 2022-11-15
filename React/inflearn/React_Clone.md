@@ -3811,7 +3811,7 @@ router.post("/images", isLoggedIn, upload.array("image"), async (req, res, next)
   * S3 버킷에 다음과 같이 두 개를 써줘야 했기 때문!
   * "Resource": [
                 "arn:aws:s3:::wesoodaa/*",
-                "arn:aws:s3:::wesoodaaa"
+                "arn:aws:s3:::wesoodaa"
             ]
 
 * 0706 ~> EC2 us-east-2에서 ap-northeast-2로 이동 (idk why)
@@ -4006,14 +4006,12 @@ server {
   * loggerMiddleware에서 console.log있어서 그렇다
   * loggerMiddleware말고 sagaMiddleware만 적용하게 바꿈!
 
-
   * reducers > index.js에서도 HYDRATE안에 콘솔 록 지움
 
 
 * Link쓴 곳에 prefetch={false}넣어주면 모든 링크를 미리 불러와 생기는 에러 방지할 수 있음 -PostCard, PostCardContent 등등
   * post/<num>처럼 하나 하나 볼 땐 prefetch써주면 좋을 것이다!
   * 하지만 모든 게시글 볼때처럼 불러야 할 것들이 너무 많으면 생산성 측면에서 prefetch false하는 것이 좋을 것이당
-
 
 * 로그인 후 Profile 가면 안 나옴
   * reverse proxying을 사용하고 있어서
